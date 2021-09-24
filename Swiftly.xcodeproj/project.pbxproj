@@ -7,16 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DA2122DE26FE07820016587F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2122DD26FE07820016587F /* LoginView.swift */; };
 		DA884F2126FE04D000F58E4A /* SwiftlyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA884F2026FE04D000F58E4A /* SwiftlyApp.swift */; };
-		DA884F2326FE04D000F58E4A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA884F2226FE04D000F58E4A /* ContentView.swift */; };
 		DA884F2526FE04D200F58E4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA884F2426FE04D200F58E4A /* Assets.xcassets */; };
 		DA884F2826FE04D200F58E4A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA884F2726FE04D200F58E4A /* Preview Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DA2122DD26FE07820016587F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DA884F1D26FE04D000F58E4A /* Swiftly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Swiftly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA884F2026FE04D000F58E4A /* SwiftlyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftlyApp.swift; sourceTree = "<group>"; };
-		DA884F2226FE04D000F58E4A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		DA884F2426FE04D200F58E4A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA884F2726FE04D200F58E4A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DA884F2926FE04D200F58E4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -52,8 +52,8 @@
 		DA884F1F26FE04D000F58E4A /* Swiftly */ = {
 			isa = PBXGroup;
 			children = (
+				DA884F2F26FE064700F58E4A /* Screens */,
 				DA884F2026FE04D000F58E4A /* SwiftlyApp.swift */,
-				DA884F2226FE04D000F58E4A /* ContentView.swift */,
 				DA884F2426FE04D200F58E4A /* Assets.xcassets */,
 				DA884F2926FE04D200F58E4A /* Info.plist */,
 				DA884F2626FE04D200F58E4A /* Preview Content */,
@@ -67,6 +67,14 @@
 				DA884F2726FE04D200F58E4A /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		DA884F2F26FE064700F58E4A /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				DA2122DD26FE07820016587F /* LoginView.swift */,
+			);
+			path = Screens;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,8 +146,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DA884F2326FE04D000F58E4A /* ContentView.swift in Sources */,
 				DA884F2126FE04D000F58E4A /* SwiftlyApp.swift in Sources */,
+				DA2122DE26FE07820016587F /* LoginView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
