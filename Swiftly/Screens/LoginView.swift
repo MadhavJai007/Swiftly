@@ -1,16 +1,17 @@
-//
+//  INFO49635 - CAPSTONE FALL 2021
 //  LoginScreen.swift
 //  Swiftly
 //
 //  Created by Toby Moktar on 2021-09-24.
-//
+
+/// All @ variables are temporary as of right now (2021-09-24).
+/// Once the functionality is implemented they will be modified.
 
 import SwiftUI
 
 struct LoginView: View {
     
-    @State private var username: String = ""
-    @State private var password: String = ""
+    @State private var placeholder: String = ""
     
     var body: some View {
         
@@ -26,17 +27,12 @@ struct LoginView: View {
                     Spacer()
                     Spacer()
                     
-                    Text("Swiftly")
-                        .font(.system(size: 75,
-                                      weight: .semibold, design: .serif))
-                        .foregroundColor(.white)
-                        .padding(.bottom, 100)
+                    TitleLabel(text:"Swiftly")
                     
                     VStack(spacing: 25){
+                        LoginInputTextField(placeholderText: "Username", stateAttribute: placeholder)
                         
-                        LoginInputTextField(placeholderText: "Username", stateAttribute: username)
-                        
-                        LoginInputTextField(placeholderText: "Password", stateAttribute: password)
+                        LoginInputTextField(placeholderText: "Password", stateAttribute: placeholder)
                     }
                                         
                     Button {
@@ -72,9 +68,24 @@ struct LoginView: View {
     }
 }
 
+// Preview 
 struct LoginScreen_Previews: PreviewProvider {
     static var previews: some View {
         LoginView()
+    }
+}
+
+// Struct representing the title label
+struct TitleLabel: View {
+    
+    var text: String
+    var body: some View {
+        
+        Text(text)
+            .font(.system(size: 75,
+                          weight: .semibold, design: .serif))
+            .foregroundColor(.white)
+            .padding(.bottom, 100)
     }
 }
 
