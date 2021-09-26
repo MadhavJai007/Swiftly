@@ -34,15 +34,16 @@ struct LoginView: View {
                         
                         LoginInputTextField(placeholderText: "Password", stateAttribute: placeholder)
                     }
-                                        
-                    Button {
-                        print("login")
-                    }label: {
+                    
+                    
+                    NavigationLink(destination: ChaptersView()){
+                        
                         LoginSignupButton(text: "Login", textColor: .white, backgroundColor: Color.blackCustom)
-                    }
-                    .padding(.top,50)
+                        
+                    }.padding(.top,50)
                     .padding(.bottom,50)
                     
+                   
                     Spacer()
                     Spacer()
                     

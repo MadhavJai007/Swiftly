@@ -10,6 +10,7 @@
 		DA2122DE26FE07820016587F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2122DD26FE07820016587F /* LoginView.swift */; };
 		DA79655F26FE3DD100CAE327 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA79655E26FE3DD100CAE327 /* SignupView.swift */; };
 		DA79656326FE3E4B00CAE327 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA79656226FE3E4B00CAE327 /* Colors.swift */; };
+		DA7965682700AEEC00CAE327 /* ChaptersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7965672700AEEC00CAE327 /* ChaptersView.swift */; };
 		DA884F2126FE04D000F58E4A /* SwiftlyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA884F2026FE04D000F58E4A /* SwiftlyApp.swift */; };
 		DA884F2526FE04D200F58E4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA884F2426FE04D200F58E4A /* Assets.xcassets */; };
 		DA884F2826FE04D200F58E4A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA884F2726FE04D200F58E4A /* Preview Assets.xcassets */; };
@@ -19,6 +20,7 @@
 		DA2122DD26FE07820016587F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DA79655E26FE3DD100CAE327 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		DA79656226FE3E4B00CAE327 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		DA7965672700AEEC00CAE327 /* ChaptersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersView.swift; sourceTree = "<group>"; };
 		DA884F1D26FE04D000F58E4A /* Swiftly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Swiftly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA884F2026FE04D000F58E4A /* SwiftlyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftlyApp.swift; sourceTree = "<group>"; };
 		DA884F2426FE04D200F58E4A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 			children = (
 				DA2122DD26FE07820016587F /* LoginView.swift */,
 				DA79655E26FE3DD100CAE327 /* SignupView.swift */,
+				DA7965672700AEEC00CAE327 /* ChaptersView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -164,6 +167,7 @@
 				DA79656326FE3E4B00CAE327 /* Colors.swift in Sources */,
 				DA884F2126FE04D000F58E4A /* SwiftlyApp.swift in Sources */,
 				DA2122DE26FE07820016587F /* LoginView.swift in Sources */,
+				DA7965682700AEEC00CAE327 /* ChaptersView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
