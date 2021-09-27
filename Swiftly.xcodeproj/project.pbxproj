@@ -16,7 +16,7 @@
 		DA884F2826FE04D200F58E4A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA884F2726FE04D200F58E4A /* Preview Assets.xcassets */; };
 		DABF368927020134009BF78A /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF368827020134009BF78A /* Chapter.swift */; };
 		DABF368C270202EA009BF78A /* ChaptersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF368B270202EA009BF78A /* ChaptersViewModel.swift */; };
-		DABF369027020E0B009BF78A /* ChapterTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF368F27020E0B009BF78A /* ChapterTitleView.swift */; };
+		DABF369427023677009BF78A /* ChapterTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF369327023677009BF78A /* ChapterTitleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +31,7 @@
 		DA884F2926FE04D200F58E4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DABF368827020134009BF78A /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
 		DABF368B270202EA009BF78A /* ChaptersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersViewModel.swift; sourceTree = "<group>"; };
-		DABF368F27020E0B009BF78A /* ChapterTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterTitleView.swift; sourceTree = "<group>"; };
+		DABF369327023677009BF78A /* ChapterTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterTitleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,9 +95,9 @@
 		DA884F2F26FE064700F58E4A /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				DABF369227022F7E009BF78A /* SignupView */,
+				DABF369127022F73009BF78A /* LoginView */,
 				DABF368A270202CE009BF78A /* ChaptersView */,
-				DA2122DD26FE07820016587F /* LoginView.swift */,
-				DA79655E26FE3DD100CAE327 /* SignupView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -130,9 +130,25 @@
 		DABF368E27020DF3009BF78A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				DABF368F27020E0B009BF78A /* ChapterTitleView.swift */,
+				DABF369327023677009BF78A /* ChapterTitleView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		DABF369127022F73009BF78A /* LoginView */ = {
+			isa = PBXGroup;
+			children = (
+				DA2122DD26FE07820016587F /* LoginView.swift */,
+			);
+			path = LoginView;
+			sourceTree = "<group>";
+		};
+		DABF369227022F7E009BF78A /* SignupView */ = {
+			isa = PBXGroup;
+			children = (
+				DA79655E26FE3DD100CAE327 /* SignupView.swift */,
+			);
+			path = SignupView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -209,7 +225,7 @@
 				DA79656326FE3E4B00CAE327 /* Colors.swift in Sources */,
 				DA884F2126FE04D000F58E4A /* SwiftlyApp.swift in Sources */,
 				DABF368927020134009BF78A /* Chapter.swift in Sources */,
-				DABF369027020E0B009BF78A /* ChapterTitleView.swift in Sources */,
+				DABF369427023677009BF78A /* ChapterTitleView.swift in Sources */,
 				DA2122DE26FE07820016587F /* LoginView.swift in Sources */,
 				DA7965682700AEEC00CAE327 /* ChaptersView.swift in Sources */,
 			);

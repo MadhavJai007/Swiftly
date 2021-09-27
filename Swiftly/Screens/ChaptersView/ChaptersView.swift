@@ -69,10 +69,10 @@ struct ChaptersView: View {
                     Spacer()
                     
                     ScrollView {
-                        LazyVGrid(columns: viewModel.columns, spacing: 100) {
+                        LazyVGrid(columns: viewModel.columns, spacing: 50) {
                             ForEach(MockData.Chapters) { chapter in
-                                Text(chapter.summary)
-                                    .background(Color.white)
+                                ChapterTitleView(chapter: chapter)
+                             
                             }
                         }
                         .padding(30)
