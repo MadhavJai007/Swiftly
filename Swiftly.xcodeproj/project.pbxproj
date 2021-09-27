@@ -14,6 +14,9 @@
 		DA884F2126FE04D000F58E4A /* SwiftlyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA884F2026FE04D000F58E4A /* SwiftlyApp.swift */; };
 		DA884F2526FE04D200F58E4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA884F2426FE04D200F58E4A /* Assets.xcassets */; };
 		DA884F2826FE04D200F58E4A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA884F2726FE04D200F58E4A /* Preview Assets.xcassets */; };
+		DABF368927020134009BF78A /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF368827020134009BF78A /* Chapter.swift */; };
+		DABF368C270202EA009BF78A /* ChaptersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF368B270202EA009BF78A /* ChaptersViewModel.swift */; };
+		DABF369027020E0B009BF78A /* ChapterTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF368F27020E0B009BF78A /* ChapterTitleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		DA884F2426FE04D200F58E4A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA884F2726FE04D200F58E4A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DA884F2926FE04D200F58E4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DABF368827020134009BF78A /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
+		DABF368B270202EA009BF78A /* ChaptersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersViewModel.swift; sourceTree = "<group>"; };
+		DABF368F27020E0B009BF78A /* ChapterTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterTitleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +72,8 @@
 		DA884F1F26FE04D000F58E4A /* Swiftly */ = {
 			isa = PBXGroup;
 			children = (
+				DABF368D27020DD9009BF78A /* Views */,
+				DABF368727020115009BF78A /* Model */,
 				DA79656026FE3E3900CAE327 /* Resources */,
 				DA884F2F26FE064700F58E4A /* Screens */,
 				DA884F2026FE04D000F58E4A /* SwiftlyApp.swift */,
@@ -87,11 +95,44 @@
 		DA884F2F26FE064700F58E4A /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				DABF368A270202CE009BF78A /* ChaptersView */,
 				DA2122DD26FE07820016587F /* LoginView.swift */,
 				DA79655E26FE3DD100CAE327 /* SignupView.swift */,
-				DA7965672700AEEC00CAE327 /* ChaptersView.swift */,
 			);
 			path = Screens;
+			sourceTree = "<group>";
+		};
+		DABF368727020115009BF78A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DABF368827020134009BF78A /* Chapter.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		DABF368A270202CE009BF78A /* ChaptersView */ = {
+			isa = PBXGroup;
+			children = (
+				DA7965672700AEEC00CAE327 /* ChaptersView.swift */,
+				DABF368B270202EA009BF78A /* ChaptersViewModel.swift */,
+			);
+			path = ChaptersView;
+			sourceTree = "<group>";
+		};
+		DABF368D27020DD9009BF78A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				DABF368E27020DF3009BF78A /* View */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		DABF368E27020DF3009BF78A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DABF368F27020E0B009BF78A /* ChapterTitleView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -163,9 +204,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DABF368C270202EA009BF78A /* ChaptersViewModel.swift in Sources */,
 				DA79655F26FE3DD100CAE327 /* SignupView.swift in Sources */,
 				DA79656326FE3E4B00CAE327 /* Colors.swift in Sources */,
 				DA884F2126FE04D000F58E4A /* SwiftlyApp.swift in Sources */,
+				DABF368927020134009BF78A /* Chapter.swift in Sources */,
+				DABF369027020E0B009BF78A /* ChapterTitleView.swift in Sources */,
 				DA2122DE26FE07820016587F /* LoginView.swift in Sources */,
 				DA7965682700AEEC00CAE327 /* ChaptersView.swift in Sources */,
 			);
