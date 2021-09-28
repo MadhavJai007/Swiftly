@@ -16,7 +16,8 @@ struct Chapter: Hashable, Identifiable {
     let difficulty: Int
     let completionStatus: String
     let summary: String
-    let estimatedLenght: Int
+    let length: Int
+    let iconName: String
     
 }
 
@@ -24,15 +25,15 @@ struct Chapter: Hashable, Identifiable {
 struct MockData {
     
     
-    static let sampleChapter = Chapter(chapterNum: 1, name: "Multi-Threading", difficulty: 3, completionStatus: "Incomplete", summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ornare purus, eget aliquam magna. Pellentesque bibendum bibendum venenatis", estimatedLenght: 15)
+    static let sampleChapter = Chapter(chapterNum: 1, name: "Multi-Threading", difficulty: 3, completionStatus: "Incomplete", summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ornare purus, eget aliquam magna. Pellentesque bibendum bibendum venenatis", length: 15, iconName: "cpu")
     
     
     static let Chapters = [
-        Chapter(chapterNum: 1, name: "Multi-Threading", difficulty: 3, completionStatus: "Incomplete", summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ornare purus, eget aliquam magna. Pellentesque bibendum bibendum venenatis", estimatedLenght: 15),
-        Chapter(chapterNum: 2, name: "Multi-Threading", difficulty: 3, completionStatus: "Incomplete", summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ornare purus, eget aliquam magna. Pellentesque bibendum bibendum venenatis", estimatedLenght: 15),
-        Chapter(chapterNum: 3, name: "Multi-Threading", difficulty: 3, completionStatus: "Incomplete", summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ornare purus, eget aliquam magna. Pellentesque bibendum bibendum venenatis", estimatedLenght: 15),
-        Chapter(chapterNum: 4, name: "Multi-Threading", difficulty: 3, completionStatus: "Incomplete", summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ornare purus, eget aliquam magna. Pellentesque bibendum bibendum venenatis", estimatedLenght: 15),
-        Chapter(chapterNum: 5, name: "Multi-Threading", difficulty: 3, completionStatus: "Incomplete", summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ornare purus, eget aliquam magna. Pellentesque bibendum bibendum venenatis", estimatedLenght: 15),
+        Chapter(chapterNum: 1, name: "Multi-Threading", difficulty: 3, completionStatus: "Incomplete", summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ornare purus, eget aliquam magna. Pellentesque bibendum bibendum venenatis", length: 15, iconName: "cpu"),
+        Chapter(chapterNum: 2, name: "Multi-Threading", difficulty: 3, completionStatus: "Incomplete", summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ornare purus, eget aliquam magna. Pellentesque bibendum bibendum venenatis", length: 15, iconName: "cpu"),
+        Chapter(chapterNum: 3, name: "Multi-Threading", difficulty: 3, completionStatus: "Incomplete", summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ornare purus, eget aliquam magna. Pellentesque bibendum bibendum venenatis", length: 15, iconName: "cpu"),
+        Chapter(chapterNum: 4, name: "Multi-Threading", difficulty: 3, completionStatus: "Incomplete", summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ornare purus, eget aliquam magna. Pellentesque bibendum bibendum venenatis", length: 15, iconName: "cpu"),
+        Chapter(chapterNum: 5, name: "Multi-Threading", difficulty: 3, completionStatus: "Incomplete", summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ornare purus, eget aliquam magna. Pellentesque bibendum bibendum venenatis", length: 15, iconName: "cpu"),
     ]
     
 }

@@ -86,8 +86,8 @@
 				DABF368727020115009BF78A /* Model */,
 				DA79656026FE3E3900CAE327 /* Resources */,
 				DA884F2F26FE064700F58E4A /* Screens */,
-				DA884F2026FE04D000F58E4A /* SwiftlyApp.swift */,
 				DA884F2426FE04D200F58E4A /* Assets.xcassets */,
+				DA884F2026FE04D000F58E4A /* SwiftlyApp.swift */,
 				DA884F2926FE04D200F58E4A /* Info.plist */,
 				DA884F2626FE04D200F58E4A /* Preview Content */,
 			);

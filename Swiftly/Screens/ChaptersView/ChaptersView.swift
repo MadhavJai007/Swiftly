@@ -82,7 +82,6 @@ struct ChaptersView: View {
                     }
                 }
                 
-                
                 Spacer()                
             }
         }

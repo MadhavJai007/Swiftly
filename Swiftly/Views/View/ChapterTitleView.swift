@@ -39,7 +39,7 @@ struct ChapterTitleView: View {
                     .font(.system(size: 20, weight: .semibold))
                     .padding(.leading, 10)
                 
-                Text("Estimated Length: \(chapter.estimatedLenght)")
+                Text("Estimated Length: \(chapter.length)")
                     .font(.system(size: 20))
                     .padding(.leading, 10)
                 
@@ -97,12 +97,3 @@ struct ChapterTitleView: View {
         }
     }
 }
-
-//struct ChapterTitleView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ChapterTitleView(chapter: MockData.sampleChapter)
-//    }
-//}
-
-
-
