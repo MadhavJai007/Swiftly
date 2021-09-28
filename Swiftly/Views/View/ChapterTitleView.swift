@@ -15,7 +15,6 @@ struct ChapterTitleView: View {
     
     var body: some View {
         
-        
         VStack{
             
             VStack(alignment: .leading, spacing: 5){
@@ -35,40 +34,19 @@ struct ChapterTitleView: View {
                     
                 }.frame(width: 325)
                 
-                Text("\(chapter.name)")
-                    .font(.system(size: 20, weight: .semibold))
-                    .padding(.leading, 10)
-                
-                Text("Estimated Length: \(chapter.length)")
-                    .font(.system(size: 20))
-                    .padding(.leading, 10)
-                
-                Text("Difficulty: \(chapter.difficulty)")
-                    .font(.system(size: 20))
-                    .padding(.leading, 10)
-                
-                
+                ChapterInfoLabel(text: "\(chapter.name)")
+                ChapterInfoLabel(text: "Estimated Length: \(chapter.length)")
+                ChapterInfoLabel(text: "Difficulty: \(chapter.difficulty)")
                 
                 HStack(){
                     
                     Spacer()
                     
                     Button{
-                        
+                        print("Tapped")
                     }label: {
-                        Text("View Leaderboard")
-                            .font(.system(size: 20, weight: .semibold, design: .default))
-                            .foregroundColor(Color.white)
-                            .padding(7)
-                            .padding(.leading, 10)
-                            .padding(.trailing, 10)
-                            .background(Color.leaderboardBtnBackground)
-                            .cornerRadius(10)
-                            .padding(.trailing, -5)
-                            .padding(.leading, 5)
+                        ViewLeaderboardButtonLabel(text: "View Leaderboard")
                     }.padding(.top, 20)
-                    
-                    
                     
                 }
                 .frame(width: 325, height: 30, alignment: .center)
@@ -96,4 +74,36 @@ struct ChapterTitleView: View {
                 .cornerRadius(15)
         }
     }
+}
+
+
+struct ViewLeaderboardButtonLabel: View {
+    
+    var text: String
+    
+    var body: some View {
+        Text(text)
+            .font(.system(size: 20, weight: .semibold, design: .default))
+            .foregroundColor(Color.white)
+            .padding(7)
+            .padding(.leading, 10)
+            .padding(.trailing, 10)
+            .background(Color.leaderboardBtnBackground)
+            .cornerRadius(10)
+            .padding(.trailing, -5)
+            .padding(.leading, 5)
+    }
+}
+
+
+struct ChapterInfoLabel: View{
+    
+    var text: String
+    
+    var body: some View {
+        Text(text)
+            .font(.system(size: 20, weight: .semibold))
+            .padding(.leading, 10)
+    }
+    
 }
