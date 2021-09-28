@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ChaptersView: View {
     
-    @StateObject var viewModel = ChaptersViewModel()
+    @ObservedObject var viewModel = ChaptersViewModel()
     
     var body: some View {
         
@@ -71,11 +71,14 @@ struct ChaptersView: View {
                     ScrollView {
                         LazyVGrid(columns: viewModel.columns, spacing: 50) {
                             ForEach(MockData.Chapters) { chapter in
-                                ChapterTitleView(chapter: chapter)
-                             
+                                ChapterTitleView(chapter: chapter, viewModel: viewModel)
                             }
                         }
                         .padding(30)
+                        .sheet(isPresented: $viewModel.isShowingDetailView) {
+                            ChapterDetailView(chapter: viewModel.selectedChapter!, isShowingDetailView: $viewModel.isShowingDetailView)
+                        }
+                            
                     }
                 }
                 
@@ -103,6 +106,6 @@ struct ChaptersTitle: View {
             .font(.system(size: 75,
                           weight: .semibold, design: .serif))
             .foregroundColor(.white)
-            
+    
     }
 }

@@ -11,6 +11,8 @@ struct ChapterTitleView: View {
     
     let chapter: Chapter
     
+    @ObservedObject var viewModel: ChaptersViewModel
+    
     var body: some View {
         
         
@@ -29,6 +31,7 @@ struct ChapterTitleView: View {
                         .resizable()
                         .frame(width: 35, height: 35)
                         .padding(10)
+                        .foregroundColor(Color.lightGrayCustom)
                     
                 }.frame(width: 325)
                 
@@ -51,7 +54,7 @@ struct ChapterTitleView: View {
                     Spacer()
                     
                     Button{
-                        print("Aa")
+                        
                     }label: {
                         Text("View Leaderboard")
                             .font(.system(size: 20, weight: .semibold, design: .default))
@@ -59,7 +62,7 @@ struct ChapterTitleView: View {
                             .padding(7)
                             .padding(.leading, 10)
                             .padding(.trailing, 10)
-                            .background(Color.black)
+                            .background(Color.leaderboardBtnBackground)
                             .cornerRadius(10)
                             .padding(.trailing, -5)
                             .padding(.leading, 5)
@@ -70,35 +73,36 @@ struct ChapterTitleView: View {
                 }
                 .frame(width: 325, height: 30, alignment: .center)
                 
-                
-                
-                
-                
                 Spacer()
                 
                 HStack{
-                    Text("Select Chapter")
-                        .font(.system(size: 20, weight: .semibold, design: .default))
-                        .foregroundColor(Color.white)
+                    Button{
+                        viewModel.didSelectChapter = true
+                        viewModel.selectedChapter = chapter                        
+                    } label: {
+                        Text("Select Chapter")
+                            .font(.system(size: 20,
+                                          weight: .semibold,
+                                          design: .default))
+                            .foregroundColor(Color.white)
+                    }
                 }
                 .frame(width: 325, height: 60)
                 .cornerRadius(30)
-                .background(Color.black)
-                
+                .background(Color.lightGrayCustom)
                 
             }.frame(width: 325, height:275, alignment: .leading)
-                .background(Color.gray)
+                .background(Color.whiteCustom)
                 .cornerRadius(15)
-            
         }
     }
 }
 
-struct ChapterTitleView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChapterTitleView(chapter: MockData.sampleChapter)
-    }
-}
+//struct ChapterTitleView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ChapterTitleView(chapter: MockData.sampleChapter)
+//    }
+//}
 
 
 

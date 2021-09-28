@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DA2122DE26FE07820016587F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2122DD26FE07820016587F /* LoginView.swift */; };
+		DA5C72712703493400E697CD /* ChapterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5C72702703493400E697CD /* ChapterDetailView.swift */; };
 		DA79655F26FE3DD100CAE327 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA79655E26FE3DD100CAE327 /* SignupView.swift */; };
 		DA79656326FE3E4B00CAE327 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA79656226FE3E4B00CAE327 /* Colors.swift */; };
 		DA7965682700AEEC00CAE327 /* ChaptersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7965672700AEEC00CAE327 /* ChaptersView.swift */; };
@@ -21,6 +22,7 @@
 
 /* Begin PBXFileReference section */
 		DA2122DD26FE07820016587F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		DA5C72702703493400E697CD /* ChapterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterDetailView.swift; sourceTree = "<group>"; };
 		DA79655E26FE3DD100CAE327 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		DA79656226FE3E4B00CAE327 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		DA7965672700AEEC00CAE327 /* ChaptersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersView.swift; sourceTree = "<group>"; };
@@ -45,6 +47,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DA5C726D270348F200E697CD /* ChapterDetailView */ = {
+			isa = PBXGroup;
+			children = (
+				DA5C72702703493400E697CD /* ChapterDetailView.swift */,
+			);
+			path = ChapterDetailView;
+			sourceTree = "<group>";
+		};
 		DA79656026FE3E3900CAE327 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -95,6 +105,7 @@
 		DA884F2F26FE064700F58E4A /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				DA5C726D270348F200E697CD /* ChapterDetailView */,
 				DABF369227022F7E009BF78A /* SignupView */,
 				DABF369127022F73009BF78A /* LoginView */,
 				DABF368A270202CE009BF78A /* ChaptersView */,
@@ -224,6 +235,7 @@
 				DA79655F26FE3DD100CAE327 /* SignupView.swift in Sources */,
 				DA79656326FE3E4B00CAE327 /* Colors.swift in Sources */,
 				DA884F2126FE04D000F58E4A /* SwiftlyApp.swift in Sources */,
+				DA5C72712703493400E697CD /* ChapterDetailView.swift in Sources */,
 				DABF368927020134009BF78A /* Chapter.swift in Sources */,
 				DABF369427023677009BF78A /* ChapterTitleView.swift in Sources */,
 				DA2122DE26FE07820016587F /* LoginView.swift in Sources */,
