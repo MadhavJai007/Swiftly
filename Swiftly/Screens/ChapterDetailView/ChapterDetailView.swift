@@ -28,9 +28,33 @@ struct ChapterDetailView: View {
                 
                 VStack(alignment: .leading){
                     
-                    ChaptersTitle(text: "Chapter \(chapter.chapterNum)")
-                        .padding(.trailing, -geometry.size.width/12)
-                        .padding(.leading, geometry.size.width/12)
+                    HStack{
+                        
+                        ChaptersTitle(text: "Chapter \(chapter.chapterNum)")
+                            .padding(.trailing, -geometry.size.width/12)
+                            .padding(.leading, geometry.size.width/12)
+                        
+                        Spacer()
+                        
+                        Button {
+                            isShowingDetailView = false
+                        } label: {
+                            Image(systemName: "xmark")
+                                .resizable()
+                                .foregroundColor(.white)
+                                .imageScale(.large)
+                                .frame(width: 20, height: 20)
+                                
+                                
+                        }
+                        .padding(.trailing, geometry.size.width/12)
+                        .padding(.leading, -geometry.size.width/12)
+                        
+                        
+                        
+                        
+                        
+                    }
                     
                     HStack{
                         
