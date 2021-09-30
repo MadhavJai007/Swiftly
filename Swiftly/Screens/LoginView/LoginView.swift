@@ -4,21 +4,16 @@
 //
 //  Created by Toby Moktar on 2021-09-24.
 
-/// All @ variables are temporary as of right now (2021-09-24).
-/// Once the functionality is implemented they will be modified.
 
 import SwiftUI
 import Firebase
 
 struct LoginView: View {
     
-    @State private var placeholder: String = ""
-    
     @State var email: String = ""
     @State var password: String = ""
     
     @EnvironmentObject var viewModel: LoginViewModel
-    
     
     var body: some View {
         
