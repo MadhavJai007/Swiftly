@@ -8,14 +8,21 @@
 /// Once the functionality is implemented they will be modified.
 
 import SwiftUI
+import Firebase
 
 struct LoginView: View {
     
     @State private var placeholder: String = ""
     
+    @State var email: String = ""
+    @State var password: String = ""
+    
+    @EnvironmentObject var viewModel: LoginViewModel
+    
+    
     var body: some View {
         
-        NavigationView{
+        NavigationView {
             
             ZStack {
                 
@@ -30,20 +37,35 @@ struct LoginView: View {
                     TitleLabel(text:"Swiftly")
                     
                     VStack(spacing: 25){
-                        LoginInputTextField(placeholderText: "Username", stateAttribute: placeholder)
                         
-                        LoginInputTextField(placeholderText: "Password", stateAttribute: placeholder)
+                        TextField("Appleseed@example.com", text: $email)
+                            .font(.system(size: 30))
+                            .padding()
+                            .frame(width: 400, height: 75)
+                            .background(Color.white)
+                            .foregroundColor(Color.blackCustom)
+                            .cornerRadius(15)
+                        
+                        TextField("Iloveapples123", text: $password)
+                            .font(.system(size: 30))
+                            .padding()
+                            .frame(width: 400, height: 75)
+                            .background(Color.white)
+                            .foregroundColor(Color.blackCustom)
+                            .cornerRadius(15)
                     }
                     
-                    
-                    NavigationLink(destination: ChaptersView()){
+                    Button(){
+                        viewModel.login(email: email, password: password)
                         
+                    }label: {
                         LoginSignupButton(text: "Login", textColor: .white, backgroundColor: Color.blackCustom)
-                        
-                    }.padding(.top,50)
+                    }
+                    .padding(.top,50)
                     .padding(.bottom,50)
                     
-                   
+                    NavigationLink(destination: ChaptersView(), isActive: $viewModel.isSuccessful) {EmptyView()}
+                    
                     Spacer()
                     Spacer()
                     
@@ -53,18 +75,17 @@ struct LoginView: View {
                             .font(.system(size: 25, weight: .light))
                             .foregroundColor(.white)
                         
-                        NavigationLink(
-                            destination: SignupView()){
-                            
+                        NavigationLink(destination: SignupView()) {
                             LoginSignupButton(text: "Tap to sign up", textColor: .white, backgroundColor: Color.blackCustom)
+                            
                             
                         }
                     }
                     .padding(.bottom, 50)
                 }
             }
-            
-        }.navigationViewStyle(StackNavigationViewStyle())
+        }
+        .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(.white)
     }
 }
@@ -106,25 +127,6 @@ struct LoginSignupButton: View {
             .frame(width: 400, height: 75)
             .background(backgroundColor)
             .foregroundColor(textColor)
-            .cornerRadius(15)
-    }
-}
-
-
-// Struct representing input text field
-struct LoginInputTextField: View {
-    
-    var placeholderText: String
-    @State var stateAttribute: String
-    
-    var body: some View {
-        
-        TextField(placeholderText, text: $stateAttribute)
-            .font(.system(size: 30))
-            .padding()
-            .frame(width: 400, height: 75)
-            .background(Color.white)
-            .foregroundColor(.white)
             .cornerRadius(15)
     }
 }

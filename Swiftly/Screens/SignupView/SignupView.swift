@@ -126,7 +126,6 @@ struct SignupView: View {
                         .cornerRadius(15)
                         
                     }
-
                     
                     // Create account button
                     Button{

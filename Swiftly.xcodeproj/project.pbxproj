@@ -3,12 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		DA2122DE26FE07820016587F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2122DD26FE07820016587F /* LoginView.swift */; };
 		DA5C72712703493400E697CD /* ChapterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5C72702703493400E697CD /* ChapterDetailView.swift */; };
+		DA5D90EB270614B20085DE6D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5D90EA270614B20085DE6D /* LoginViewModel.swift */; };
+		DA5D90ED270614BD0085DE6D /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5D90EC270614BD0085DE6D /* SignupViewModel.swift */; };
+		DA5D90EF270616460085DE6D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DA5D90EE270616460085DE6D /* GoogleService-Info.plist */; };
 		DA79655F26FE3DD100CAE327 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA79655E26FE3DD100CAE327 /* SignupView.swift */; };
 		DA79656326FE3E4B00CAE327 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA79656226FE3E4B00CAE327 /* Colors.swift */; };
 		DA7965682700AEEC00CAE327 /* ChaptersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7965672700AEEC00CAE327 /* ChaptersView.swift */; };
@@ -18,11 +21,18 @@
 		DABF368927020134009BF78A /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF368827020134009BF78A /* Chapter.swift */; };
 		DABF368C270202EA009BF78A /* ChaptersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF368B270202EA009BF78A /* ChaptersViewModel.swift */; };
 		DABF369427023677009BF78A /* ChapterTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF369327023677009BF78A /* ChapterTitleView.swift */; };
+		DBC0793536759C50964ACED1 /* Pods_Swiftly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11B3422058B48AC46E6C075C /* Pods_Swiftly.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		11B3422058B48AC46E6C075C /* Pods_Swiftly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swiftly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		66F71B613F71F71DCB1B8233 /* Pods-Swiftly.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swiftly.release.xcconfig"; path = "Target Support Files/Pods-Swiftly/Pods-Swiftly.release.xcconfig"; sourceTree = "<group>"; };
+		8FDBE6C6B205D978766E6A18 /* Pods-Swiftly.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swiftly.debug.xcconfig"; path = "Target Support Files/Pods-Swiftly/Pods-Swiftly.debug.xcconfig"; sourceTree = "<group>"; };
 		DA2122DD26FE07820016587F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DA5C72702703493400E697CD /* ChapterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterDetailView.swift; sourceTree = "<group>"; };
+		DA5D90EA270614B20085DE6D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		DA5D90EC270614BD0085DE6D /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
+		DA5D90EE270616460085DE6D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DA79655E26FE3DD100CAE327 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		DA79656226FE3E4B00CAE327 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		DA7965672700AEEC00CAE327 /* ChaptersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersView.swift; sourceTree = "<group>"; };
@@ -41,12 +51,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DBC0793536759C50964ACED1 /* Pods_Swiftly.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		572D01B0403350F11E0E40F5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				11B3422058B48AC46E6C075C /* Pods_Swiftly.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DA5C726D270348F200E697CD /* ChapterDetailView */ = {
 			isa = PBXGroup;
 			children = (
@@ -68,6 +87,8 @@
 			children = (
 				DA884F1F26FE04D000F58E4A /* Swiftly */,
 				DA884F1E26FE04D000F58E4A /* Products */,
+				E7CF9668284AE716B205B930 /* Pods */,
+				572D01B0403350F11E0E40F5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -89,6 +110,7 @@
 				DA884F2426FE04D200F58E4A /* Assets.xcassets */,
 				DA884F2026FE04D000F58E4A /* SwiftlyApp.swift */,
 				DA884F2926FE04D200F58E4A /* Info.plist */,
+				DA5D90EE270616460085DE6D /* GoogleService-Info.plist */,
 				DA884F2626FE04D200F58E4A /* Preview Content */,
 			);
 			path = Swiftly;
@@ -150,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				DA2122DD26FE07820016587F /* LoginView.swift */,
+				DA5D90EA270614B20085DE6D /* LoginViewModel.swift */,
 			);
 			path = LoginView;
 			sourceTree = "<group>";
@@ -158,8 +181,18 @@
 			isa = PBXGroup;
 			children = (
 				DA79655E26FE3DD100CAE327 /* SignupView.swift */,
+				DA5D90EC270614BD0085DE6D /* SignupViewModel.swift */,
 			);
 			path = SignupView;
+			sourceTree = "<group>";
+		};
+		E7CF9668284AE716B205B930 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				8FDBE6C6B205D978766E6A18 /* Pods-Swiftly.debug.xcconfig */,
+				66F71B613F71F71DCB1B8233 /* Pods-Swiftly.release.xcconfig */,
+			);
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,9 +202,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = DA884F2C26FE04D200F58E4A /* Build configuration list for PBXNativeTarget "Swiftly" */;
 			buildPhases = (
+				BDAEB11C4E18048D8857FEE4 /* [CP] Check Pods Manifest.lock */,
 				DA884F1926FE04D000F58E4A /* Sources */,
 				DA884F1A26FE04D000F58E4A /* Frameworks */,
 				DA884F1B26FE04D000F58E4A /* Resources */,
+				94E0C06FCB33E5360B48D85E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -221,10 +256,53 @@
 			files = (
 				DA884F2826FE04D200F58E4A /* Preview Assets.xcassets in Resources */,
 				DA884F2526FE04D200F58E4A /* Assets.xcassets in Resources */,
+				DA5D90EF270616460085DE6D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		94E0C06FCB33E5360B48D85E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Swiftly/Pods-Swiftly-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Swiftly/Pods-Swiftly-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Swiftly/Pods-Swiftly-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BDAEB11C4E18048D8857FEE4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Swiftly-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		DA884F1926FE04D000F58E4A /* Sources */ = {
@@ -236,9 +314,11 @@
 				DA79656326FE3E4B00CAE327 /* Colors.swift in Sources */,
 				DA884F2126FE04D000F58E4A /* SwiftlyApp.swift in Sources */,
 				DA5C72712703493400E697CD /* ChapterDetailView.swift in Sources */,
+				DA5D90ED270614BD0085DE6D /* SignupViewModel.swift in Sources */,
 				DABF368927020134009BF78A /* Chapter.swift in Sources */,
 				DABF369427023677009BF78A /* ChapterTitleView.swift in Sources */,
 				DA2122DE26FE07820016587F /* LoginView.swift in Sources */,
+				DA5D90EB270614B20085DE6D /* LoginViewModel.swift in Sources */,
 				DA7965682700AEEC00CAE327 /* ChaptersView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -364,6 +444,7 @@
 		};
 		DA884F2D26FE04D200F58E4A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8FDBE6C6B205D978766E6A18 /* Pods-Swiftly.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -386,6 +467,7 @@
 		};
 		DA884F2E26FE04D200F58E4A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 66F71B613F71F71DCB1B8233 /* Pods-Swiftly.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
