@@ -21,6 +21,8 @@
 		DABF368927020134009BF78A /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF368827020134009BF78A /* Chapter.swift */; };
 		DABF368C270202EA009BF78A /* ChaptersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF368B270202EA009BF78A /* ChaptersViewModel.swift */; };
 		DABF369427023677009BF78A /* ChapterTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF369327023677009BF78A /* ChapterTitleView.swift */; };
+		DAD6B312270748CA002C8A55 /* ChapterContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD6B311270748CA002C8A55 /* ChapterContentView.swift */; };
+		DAD6B31427079D01002C8A55 /* ChapterDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD6B31327079D01002C8A55 /* ChapterDetailViewModel.swift */; };
 		DBC0793536759C50964ACED1 /* Pods_Swiftly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11B3422058B48AC46E6C075C /* Pods_Swiftly.framework */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +46,8 @@
 		DABF368827020134009BF78A /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
 		DABF368B270202EA009BF78A /* ChaptersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersViewModel.swift; sourceTree = "<group>"; };
 		DABF369327023677009BF78A /* ChapterTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterTitleView.swift; sourceTree = "<group>"; };
+		DAD6B311270748CA002C8A55 /* ChapterContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterContentView.swift; sourceTree = "<group>"; };
+		DAD6B31327079D01002C8A55 /* ChapterDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterDetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				DA5C72702703493400E697CD /* ChapterDetailView.swift */,
+				DAD6B31327079D01002C8A55 /* ChapterDetailViewModel.swift */,
 			);
 			path = ChapterDetailView;
 			sourceTree = "<group>";
@@ -127,6 +132,7 @@
 		DA884F2F26FE064700F58E4A /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				DAD6B310270748B6002C8A55 /* Chapter Content View */,
 				DA5C726D270348F200E697CD /* ChapterDetailView */,
 				DABF369227022F7E009BF78A /* SignupView */,
 				DABF369127022F73009BF78A /* LoginView */,
@@ -184,6 +190,14 @@
 				DA5D90EC270614BD0085DE6D /* SignupViewModel.swift */,
 			);
 			path = SignupView;
+			sourceTree = "<group>";
+		};
+		DAD6B310270748B6002C8A55 /* Chapter Content View */ = {
+			isa = PBXGroup;
+			children = (
+				DAD6B311270748CA002C8A55 /* ChapterContentView.swift */,
+			);
+			path = "Chapter Content View";
 			sourceTree = "<group>";
 		};
 		E7CF9668284AE716B205B930 /* Pods */ = {
@@ -313,11 +327,13 @@
 				DA79655F26FE3DD100CAE327 /* SignupView.swift in Sources */,
 				DA79656326FE3E4B00CAE327 /* Colors.swift in Sources */,
 				DA884F2126FE04D000F58E4A /* SwiftlyApp.swift in Sources */,
+				DAD6B312270748CA002C8A55 /* ChapterContentView.swift in Sources */,
 				DA5C72712703493400E697CD /* ChapterDetailView.swift in Sources */,
 				DA5D90ED270614BD0085DE6D /* SignupViewModel.swift in Sources */,
 				DABF368927020134009BF78A /* Chapter.swift in Sources */,
 				DABF369427023677009BF78A /* ChapterTitleView.swift in Sources */,
 				DA2122DE26FE07820016587F /* LoginView.swift in Sources */,
+				DAD6B31427079D01002C8A55 /* ChapterDetailViewModel.swift in Sources */,
 				DA5D90EB270614B20085DE6D /* LoginViewModel.swift in Sources */,
 				DA7965682700AEEC00CAE327 /* ChaptersView.swift in Sources */,
 			);

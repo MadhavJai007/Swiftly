@@ -12,9 +12,11 @@ import Firebase
 final class LoginViewModel: ObservableObject {
     
     @Published var isSuccessful: Bool
+    @Published var isBadLogin: Bool
     
     init(){
         isSuccessful = false
+        isBadLogin = false
     }
     
     func login(email: String, password: String){
@@ -24,10 +26,12 @@ final class LoginViewModel: ObservableObject {
             if error != nil {
                 print("Bad Login")
                 self.isSuccessful = false
+                self.isBadLogin = true
             }else{
                 
                 print("Succesful login")
                 self.isSuccessful = true
+                self.isBadLogin = false
             }
         }
     }

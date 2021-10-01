@@ -14,11 +14,13 @@ struct SwiftlyApp: App {
     
     var loginViewModel: LoginViewModel
     var chaptersViewModel: ChaptersViewModel
+    var chapterDetailsViewModel: ChapterDetailViewModel
     
     init(){
         FirebaseApp.configure()
         loginViewModel = LoginViewModel()
         chaptersViewModel = ChaptersViewModel()
+        chapterDetailsViewModel = ChapterDetailViewModel()
     }
     
     var body: some Scene {

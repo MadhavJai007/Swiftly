@@ -11,6 +11,11 @@ struct ChaptersView: View {
     
     @ObservedObject var viewModel = ChaptersViewModel()
     
+    
+   // @EnvironmentObject var thisViewModel: ChaptersViewModel
+   // @EnvironmentObject var chapterDetailViewModel: ChapterDetailViewModel
+    
+    
     var body: some View {
         
         GeometryReader { geometry in
@@ -88,11 +93,11 @@ struct ChaptersView: View {
     }
 }
 
-struct ChaptersView_Preview: PreviewProvider {
-    static var previews: some View {
-        ChaptersView()
-    }
-}
+//struct ChaptersView_Preview: PreviewProvider {
+//    static var previews: some View {
+//        ChaptersView()
+//    }
+//}
 
 
 // Struct representing the title label

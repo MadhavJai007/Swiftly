@@ -11,15 +11,14 @@ import SwiftUI
 final class ChaptersViewModel: ObservableObject {
     
     var didSelectChapter = false
-    
     var didSelectLeaderboard = false
+    
+    @Published var isShowingDetailView = false
     
     var selectedChapter: Chapter? {
         didSet { isShowingDetailView = true }
     }
     
-    
-    @Published var isShowingDetailView = false
     
     let columns: [GridItem] = [GridItem(.flexible()),
                                GridItem(.flexible())

@@ -11,7 +11,11 @@ struct ChapterDetailView: View {
     
     var chapter: Chapter
     
+    @ObservedObject var viewModel = ChapterDetailViewModel()
+    
     @Binding var isShowingDetailView: Bool
+    
+    
     
     var body: some View {
         
@@ -142,11 +146,8 @@ struct ChapterDetailView: View {
                     .frame(width: geometry.size.width, alignment: .center)
                     .padding(.top, geometry.size.width/12)
                         
-                    
-                    
-                    
-                    
-                    
+
+                    NavigationLink(destination: ChapterContentView(), isActive: $viewModel.isSelected) {EmptyView()}
                     
                     Spacer()
                     

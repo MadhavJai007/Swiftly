@@ -14,6 +14,8 @@ struct LoginView: View {
     @State var password: String = ""
     
     @EnvironmentObject var viewModel: LoginViewModel
+    @EnvironmentObject var chaptersViewModel: ChaptersViewModel
+    @EnvironmentObject var chapterDetailsViewModel: ChapterDetailViewModel
     
     var body: some View {
         
@@ -53,11 +55,15 @@ struct LoginView: View {
                     Button(){
                         viewModel.login(email: email, password: password)
                         
+                        
                     }label: {
                         LoginSignupButton(text: "Login", textColor: .white, backgroundColor: Color.blackCustom)
                     }
                     .padding(.top,50)
                     .padding(.bottom,50)
+                    .alert(isPresented: $viewModel.isBadLogin) {
+                        Alert(title: Text("Oops!"), message: Text("Email and/or password are incorrect."), dismissButton: .default(Text("OK")))
+                    }
                     
                     NavigationLink(destination: ChaptersView(), isActive: $viewModel.isSuccessful) {EmptyView()}
                     
