@@ -1,9 +1,8 @@
-//
+//  INFO49635 - CAPSTONE FALL 2021
 //  LoginViewModel.swift
 //  Swiftly
 //
 //  Created by Toby Moktar on 2021-09-30.
-//
 
 import Foundation
 import SwiftUI

@@ -1,19 +1,17 @@
-//
+//  INFO49635 - CAPSTONE FALL 2021
 //  ChapterScreen.swift
 //  Swiftly
 //
 //  Created by Toby Moktar on 2021-09-26.
-//
 
 import SwiftUI
 
 struct ChaptersView: View {
     
-    @ObservedObject var viewModel = ChaptersViewModel()
-    
-    
-   // @EnvironmentObject var thisViewModel: ChaptersViewModel
-   // @EnvironmentObject var chapterDetailViewModel: ChapterDetailViewModel
+    @EnvironmentObject var loginViewModel: LoginViewModel
+    @EnvironmentObject var signupViewModel: SignupViewModel
+    @EnvironmentObject var chaptersViewModel: ChaptersViewModel // view model for this view
+    @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     
     
     var body: some View {
@@ -35,12 +33,11 @@ struct ChaptersView: View {
                             .frame(width: 44, height: 44)
                             .foregroundColor(Color.white)
                             .padding(.leading, 30)
-                            
                         
                         Spacer()
                         
                         Button{
-                            print("as")
+                            print("tapped")
                         }label: {
                             Text("Join a Classroom")
                                 .font(.system(size: 25))
@@ -52,16 +49,12 @@ struct ChaptersView: View {
                                 .cornerRadius(15)
                                 .padding(.trailing, 30)
                         }
-                        
-                       
                     }
                     
-                    
                     VStack(alignment: .leading){
-                         
+                        
                         ChaptersTitle(text:"All Chapters")
                             .padding(.leading, 30)
-                            
                         
                         Text("Classroom: Global")
                             .font(.system(size: 25))
@@ -70,34 +63,39 @@ struct ChaptersView: View {
                         
                     }.frame(width: geometry.size.width, alignment: .leading)
                     
-                    
                     Spacer()
                     
                     ScrollView {
-                        LazyVGrid(columns: viewModel.columns, spacing: 50) {
+                        LazyVGrid(columns: chaptersViewModel.columns, spacing: 50) {
                             ForEach(MockData.Chapters) { chapter in
-                                ChapterTitleView(chapter: chapter, viewModel: viewModel)
+                                ChapterTitleView(chapter: chapter, viewModel: chaptersViewModel)
                             }
                         }
                         .padding(30)
-                        .sheet(isPresented: $viewModel.isShowingDetailView) {
-                            ChapterDetailView(chapter: viewModel.selectedChapter!, isShowingDetailView: $viewModel.isShowingDetailView)
-                        }
+                        .sheet(isPresented: $chaptersViewModel.isShowingDetailView) {
                             
+                            ChapterDetailView(isShowingDetailView: $chaptersViewModel.isShowingDetailView)
+                                .environmentObject(chaptersViewModel)
+                                .environmentObject(chapterContentViewModel)
+                        }
                     }
+                    
+                    NavigationLink(destination: ChapterContentView()
+                                    .environmentObject(chaptersViewModel)
+                                    .environmentObject(chapterContentViewModel)
+                                   , isActive: $chaptersViewModel.didStartChapter) {EmptyView()}
                 }
-                
-                Spacer()                
+                Spacer()
             }
         }
     }
 }
 
-//struct ChaptersView_Preview: PreviewProvider {
-//    static var previews: some View {
-//        ChaptersView()
-//    }
-//}
+struct ChaptersView_Preview: PreviewProvider {
+    static var previews: some View {
+        ChaptersView()
+    }
+}
 
 
 // Struct representing the title label
@@ -110,6 +108,5 @@ struct ChaptersTitle: View {
             .font(.system(size: 75,
                           weight: .semibold, design: .serif))
             .foregroundColor(.white)
-    
     }
 }

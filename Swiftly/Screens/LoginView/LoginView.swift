@@ -4,7 +4,6 @@
 //
 //  Created by Toby Moktar on 2021-09-24.
 
-
 import SwiftUI
 import Firebase
 
@@ -13,9 +12,10 @@ struct LoginView: View {
     @State var email: String = ""
     @State var password: String = ""
     
-    @EnvironmentObject var viewModel: LoginViewModel
+    @EnvironmentObject var loginViewModel: LoginViewModel // view model for this view
+    @EnvironmentObject var signupViewModel: SignupViewModel
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
-    @EnvironmentObject var chapterDetailsViewModel: ChapterDetailViewModel
+    @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     
     var body: some View {
         
@@ -53,33 +53,38 @@ struct LoginView: View {
                     }
                     
                     Button(){
-                        viewModel.login(email: email, password: password)
-                        
-                        
+                        loginViewModel.login(email: email, password: password)
                     }label: {
                         LoginSignupButton(text: "Login", textColor: .white, backgroundColor: Color.blackCustom)
                     }
                     .padding(.top,50)
                     .padding(.bottom,50)
-                    .alert(isPresented: $viewModel.isBadLogin) {
+                    .alert(isPresented: $loginViewModel.isBadLogin) {
                         Alert(title: Text("Oops!"), message: Text("Email and/or password are incorrect."), dismissButton: .default(Text("OK")))
                     }
                     
-                    NavigationLink(destination: ChaptersView(), isActive: $viewModel.isSuccessful) {EmptyView()}
+                    NavigationLink(destination: ChaptersView()
+                                    .environmentObject(loginViewModel)
+                                    .environmentObject(signupViewModel)
+                                    .environmentObject(chaptersViewModel)
+                                    .environmentObject(chapterContentViewModel),
+                                   isActive: $loginViewModel.isSuccessful) {EmptyView()}
                     
                     Spacer()
                     Spacer()
-                    
                     
                     VStack(spacing: 20){
                         Text("Need an account?")
                             .font(.system(size: 25, weight: .light))
                             .foregroundColor(.white)
                         
-                        NavigationLink(destination: SignupView()) {
+                        NavigationLink(destination: SignupView()
+                                        .environmentObject(loginViewModel)
+                                        .environmentObject(signupViewModel)
+                                        .environmentObject(chaptersViewModel)
+                                        .environmentObject(chapterContentViewModel)) {
+                            
                             LoginSignupButton(text: "Tap to sign up", textColor: .white, backgroundColor: Color.blackCustom)
-                            
-                            
                         }
                     }
                     .padding(.bottom, 50)

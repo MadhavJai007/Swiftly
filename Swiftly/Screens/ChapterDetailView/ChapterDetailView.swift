@@ -1,40 +1,33 @@
-//
+//  INFO49635 - CAPSTONE FALL 2021
 //  ChapterDetailView.swift
 //  Swiftly
 //
-//  Created by Toby moktar on 2021-09-28.
-//
+//  Created by Toby Moktar on 2021-09-28.
 
 import SwiftUI
 
 struct ChapterDetailView: View {
     
-    var chapter: Chapter
+    @EnvironmentObject var chaptersViewModel: ChaptersViewModel // view model for this view
+    @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     
-    @ObservedObject var viewModel = ChapterDetailViewModel()
-    
+    // Connected to chaptersViewModel isShowingDetail
     @Binding var isShowingDetailView: Bool
-    
-    
     
     var body: some View {
         
-        
         GeometryReader { geometry in
-            
             
             ZStack{
                 
                 Color.darkGrayCustom
                     .ignoresSafeArea()
                 
-                
-                
                 VStack(alignment: .leading){
                     
                     HStack{
                         
-                        ChaptersTitle(text: "Chapter \(chapter.chapterNum)")
+                        ChaptersTitle(text: "Chapter \(chaptersViewModel.selectedChapter!.chapterNum)")
                             .padding(.trailing, -geometry.size.width/12)
                             .padding(.leading, geometry.size.width/12)
                         
@@ -53,16 +46,11 @@ struct ChapterDetailView: View {
                         }
                         .padding(.trailing, geometry.size.width/12)
                         .padding(.leading, -geometry.size.width/12)
-                        
-                        
-                        
-                        
-                        
                     }
                     
                     HStack{
                         
-                        Text(chapter.name)
+                        Text(chaptersViewModel.selectedChapter!.name)
                             .font(.system(size: 35,
                                           weight: .bold,
                                           design: .default))
@@ -83,9 +71,9 @@ struct ChapterDetailView: View {
                         
                         VStack(alignment: .leading, spacing: -geometry.size.width/48){
                         
-                            ChapterSubTitleText(text: "Estimated Length: \(chapter.length) minutes")
+                            ChapterSubTitleText(text: "Estimated Length: \(chaptersViewModel.selectedChapter!.length) minutes")
                             
-                            ChapterSubTitleText(text:"Difficulty Level: \(chapter.difficulty)")
+                            ChapterSubTitleText(text:"Difficulty Level: \(chaptersViewModel.selectedChapter!.difficulty)")
                             
                             ChapterSubTitleText(text:"Status: Incomplete")
                             
@@ -98,7 +86,6 @@ struct ChapterDetailView: View {
                         VStack(alignment: .leading){
                             
                             ChapterSubTitleText(text: "Jump To")
-                            
                             
                             HStack(spacing: geometry.size.width/32){
                                 Button{
@@ -138,7 +125,9 @@ struct ChapterDetailView: View {
                     
                     VStack{
                         Button{
-                            print("tapped")
+                            isShowingDetailView = false
+                            chaptersViewModel.startChapterIntent = true
+                            
                         }label: {
                             StartChapterButton(text: "Start Chapter", textColor: .white, backgroundColor: Color.blackCustom)
                         }
@@ -146,27 +135,31 @@ struct ChapterDetailView: View {
                     .frame(width: geometry.size.width, alignment: .center)
                     .padding(.top, geometry.size.width/12)
                         
-
-                    NavigationLink(destination: ChapterContentView(), isActive: $viewModel.isSelected) {EmptyView()}
                     
-                    Spacer()
-                    
+                    Spacer() 
                 }
                 .padding(.top, geometry.size.width/12)
             }
-            
-            
         }
         
+        .onDisappear {
+            // This is done so that the sheet can be dismissed before the chapter content view
+            // is presented.
+            if (chaptersViewModel.startChapterIntent){
+                chaptersViewModel.startChapter()
+                chapterContentViewModel.chapter = chaptersViewModel.selectedChapter!
+            }
+        }
     }
+        
 }
 
-struct ChapterDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChapterDetailView(chapter: MockData.sampleChapter, isShowingDetailView: .constant(false))
-    }
-}
 
+//struct ChapterDetailView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ChapterDetailView(chapter: MockData.sampleChapter, isShowingDetailView: .constant(false))
+//    }
+//}
 
 
 // Struct representing the label on a button

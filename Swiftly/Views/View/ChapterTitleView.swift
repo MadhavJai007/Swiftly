@@ -1,9 +1,8 @@
-//
+//  INFO49635 - CAPSTONE FALL 2021
 //  ChapterTitleView.swift
 //  Swiftly
 //
-//  Created by Toby moktar on 2021-09-27.
-//
+//  Created by Toby Moktar on 2021-09-27.
 
 import SwiftUI
 
@@ -55,7 +54,6 @@ struct ChapterTitleView: View {
                 
                 HStack{
                     Button{
-                        viewModel.didSelectChapter = true
                         viewModel.selectedChapter = chapter                        
                     } label: {
                         Text("Select Chapter")
