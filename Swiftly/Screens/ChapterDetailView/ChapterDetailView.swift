@@ -148,10 +148,10 @@ struct ChapterDetailView: View {
             if (chaptersViewModel.startChapterIntent){
                 chaptersViewModel.startChapter()
                 chapterContentViewModel.chapter = chaptersViewModel.selectedChapter!
+                chaptersViewModel.startChapterIntent = false
             }
         }
     }
-        
 }
 
 

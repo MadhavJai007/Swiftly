@@ -10,8 +10,9 @@ struct ChapterTitleView: View {
     
     let chapter: Chapter
     
-    @ObservedObject var viewModel: ChaptersViewModel
-    
+    @EnvironmentObject var chaptersViewModel: ChaptersViewModel // view model for this view
+    @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
+
     var body: some View {
         
         VStack{
@@ -54,7 +55,7 @@ struct ChapterTitleView: View {
                 
                 HStack{
                     Button{
-                        viewModel.selectedChapter = chapter                        
+                        chaptersViewModel.selectedChapter = chapter
                     } label: {
                         Text("Select Chapter")
                             .font(.system(size: 20,
@@ -73,6 +74,14 @@ struct ChapterTitleView: View {
         }
     }
 }
+
+
+struct ChapterTitleView_Previews: PreviewProvider {
+    static var previews: some View {
+        ChapterTitleView(chapter: MockData.sampleChapter)
+    }
+}
+
 
 
 struct ViewLeaderboardButtonLabel: View {

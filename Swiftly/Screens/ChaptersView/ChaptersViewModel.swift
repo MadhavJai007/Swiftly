@@ -14,6 +14,7 @@ final class ChaptersViewModel: ObservableObject {
     @Published var isShowingDetailView = false
     
     var startChapterIntent = false
+    
     var selectedChapter: Chapter? {
         didSet {
             isShowingDetailView = true
@@ -23,7 +24,6 @@ final class ChaptersViewModel: ObservableObject {
     let columns: [GridItem] = [GridItem(.flexible()),
                                GridItem(.flexible())]
 
-    
     func startChapter(){
         self.didStartChapter = true
     }

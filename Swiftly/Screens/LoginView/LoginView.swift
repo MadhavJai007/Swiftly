@@ -9,6 +9,8 @@ import Firebase
 
 struct LoginView: View {
     
+    @State var isNavigationBarHidden: Bool = false
+    
     @State var email: String = ""
     @State var password: String = ""
     
@@ -90,7 +92,10 @@ struct LoginView: View {
                     .padding(.bottom, 50)
                 }
             }
-        }
+            
+            
+            }
+        
         .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(.white)
     }

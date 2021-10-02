@@ -49,7 +49,7 @@ struct ChaptersView: View {
                                 .cornerRadius(15)
                                 .padding(.trailing, 30)
                         }
-                    }
+                    }.padding(.top, geometry.size.width/16)
                     
                     VStack(alignment: .leading){
                         
@@ -68,7 +68,9 @@ struct ChaptersView: View {
                     ScrollView {
                         LazyVGrid(columns: chaptersViewModel.columns, spacing: 50) {
                             ForEach(MockData.Chapters) { chapter in
-                                ChapterTitleView(chapter: chapter, viewModel: chaptersViewModel)
+                                ChapterTitleView(chapter: chapter)
+                                    .environmentObject(chaptersViewModel)
+                                    .environmentObject(chapterContentViewModel)
                             }
                         }
                         .padding(30)
@@ -88,6 +90,11 @@ struct ChaptersView: View {
                 Spacer()
             }
         }
+        
+        .navigationBarTitle("")
+        .navigationBarHidden(true)
+        
+        
     }
 }
 
