@@ -12,7 +12,7 @@ struct ChapterContentView: View {
     
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel // view model for this view
-
+    
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     var body: some View {
@@ -31,49 +31,30 @@ struct ChapterContentView: View {
                         Button{
                             self.mode.wrappedValue.dismiss()
                         }label:{
-                            Image(systemName: "xmark")
-                                .resizable()
-                                .foregroundColor(.white)
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 25, height: 25)
-                                .padding(.leading, 30)
+                            ChapterNavBarIcon(iconName: "xmark")
+                            
                         }
-                        
-                       
+                        .padding(.leading, 30)
                         
                         Spacer()
                         
-                        Image(systemName: "questionmark")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 25, height: 25)
-                            .foregroundColor(Color.white)
+                        ChapterNavBarIcon(iconName: "questionmark")
                             .padding(.trailing, 30)
-                        
-                        
                     }
                     .padding(.top, geometry.size.width/16)
                     .padding(.bottom, geometry.size.width/16)
                     
                     TabView {
                         
-                        // First page
+                        // Page 1
                         VStack(alignment: .leading){
                             
                             ChaptersTitle(text: "Chapter: \(chapter.chapterNum)")
                                 .padding(.leading, geometry.size.width/32)
                             
                             HStack{
-                                Text(chapter.name)
-                                    .font(.system(size: 40,
-                                                  weight: .bold,
-                                                  design: .default))
-                                    .foregroundColor(Color.white)
-                                
-                                Image(systemName: "cpu")
-                                    .resizable()
-                                    .frame(width: 40, height: 40)
-                                    .foregroundColor(.white)
+                                ChapterTopic(text: chapter.name)
+                                ChapterTopicIcon(iconName: "cpu")
                             }
                             .padding(.leading, geometry.size.width/24)
                             .padding(.top, -geometry.size.width/30)
@@ -81,39 +62,102 @@ struct ChapterContentView: View {
                             
                             
                             VStack(alignment: .leading){
-                                Text("Lorem Ipsum")
-                                    .font(.system(size: 40,
-                                                  weight: .bold,
-                                                  design: .default))
-                                    .foregroundColor(Color.white)
-                                
-                                ChapterSubTitleText(text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+                                ChapterSubTitle(text: "Lorem Ipsum")
+                                ChapterContentText(text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
                                     .padding(.top, -geometry.size.width/18)
                                     .padding(.trailing, geometry.size.width/24)
-                                  
+                                
                             }
                             .padding(.top, geometry.size.width/24)
                             .padding(.leading, geometry.size.width/24)
                             
                             VStack{
-                            
+                                
                                 Image("placeholder_img")
                                     .resizable()
                                     .scaledToFit()
-                               
+                                
                             }.frame(width: geometry.size.width, alignment: .center)
                             
                             Spacer()
                         }
                         .frame(width: geometry.size.width, alignment: .leading)
                         
-                        VStack{
-                            Text("Page 2")
-                        }
                         
-                        VStack{
-                            Text("Page 3")
+                        
+                        // Page 2
+                        VStack(alignment: .leading){
+                            
+                            VStack(alignment: .leading){
+                                ChapterSubTitle(text: "Lorem Ipsum")
+                                ChapterContentText(text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+                                    .padding(.top, -geometry.size.width/18)
+                                    .padding(.trailing, geometry.size.width/24)
+                            }
+                            .padding(.top, geometry.size.width/24)
+                            .padding(.leading, geometry.size.width/24)
+                            
+                            VStack(alignment: .leading){
+                                
+                                ChapterSubTitle(text: "Lorem Ipsum")
+                                ChapterContentText(text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+                                    .padding(.top, -geometry.size.width/18)
+                                    .padding(.trailing, geometry.size.width/24)
+                                
+                            }
+                            .padding(.top, geometry.size.width/24)
+                            .padding(.leading, geometry.size.width/24)
+                            
+                            
+                            
+                            Spacer()
                         }
+                        .frame(width: geometry.size.width, alignment: .leading)
+                        
+                        // PAGE 3
+                        VStack(alignment: .leading){
+                            
+                            VStack(alignment: .leading){
+                                ChapterSubTitle(text: "Lorem Ipsum")
+                                ChapterContentText(text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+                                    .padding(.top, -geometry.size.width/18)
+                                    .padding(.trailing, geometry.size.width/24)
+                            }
+                            .padding(.top, geometry.size.width/24)
+                            .padding(.leading, geometry.size.width/24)
+                            
+                            VStack(alignment: .leading){
+                                
+                                ChapterSubTitle(text: "Lorem Ipsum")
+                                ChapterContentText(text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+                                    .padding(.top, -geometry.size.width/18)
+                                    .padding(.trailing, geometry.size.width/24)
+                                
+                            }
+                            .padding(.top, geometry.size.width/24)
+                            .padding(.leading, geometry.size.width/24)
+                            
+                            Spacer()
+                            
+                            HStack{
+                                Spacer()
+                                
+                                Button{
+                                    print("tapped")
+                                }label: {
+                                    Text("Start Interactive Section")
+                                        .font(.system(size: 30, weight: .semibold))
+                                        .foregroundColor(Color.white)
+                                        .padding(.top, 25)
+                                  
+                                       
+                                        
+                                }
+                            }
+                            .padding(.trailing, geometry.size.width/24)
+                            .padding(.bottom, geometry.size.width/100)
+                        }
+                        .frame(width: geometry.size.width, alignment: .leading)
                     }
                     .tabViewStyle(.page)
                 }
@@ -126,5 +170,62 @@ struct ChapterContentView: View {
 struct ChapterContentView_Previews: PreviewProvider {
     static var previews: some View {
         ChapterContentView()
+    }
+}
+
+struct ChapterTopic: View {
+    
+    var text: String
+    
+    var body: some View {
+        
+        Text(text)
+            .font(.system(size: 40,
+                          weight: .bold,
+                          design: .default))
+            .foregroundColor(Color.white)
+        
+        
+    }
+}
+
+
+struct ChapterTopicIcon: View {
+    
+    var iconName: String
+    
+    var body: some View {
+        
+        Image(systemName: iconName)
+            .resizable()
+            .frame(width: 40, height: 40)
+            .foregroundColor(.white)
+        
+    }
+}
+
+struct ChapterNavBarIcon: View {
+    
+    var iconName: String
+    
+    var body: some View {
+        Image(systemName: iconName)
+            .resizable()
+            .foregroundColor(.white)
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 25, height: 25)
+    }
+}
+
+struct ChapterSubTitle: View {
+    
+    var text: String
+    
+    var body: some View {
+        Text(text)
+            .font(.system(size: 40,
+                          weight: .bold,
+                          design: .default))
+            .foregroundColor(Color.white)
     }
 }

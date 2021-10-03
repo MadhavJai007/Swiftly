@@ -71,13 +71,13 @@ struct ChapterDetailView: View {
                         
                         VStack(alignment: .leading, spacing: -geometry.size.width/48){
                         
-                            ChapterSubTitleText(text: "Estimated Length: \(chaptersViewModel.selectedChapter!.length) minutes")
+                            ChapterContentText(text: "Estimated Length: \(chaptersViewModel.selectedChapter!.length) minutes")
                             
-                            ChapterSubTitleText(text:"Difficulty Level: \(chaptersViewModel.selectedChapter!.difficulty)")
+                            ChapterContentText(text:"Difficulty Level: \(chaptersViewModel.selectedChapter!.difficulty)")
                             
-                            ChapterSubTitleText(text:"Status: Incomplete")
+                            ChapterContentText(text:"Status: Incomplete")
                             
-                            ChapterSubTitleText(text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+                            ChapterContentText(text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
                                 .padding(.trailing, geometry.size.width/6)
                                 .padding(.top, geometry.size.width/24)
                         }
@@ -85,7 +85,7 @@ struct ChapterDetailView: View {
                         
                         VStack(alignment: .leading){
                             
-                            ChapterSubTitleText(text: "Jump To")
+                            ChapterContentText(text: "Jump To")
                             
                             HStack(spacing: geometry.size.width/32){
                                 Button{
@@ -182,7 +182,7 @@ struct StartChapterButton: View {
 }
 
 
-struct ChapterSubTitleText: View {
+struct ChapterContentText: View {
     
     var text: String
     
