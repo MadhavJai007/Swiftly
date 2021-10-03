@@ -10,8 +10,8 @@ struct ChapterContentView: View {
     
     var chapter = MockData.sampleChapter
     
-        @EnvironmentObject var chaptersViewModel: ChaptersViewModel
-        @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel // view model for this view
+    @EnvironmentObject var chaptersViewModel: ChaptersViewModel
+    @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel // view model for this view
 
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
@@ -35,7 +35,7 @@ struct ChapterContentView: View {
                                 .resizable()
                                 .foregroundColor(.white)
                                 .aspectRatio(contentMode: .fit)
-                                .frame(width: 40, height: 40)
+                                .frame(width: 25, height: 25)
                                 .padding(.leading, 30)
                         }
                         
@@ -46,7 +46,7 @@ struct ChapterContentView: View {
                         Image(systemName: "questionmark")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 40, height: 40)
+                            .frame(width: 25, height: 25)
                             .foregroundColor(Color.white)
                             .padding(.trailing, 30)
                         
@@ -76,7 +76,7 @@ struct ChapterContentView: View {
                                     .foregroundColor(.white)
                             }
                             .padding(.leading, geometry.size.width/24)
-                            .padding(.top, -geometry.size.width/24)
+                            .padding(.top, -geometry.size.width/30)
                             
                             
                             
@@ -88,40 +88,38 @@ struct ChapterContentView: View {
                                     .foregroundColor(Color.white)
                                 
                                 ChapterSubTitleText(text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
-                                    .padding(.top, -geometry.size.width/28)
+                                    .padding(.top, -geometry.size.width/18)
                                     .padding(.trailing, geometry.size.width/24)
                                   
                             }
-                            .padding(.top, geometry.size.width/12)
+                            .padding(.top, geometry.size.width/24)
                             .padding(.leading, geometry.size.width/24)
                             
+                            VStack{
+                            
+                                Image("placeholder_img")
+                                    .resizable()
+                                    .scaledToFit()
+                               
+                            }.frame(width: geometry.size.width, alignment: .center)
                             
                             Spacer()
-                            
                         }
                         .frame(width: geometry.size.width, alignment: .leading)
-                        
-                        
                         
                         VStack{
                             Text("Page 2")
                         }
                         
-                        
                         VStack{
                             Text("Page 3")
                         }
-                        
-                        
                     }
                     .tabViewStyle(.page)
-                    
                 }
-                
             }
         }
         .navigationBarHidden(true)
-//        .navigationBarBackButtonHidden(true)
     }
 }
 
@@ -130,4 +128,3 @@ struct ChapterContentView_Previews: PreviewProvider {
         ChapterContentView()
     }
 }
-

@@ -13,7 +13,6 @@ struct ChaptersView: View {
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel // view model for this view
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     
-    
     var body: some View {
         
         GeometryReader { geometry in
@@ -88,16 +87,13 @@ struct ChaptersView: View {
                     NavigationLink(destination: ChapterContentView()
                                     .environmentObject(chaptersViewModel)
                                     .environmentObject(chapterContentViewModel)
-                                   , isActive: $chaptersViewModel.didStartChapter) {EmptyView()}
+                                   ,isActive: $chaptersViewModel.didStartChapter) {EmptyView()}
                 }
                 Spacer()
             }
         }
-        
         .navigationBarTitle("")
         .navigationBarHidden(true)
-        
-        
     }
 }
 

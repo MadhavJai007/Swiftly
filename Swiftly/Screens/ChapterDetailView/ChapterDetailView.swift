@@ -40,7 +40,7 @@ struct ChapterDetailView: View {
                                 .resizable()
                                 .foregroundColor(.white)
                                 .imageScale(.large)
-                                .frame(width: 20, height: 20)
+                                .frame(width: 25, height: 25)
                                 
                                 
                         }
