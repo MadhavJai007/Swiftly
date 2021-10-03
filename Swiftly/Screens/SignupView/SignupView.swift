@@ -131,11 +131,7 @@ struct SignupView: View {
                         CreateAccountButton(text: "Create Account", textColor: .white, backgroundColor: Color.blackCustom)
                             .padding(geometry.size.width/42)
                     }
-                    
-                    
-                    
                 }
-                
                 Spacer()
             }
         }

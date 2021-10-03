@@ -10,6 +10,8 @@ struct ChapterTitleView: View {
     
     let chapter: Chapter
     
+    var width: CGFloat
+
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel // view model for this view
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
 
@@ -32,7 +34,7 @@ struct ChapterTitleView: View {
                         .padding(10)
                         .foregroundColor(Color.lightGrayCustom)
                     
-                }.frame(width: 325)
+                }.frame(width: width)
                 
                 ChapterInfoLabel(text: "\(chapter.name)")
                 ChapterInfoLabel(text: "Estimated Length: \(chapter.length)")
@@ -49,7 +51,7 @@ struct ChapterTitleView: View {
                     }.padding(.top, 20)
                     
                 }
-                .frame(width: 325, height: 30, alignment: .center)
+                .frame(width: width, height: 30, alignment: .center)
                 
                 Spacer()
                 
@@ -58,17 +60,16 @@ struct ChapterTitleView: View {
                         chaptersViewModel.selectedChapter = chapter
                     } label: {
                         Text("Select Chapter")
-                            .font(.system(size: 20,
-                                          weight: .semibold,
-                                          design: .default))
+                            .font(.system(size: 20, weight: .semibold, design: .default))
                             .foregroundColor(Color.white)
+                            .frame(width: width, height: 60)
                     }
                 }
-                .frame(width: 325, height: 60)
+                .frame(width: width, height: 60)
                 .cornerRadius(30)
                 .background(Color.lightGrayCustom)
                 
-            }.frame(width: 325, height:275, alignment: .leading)
+            }.frame(width: width, height:275, alignment: .leading)
                 .background(Color.whiteCustom)
                 .cornerRadius(15)
         }
@@ -78,7 +79,7 @@ struct ChapterTitleView: View {
 
 struct ChapterTitleView_Previews: PreviewProvider {
     static var previews: some View {
-        ChapterTitleView(chapter: MockData.sampleChapter)
+        ChapterTitleView(chapter: MockData.sampleChapter, width: 325)
     }
 }
 

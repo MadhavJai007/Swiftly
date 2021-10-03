@@ -4,6 +4,8 @@
 //
 //  Created by Toby Moktar on 2021-09-24.
 
+///Todo: Clear user input on disappear
+
 import SwiftUI
 import Firebase
 

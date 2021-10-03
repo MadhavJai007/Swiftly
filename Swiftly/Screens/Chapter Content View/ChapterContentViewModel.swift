@@ -9,6 +9,17 @@ import SwiftUI
 
 
 final class ChapterContentViewModel: ObservableObject {
-
+    
+    
     var chapter = MockData.sampleChapter
+    
+    @Published var willQuitChapter = false
+
+    
+    func quitChapter(){
+        willQuitChapter = true
+    }
+    
+    
+    
 }
