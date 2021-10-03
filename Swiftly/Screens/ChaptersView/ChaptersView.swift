@@ -12,6 +12,7 @@ struct ChaptersView: View {
     @EnvironmentObject var signupViewModel: SignupViewModel
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel // view model for this view
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
+    @EnvironmentObject var userAccountViewModel: UserAccountViewModel
     
     var body: some View {
         
@@ -24,32 +25,25 @@ struct ChaptersView: View {
                 
                 VStack{
                     
+                    
                     HStack {
-                        Image(systemName: "person.crop.circle")
-                            .renderingMode(.original)
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 44, height: 44)
-                            .foregroundColor(Color.white)
-                            .padding(.leading, 30)
+                    
+                        Button{
+                            chaptersViewModel.isShowingAccountView.toggle()
+                        }label: {
+                            UserAccountIcon(text: "person.crop.circle")
+                        }
                         
                         Spacer()
                         
                         Button{
                             print("tapped")
                         }label: {
-                            Text("Join a Classroom")
-                                .font(.system(size: 25))
-                                .fontWeight(.semibold)
-                                .padding()
-                                .frame(width: 250, height: 75)
-                                .background(Color.blackCustom)
-                                .foregroundColor(.white)
-                                .cornerRadius(15)
-                                .padding(.trailing, 30)
+                            ClassroomInstanceView(text: "Join a class")
                         }
                     }.padding(.top, geometry.size.width/18)
                     
+                    // All chapters label and classroom instance
                     VStack(alignment: .leading){
                         
                         ChaptersTitle(text:"All Chapters")
@@ -64,6 +58,7 @@ struct ChaptersView: View {
                     
                     Spacer()
                     
+                    // ScrollView containing all chapters
                     ScrollView {
                         
                         LazyVGrid(columns: chaptersViewModel.columns, spacing: 50) {
@@ -74,26 +69,35 @@ struct ChaptersView: View {
                             }
                         }
                         .padding(30)
-                        .sheet(isPresented: $chaptersViewModel.isShowingDetailView) {
+                        .sheet(isPresented: $chaptersViewModel.isShowingChapterDetailView) {
                             
-                            ChapterDetailView(isShowingDetailView: $chaptersViewModel.isShowingDetailView)
+                            ChapterDetailView(isShowingDetailView: $chaptersViewModel.isShowingChapterDetailView)
                                 .environmentObject(chaptersViewModel)
                                 .environmentObject(chapterContentViewModel)
                         }
-                        
-                        
                     }
                     
+                    // Nav link to accessing chapter content
                     NavigationLink(destination: ChapterContentView()
                                     .environmentObject(chaptersViewModel)
                                     .environmentObject(chapterContentViewModel)
-                                   ,isActive: $chaptersViewModel.didStartChapter) {EmptyView()}
+                                    .environmentObject(userAccountViewModel),
+                                   isActive: $chaptersViewModel.didStartChapter) {EmptyView()}
+                    
+                    // Nav link to accessing user account
+                    NavigationLink(destination: UserAccountView()
+                                    .environmentObject(userAccountViewModel),
+                                   isActive: $chaptersViewModel.isShowingAccountView) {EmptyView()}
                 }
                 Spacer()
             }
         }
         .navigationBarTitle("")
         .navigationBarHidden(true)
+        
+        .onAppear {
+            chaptersViewModel.isShowingAccountView = false
+        }
     }
 }
 
@@ -114,5 +118,41 @@ struct ChaptersTitle: View {
             .font(.system(size: 75,
                           weight: .medium, design: .default))
             .foregroundColor(.white)
+    }
+}
+
+// Struct for the join/create a classroom view
+struct ClassroomInstanceView: View {
+    
+    var text: String
+
+    var body: some View {
+        
+        Text(text)
+            .font(.system(size: 25))
+            .fontWeight(.semibold)
+            .padding()
+            .frame(width: 250, height: 75)
+            .background(Color.blackCustom)
+            .foregroundColor(.white)
+            .cornerRadius(15)
+            .padding(.trailing, 30)
+        
+    }
+}
+
+// Struct representing user account icon
+struct UserAccountIcon: View{
+    
+    var text: String
+    
+    var body: some View {
+        Image(systemName: text)
+            .renderingMode(.original)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 44, height: 44)
+            .foregroundColor(Color.white)
+            .padding(.leading, 30)
     }
 }

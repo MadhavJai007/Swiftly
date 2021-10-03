@@ -7,7 +7,7 @@
 import SwiftUI
 
 struct ChapterDetailView: View {
-    
+
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel // view model for this view
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     

@@ -16,6 +16,7 @@ struct SwiftlyApp: App {
     @StateObject var signupViewModel = SignupViewModel()
     @StateObject var chaptersViewModel = ChaptersViewModel()
     @StateObject var chapterContentViewModel = ChapterContentViewModel()
+    @StateObject var userAccountViewModel = UserAccountViewModel()
     
     
     init(){
@@ -31,6 +32,7 @@ struct SwiftlyApp: App {
                 .environmentObject(signupViewModel)
                 .environmentObject(chaptersViewModel)
                 .environmentObject(chapterContentViewModel)
+                .environmentObject(userAccountViewModel)
         }
     }
 }

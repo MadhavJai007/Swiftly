@@ -20,6 +20,7 @@ struct LoginView: View {
     @EnvironmentObject var signupViewModel: SignupViewModel
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
+    @EnvironmentObject var userAccountViewModel: UserAccountViewModel
     
     var body: some View {
         
@@ -71,7 +72,8 @@ struct LoginView: View {
                                     .environmentObject(loginViewModel)
                                     .environmentObject(signupViewModel)
                                     .environmentObject(chaptersViewModel)
-                                    .environmentObject(chapterContentViewModel),
+                                    .environmentObject(chapterContentViewModel)
+                                    .environmentObject(userAccountViewModel),
                                    isActive: $loginViewModel.isSuccessful) {EmptyView()}
                     
                     Spacer()
