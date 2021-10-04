@@ -62,7 +62,7 @@ struct ChapterContentView: View {
                             
                             
                             VStack(alignment: .leading){
-                                ChapterSubTitle(text: "Lorem Ipsum")
+                                ChapterSubTitle(text: "Data Types in Swift")
                                 ChapterContentText(text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
                                     .padding(.top, -geometry.size.width/18)
                                     .padding(.trailing, geometry.size.width/24)
