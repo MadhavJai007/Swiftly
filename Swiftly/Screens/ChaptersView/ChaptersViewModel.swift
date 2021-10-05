@@ -10,11 +10,14 @@ import SwiftUI
 final class ChaptersViewModel: ObservableObject {
 
     @Published var didStartChapter = false
+    @Published var didSelectLeaderboard  = false
     
     @Published var isShowingChapterDetailView = false
     @Published var isShowingAccountView = false
     
+    
     var startChapterIntent = false
+
     
     var selectedChapter: Chapter? {
         didSet {
@@ -27,5 +30,9 @@ final class ChaptersViewModel: ObservableObject {
 
     func startChapter(){
         self.didStartChapter = true
+    }
+    
+    func viewLeaderboard(){
+        self.didSelectLeaderboard = true
     }
 }

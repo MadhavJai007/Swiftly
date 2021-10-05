@@ -14,6 +14,7 @@ struct ChapterTitleView: View {
 
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel // view model for this view
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
+    @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel
 
     var body: some View {
         
@@ -45,11 +46,11 @@ struct ChapterTitleView: View {
                     Spacer()
                     
                     Button{
-                        print("Tapped")
+                        chaptersViewModel.viewLeaderboard()
+                        leaderboardViewModel.selectedChapter = chapter
                     }label: {
                         ViewLeaderboardButtonLabel(text: "View Leaderboard")
                     }.padding(.top, 20)
-                    
                 }
                 .frame(width: width, height: 30, alignment: .center)
                 

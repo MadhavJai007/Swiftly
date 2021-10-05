@@ -21,6 +21,7 @@ struct LoginView: View {
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel
+    @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel
     
     var body: some View {
         
@@ -69,11 +70,10 @@ struct LoginView: View {
                     }
                     
                     NavigationLink(destination: ChaptersView()
-                                    .environmentObject(loginViewModel)
-                                    .environmentObject(signupViewModel)
                                     .environmentObject(chaptersViewModel)
                                     .environmentObject(chapterContentViewModel)
-                                    .environmentObject(userAccountViewModel),
+                                    .environmentObject(userAccountViewModel)
+                                    .environmentObject(leaderboardViewModel),
                                    isActive: $loginViewModel.isSuccessful) {EmptyView()}
                     
                     Spacer()

@@ -15,6 +15,8 @@
 		DA79655F26FE3DD100CAE327 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA79655E26FE3DD100CAE327 /* SignupView.swift */; };
 		DA79656326FE3E4B00CAE327 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA79656226FE3E4B00CAE327 /* Colors.swift */; };
 		DA7965682700AEEC00CAE327 /* ChaptersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA7965672700AEEC00CAE327 /* ChaptersView.swift */; };
+		DA840A14270CB25A00751FB7 /* LeaderboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA840A13270CB25A00751FB7 /* LeaderboardView.swift */; };
+		DA840A16270CB26800751FB7 /* LeaderboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA840A15270CB26800751FB7 /* LeaderboardViewModel.swift */; };
 		DA884F2126FE04D000F58E4A /* SwiftlyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA884F2026FE04D000F58E4A /* SwiftlyApp.swift */; };
 		DA884F2526FE04D200F58E4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA884F2426FE04D200F58E4A /* Assets.xcassets */; };
 		DA884F2826FE04D200F58E4A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA884F2726FE04D200F58E4A /* Preview Assets.xcassets */; };
@@ -41,6 +43,8 @@
 		DA79655E26FE3DD100CAE327 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		DA79656226FE3E4B00CAE327 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		DA7965672700AEEC00CAE327 /* ChaptersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersView.swift; sourceTree = "<group>"; };
+		DA840A13270CB25A00751FB7 /* LeaderboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardView.swift; sourceTree = "<group>"; };
+		DA840A15270CB26800751FB7 /* LeaderboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaderboardViewModel.swift; sourceTree = "<group>"; };
 		DA884F1D26FE04D000F58E4A /* Swiftly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Swiftly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA884F2026FE04D000F58E4A /* SwiftlyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftlyApp.swift; sourceTree = "<group>"; };
 		DA884F2426FE04D200F58E4A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -92,6 +96,15 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		DA840A12270CB24600751FB7 /* Leaderboard View */ = {
+			isa = PBXGroup;
+			children = (
+				DA840A13270CB25A00751FB7 /* LeaderboardView.swift */,
+				DA840A15270CB26800751FB7 /* LeaderboardViewModel.swift */,
+			);
+			path = "Leaderboard View";
+			sourceTree = "<group>";
+		};
 		DA884F1426FE04D000F58E4A = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +150,7 @@
 		DA884F2F26FE064700F58E4A /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				DA840A12270CB24600751FB7 /* Leaderboard View */,
 				DAD6B317270A3C52002C8A55 /* User Account View */,
 				DAD6B310270748B6002C8A55 /* Chapter Content View */,
 				DA5C726D270348F200E697CD /* ChapterDetailView */,
@@ -344,10 +358,12 @@
 				DA79655F26FE3DD100CAE327 /* SignupView.swift in Sources */,
 				DAD6B3162708A3CC002C8A55 /* ChapterContentViewModel.swift in Sources */,
 				DAD6B319270A3C71002C8A55 /* UserAccountView.swift in Sources */,
+				DA840A16270CB26800751FB7 /* LeaderboardViewModel.swift in Sources */,
 				DAD6B31D270A4833002C8A55 /* User.swift in Sources */,
 				DA79656326FE3E4B00CAE327 /* Colors.swift in Sources */,
 				DA884F2126FE04D000F58E4A /* SwiftlyApp.swift in Sources */,
 				DAD6B312270748CA002C8A55 /* ChapterContentView.swift in Sources */,
+				DA840A14270CB25A00751FB7 /* LeaderboardView.swift in Sources */,
 				DA5C72712703493400E697CD /* ChapterDetailView.swift in Sources */,
 				DA5D90ED270614BD0085DE6D /* SignupViewModel.swift in Sources */,
 				DABF368927020134009BF78A /* Chapter.swift in Sources */,

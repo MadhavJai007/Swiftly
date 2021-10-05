@@ -20,7 +20,7 @@ final class LoginViewModel: ObservableObject {
     
     func login(email: String, password: String){
         
-        Auth.auth().signIn(withEmail: "test@email.com", password: "123456") { result, error in
+        Auth.auth().signIn(withEmail: email, password: password) { result, error in
             
             if error != nil {
                 print("Bad Login")

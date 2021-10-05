@@ -8,11 +8,10 @@ import SwiftUI
 
 struct ChaptersView: View {
     
-    @EnvironmentObject var loginViewModel: LoginViewModel
-    @EnvironmentObject var signupViewModel: SignupViewModel
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel // view model for this view
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel
+    @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel
     
     var body: some View {
         
@@ -66,11 +65,12 @@ struct ChaptersView: View {
                                 ChapterTitleView(chapter: chapter, width: geometry.size.width/2.35)
                                     .environmentObject(chaptersViewModel)
                                     .environmentObject(chapterContentViewModel)
+                                    .environmentObject(leaderboardViewModel)
                             }
                         }
                         .padding(30)
+                        // Presenting chapter detail view
                         .sheet(isPresented: $chaptersViewModel.isShowingChapterDetailView) {
-                            
                             ChapterDetailView(isShowingDetailView: $chaptersViewModel.isShowingChapterDetailView)
                                 .environmentObject(chaptersViewModel)
                                 .environmentObject(chapterContentViewModel)
@@ -88,6 +88,12 @@ struct ChaptersView: View {
                     NavigationLink(destination: UserAccountView()
                                     .environmentObject(userAccountViewModel),
                                    isActive: $chaptersViewModel.isShowingAccountView) {EmptyView()}
+                    
+                    // Nav link to accessing user account
+                    NavigationLink(destination: LeaderboardView()
+                                    .environmentObject(userAccountViewModel)
+                                    .environmentObject(leaderboardViewModel),
+                                   isActive: $chaptersViewModel.didSelectLeaderboard) {EmptyView()}
                 }
                 Spacer()
             }

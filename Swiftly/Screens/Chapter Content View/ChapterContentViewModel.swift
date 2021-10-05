@@ -15,11 +15,9 @@ final class ChapterContentViewModel: ObservableObject {
     
     @Published var willQuitChapter = false
 
-    
     func quitChapter(){
         willQuitChapter = true
     }
-    
     
     
 }
