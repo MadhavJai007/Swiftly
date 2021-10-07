@@ -18,7 +18,11 @@ final class LoginViewModel: ObservableObject {
         isBadLogin = false
     }
     
-    func login(email: String, password: String){
+    func testLogin(user: Int, password: Int) -> Bool{
+        return user > password
+    }
+    
+    func login(email: String, password: String) {
         
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
             
@@ -26,11 +30,11 @@ final class LoginViewModel: ObservableObject {
                 print("Bad Login")
                 self.isSuccessful = false
                 self.isBadLogin = true
-            }else{
-                
+            } else{
                 print("Succesful login")
                 self.isSuccessful = true
                 self.isBadLogin = false
+                
             }
         }
     }

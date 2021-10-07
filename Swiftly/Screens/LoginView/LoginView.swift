@@ -59,7 +59,18 @@ struct LoginView: View {
                     }
                     
                     Button(){
+            
                         loginViewModel.login(email: email, password: password)
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            if (loginViewModel.isSuccessful) {
+                                print("Yes")
+                                chaptersViewModel.getChapterDocs()
+                            }
+                            else {
+                                print("No")
+                            }
+                        }
+                        
                     }label: {
                         LoginSignupButton(text: "Login", textColor: .white, backgroundColor: Color.blackCustom)
                     }

@@ -24,6 +24,8 @@ struct Chapter: Hashable, Identifiable {
 }
 
 
+
+
 struct MockData {
     
     static let sampleUser = User(firstName: "Johhny", lastName: "Appleseed", username: "ilikeapples123", email: "test@email.com", password: "123456", dob: "2000/01/11", country: "Canada")
