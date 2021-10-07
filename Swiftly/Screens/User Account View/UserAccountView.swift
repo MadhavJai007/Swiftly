@@ -6,13 +6,14 @@
 
 /// Todo: Add functionality that will allow the user to logout. This will change a variable that will pop this view, and ChaptersView.
 
-/// Todo: Hide navigation bar, add back button and settings button that will allow user to edit their account.
-
 import SwiftUI
 
 struct UserAccountView: View {
     
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel // view model for this view
+    
+    // Used to manually pop from nav view stack
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     var body: some View {
         
@@ -23,7 +24,32 @@ struct UserAccountView: View {
                 Color.darkGrayCustom
                     .ignoresSafeArea()
                 
+                
+                
                 VStack{
+                    
+                    HStack {
+                        
+                        Button{
+                            self.mode.wrappedValue.dismiss()
+                        }label:{
+                            UserAccountNavBarIcon(iconName: "chevron.backward")
+                        }
+                        .padding(.leading, 30)
+                        
+                        Spacer()
+                        
+                        
+                        
+                        Button{
+                            //                            self.mode.wrappedValue.dismiss()
+                        }label:{
+                            UserAccountNavBarIcon(iconName: "gearshape")
+                        }
+                        .padding(.trailing, 30)
+                    }
+                    .padding(.top, geometry.size.width/16)
+                    .padding(.bottom, geometry.size.width/16)
                     
                     Spacer()
                     
@@ -65,7 +91,7 @@ struct UserAccountView: View {
                             
                             Spacer()
                         }
-                        .frame(width: geometry.size.width/2, alignment: .leading)
+                        .frame(width: geometry.size.width/2, height: geometry.size.height/1.15, alignment: .leading)
                         .padding(.leading, geometry.size.width/24)
                         
                         Spacer()
@@ -77,15 +103,17 @@ struct UserAccountView: View {
                             VStack(alignment: .leading){
                                 
                                 UserAccountTitleLabel(text: "Progress", color: Color.darkGrayCustom)
-                                    
+                                    .padding(.top, -geometry.size.width/108)
+                                
                                 Spacer()
-
+                                
                             }.padding(.leading, geometry.size.width/24)
                             
                             
-                        }.frame(width: geometry.size.width/2, height: geometry.size.height/1.15, alignment: .leading)
+                        }.frame(width: geometry.size.width/2, height: geometry.size.height/1.25, alignment: .leading)
                             .cornerRadius(40)
                             .padding(.trailing, -geometry.size.width/24)
+                            .padding(.top, -geometry.size.width/12)
                         
                     }
                     
@@ -94,6 +122,7 @@ struct UserAccountView: View {
                 .frame(width: geometry.size.width, height: geometry.size.height/1.15)
             }
         }
+        .navigationBarHidden(true)
     }
 }
 
@@ -143,5 +172,20 @@ struct InfoLabel: View {
         Text(text)
             .font(.system(size: 35, weight: .semibold))
             .foregroundColor(Color.whiteCustom)
+    }
+}
+
+
+// Struct for custom nav bar icon
+struct UserAccountNavBarIcon: View {
+    
+    var iconName: String
+    
+    var body: some View {
+        Image(systemName: iconName)
+            .resizable()
+            .foregroundColor(.white)
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 25, height: 25)
     }
 }
