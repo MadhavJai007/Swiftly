@@ -19,8 +19,12 @@ final class ChaptersViewModel: ObservableObject {
     @Published var chaptersArr = [Chapter]()
     
     var startChapterIntent = false
-
     
+    
+    init(){
+        /// Call getChapterDocs() in here so there's no race between logging in and downloading chapters
+    }
+
     
     var selectedChapter: Chapter? {
         didSet {

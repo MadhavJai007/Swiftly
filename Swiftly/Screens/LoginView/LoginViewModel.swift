@@ -8,6 +8,7 @@ import Foundation
 import SwiftUI
 import Firebase
 
+
 final class LoginViewModel: ObservableObject {
     
     @Published var isSuccessful: Bool

@@ -14,9 +14,14 @@ final class ChapterContentViewModel: ObservableObject {
     var chapter = MockData.sampleChapter
     
     @Published var willQuitChapter = false
+    @Published var willStartInteractiveSection = false
 
     func quitChapter(){
         willQuitChapter = true
+    }
+    
+    func startInteractiveSection(){
+        willStartInteractiveSection = true
     }
     
     

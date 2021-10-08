@@ -144,25 +144,29 @@ struct ChapterContentView: View {
                                 Spacer()
                                 
                                 Button{
-                                    print("tapped")
+                                    chapterContentViewModel.startInteractiveSection()
                                 }label: {
                                     Text("Start Interactive Section")
                                         .font(.system(size: 30, weight: .semibold))
                                         .foregroundColor(Color.white)
-                                        .padding(.top, 25)
-                                  
-                                       
-                                        
                                 }
+                                .frame(width: geometry.size.width/2, height: geometry.size.height/12)
+                                .background(Color.blackCustom)
+                                .cornerRadius(15)
+                                
+                                Spacer()
                             }
-                            .padding(.trailing, geometry.size.width/24)
                             .padding(.bottom, geometry.size.width/100)
+                            Spacer()
                         }
                         .frame(width: geometry.size.width, alignment: .leading)
                     }
                     .tabViewStyle(.page)
                 }
             }
+            
+            NavigationLink(destination: InteractiveView(),
+                           isActive: $chapterContentViewModel.willStartInteractiveSection) {EmptyView()}
         }
         .navigationBarHidden(true)
     }

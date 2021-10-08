@@ -12,6 +12,7 @@ import Firebase
 struct LoginView: View {
     
     @State var isNavigationBarHidden: Bool = false
+    @State var gettingChapters = false
     
     @State var email: String = ""
     @State var password: String = ""
@@ -61,6 +62,7 @@ struct LoginView: View {
                     Button(){
             
                         loginViewModel.login(email: email, password: password)
+                        
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                             if (loginViewModel.isSuccessful) {
                                 print("Yes")
@@ -80,6 +82,7 @@ struct LoginView: View {
                         Alert(title: Text("Oops!"), message: Text("Email and/or password are incorrect."), dismissButton: .default(Text("OK")))
                     }
                     
+                    // Nav link to go to chapters
                     NavigationLink(destination: ChaptersView()
                                     .environmentObject(chaptersViewModel)
                                     .environmentObject(chapterContentViewModel)
