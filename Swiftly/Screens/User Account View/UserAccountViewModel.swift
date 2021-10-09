@@ -6,10 +6,28 @@
 
 import Foundation
 import SwiftUI
+import Firebase
 
 final class UserAccountViewModel: ObservableObject {
-
+    
+    @Published var isUserLoggedIn = false
+    
     ///Todo: User object needs to be passed down the view hierarch from the login viewmodel
     var user = MockData.sampleUser
-
+    
+    
+    
+    func logoutUser(){
+        
+        do {
+            try Auth.auth().signOut()
+            isUserLoggedIn = false
+        }
+        catch {
+            print("already logged out")
+            
+        }
+        
+        
+    }
 }

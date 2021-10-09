@@ -8,23 +8,24 @@ import SwiftUI
 
 struct ChaptersView: View {
     
-    @EnvironmentObject var chaptersViewModel: ChaptersViewModel // view model for this view
+    @EnvironmentObject var loginViewModel: LoginViewModel // view model for this view
+    @EnvironmentObject var chaptersViewModel: ChaptersViewModel /// view model for this view
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel
     @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel
+    
+    /// Used to manually pop from nav view stack
+    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     var body: some View {
         
         GeometryReader { geometry in
             
             ZStack {
-                
                 Color.darkGrayCustom
                     .ignoresSafeArea()
                 
                 VStack{
-                    
-                    
                     HStack {
                     
                         Button{
@@ -105,6 +106,24 @@ struct ChaptersView: View {
         
         .onAppear {
             chaptersViewModel.isShowingAccountView = false
+            
+            /// Called when the user is logging out
+            if (userAccountViewModel.isUserLoggedIn == false){
+                
+                loginViewModel.isSuccessful = false
+                loginViewModel.isBadLogin = false
+                chaptersViewModel.isFinishedDownloadingChapters = false
+                
+                self.mode.wrappedValue.dismiss()
+                
+            }
+        }
+        
+        .onDisappear {
+            /// Clearing the chapters array if the user is logging out
+            if (userAccountViewModel.isUserLoggedIn == false){
+                chaptersViewModel.chaptersArr.removeAll()
+            }
         }
     }
 }
@@ -145,7 +164,6 @@ struct ClassroomInstanceView: View {
             .foregroundColor(.white)
             .cornerRadius(15)
             .padding(.trailing, 30)
-        
     }
 }
 

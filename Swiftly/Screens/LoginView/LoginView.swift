@@ -60,6 +60,10 @@ struct LoginView: View {
                     Button(){
                         
                         loginViewModel.login(email: email, password: password)
+                        userAccountViewModel.isUserLoggedIn = true
+                        
+                        email = ""
+                        password = ""
                         
                         /// If the login is successful, download chapter content
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -82,6 +86,7 @@ struct LoginView: View {
                     /// Navigation link for chapters view --> is only toggled when chapters view model is
                     /// finished downloading chapters from remote db.
                     NavigationLink(destination: ChaptersView()
+                                    .environmentObject(loginViewModel)
                                     .environmentObject(chaptersViewModel)
                                     .environmentObject(chapterContentViewModel)
                                     .environmentObject(userAccountViewModel)
@@ -138,6 +143,11 @@ struct LoginView: View {
             loginViewModel.isSuccessful = false
             loginViewModel.isBadLogin = false
             chaptersViewModel.isFinishedDownloadingChapters = false
+        }
+        
+        .onDisappear {
+            self.email = ""
+            self.password = ""
         }
     }
 }

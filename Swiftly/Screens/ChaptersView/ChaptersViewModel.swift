@@ -19,6 +19,7 @@ final class ChaptersViewModel: ObservableObject {
     @Published var chaptersArr = [Chapter]()
     @Published var isFinishedDownloadingChapters = false
     
+    
     var startChapterIntent = false
     
     
@@ -64,6 +65,5 @@ final class ChaptersViewModel: ObservableObject {
                 self.isFinishedDownloadingChapters = true
             }
         }
-    }
-    
+    }  
 }

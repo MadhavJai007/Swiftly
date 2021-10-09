@@ -10,9 +10,9 @@ import SwiftUI
 
 struct UserAccountView: View {
     
-    @EnvironmentObject var userAccountViewModel: UserAccountViewModel // view model for this view
+    @EnvironmentObject var userAccountViewModel: UserAccountViewModel /// view model for this view
     
-    // Used to manually pop from nav view stack
+    /// Used to manually pop from nav view stack
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     var body: some View {
@@ -89,6 +89,21 @@ struct UserAccountView: View {
                                 InfoLabel(text: MockData.sampleUser.password)
                             }
                             
+                            Button{
+                                userAccountViewModel.logoutUser()
+                                
+                                if (userAccountViewModel.isUserLoggedIn == false){
+                                    self.mode.wrappedValue.dismiss()
+                                }else{
+                                    print("Something went wrong with logging out.")
+                                }
+                                
+                            }label: {
+                                LogoutLabel(text: "Logout")
+                                    .frame(width: 200, height: 75)
+                                    .background(Color.redCustom)
+                                    .cornerRadius(20)
+                            }
                             Spacer()
                         }
                         .frame(width: geometry.size.width/2, height: geometry.size.height/1.15, alignment: .leading)
@@ -114,7 +129,6 @@ struct UserAccountView: View {
                             .cornerRadius(40)
                             .padding(.trailing, -geometry.size.width/24)
                             .padding(.top, -geometry.size.width/12)
-                        
                     }
                     
                     Spacer()
@@ -187,5 +201,18 @@ struct UserAccountNavBarIcon: View {
             .foregroundColor(.white)
             .aspectRatio(contentMode: .fit)
             .frame(width: 25, height: 25)
+    }
+}
+
+// Struct for the info label
+struct LogoutLabel: View {
+    
+    var text: String
+    
+    var body: some View {
+        
+        Text(text)
+            .font(.system(size: 35, weight: .medium))
+            .foregroundColor(Color.white)
     }
 }
