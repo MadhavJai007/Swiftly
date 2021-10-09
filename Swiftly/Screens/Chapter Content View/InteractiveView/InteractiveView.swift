@@ -7,12 +7,43 @@
 
 import SwiftUI
 
+/// TODO: Access screen size and find areas that draggable
+/// icon are allowed.
+
 
 struct InteractiveView: View {
+    
+    @State private var location: CGPoint = CGPoint(x: 50, y: 50)
+    @State private var fingerLocation: CGPoint?
     
     // Used to manually pop from nav view stack
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
+    
+    let draggableYLower = UIScreen.screenHeight/1.575
+    let draggableYUpper = UIScreen.screenHeight/24
+    
+    let leftLimit = UIScreen.screenWidth/15.575
+    let rightLimit = UIScreen.screenWidth/1.075
+    
+    var simpleDrag: some Gesture {
+        DragGesture()
+            .onChanged { value in
+                
+                if (value.location.y < draggableYLower && value.location.y > draggableYUpper){
+                
+                    self.location.y = value.location.y
+                }
+                
+                if (value.location.x > leftLimit && value.location.x < rightLimit){
+                
+                    self.location.x = value.location.x
+                }
+                
+                
+            }
+    }
+        
     var body: some View {
         
         GeometryReader { geometry in
@@ -38,6 +69,14 @@ struct InteractiveView: View {
                     }
                     .padding(.top, geometry.size.width/16)
                     .padding(.bottom, geometry.size.width/32)
+                    
+                    
+                    /// Basic drag test
+                    RoundedRectangle(cornerRadius: 10)
+                        .foregroundColor(.pink)
+                        .frame(width: 100, height: 100)
+                        .position(location)
+                        .gesture(simpleDrag)
                     
                     Spacer()
                     
@@ -70,9 +109,8 @@ struct InteractiveView: View {
                                 
                             }.frame(width: geometry.size.width/4, alignment: .center)
                         }
-                        
                     }
-                    
+
                     .frame(width: geometry.size.width, height: geometry.size.height/5)
                 }    
             }
@@ -111,4 +149,11 @@ struct InteractiveContentText: View {
             .font(.system(size: 30))
             .foregroundColor(Color.white)
     }
+}
+
+
+extension UIScreen{
+   static let screenWidth = UIScreen.main.bounds.size.width
+   static let screenHeight = UIScreen.main.bounds.size.height
+   static let screenSize = UIScreen.main.bounds.size
 }
