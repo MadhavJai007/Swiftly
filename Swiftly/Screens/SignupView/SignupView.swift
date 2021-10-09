@@ -1,7 +1,6 @@
 //  INFO49635 - CAPSTONE FALL 2021
 //  SignupView.swift
 //  Swiftly
-//
 
 import SwiftUI
 
@@ -180,17 +179,6 @@ struct SignupView: View {
                         
                         //create newUsser variable to push to database
                         
-                        /*
-                        var newUser = User(firstName: viewModel.newUser.firstName,
-                                           lastName: viewModel.newUser.lastName,
-                                           username: viewModel.newUser.username,
-                                           email: viewModel.newUser.email,
-                                           password: viewModel.newUser.password,
-                                           dob: viewModel.newUser.dob,
-                                           country: viewModel.newUser.country)
-                        
-                        print(newUser.firstName)
-                         */
                         
                         self.mode.wrappedValue.dismiss()
                         
@@ -227,28 +215,6 @@ struct InputFieldLabel: View {
             .foregroundColor(.white)
             .font(.system(size: 25))
         
-    }
-}
-
-
-// Struct representing input text field
-struct SignupInputField: View {
-    
-    var placeholderText: String
-    var width: CGFloat
-    var height: CGFloat
-
-    @State var stateAttribute: String
-
-    var body: some View {
-        
-        TextField(placeholderText, text: $stateAttribute)
-            .font(.system(size: 30))
-            .padding()
-            .frame(width: width, height: height)
-            .background(Color.white)
-            .foregroundColor(.darkGrayCustom)
-            .cornerRadius(15)
     }
 }
 

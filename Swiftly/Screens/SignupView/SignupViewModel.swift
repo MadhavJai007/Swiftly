@@ -1,7 +1,6 @@
 //  INFO49635 - CAPSTONE FALL 2021
 //  SignupViewModel.swift
 //  Swiftly
-//
 
 import Foundation
 import SwiftUI
