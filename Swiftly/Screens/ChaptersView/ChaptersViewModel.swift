@@ -17,12 +17,12 @@ final class ChaptersViewModel: ObservableObject {
     @Published var isShowingAccountView = false
     
     @Published var chaptersArr = [Chapter]()
+    @Published var isFinishedDownloadingChapters = false
     
     var startChapterIntent = false
     
     
     init(){
-        /// Call getChapterDocs() in here so there's no race between logging in and downloading chapters
     }
 
     
@@ -43,10 +43,13 @@ final class ChaptersViewModel: ObservableObject {
         self.didSelectLeaderboard = true
     }
     
+    /// Downloading chapters from Firebase and appending them to the chapters array
     func getChapterDocs() {
         let db = Firestore.firestore()
         db.collection("Chapters").getDocuments() { (querySnapshot, err) in
             if let err = err {
+                
+                /// Todo: Inform user some error happened -> don't let them access chapters page
                 print("Error getting chapter documents: \(err)")
             } else {
                 for document in querySnapshot!.documents {
@@ -57,6 +60,8 @@ final class ChaptersViewModel: ObservableObject {
                     print("Chapter length:  \(document.data()["chapter_length"]!)")
                     print("\(document.documentID) => \(document.data())")
                 }
+                
+                self.isFinishedDownloadingChapters = true
             }
         }
     }

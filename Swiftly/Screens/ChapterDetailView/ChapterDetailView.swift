@@ -143,8 +143,8 @@ struct ChapterDetailView: View {
         }
         
         .onDisappear {
-            // This is done so that the sheet can be dismissed before the chapter content view
-            // is presented.
+            /// This is done so that the sheet can be dismissed before the chapter content view
+            /// is presented.
             if (chaptersViewModel.startChapterIntent){
                 chaptersViewModel.startChapter()
                 chapterContentViewModel.chapter = chaptersViewModel.selectedChapter!
@@ -162,7 +162,7 @@ struct ChapterDetailView: View {
 //}
 
 
-// Struct representing the label on a button
+/// Struct representing the label on a button
 struct StartChapterButton: View {
     
     var text: String

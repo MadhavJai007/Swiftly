@@ -4,15 +4,12 @@
 //
 //  Created by Toby Moktar on 2021-09-24.
 
-///Todo: Clear user input on disappear
-
 import SwiftUI
 import Firebase
 
 struct LoginView: View {
     
     @State var isNavigationBarHidden: Bool = false
-    @State var gettingChapters = false
     
     @State var email: String = ""
     @State var password: String = ""
@@ -59,18 +56,18 @@ struct LoginView: View {
                             .cornerRadius(15)
                     }
                     
+                    /// Button for logging in --> calls login() from loginViewModel
                     Button(){
-            
+                        
                         loginViewModel.login(email: email, password: password)
                         
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        /// If the login is successful, download chapter content
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             if (loginViewModel.isSuccessful) {
-                                print("Yes")
                                 chaptersViewModel.getChapterDocs()
                             }
-                            else {
-                                print("No")
-                            }
+                            
+                            /// Todo: Download user account information here too.
                         }
                         
                     }label: {
@@ -82,13 +79,14 @@ struct LoginView: View {
                         Alert(title: Text("Oops!"), message: Text("Email and/or password are incorrect."), dismissButton: .default(Text("OK")))
                     }
                     
-                    // Nav link to go to chapters
+                    /// Navigation link for chapters view --> is only toggled when chapters view model is
+                    /// finished downloading chapters from remote db.
                     NavigationLink(destination: ChaptersView()
                                     .environmentObject(chaptersViewModel)
                                     .environmentObject(chapterContentViewModel)
                                     .environmentObject(userAccountViewModel)
                                     .environmentObject(leaderboardViewModel),
-                                   isActive: $loginViewModel.isSuccessful) {EmptyView()}
+                                   isActive: $chaptersViewModel.isFinishedDownloadingChapters) {EmptyView()}
                     
                     Spacer()
                     Spacer()
@@ -98,6 +96,7 @@ struct LoginView: View {
                             .font(.system(size: 25, weight: .light))
                             .foregroundColor(.white)
                         
+                        /// Navigation for signup view
                         NavigationLink(destination: SignupView()
                                         .environmentObject(loginViewModel)
                                         .environmentObject(signupViewModel)
@@ -109,13 +108,37 @@ struct LoginView: View {
                     }
                     .padding(.bottom, 50)
                 }
+                
+                /// Shows progress loader while chapters are being downloaded
+                if (loginViewModel.isSuccessful){
+                    
+                        ZStack {
+                            
+                            Color.blackCustom
+                            
+                            VStack{
+                                ProgressView {
+                                    Text("Loading")
+                                        .foregroundColor(Color.whiteCustom)
+                                        .font(.system(size: 20))
+                                }
+                                .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
+                            }
+                        }
+                        .frame(width: 150, height: 100)
+                        .cornerRadius(20)
+                }
             }
-            
-            
-            }
-        
+        }
         .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(.white)
+        
+        /// Resetting variables
+        .onAppear(){
+            loginViewModel.isSuccessful = false
+            loginViewModel.isBadLogin = false
+            chaptersViewModel.isFinishedDownloadingChapters = false
+        }
     }
 }
 

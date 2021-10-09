@@ -8,6 +8,7 @@ import Foundation
 import SwiftUI
 import Firebase
 
+/// Todo: Only grab chapter information after user has logged in --> can be done with a completion handler.
 
 final class LoginViewModel: ObservableObject {
     
@@ -23,19 +24,16 @@ final class LoginViewModel: ObservableObject {
         return user > password
     }
     
+    /// Called when the user wants to login
     func login(email: String, password: String) {
         
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
-            
             if error != nil {
-                print("Bad Login")
                 self.isSuccessful = false
                 self.isBadLogin = true
             } else{
-                print("Succesful login")
                 self.isSuccessful = true
                 self.isBadLogin = false
-                
             }
         }
     }
