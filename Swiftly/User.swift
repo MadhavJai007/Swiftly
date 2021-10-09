@@ -12,14 +12,14 @@ import SwiftUI
 
 struct User: Hashable, Identifiable {
 
-    let id = UUID()
-    let firstName: String
-    let lastName: String
-    let username: String
-    let email: String
-    let password: String
-    let dob: String
-    let country: String
+    var id = UUID()
+    var firstName: String
+    var lastName: String
+    var username: String
+    var email: String
+    var password: String
+    var dob: String
+    var country: String
     
 }
 

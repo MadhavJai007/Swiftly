@@ -2,7 +2,6 @@
 //  SignupView.swift
 //  Swiftly
 //
-//  Created by Toby Moktar on 2021-09-24.
 
 import SwiftUI
 
@@ -12,9 +11,15 @@ struct SignupView: View {
     @State private var selectedType = "Student"
     
     @State private var placeholder = "Placeholder"
+    
+    @StateObject var viewModel = SignupViewModel()
+    
+    
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
+    
     var body: some View {
+        
         
         GeometryReader { geometry in
             
@@ -36,11 +41,20 @@ struct SignupView: View {
                     // Username
                     VStack(alignment: .leading){
                         
-                        InputFieldLabel(text:"First Name")
+                        InputFieldLabel(text:"Username")
                             .padding(.bottom, -geometry.size.width/120)
                         
-                        SignupInputField(placeholderText: "Username", width: geometry.size.width - 150, height: geometry.size.width/12, stateAttribute: placeholder)
-                    }.padding(.bottom, geometry.size.width/42)
+
+                    
+                        TextField("Username", text : $viewModel.newUser.username)
+                            .font(.system(size: 30))
+                            .padding()
+                            .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
+                            .background(Color.white)
+                            .foregroundColor(.darkGrayCustom)
+                            .cornerRadius(15)
+                        
+                    }
                     
                     
                     
@@ -52,7 +66,14 @@ struct SignupView: View {
                             InputFieldLabel(text:"First Name")
                                 .padding(.bottom, -geometry.size.width/120)
                             
-                            SignupInputField(placeholderText: "First Name", width: geometry.size.width/2 - 100, height: geometry.size.width/12, stateAttribute: placeholder)
+                            
+                            TextField("First Name", text : $viewModel.newUser.firstName)
+                                .font(.system(size: 30))
+                                .padding()
+                                .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
+                                .background(Color.white)
+                                .foregroundColor(.darkGrayCustom)
+                                .cornerRadius(15)
                         }
                         
                         VStack(alignment: .leading) {
@@ -60,7 +81,13 @@ struct SignupView: View {
                             InputFieldLabel(text:"Last Name")
                                 .padding(.bottom, -geometry.size.width/120)
 
-                            SignupInputField(placeholderText: "Last Name", width: geometry.size.width/2 - 100, height: geometry.size.width/12, stateAttribute: placeholder)
+                            TextField("Last Name", text : $viewModel.newUser.lastName)
+                                .font(.system(size: 30))
+                                .padding()
+                                .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
+                                .background(Color.white)
+                                .foregroundColor(.darkGrayCustom)
+                                .cornerRadius(15)
                         }
                     }.padding(.bottom, geometry.size.width/42)
                     
@@ -72,7 +99,13 @@ struct SignupView: View {
                             InputFieldLabel(text:"Country")
                                 .padding(.bottom, -geometry.size.width/120)
                             
-                            SignupInputField(placeholderText: "Country", width: geometry.size.width/2 - 100, height: geometry.size.width/12, stateAttribute: placeholder)
+                            TextField("Country", text : $viewModel.newUser.country)
+                                .font(.system(size: 30))
+                                .padding()
+                                .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
+                                .background(Color.white)
+                                .foregroundColor(.darkGrayCustom)
+                                .cornerRadius(15)
                             
                             
                         }
@@ -82,7 +115,13 @@ struct SignupView: View {
                             InputFieldLabel(text:"Date of Birth")
                                 .padding(.bottom, -geometry.size.width/120)
                             
-                            SignupInputField(placeholderText: "Date of Birth", width: geometry.size.width/2 - 100, height: geometry.size.width/12, stateAttribute: placeholder)
+                            TextField("Date of Birth", text : $viewModel.newUser.dob)
+                                .font(.system(size: 30))
+                                .padding()
+                                .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
+                                .background(Color.white)
+                                .foregroundColor(.darkGrayCustom)
+                                .cornerRadius(15)
                         }
                     }.padding(.bottom, geometry.size.width/42)
                     
@@ -92,7 +131,13 @@ struct SignupView: View {
                         InputFieldLabel(text:"Email Address")
                             .padding(.bottom, -geometry.size.width/120)
                         
-                        SignupInputField(placeholderText: "Email Address", width: geometry.size.width - 150, height: geometry.size.width/12, stateAttribute: placeholder)
+                        TextField("Email", text : $viewModel.newUser.email)
+                            .font(.system(size: 30))
+                            .padding()
+                            .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
+                            .background(Color.white)
+                            .foregroundColor(.darkGrayCustom)
+                            .cornerRadius(15)
                         
                     }.padding(.bottom, geometry.size.width/42)
                     
@@ -102,7 +147,13 @@ struct SignupView: View {
                         InputFieldLabel(text:"Password")
                             .padding(.bottom, -geometry.size.width/120)
                         
-                        SignupInputField(placeholderText: "Password", width: geometry.size.width - 150, height: geometry.size.width/12, stateAttribute: placeholder)
+                        TextField("Password", text : $viewModel.newUser.password)
+                            .font(.system(size: 30))
+                            .padding()
+                            .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
+                            .background(Color.white)
+                            .foregroundColor(.darkGrayCustom)
+                            .cornerRadius(15)
                         
                     }.padding(.bottom, geometry.size.width/42)
                     
@@ -126,7 +177,26 @@ struct SignupView: View {
                     
                     // Create account button
                     Button{
+                        
+                        //create newUsser variable to push to database
+                        
+                        /*
+                        var newUser = User(firstName: viewModel.newUser.firstName,
+                                           lastName: viewModel.newUser.lastName,
+                                           username: viewModel.newUser.username,
+                                           email: viewModel.newUser.email,
+                                           password: viewModel.newUser.password,
+                                           dob: viewModel.newUser.dob,
+                                           country: viewModel.newUser.country)
+                        
+                        print(newUser.firstName)
+                         */
+                        
                         self.mode.wrappedValue.dismiss()
+                        
+                        
+                        
+                        
                     }label:{
                         CreateAccountButton(text: "Create Account", textColor: .white, backgroundColor: Color.blackCustom)
                             .padding(geometry.size.width/42)
@@ -201,3 +271,4 @@ struct CreateAccountButton: View {
             .cornerRadius(15)
     }
 }
+
