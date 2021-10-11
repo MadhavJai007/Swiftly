@@ -5,13 +5,19 @@
 //  Created by Toby Moktar on 2021-10-01.
 
 import SwiftUI
+import UIKit
+
+/// TODO: Pass more view models down here (if needed to update student stats)
+/// TODO: Might have to think of a better way to present theoretical data, because not every chapter will have exactly
+/// three screens and so on. Might have to use a grid view where each cell is the size of the screen.
 
 struct ChapterContentView: View {
     
     var chapter = MockData.sampleChapter
-    
+
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel /// view model for this view
+    
     
     /// Used to manually pop from nav view stack
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
@@ -47,7 +53,7 @@ struct ChapterContentView: View {
                     
                     TabView {
                         
-                        // Page 1
+                        /// Page 1
                         VStack(alignment: .leading){
                             
                             ChaptersTitle(text: "Chapter: \(chapter.chapterNum)")
@@ -86,7 +92,7 @@ struct ChapterContentView: View {
                         
                         
                         
-                        // Page 2
+                        /// Page 2
                         VStack(alignment: .leading){
                             
                             VStack(alignment: .leading){
@@ -109,13 +115,12 @@ struct ChapterContentView: View {
                             .padding(.top, geometry.size.width/24)
                             .padding(.leading, geometry.size.width/24)
                             
-                            
-                            
+                        
                             Spacer()
                         }
                         .frame(width: geometry.size.width, alignment: .leading)
                         
-                        // PAGE 3
+                        /// PAGE 3
                         VStack(alignment: .leading){
                             
                             VStack(alignment: .leading){
@@ -165,7 +170,9 @@ struct ChapterContentView: View {
                 }
             }
             
-            NavigationLink(destination: InteractiveView(),
+            NavigationLink(destination: InteractiveView()
+                            .environmentObject(chaptersViewModel)
+                            .environmentObject(chapterContentViewModel),
                            isActive: $chapterContentViewModel.willStartInteractiveSection) {EmptyView()}
         }
         .navigationBarHidden(true)
@@ -178,6 +185,7 @@ struct ChapterContentView_Previews: PreviewProvider {
     }
 }
 
+/// struct representing chapter topic
 struct ChapterTopic: View {
     
     var text: String
@@ -189,12 +197,11 @@ struct ChapterTopic: View {
                           weight: .bold,
                           design: .default))
             .foregroundColor(Color.white)
-        
-        
     }
 }
 
 
+/// struct representing chapter icon
 struct ChapterTopicIcon: View {
     
     var iconName: String

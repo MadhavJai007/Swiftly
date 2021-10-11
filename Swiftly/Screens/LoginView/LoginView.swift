@@ -7,6 +7,9 @@
 import SwiftUI
 import Firebase
 
+/// TODO: Disable login fields, login button, and signup button when the login
+/// loading (showing progress view)
+
 struct LoginView: View {
     
     @State var isNavigationBarHidden: Bool = false

@@ -11,6 +11,17 @@ import SwiftUI
 final class ChapterContentViewModel: ObservableObject {
     
     
+    @Published var data: [InteractiveBlock]
+
+    let columns = [GridItem(.flexible())]
+    
+    init() {
+        data = Array(repeating: InteractiveBlock(id: 0), count: 4)
+        for i in 0..<data.count {
+            data[i] = InteractiveBlock(id: i)
+        }
+    }
+    
     var chapter = MockData.sampleChapter
     
     @Published var willQuitChapter = false

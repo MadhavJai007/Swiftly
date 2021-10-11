@@ -6,45 +6,23 @@
 //
 
 import SwiftUI
-
-/// TODO: Access screen size and find areas that draggable
-/// icon are allowed.
-
+import UIKit
+import UniformTypeIdentifiers
 
 struct InteractiveView: View {
     
-    @State private var location: CGPoint = CGPoint(x: 50, y: 50)
-    @State private var fingerLocation: CGPoint?
+
+    @State private var dragging: InteractiveBlock?
+    
+    @EnvironmentObject var chaptersViewModel: ChaptersViewModel
+    @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     
     // Used to manually pop from nav view stack
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     
-    let draggableYLower = UIScreen.screenHeight/1.575
-    let draggableYUpper = UIScreen.screenHeight/24
-    
-    let leftLimit = UIScreen.screenWidth/15.575
-    let rightLimit = UIScreen.screenWidth/1.075
-    
-    var simpleDrag: some Gesture {
-        DragGesture()
-            .onChanged { value in
-                
-                if (value.location.y < draggableYLower && value.location.y > draggableYUpper){
-                
-                    self.location.y = value.location.y
-                }
-                
-                if (value.location.x > leftLimit && value.location.x < rightLimit){
-                
-                    self.location.x = value.location.x
-                }
-                
-                
-            }
-    }
-        
     var body: some View {
+        
         
         GeometryReader { geometry in
             
@@ -70,20 +48,44 @@ struct InteractiveView: View {
                     .padding(.top, geometry.size.width/16)
                     .padding(.bottom, geometry.size.width/32)
                     
+                    /// For the tiles
+                    VStack{
+                        
+                        ScrollView {
+                            
+                            
+
+                            LazyVGrid(columns: chapterContentViewModel.columns, spacing: 20) {
+                                ForEach(chapterContentViewModel.data) { block in
+
+                                    /// Creating the tile view and passing the code block struct to it
+                                    InteractiveTileView(codeBlock: block)
+                                        .overlay(dragging?.id == block.id ? Color.white.opacity(0.8) : Color.clear)
+                                        .cornerRadius(20)
+                                        .onDrag {
+                                            self.dragging = block
+                                            return NSItemProvider(object: String(block.id) as NSString)
+                                        }
+                                        .onDrop(of: [UTType.text], delegate: DragRelocateDelegate(item: block, listData: $chapterContentViewModel.data, current: $dragging))
+                                }
+                            }
+                            .animation(.default, value: chapterContentViewModel.data)
+                            .padding(.top, geometry.size.height/8)
+                        }
+                        .onDrop(of: [UTType.text], delegate: DropOutsideDelegate(current: $dragging))
+                        .hasScrollEnabled(false)
+                        
+                        
+                    }.frame(width: geometry.size.width/1.05, height: geometry.size.height/1.50, alignment: .center)
+                        
                     
-                    /// Basic drag test
-                    RoundedRectangle(cornerRadius: 10)
-                        .foregroundColor(.pink)
-                        .frame(width: 100, height: 100)
-                        .position(location)
-                        .gesture(simpleDrag)
                     
                     Spacer()
                     
                     ZStack{
                         Color.darkGrayCustom
                             .ignoresSafeArea()
-                    
+                        
                         
                         HStack{
                             
@@ -94,9 +96,8 @@ struct InteractiveView: View {
                                 Spacer()
                             }.frame(width: geometry.size.width/1.5)
                                 .padding(.top, 30)
-                                
                             
-        
+                            
                             VStack(alignment: .center){
                                 Button{
                                     print("Submit")
@@ -110,9 +111,8 @@ struct InteractiveView: View {
                             }.frame(width: geometry.size.width/4, alignment: .center)
                         }
                     }
-
                     .frame(width: geometry.size.width, height: geometry.size.height/5)
-                }    
+                }
             }
         }
         .navigationBarHidden(true)
@@ -152,8 +152,18 @@ struct InteractiveContentText: View {
 }
 
 
+/// Used to get the screen dimensions without geometry reader
 extension UIScreen{
-   static let screenWidth = UIScreen.main.bounds.size.width
-   static let screenHeight = UIScreen.main.bounds.size.height
-   static let screenSize = UIScreen.main.bounds.size
+    static let screenWidth = UIScreen.main.bounds.size.width
+    static let screenHeight = UIScreen.main.bounds.size.height
+    static let screenSize = UIScreen.main.bounds.size
+}
+
+/// Used to disable scroll for any view
+extension View {
+    func hasScrollEnabled(_ value: Bool) -> some View {
+        self.onAppear {
+            UIScrollView.appearance().bounces = value
+        }
+    }
 }
