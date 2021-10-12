@@ -10,7 +10,7 @@
 import Foundation
 import SwiftUI
 
-struct User: Hashable, Identifiable {
+struct User: Hashable, Identifiable, Codable {
 
     var id = UUID()
     var firstName: String

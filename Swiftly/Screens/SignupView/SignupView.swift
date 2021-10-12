@@ -178,9 +178,9 @@ struct SignupView: View {
                     Button{
                         
                         //create newUsser variable to push to database
+                        createAccount()
                         
                         
-                        self.mode.wrappedValue.dismiss()
                         
                         
                         
@@ -194,6 +194,11 @@ struct SignupView: View {
             }
         }
             
+    }
+    
+    func createAccount() {
+        viewModel.save()
+        self.mode.wrappedValue.dismiss()
     }
 }
 

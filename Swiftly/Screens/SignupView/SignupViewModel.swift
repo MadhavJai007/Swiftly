@@ -5,6 +5,8 @@
 import Foundation
 import SwiftUI
 import Firebase
+import FirebaseFirestore
+
 
 /// Todo: Make sure user cannot create account with same username or email.
 
@@ -22,7 +24,7 @@ final class SignupViewModel: ObservableObject {
         //initializer
     }
     
-    //store user inputted information into a User variable
+    //create newUser variable to store account information to be passed to the database
     
     @Published var newUser = User(firstName: "",
                        lastName: "",
@@ -34,16 +36,28 @@ final class SignupViewModel: ObservableObject {
     
     private var db = Firestore.firestore()
     
-    //push User variable to database
     
-    func addUser(newUser: User){
-        do{
-            //let _ = try db.collection("Students").addDocument(from: newUser)
-            
-        }
-        catch{
-            print(error)
-        }
+    func addUser(user: User){
+            // Add a new document in collection "Students"
+            db.collection("Students").document(user.username).setData([
+                "country": user.country,
+                "date_of_birth": user.dob,
+                "email": user.email,
+                "firstname" : user.firstName,
+                "lastName" : user.lastName,
+                "password" : user.password
+            ]) { err in
+                if let err = err {
+                    print("Error writing document: \(err)")
+                } else {
+                    print("Document successfully written!")
+                }
+            }
+
+    }
+    
+    func save(){
+        addUser(user: newUser)
     }
     
     
