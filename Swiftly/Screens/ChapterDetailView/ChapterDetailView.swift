@@ -75,9 +75,9 @@ struct ChapterDetailView: View {
                             
                             ChapterContentText(text:"Difficulty Level: \(chaptersViewModel.selectedChapter!.difficulty)")
                             
-                            ChapterContentText(text:"Status: Incomplete")
+                            ChapterContentText(text:"Status: \(chaptersViewModel.selectedChapter!.completionStatus)")
                             
-                            ChapterContentText(text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
+                            ChapterContentText(text: chaptersViewModel.selectedChapter!.summary)
                                 .padding(.trailing, geometry.size.width/6)
                                 .padding(.top, geometry.size.width/24)
                         }
