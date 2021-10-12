@@ -56,7 +56,7 @@ struct ChapterDetailView: View {
                                           design: .default))
                             .foregroundColor(Color.white)
                         
-                        Image(systemName: "cpu")
+                        Image(systemName: chaptersViewModel.selectedChapter!.iconName)
                             .resizable()
                             .frame(width: 40, height: 40)
                             .foregroundColor(.white)
@@ -147,7 +147,7 @@ struct ChapterDetailView: View {
             /// is presented.
             if (chaptersViewModel.startChapterIntent){
                 chaptersViewModel.startChapter()
-                chapterContentViewModel.chapter = chaptersViewModel.selectedChapter!
+                //chapterContentViewModel.chapter = chaptersViewModel.selectedChapter!
                 chaptersViewModel.startChapterIntent = false
             }
         }
