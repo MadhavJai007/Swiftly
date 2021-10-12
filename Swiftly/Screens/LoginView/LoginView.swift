@@ -50,7 +50,7 @@ struct LoginView: View {
                             .foregroundColor(Color.blackCustom)
                             .cornerRadius(15)
                         
-                        TextField("Iloveapples123", text: $password)
+                        SecureField("Iloveapples123", text: $password)
                             .font(.system(size: 30))
                             .padding()
                             .frame(width: 400, height: 75)
