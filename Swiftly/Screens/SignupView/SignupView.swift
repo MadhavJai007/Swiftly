@@ -176,15 +176,8 @@ struct SignupView: View {
                     
                     // Create account button
                     Button{
-                        
                         //create newUsser variable to push to database
                         createAccount()
-                        
-                        
-                        
-                        
-                        
-                        
                     }label:{
                         CreateAccountButton(text: "Create Account", textColor: .white, backgroundColor: Color.blackCustom)
                             .padding(geometry.size.width/42)

@@ -37,8 +37,20 @@ final class SignupViewModel: ObservableObject {
     private var db = Firestore.firestore()
     
     
+    func authenticateUser(user: User){
+        Auth.auth().createUser(withEmail: user.email, password: user.password) { authResult, error in
+            // [START_EXCLUDE]
+                          guard let user = authResult?.user, error == nil else {
+                            return
+                          }
+                          print("\(user.email!) created")
+                        // [END_EXCLUDE]
+        }
+    }
+    
+    
     func addUser(user: User){
-            // Add a new document in collection "Students"
+            // adding a new document in collection "Students"
             db.collection("Students").document(user.username).setData([
                 "country": user.country,
                 "date_of_birth": user.dob,
@@ -57,6 +69,7 @@ final class SignupViewModel: ObservableObject {
     }
     
     func save(){
+        authenticateUser(user: newUser)
         addUser(user: newUser)
     }
     
