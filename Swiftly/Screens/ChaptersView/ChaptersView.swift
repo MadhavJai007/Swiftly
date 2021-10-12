@@ -62,7 +62,6 @@ struct ChaptersView: View {
                     // ScrollView containing all chapters
                     ScrollView {
                         
-                        // TODO: Get the chapters in firestore and put them in here
                         LazyVGrid(columns: chaptersViewModel.columns, spacing: 50) {
                             ForEach(chaptersViewModel.chaptersArr) { chapter in
                                 ChapterTitleView(chapter: chapter, width: geometry.size.width/2.35)

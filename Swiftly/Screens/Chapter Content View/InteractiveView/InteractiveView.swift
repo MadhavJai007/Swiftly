@@ -11,13 +11,12 @@ import UniformTypeIdentifiers
 
 struct InteractiveView: View {
     
-
     @State private var dragging: InteractiveBlock?
     
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     
-    // Used to manually pop from nav view stack
+    /// Used to manually pop from nav view stack
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     
@@ -34,11 +33,10 @@ struct InteractiveView: View {
                 VStack{
                     
                     HStack {
-                        
                         Button{
                             self.mode.wrappedValue.dismiss()
                         }label:{
-                            ChapterNavBarIcon(iconName: "xmark")
+                            ChapterNavBarIcon(iconName: "chevron.backward")
                             
                         }
                         .padding(.leading, 30)
@@ -53,10 +51,8 @@ struct InteractiveView: View {
                         
                         ScrollView {
                             
-                            
-
                             LazyVGrid(columns: chapterContentViewModel.columns, spacing: 20) {
-                                ForEach(chapterContentViewModel.data) { block in
+                                ForEach(chapterContentViewModel.activeBlocks) { block in
 
                                     /// Creating the tile view and passing the code block struct to it
                                     InteractiveTileView(codeBlock: block)
@@ -66,10 +62,10 @@ struct InteractiveView: View {
                                             self.dragging = block
                                             return NSItemProvider(object: String(block.id) as NSString)
                                         }
-                                        .onDrop(of: [UTType.text], delegate: DragRelocateDelegate(item: block, listData: $chapterContentViewModel.data, current: $dragging))
+                                        .onDrop(of: [UTType.text], delegate: DragRelocateDelegate(item: block, listData: $chapterContentViewModel.activeBlocks, current: $dragging))
                                 }
                             }
-                            .animation(.default, value: chapterContentViewModel.data)
+                            .animation(.default, value: chapterContentViewModel.activeBlocks)
                             .padding(.top, geometry.size.height/8)
                         }
                         .onDrop(of: [UTType.text], delegate: DropOutsideDelegate(current: $dragging))
@@ -86,9 +82,7 @@ struct InteractiveView: View {
                         Color.darkGrayCustom
                             .ignoresSafeArea()
                         
-                        
                         HStack{
-                            
                             VStack(alignment: .leading){
                                 InteractiveSubTitle(text:"Challenge")
                                 InteractiveContentText(text:"Your challenge is to reconstruct the code for X that you learned about in the previous section.")
@@ -100,7 +94,7 @@ struct InteractiveView: View {
                             
                             VStack(alignment: .center){
                                 Button{
-                                    print("Submit")
+                                    chapterContentViewModel.completeInteractiveSection()
                                 }label: {
                                     InteractiveSubTitle(text: "Submit")
                                 }
@@ -116,6 +110,12 @@ struct InteractiveView: View {
             }
         }
         .navigationBarHidden(true)
+        
+        /// Navigation link for showing chapter quiz view
+        NavigationLink(destination: ChapterQuizView()
+                        .environmentObject(chaptersViewModel)
+                        .environmentObject(chapterContentViewModel)
+                       , isActive: $chapterContentViewModel.didCompleteInteractiveSection) {EmptyView()}
     }
 }
 

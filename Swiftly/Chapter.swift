@@ -11,34 +11,33 @@ import Foundation
 import SwiftUI
 
 struct Chapter: Hashable, Identifiable {
-    
     let id = UUID()
     let chapterNum: Int
     let name: String
     let difficulty: Int
     let completionStatus: String
+    let lessonCompletion: String
+    let playgroundCompletion: String
+    let quizCompletion: String
     let summary: String
     let length: Int
     let iconName: String
-    
+    let playgroundContent: Playground
 }
-
-
 
 
 struct MockData {
     
     static let sampleUser = User(firstName: "Johhny", lastName: "Appleseed", username: "ilikeapples123", email: "test@email.com", password: "123456", dob: "2000/01/11", country: "Canada")
     
-    static let sampleChapter = Chapter(chapterNum: 1, name: "Multi-Threading", difficulty: 3, completionStatus: "Incomplete", summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ornare purus, eget aliquam magna. Pellentesque bibendum bibendum venenatis", length: 15, iconName: "cpu")
+    static let sampleChapter = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, completionStatus: "Mid", lessonCompletion: "Yes", playgroundCompletion: "No", quizCompletion: "No", summary: "SUmmary", length: 24, iconName: "cpu", playgroundContent: Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"]))
     
     
     static let Chapters = [
-        Chapter(chapterNum: 1, name: "Multi-Threading", difficulty: 3, completionStatus: "Incomplete", summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ornare purus, eget aliquam magna. Pellentesque bibendum bibendum venenatis", length: 15, iconName: "cpu"),
-        Chapter(chapterNum: 2, name: "Multi-Threading", difficulty: 3, completionStatus: "Incomplete", summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ornare purus, eget aliquam magna. Pellentesque bibendum bibendum venenatis", length: 15, iconName: "cpu"),
-        Chapter(chapterNum: 3, name: "Multi-Threading", difficulty: 3, completionStatus: "Incomplete", summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ornare purus, eget aliquam magna. Pellentesque bibendum bibendum venenatis", length: 15, iconName: "cpu"),
-        Chapter(chapterNum: 4, name: "Multi-Threading", difficulty: 3, completionStatus: "Incomplete", summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ornare purus, eget aliquam magna. Pellentesque bibendum bibendum venenatis", length: 15, iconName: "cpu"),
-        Chapter(chapterNum: 5, name: "Multi-Threading", difficulty: 3, completionStatus: "Incomplete", summary: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nec ornare purus, eget aliquam magna. Pellentesque bibendum bibendum venenatis", length: 15, iconName: "cpu"),
+        sampleChapter,
+        sampleChapter,
+        sampleChapter,
+        sampleChapter,
     ]
     
 }

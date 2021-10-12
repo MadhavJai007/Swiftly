@@ -17,7 +17,7 @@ struct LoginView: View {
     @State var email: String = ""
     @State var password: String = ""
     
-    @EnvironmentObject var loginViewModel: LoginViewModel // view model for this view
+    @EnvironmentObject var loginViewModel: LoginViewModel /// view model for this view
     @EnvironmentObject var signupViewModel: SignupViewModel
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
@@ -82,8 +82,15 @@ struct LoginView: View {
                     }
                     .padding(.top,50)
                     .padding(.bottom,50)
+                    
+                    /// Alert for bad login
                     .alert(isPresented: $loginViewModel.isBadLogin) {
                         Alert(title: Text("Oops!"), message: Text("Email and/or password are incorrect."), dismissButton: .default(Text("OK")))
+                    }
+                    
+                    /// Alert for when chapters could not be loaded
+                    .alert(isPresented: $chaptersViewModel.didErrorOccurGrabbingData) {
+                        Alert(title: Text("Uh-Oh"), message: Text("There was an error loading chapters. Please try again later."), dismissButton: .default(Text("OK")))
                     }
                     
                     /// Navigation link for chapters view --> is only toggled when chapters view model is

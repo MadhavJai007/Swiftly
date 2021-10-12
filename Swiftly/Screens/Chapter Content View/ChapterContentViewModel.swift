@@ -11,21 +11,45 @@ import SwiftUI
 final class ChapterContentViewModel: ObservableObject {
     
     
-    @Published var data: [InteractiveBlock]
+    /// Representing the current chapter and it's playground blocks
+    var chapter: Chapter
+    var chapterPlaygroundBlocks: [String]
+    
+    /// This is used to allow interaction with blocks
+    @Published var activeBlocks: [InteractiveBlock]
+
+    @Published var willQuitChapter = false
+    @Published var willStartInteractiveSection = false
+    @Published var didCompleteInteractiveSection = false
 
     let columns = [GridItem(.flexible())]
     
-    init() {
-        data = Array(repeating: InteractiveBlock(id: 0), count: 4)
-        for i in 0..<data.count {
-            data[i] = InteractiveBlock(id: i)
+
+    /// Init variables with basic data
+    init(){
+        chapter = MockData.sampleChapter
+        chapterPlaygroundBlocks = chapter.playgroundContent.originalArr
+        activeBlocks = Array(repeating: InteractiveBlock(id: 0, content: ""), count: self.chapterPlaygroundBlocks.count)
+    }
+    
+    
+    /// Called to setup the playground environment
+    func setupPlayground(selectedChapter: Chapter){
+        
+        /// Grabs chapter and chapter playground content data
+        chapter = selectedChapter
+        chapterPlaygroundBlocks = chapter.playgroundContent.originalArr
+        
+        /// Pre-populates array with interactive block objects
+        activeBlocks = Array(repeating: InteractiveBlock(id: 0, content: ""), count: self.chapterPlaygroundBlocks.count)
+        
+        /// Copying content from playground blocks to array active blocks --> active blocks is the array that is copied and
+        /// the user interacts with it. It gets compared to the original array to get user score.
+        for i in 0..<chapterPlaygroundBlocks.count {
+            activeBlocks[i] = InteractiveBlock(id: i, content: chapterPlaygroundBlocks[i])
         }
     }
     
-    var chapter = MockData.sampleChapter
-    
-    @Published var willQuitChapter = false
-    @Published var willStartInteractiveSection = false
 
     func quitChapter(){
         willQuitChapter = true
@@ -35,5 +59,20 @@ final class ChapterContentViewModel: ObservableObject {
         willStartInteractiveSection = true
     }
     
-    
+    /// Compares users results to the results of the original array
+    func completeInteractiveSection(){
+        
+//        didCompleteInteractiveSection = true
+        var userScore = 0
+        
+        for i in 0..<chapterPlaygroundBlocks.count {
+            
+            if (activeBlocks[i].content == chapterPlaygroundBlocks[i]){
+                userScore += 1
+            }
+            
+        }
+        
+        print("USER SCORE: \(userScore)")
+    }
 }

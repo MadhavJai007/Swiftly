@@ -9,8 +9,8 @@ import Foundation
 import SwiftUI
 
 
-/// Representing the code block that each chapter's interactive section contains several of
-struct InteractiveBlock: Identifiable, Equatable {
-    let content = "SOME CODE"
+/// Represents an interactive block that are contained within playground
+struct InteractiveBlock: Identifiable, Equatable, Hashable {
     let id: Int
+    let content: String
 }

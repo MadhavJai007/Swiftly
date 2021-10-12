@@ -31,6 +31,8 @@
 		DADCC3AB27135E1B0071D287 /* InteractiveTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADCC3AA27135E1B0071D287 /* InteractiveTileView.swift */; };
 		DADCC3AF271362110071D287 /* InteractiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADCC3AE271362100071D287 /* InteractiveView.swift */; };
 		DADCC3B12714C8F60071D287 /* InteractiveBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADCC3B02714C8F60071D287 /* InteractiveBlock.swift */; };
+		DADCC3B52715C42B0071D287 /* ChapterQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADCC3B42715C42B0071D287 /* ChapterQuizView.swift */; };
+		DADCC3B72715D3B50071D287 /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADCC3B62715D3B50071D287 /* Playground.swift */; };
 		DBC0793536759C50964ACED1 /* Pods_Swiftly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11B3422058B48AC46E6C075C /* Pods_Swiftly.framework */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +66,8 @@
 		DADCC3AA27135E1B0071D287 /* InteractiveTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveTileView.swift; sourceTree = "<group>"; };
 		DADCC3AE271362100071D287 /* InteractiveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveView.swift; sourceTree = "<group>"; };
 		DADCC3B02714C8F60071D287 /* InteractiveBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveBlock.swift; sourceTree = "<group>"; };
+		DADCC3B42715C42B0071D287 /* ChapterQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterQuizView.swift; sourceTree = "<group>"; };
+		DADCC3B62715D3B50071D287 /* Playground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playground.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +177,7 @@
 				DABF368827020134009BF78A /* Chapter.swift */,
 				DAD6B31C270A4832002C8A55 /* User.swift */,
 				DADCC3B02714C8F60071D287 /* InteractiveBlock.swift */,
+				DADCC3B62715D3B50071D287 /* Playground.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -224,8 +229,9 @@
 		DAD6B310270748B6002C8A55 /* Chapter Content View */ = {
 			isa = PBXGroup;
 			children = (
+				DADCC3B32715C2770071D287 /* QuizView */,
+				DADCC3B22715C2350071D287 /* ContentView */,
 				DAE45E46271078FF0073BA1C /* InteractiveView */,
-				DAD6B311270748CA002C8A55 /* ChapterContentView.swift */,
 				DAD6B3152708A3CC002C8A55 /* ChapterContentViewModel.swift */,
 			);
 			path = "Chapter Content View";
@@ -238,6 +244,22 @@
 				DAD6B31A270A3E63002C8A55 /* UserAccountViewModel.swift */,
 			);
 			path = "User Account View";
+			sourceTree = "<group>";
+		};
+		DADCC3B22715C2350071D287 /* ContentView */ = {
+			isa = PBXGroup;
+			children = (
+				DAD6B311270748CA002C8A55 /* ChapterContentView.swift */,
+			);
+			path = ContentView;
+			sourceTree = "<group>";
+		};
+		DADCC3B32715C2770071D287 /* QuizView */ = {
+			isa = PBXGroup;
+			children = (
+				DADCC3B42715C42B0071D287 /* ChapterQuizView.swift */,
+			);
+			path = QuizView;
 			sourceTree = "<group>";
 		};
 		DAE45E46271078FF0073BA1C /* InteractiveView */ = {
@@ -390,6 +412,8 @@
 				DAD6B31B270A3E63002C8A55 /* UserAccountViewModel.swift in Sources */,
 				DABF369427023677009BF78A /* ChapterTitleView.swift in Sources */,
 				DA2122DE26FE07820016587F /* LoginView.swift in Sources */,
+				DADCC3B52715C42B0071D287 /* ChapterQuizView.swift in Sources */,
+				DADCC3B72715D3B50071D287 /* Playground.swift in Sources */,
 				DA5D90EB270614B20085DE6D /* LoginViewModel.swift in Sources */,
 				DA7965682700AEEC00CAE327 /* ChaptersView.swift in Sources */,
 			);

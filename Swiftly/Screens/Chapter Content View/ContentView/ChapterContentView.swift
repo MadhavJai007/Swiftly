@@ -18,7 +18,6 @@ struct ChapterContentView: View {
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel /// view model for this view
     
-    
     /// Used to manually pop from nav view stack
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
@@ -39,7 +38,6 @@ struct ChapterContentView: View {
                             self.mode.wrappedValue.dismiss()
                         }label:{
                             ChapterNavBarIcon(iconName: "xmark")
-                            
                         }
                         .padding(.leading, 30)
                         
@@ -51,6 +49,8 @@ struct ChapterContentView: View {
                     .padding(.top, geometry.size.width/16)
                     .padding(.bottom, geometry.size.width/16)
                     
+                    
+                    /// ** Look at todo at top of file
                     TabView {
                         
                         /// Page 1
@@ -66,8 +66,7 @@ struct ChapterContentView: View {
                             .padding(.leading, geometry.size.width/24)
                             .padding(.top, -geometry.size.width/30)
                             
-                            
-                            
+                        
                             VStack(alignment: .leading){
                                 ChapterSubTitle(text: "Data Types in Swift")
                                 ChapterContentText(text:"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla semper dapibus velit, ut volutpat lorem. Praesent sed interdum ligula.Lorem ipsum dolor sit amet, consectetur adipiscing elit.")
@@ -89,7 +88,6 @@ struct ChapterContentView: View {
                             Spacer()
                         }
                         .frame(width: geometry.size.width, alignment: .leading)
-                        
                         
                         
                         /// Page 2
@@ -176,6 +174,13 @@ struct ChapterContentView: View {
                            isActive: $chapterContentViewModel.willStartInteractiveSection) {EmptyView()}
         }
         .navigationBarHidden(true)
+        
+        .onAppear(){
+            
+            if (chapterContentViewModel.chapter == MockData.sampleChapter){
+                chapterContentViewModel.setupPlayground(selectedChapter: chaptersViewModel.selectedChapter!)
+            }
+        }
     }
 }
 
