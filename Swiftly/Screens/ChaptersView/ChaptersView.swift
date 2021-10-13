@@ -124,17 +124,6 @@ struct ChaptersView: View {
             if (chapterContentViewModel.willStartInteractiveSection == true){
                 chapterContentViewModel.willStartInteractiveSection = false
             }
-            
-            /// Called when the user is logging out --> NOT NEEDED
-//            if (userAccountViewModel.isUserLoggedIn == false){
-//
-//                loginViewModel.isSuccessful = false
-//                loginViewModel.isBadLogin = false
-//                chaptersViewModel.isUserLoggedIn = false
-//
-//                self.mode.wrappedValue.dismiss()
-//
-//            }
         }
     }
 }
