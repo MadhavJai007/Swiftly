@@ -14,10 +14,12 @@ final class LoginViewModel: ObservableObject {
     
     @Published var isSuccessful: Bool
     @Published var isBadLogin: Bool
+    @Published var isLoggedOut: Bool
     
     init(){
         isSuccessful = false
         isBadLogin = false
+        isLoggedOut = false
     }
     
     func testLogin(user: Int, password: Int) -> Bool{
@@ -30,10 +32,8 @@ final class LoginViewModel: ObservableObject {
         Auth.auth().signIn(withEmail: email, password: password) { result, error in
             if error != nil {
                 self.isSuccessful = false
-                self.isBadLogin = true
             } else{
                 self.isSuccessful = true
-                self.isBadLogin = false
             }
         }
     }

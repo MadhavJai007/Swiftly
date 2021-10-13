@@ -8,6 +8,8 @@ import SwiftUI
 
 struct ChaptersView: View {
     
+    @State var isActive: Bool = false
+    
     @EnvironmentObject var loginViewModel: LoginViewModel // view model for this view
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel /// view model for this view
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
@@ -88,7 +90,9 @@ struct ChaptersView: View {
                     
                     // Nav link to accessing user account
                     NavigationLink(destination: UserAccountView()
-                                    .environmentObject(userAccountViewModel),
+                                    .environmentObject(userAccountViewModel)
+                                    .environmentObject(chaptersViewModel)
+                                    .environmentObject(loginViewModel),
                                    isActive: $chaptersViewModel.isShowingAccountView) {EmptyView()}
                     
                     // Nav link to accessing user account
@@ -100,29 +104,37 @@ struct ChaptersView: View {
                 Spacer()
             }
         }
-        .navigationBarTitle("")
         .navigationBarHidden(true)
         
         .onAppear {
             chaptersViewModel.isShowingAccountView = false
+            chaptersViewModel.didStartChapter = false
             
-            /// Called when the user is logging out
-            if (userAccountViewModel.isUserLoggedIn == false){
-                
-                loginViewModel.isSuccessful = false
-                loginViewModel.isBadLogin = false
-                chaptersViewModel.isFinishedDownloadingChapters = false
-                
-                self.mode.wrappedValue.dismiss()
-                
+//            chapterContentViewModel.willStartQuizSection.toggle()
+//            chapterContentViewModel.willStartInteractiveSection.toggle()
+            
+            
+            /// Called when user quits quiz but these two variables are still true
+            /// You can set them to false when user quits quiz but then you see the other
+            /// views being popped. This way it it only shows 1 view being popped.
+            if (chapterContentViewModel.willStartQuizSection == true){
+                chapterContentViewModel.willStartQuizSection = false
             }
-        }
-        
-        .onDisappear {
-            /// Clearing the chapters array if the user is logging out
-            if (userAccountViewModel.isUserLoggedIn == false){
-                chaptersViewModel.chaptersArr.removeAll()
+            
+            if (chapterContentViewModel.willStartInteractiveSection == true){
+                chapterContentViewModel.willStartInteractiveSection = false
             }
+            
+            /// Called when the user is logging out --> NOT NEEDED
+//            if (userAccountViewModel.isUserLoggedIn == false){
+//
+//                loginViewModel.isSuccessful = false
+//                loginViewModel.isBadLogin = false
+//                chaptersViewModel.isUserLoggedIn = false
+//
+//                self.mode.wrappedValue.dismiss()
+//
+//            }
         }
     }
 }

@@ -12,7 +12,7 @@ import UIKit
 /// three screens and so on. Might have to use a grid view where each cell is the size of the screen.
 
 struct ChapterContentView: View {
-    
+        
     var chapter = MockData.sampleChapter
 
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
@@ -35,9 +35,9 @@ struct ChapterContentView: View {
                     HStack {
                         
                         Button{
-                            self.mode.wrappedValue.dismiss()
+                            chaptersViewModel.didStartChapter.toggle()
                         }label:{
-                            ChapterNavBarIcon(iconName: "xmark")
+                            ChapterNavBarIcon(iconName: "chevron.backward")
                         }
                         .padding(.leading, 30)
                         

@@ -11,6 +11,9 @@ import SwiftUI
 struct UserAccountView: View {
     
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel /// view model for this view
+    @EnvironmentObject var chaptersViewModel: ChaptersViewModel
+    @EnvironmentObject var loginViewModel: LoginViewModel
+    
     
     /// Used to manually pop from nav view stack
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
@@ -25,13 +28,12 @@ struct UserAccountView: View {
                     .ignoresSafeArea()
                 
                 
-                
                 VStack{
                     
                     HStack {
                         
                         Button{
-                            self.mode.wrappedValue.dismiss()
+                            chaptersViewModel.isShowingAccountView.toggle()
                         }label:{
                             UserAccountNavBarIcon(iconName: "chevron.backward")
                         }
@@ -42,7 +44,7 @@ struct UserAccountView: View {
                         
                         
                         Button{
-                            //                            self.mode.wrappedValue.dismiss()
+                            /// Todo: Edit account
                         }label:{
                             UserAccountNavBarIcon(iconName: "gearshape")
                         }
@@ -90,13 +92,19 @@ struct UserAccountView: View {
                             }
                             
                             Button{
+                                
+                                /// Actually logs user out
                                 userAccountViewModel.logoutUser()
                                 
-                                if (userAccountViewModel.isUserLoggedIn == false){
-                                    self.mode.wrappedValue.dismiss()
+                                if (userAccountViewModel.logoutSuccessful){
+                                    /// Called to pop to login view
+                                    loginViewModel.isSuccessful = false
+                                    chaptersViewModel.chaptersArr.removeAll()
+                                    chaptersViewModel.isUserLoggedIn.toggle()
                                 }else{
-                                    print("Something went wrong with logging out.")
+                                    /// Todo: Show some alert
                                 }
+                                
                                 
                             }label: {
                                 LogoutLabel(text: "Logout")

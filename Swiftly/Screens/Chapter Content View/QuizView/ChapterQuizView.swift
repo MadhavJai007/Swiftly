@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ChapterQuizView: View {
     
+    
     /// Used to manually pop from nav view stack
     @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
@@ -16,7 +17,42 @@ struct ChapterQuizView: View {
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        
+        GeometryReader { geometry in
+            
+            ZStack{
+                
+                Color.blackCustom
+                    .ignoresSafeArea()
+                
+                VStack{
+                    HStack {
+                        
+                        Button{
+                            chaptersViewModel.didStartChapter.toggle()
+                            
+                        }label:{
+                            ChapterNavBarIcon(iconName: "xmark")
+                        }
+                        .padding(.leading, 30)
+                        
+                        Spacer()
+                    }
+                    .padding(.top, geometry.size.width/16)
+                    .padding(.bottom, geometry.size.width/16)
+                    
+                    Spacer()
+                    /// Todo: Tab View
+                    
+                }
+            }
+            
+            
+        }
+        .navigationBarHidden(true)
+        
+        
+     
     }
 }
 

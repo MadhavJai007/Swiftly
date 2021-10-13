@@ -33,6 +33,7 @@
 		DADCC3B12714C8F60071D287 /* InteractiveBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADCC3B02714C8F60071D287 /* InteractiveBlock.swift */; };
 		DADCC3B52715C42B0071D287 /* ChapterQuizView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADCC3B42715C42B0071D287 /* ChapterQuizView.swift */; };
 		DADCC3B72715D3B50071D287 /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADCC3B62715D3B50071D287 /* Playground.swift */; };
+		DADCC3B927162D000071D287 /* Quiz.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADCC3B827162CFF0071D287 /* Quiz.swift */; };
 		DBC0793536759C50964ACED1 /* Pods_Swiftly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11B3422058B48AC46E6C075C /* Pods_Swiftly.framework */; };
 /* End PBXBuildFile section */
 
@@ -68,6 +69,7 @@
 		DADCC3B02714C8F60071D287 /* InteractiveBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveBlock.swift; sourceTree = "<group>"; };
 		DADCC3B42715C42B0071D287 /* ChapterQuizView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterQuizView.swift; sourceTree = "<group>"; };
 		DADCC3B62715D3B50071D287 /* Playground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playground.swift; sourceTree = "<group>"; };
+		DADCC3B827162CFF0071D287 /* Quiz.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Quiz.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +180,7 @@
 				DAD6B31C270A4832002C8A55 /* User.swift */,
 				DADCC3B02714C8F60071D287 /* InteractiveBlock.swift */,
 				DADCC3B62715D3B50071D287 /* Playground.swift */,
+				DADCC3B827162CFF0071D287 /* Quiz.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -407,6 +410,7 @@
 				DA840A14270CB25A00751FB7 /* LeaderboardView.swift in Sources */,
 				DA5C72712703493400E697CD /* ChapterDetailView.swift in Sources */,
 				DADCC3AB27135E1B0071D287 /* InteractiveTileView.swift in Sources */,
+				DADCC3B927162D000071D287 /* Quiz.swift in Sources */,
 				DA5D90ED270614BD0085DE6D /* SignupViewModel.swift in Sources */,
 				DABF368927020134009BF78A /* Chapter.swift in Sources */,
 				DAD6B31B270A3E63002C8A55 /* UserAccountViewModel.swift in Sources */,

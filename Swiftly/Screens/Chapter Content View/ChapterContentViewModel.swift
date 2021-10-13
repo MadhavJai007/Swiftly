@@ -20,7 +20,7 @@ final class ChapterContentViewModel: ObservableObject {
 
     @Published var willQuitChapter = false
     @Published var willStartInteractiveSection = false
-    @Published var didCompleteInteractiveSection = false
+    @Published var willStartQuizSection = false
 
     let columns = [GridItem(.flexible())]
     
@@ -50,7 +50,7 @@ final class ChapterContentViewModel: ObservableObject {
         }
     }
     
-
+    
     func quitChapter(){
         willQuitChapter = true
     }
@@ -62,7 +62,7 @@ final class ChapterContentViewModel: ObservableObject {
     /// Compares users results to the results of the original array
     func completeInteractiveSection(){
         
-//        didCompleteInteractiveSection = true
+        
         var userScore = 0
         
         for i in 0..<chapterPlaygroundBlocks.count {
@@ -72,6 +72,8 @@ final class ChapterContentViewModel: ObservableObject {
             }
             
         }
+        
+        willStartQuizSection = true
         
         print("USER SCORE: \(userScore)")
     }

@@ -11,17 +11,15 @@ import UniformTypeIdentifiers
 
 struct InteractiveView: View {
     
+    
+    
     @State private var dragging: InteractiveBlock?
     
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
-    
-    /// Used to manually pop from nav view stack
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-    
+
     
     var body: some View {
-        
         
         GeometryReader { geometry in
             
@@ -34,7 +32,7 @@ struct InteractiveView: View {
                     
                     HStack {
                         Button{
-                            self.mode.wrappedValue.dismiss()
+                            chapterContentViewModel.willStartInteractiveSection.toggle()
                         }label:{
                             ChapterNavBarIcon(iconName: "chevron.backward")
                             
@@ -114,8 +112,8 @@ struct InteractiveView: View {
         /// Navigation link for showing chapter quiz view
         NavigationLink(destination: ChapterQuizView()
                         .environmentObject(chaptersViewModel)
-                        .environmentObject(chapterContentViewModel)
-                       , isActive: $chapterContentViewModel.didCompleteInteractiveSection) {EmptyView()}
+                        .environmentObject(chapterContentViewModel),
+                       isActive: $chapterContentViewModel.willStartQuizSection) {EmptyView()}
     }
 }
 

@@ -15,7 +15,7 @@ final class ChaptersViewModel: ObservableObject {
     @Published var isShowingChapterDetailView = false
     @Published var isShowingAccountView = false
     @Published var chaptersArr = [Chapter]()
-    @Published var isFinishedDownloadingChapters = false
+    @Published var isUserLoggedIn = false
     @Published var didErrorOccurGrabbingData = false
     
     var startChapterIntent = false
@@ -39,6 +39,11 @@ final class ChaptersViewModel: ObservableObject {
         self.didSelectLeaderboard = true
     }
     
+    /// Called from views to pop to chapters view model
+    func quitChapter(){
+        self.didStartChapter = false
+    }
+    
     /// Downloading chapters from Firebase and appending them to the chapters array
     func getChapterDocs() {
         
@@ -48,7 +53,7 @@ final class ChaptersViewModel: ObservableObject {
             if let err = err {
                 print("Error getting chapter documents: \(err)")
                 self.didErrorOccurGrabbingData = true
-                self.isFinishedDownloadingChapters = false
+                self.isUserLoggedIn = false
             } else {
                 
                 for document in querySnapshot!.documents {
@@ -79,7 +84,7 @@ final class ChaptersViewModel: ObservableObject {
 //                    print("\(document.documentID) => \(document.data())")
                 }
                 
-                self.isFinishedDownloadingChapters = true
+                self.isUserLoggedIn = true
                 self.didErrorOccurGrabbingData = false
             }
         }

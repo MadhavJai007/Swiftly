@@ -10,7 +10,8 @@ import Firebase
 
 final class UserAccountViewModel: ObservableObject {
     
-    @Published var isUserLoggedIn = false
+
+    var logoutSuccessful = false
     
     ///Todo: User object needs to be passed down the view hierarch from the login viewmodel
     var user = MockData.sampleUser
@@ -21,10 +22,11 @@ final class UserAccountViewModel: ObservableObject {
         
         do {
             try Auth.auth().signOut()
-            isUserLoggedIn = false
+            logoutSuccessful = true
         }
         catch {
             print("already logged out")
+            logoutSuccessful = false
             
         }
         

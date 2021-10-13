@@ -63,7 +63,7 @@ struct LoginView: View {
                     Button(){
                         
                         loginViewModel.login(email: email, password: password)
-                        userAccountViewModel.isUserLoggedIn = true
+                        userAccountViewModel.logoutSuccessful = false // --> might not need this?
                         
                         email = ""
                         password = ""
@@ -101,7 +101,7 @@ struct LoginView: View {
                                     .environmentObject(chapterContentViewModel)
                                     .environmentObject(userAccountViewModel)
                                     .environmentObject(leaderboardViewModel),
-                                   isActive: $chaptersViewModel.isFinishedDownloadingChapters) {EmptyView()}
+                                   isActive: $chaptersViewModel.isUserLoggedIn) {EmptyView()}
                     
                     Spacer()
                     Spacer()
@@ -125,7 +125,7 @@ struct LoginView: View {
                 }
                 
                 /// Shows progress loader while chapters are being downloaded
-                if (loginViewModel.isSuccessful){
+                if (loginViewModel.isSuccessful == true){
                     
                         ZStack {
                             
@@ -140,7 +140,7 @@ struct LoginView: View {
                                 .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
                             }
                         }
-                        .frame(width: 150, height: 100)
+                        .frame(width: 150, height: 115)
                         .cornerRadius(20)
                 }
             }
@@ -148,11 +148,8 @@ struct LoginView: View {
         .navigationViewStyle(StackNavigationViewStyle())
         .accentColor(.white)
         
-        /// Resetting variables
-        .onAppear(){
-            loginViewModel.isSuccessful = false
-            loginViewModel.isBadLogin = false
-            chaptersViewModel.isFinishedDownloadingChapters = false
+        .onAppear{
+            chaptersViewModel.isUserLoggedIn = false
         }
         
         .onDisappear {
