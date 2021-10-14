@@ -64,25 +64,16 @@ struct InteractiveQuestionsView: View {
                                         Text("\(question.description)")
                                             .font(.system(size: 28))
                                             .padding(.leading, 10)
-                                        
-                                        Spacer()
-                                        
-                                        LazyVGrid(columns: chapterContentViewModel.columns, spacing: 20) {
-                                            ForEach(chapterContentViewModel.previewBlocks) { block in
-
-                                                /// Creating the tile view and passing the code block struct to it
-                                                InteractiveTileView(codeBlock: block)
-                                                    .cornerRadius(20)
-                                            }
-                                        }
-
-                                        
+                                                                                
                                         Spacer()
                                         
                                         VStack{
                                             
                                             Button {
-                                                chapterContentViewModel.selectedQuestion = question
+                                                chapterContentViewModel.setupPlayground(question: question)
+                                                
+                                                
+                                                
                                             }label: {
                                                 InteractiveStartButton(text: "Start Playground", textColor: Color.white, backgroundColor: Color.blackCustom)
                                             }
@@ -105,6 +96,10 @@ struct InteractiveQuestionsView: View {
                     .frame(width: geometry.size.width/1.20, height: geometry.size.height/1.5)
                     .padding(.top, -50)
                     
+                    NavigationLink(destination: InteractiveView()
+                                    .environmentObject(chaptersViewModel)
+                                    .environmentObject(chapterContentViewModel),
+                                   isActive: $chapterContentViewModel.willStartPlaygroundQuestion) {EmptyView()}
                     
                     Spacer()
                 }

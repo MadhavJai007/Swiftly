@@ -32,9 +32,9 @@ struct InteractiveView: View {
                     
                     HStack {
                         Button{
-                            chapterContentViewModel.willStartInteractiveSection.toggle()
+                            chapterContentViewModel.willStartPlaygroundQuestion.toggle()
                         }label:{
-                            ChapterNavBarIcon(iconName: "chevron.backward")
+                            ChapterNavBarIcon(iconName: "xmark")
                             
                         }
                         .padding(.leading, 30)
