@@ -15,10 +15,12 @@ struct InteractiveTileView: View {
             Text(String(codeBlock.content))
                 .font(.headline)
                 .foregroundColor(.white)
+                .padding(10)
         }
-        .frame(width: UIScreen.screenWidth/1.25, height: 100)
+        .frame(width: UIScreen.screenWidth/1.25, height: 100, alignment: .leading)
         .background(Color.darkGrayCustom)
         .cornerRadius(20)
+        
     }
 }
 

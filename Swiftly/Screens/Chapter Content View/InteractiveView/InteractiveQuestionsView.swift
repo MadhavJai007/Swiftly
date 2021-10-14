@@ -57,13 +57,14 @@ struct InteractiveQuestionsView: View {
                                     VStack(alignment: .leading){
                                         
                                         Text("\(question.title)")
-                                            .font(.system(size: 35))
-                                            .padding(.leading, 10)
+                                            .font(.system(size: 35, weight: .medium))
+                                            .padding(.leading, 20)
                                             .padding(.top, 20)
                                         
                                         Text("\(question.description)")
                                             .font(.system(size: 28))
-                                            .padding(.leading, 10)
+                                            .padding(.leading, 20)
+                                            .padding(.trailing, 20)
                                                                                 
                                         Spacer()
                                         
@@ -71,15 +72,12 @@ struct InteractiveQuestionsView: View {
                                             
                                             Button {
                                                 chapterContentViewModel.setupPlayground(question: question)
-                                                
-                                                
-                                                
                                             }label: {
                                                 InteractiveStartButton(text: "Start Playground", textColor: Color.white, backgroundColor: Color.blackCustom)
                                             }
+                                            .frame(width: geometry.size.width/1.50, height: 120)
                                         }
-                                        .padding(.bottom, 30)
-                                        .padding(.leading, 10)
+                                       
                                     }
                                     
                                     .frame(width: geometry.size.width/1.50, height: geometry.size.height/1.5)

@@ -86,12 +86,20 @@ final class ChaptersViewModel: ObservableObject {
                                 
                                 let title = playgroundDocument.data()["question_title"]! as! String
                                 let description = playgroundDocument.data()["question_description"]! as! String
-                                let blocks = playgroundDocument.data()["code_blocks"]! as! [String]
+                                var blocks = playgroundDocument.data()["code_blocks"]! as! [String]
+                                
+                                
+                                /// Since Firestore doesn't store line break, we have to save them as $s, then
+                                /// once we download the data, we have to replace them with \n
+                                for i in 0..<blocks.count {
+                                    blocks[i] = blocks[i].replacingOccurrences(of: "$n", with: "\n")
+                                }
                                 
                                 let playgroundQuestion = Playground(title: title, description: description, originalArr: blocks)
                                 
                                 playgroundQuestions.append(playgroundQuestion)
                             }
+                        
                             
                             self.chaptersArr.append(Chapter(chapterNum: chapterNum, name: chapterName, difficulty: chapterDifficulty, completionStatus: chapterCompletion, lessonCompletion: lessonCompletion, playgroundCompletion: playgroundCompletion, quizCompletion: quizCompletion, summary: chapterSummary, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions))
                         }     
