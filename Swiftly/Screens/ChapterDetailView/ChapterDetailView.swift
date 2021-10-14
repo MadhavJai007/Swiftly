@@ -7,7 +7,9 @@
 import SwiftUI
 
 struct ChapterDetailView: View {
-
+    
+    let chapter = MockData.sampleChapter
+    
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel // view model for this view
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     
@@ -27,7 +29,7 @@ struct ChapterDetailView: View {
                     
                     HStack{
                         
-                        ChaptersTitle(text: "Chapter \(chaptersViewModel.selectedChapter!.chapterNum)")
+                        ChaptersTitle(text: "Chapter 1")
                             .padding(.trailing, -geometry.size.width/12)
                             .padding(.leading, geometry.size.width/12)
                         
@@ -41,8 +43,6 @@ struct ChapterDetailView: View {
                                 .foregroundColor(.white)
                                 .imageScale(.large)
                                 .frame(width: 25, height: 25)
-                                
-                                
                         }
                         .padding(.trailing, geometry.size.width/12)
                         .padding(.leading, -geometry.size.width/12)
@@ -50,13 +50,13 @@ struct ChapterDetailView: View {
                     
                     HStack{
                         
-                        Text(chaptersViewModel.selectedChapter!.name)
+                        Text("Chapter Name")
                             .font(.system(size: 35,
                                           weight: .bold,
                                           design: .default))
                             .foregroundColor(Color.white)
                         
-                        Image(systemName: chaptersViewModel.selectedChapter!.iconName)
+                        Image(systemName: "cpu")
                             .resizable()
                             .frame(width: 40, height: 40)
                             .foregroundColor(.white)
@@ -70,17 +70,31 @@ struct ChapterDetailView: View {
                     VStack(alignment: .leading){
                         
                         VStack(alignment: .leading, spacing: -geometry.size.width/48){
-                        
-                            ChapterContentText(text: "Estimated Length: \(chaptersViewModel.selectedChapter!.length) minutes")
                             
-                            ChapterContentText(text:"Difficulty Level: \(chaptersViewModel.selectedChapter!.difficulty)")
+                            ChapterContentText(text: "Estimated Length: 15 minutes")
                             
-                            ChapterContentText(text:"Status: \(chaptersViewModel.selectedChapter!.completionStatus)")
+                            ChapterContentText(text:"Difficulty Level: 5")
                             
-                            ChapterContentText(text: chaptersViewModel.selectedChapter!.summary)
+                            ChapterContentText(text:"Status: Incomplete")
+                            
+                            ChapterContentText(text: "This is the chapter summary")
                                 .padding(.trailing, geometry.size.width/6)
                                 .padding(.top, geometry.size.width/24)
                         }
+                        
+                        Spacer()
+                        
+                        
+                        Button{
+                                                            isShowingDetailView = false
+                            chaptersViewModel.startChapterIntent = true
+                            
+                        }label: {
+                            StartChapterButton(text: "Start Chapter", textColor: .white, backgroundColor: Color.blackCustom)
+                        }
+                        .padding(.leading, geometry.size.width/12)
+                        .padding(.bottom, geometry.size.width/12)
+                         
                         
                         
                         VStack(alignment: .leading){
@@ -107,36 +121,13 @@ struct ChapterDetailView: View {
                                 .background(Color.lightGrayCustom)
                                 .cornerRadius(10)
                                 
-                                Button{
-                                    print("tapped")
-                                }label: {
-                                    ChapterDetailsButtonText(text:"Chapter Quiz")
-                                }
-                                .frame(width: 200, height: 50)
-                                .background(Color.lightGrayCustom)
-                                .cornerRadius(10)
                             }
                             .frame(width: geometry.size.width, alignment: .leading)
                         }
+                        Spacer()
                     }
                     .padding(.trailing, -geometry.size.width/12)
                     .padding(.leading, geometry.size.width/12)
-                    
-                    
-                    VStack{
-                        Button{
-                            isShowingDetailView = false
-                            chaptersViewModel.startChapterIntent = true
-                            
-                        }label: {
-                            StartChapterButton(text: "Start Chapter", textColor: .white, backgroundColor: Color.blackCustom)
-                        }
-                    }
-                    .frame(width: geometry.size.width, alignment: .center)
-                    .padding(.top, geometry.size.width/12)
-                        
-                    
-                    Spacer() 
                 }
                 .padding(.top, geometry.size.width/12)
             }
@@ -157,7 +148,7 @@ struct ChapterDetailView: View {
 
 //struct ChapterDetailView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        ChapterDetailView(chapter: MockData.sampleChapter, isShowingDetailView: .constant(false))
+//        ChapterDetailView()
 //    }
 //}
 
@@ -171,10 +162,10 @@ struct StartChapterButton: View {
     
     var body: some View {
         Text(text)
-            .font(.system(size: 35))
-            .fontWeight(.semibold)
+            .font(.system(size: 40))
+            .fontWeight(.medium)
             .padding()
-            .frame(width: 400, height: 75)
+            .frame(width: 500, height: 120)
             .background(backgroundColor)
             .foregroundColor(textColor)
             .cornerRadius(15)

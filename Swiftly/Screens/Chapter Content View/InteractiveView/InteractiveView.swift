@@ -110,10 +110,10 @@ struct InteractiveView: View {
         .navigationBarHidden(true)
         
         /// Navigation link for showing chapter quiz view
-        NavigationLink(destination: ChapterQuizView()
-                        .environmentObject(chaptersViewModel)
-                        .environmentObject(chapterContentViewModel),
-                       isActive: $chapterContentViewModel.willStartQuizSection) {EmptyView()}
+//        NavigationLink(destination: ChapterQuizView()
+//                        .environmentObject(chaptersViewModel)
+//                        .environmentObject(chapterContentViewModel),
+//                       isActive: $chapterContentViewModel.willStartQuizSection) {EmptyView()}
     }
 }
 

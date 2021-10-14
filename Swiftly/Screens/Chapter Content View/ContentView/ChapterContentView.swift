@@ -168,7 +168,7 @@ struct ChapterContentView: View {
                 }
             }
             
-            NavigationLink(destination: InteractiveView()
+            NavigationLink(destination: InteractiveQuestionsView()
                             .environmentObject(chaptersViewModel)
                             .environmentObject(chapterContentViewModel),
                            isActive: $chapterContentViewModel.willStartInteractiveSection) {EmptyView()}

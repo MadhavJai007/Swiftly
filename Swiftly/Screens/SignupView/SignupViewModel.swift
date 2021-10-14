@@ -36,7 +36,7 @@ final class SignupViewModel: ObservableObject {
     
     private var db = Firestore.firestore()
     
-    
+    ///Todo: Check if user already exists --> if they do, don't add user
     func authenticateUser(user: User){
         Auth.auth().createUser(withEmail: user.email, password: user.password) { authResult, error in
             // [START_EXCLUDE]

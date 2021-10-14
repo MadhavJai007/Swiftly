@@ -32,12 +32,17 @@ struct MockData {
     
     static let sampleChapter = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, completionStatus: "Mid", lessonCompletion: "Yes", playgroundCompletion: "No", quizCompletion: "No", summary: "SUmmary", length: 24, iconName: "cpu", playgroundContent: Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"]))
     
+    static let sampleChapter2 = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, completionStatus: "Mid", lessonCompletion: "Yes", playgroundCompletion: "No", quizCompletion: "No", summary: "SUmmary", length: 24, iconName: "cpu", playgroundContent: Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"]))
+    
+    static let sampleChapter3 = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, completionStatus: "Mid", lessonCompletion: "Yes", playgroundCompletion: "No", quizCompletion: "No", summary: "SUmmary", length: 24, iconName: "cpu", playgroundContent: Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"]))
+    
+    static let sampleChapter4 = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, completionStatus: "Mid", lessonCompletion: "Yes", playgroundCompletion: "No", quizCompletion: "No", summary: "SUmmary", length: 24, iconName: "cpu", playgroundContent: Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"]))
+    
     
     static let Chapters = [
         sampleChapter,
-        sampleChapter,
-        sampleChapter,
-        sampleChapter,
+        sampleChapter2,
+        sampleChapter3
     ]
     
 }
