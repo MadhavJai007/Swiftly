@@ -92,7 +92,7 @@ struct InteractiveView: View {
                             
                             VStack(alignment: .center){
                                 Button{
-                                    chapterContentViewModel.completeInteractiveSection()
+//                                    chapterContentViewModel.completeInteractiveSection()
                                 }label: {
                                     InteractiveSubTitle(text: "Submit")
                                 }

@@ -29,7 +29,7 @@ struct ChaptersView: View {
                 
                 VStack{
                     HStack {
-                    
+                        
                         Button{
                             chaptersViewModel.isShowingAccountView.toggle()
                         }label: {
@@ -110,17 +110,6 @@ struct ChaptersView: View {
             chaptersViewModel.isShowingAccountView = false
             chaptersViewModel.didStartChapter = false
             
-//            chapterContentViewModel.willStartQuizSection.toggle()
-//            chapterContentViewModel.willStartInteractiveSection.toggle()
-            
-            
-            /// Called when user quits quiz but these two variables are still true
-            /// You can set them to false when user quits quiz but then you see the other
-            /// views being popped. This way it it only shows 1 view being popped.
-            if (chapterContentViewModel.willStartQuizSection == true){
-                chapterContentViewModel.willStartQuizSection = false
-            }
-            
             if (chapterContentViewModel.willStartInteractiveSection == true){
                 chapterContentViewModel.willStartInteractiveSection = false
             }
@@ -152,7 +141,7 @@ struct ChaptersTitle: View {
 struct ClassroomInstanceView: View {
     
     var text: String
-
+    
     var body: some View {
         
         Text(text)

@@ -86,7 +86,7 @@ struct ChapterDetailView: View {
                         
                         
                         Button{
-                                                            isShowingDetailView = false
+                            isShowingDetailView = false
                             chaptersViewModel.startChapterIntent = true
                             
                         }label: {
@@ -94,7 +94,7 @@ struct ChapterDetailView: View {
                         }
                         .padding(.leading, geometry.size.width/12)
                         .padding(.bottom, geometry.size.width/12)
-                         
+                        
                         
                         
                         VStack(alignment: .leading){
@@ -137,9 +137,14 @@ struct ChapterDetailView: View {
             /// This is done so that the sheet can be dismissed before the chapter content view
             /// is presented.
             if (chaptersViewModel.startChapterIntent){
-                chaptersViewModel.startChapter()
-                //chapterContentViewModel.chapter = chaptersViewModel.selectedChapter!
+                
+                /// Setting chapter data to chapterContentView
+                chapterContentViewModel.chapter = chaptersViewModel.selectedChapter!
+                chapterContentViewModel.setupPlaygroundQuestions(selectedChapter: chaptersViewModel.selectedChapter!)
+                
+                /// Resetting intentt and telling chaptersViewModel to start the chapter
                 chaptersViewModel.startChapterIntent = false
+                chaptersViewModel.startChapter()
             }
         }
     }

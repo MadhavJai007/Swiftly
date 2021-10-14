@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 
 final class ChaptersViewModel: ObservableObject {
-
+    
     @Published var didStartChapter = false
     @Published var didSelectLeaderboard  = false
     @Published var isShowingChapterDetailView = false
@@ -28,7 +28,7 @@ final class ChaptersViewModel: ObservableObject {
     
     /// 2 x 2 chapter columns
     let columns: [GridItem] = [GridItem(.flexible()), GridItem(.flexible())]
-
+    
     /// Called when the users starts the chapter
     func startChapter(){
         self.didStartChapter = true
@@ -48,6 +48,8 @@ final class ChaptersViewModel: ObservableObject {
     func getChapterDocs() {
         
         let db = Firestore.firestore()
+        
+        
         
         db.collection("Chapters").getDocuments() { (querySnapshot, err) in
             if let err = err {
@@ -69,24 +71,41 @@ final class ChaptersViewModel: ObservableObject {
                     let chapterLength = document.data()["chapter_length"]! as! Int
                     let iconName = document.data()["chapter_icon_name"]! as! String
                     
-                    let playgroundTitle = document.data()["playground_title"]! as! String
-                    let playgroundDescription = document.data()["playground_description"]! as! String
-                    let playgroundBlocks = document.data()["playground_code_blocks"]! as! [String]
-                    
-                    let playgroundContent = Playground(title:playgroundTitle, description: playgroundDescription, originalArr: playgroundBlocks)
-                    
-                    self.chaptersArr.append(Chapter(chapterNum: chapterNum, name: chapterName, difficulty: chapterDifficulty, completionStatus: chapterCompletion, lessonCompletion: lessonCompletion, playgroundCompletion: playgroundCompletion, quizCompletion: quizCompletion, summary: chapterSummary, length: chapterLength, iconName: iconName, playgroundContent: playgroundContent))
-                    
-//                    print("Chapter desc:  \(document.data()["chapter_desc"]!)")
-//                    print("Chapter difficulty:  \(document.data()["chapter_difficulty"]!)")
-//                    print("Chapter title:  \(document.data()["chapter_title"]!)")
-//                    print("Chapter length:  \(document.data()["chapter_length"]!)")
-//                    print("\(document.documentID) => \(document.data())")
+                    db.collection("Chapters").document(document.documentID).collection("playground").getDocuments() {
+                        (querySnapshot, err) in
+                        
+                        if let err = err {
+                            print("Error getting chapter documents: \(err)")
+                            self.didErrorOccurGrabbingData = true
+                            self.isUserLoggedIn = false
+                        } else {
+                        
+                            var playgroundQuestions = [Playground]()
+                            
+                            for playgroundDocument in querySnapshot!.documents {
+                                
+                                let title = playgroundDocument.data()["question_title"]! as! String
+                                let description = playgroundDocument.data()["question_description"]! as! String
+                                let blocks = playgroundDocument.data()["code_blocks"]! as! [String]
+                                
+                                let playgroundQuestion = Playground(title: title, description: description, originalArr: blocks)
+                                
+                                playgroundQuestions.append(playgroundQuestion)
+                            }
+                            
+                            self.chaptersArr.append(Chapter(chapterNum: chapterNum, name: chapterName, difficulty: chapterDifficulty, completionStatus: chapterCompletion, lessonCompletion: lessonCompletion, playgroundCompletion: playgroundCompletion, quizCompletion: quizCompletion, summary: chapterSummary, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions))
+                        }     
+                    }
+                    //                    print("Chapter desc:  \(document.data()["chapter_desc"]!)")
+                    //                    print("Chapter difficulty:  \(document.data()["chapter_difficulty"]!)")
+                    //                    print("Chapter title:  \(document.data()["chapter_title"]!)")
+                    //                    print("Chapter length:  \(document.data()["chapter_length"]!)")
+                    //                    print("\(document.documentID) => \(document.data())")
                 }
                 
                 self.isUserLoggedIn = true
                 self.didErrorOccurGrabbingData = false
             }
         }
-    }  
+    }
 }

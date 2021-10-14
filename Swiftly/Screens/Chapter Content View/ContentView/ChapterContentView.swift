@@ -56,11 +56,11 @@ struct ChapterContentView: View {
                         /// Page 1
                         VStack(alignment: .leading){
                             
-                            ChaptersTitle(text: "Chapter: \(chapter.chapterNum)")
+                            ChaptersTitle(text: "Chapter: \(chapterContentViewModel.chapter.chapterNum)")
                                 .padding(.leading, geometry.size.width/32)
                             
                             HStack{
-                                ChapterTopic(text: chapter.name)
+                                ChapterTopic(text: chapterContentViewModel.chapter.name)
                                 ChapterTopicIcon(iconName: "cpu")
                             }
                             .padding(.leading, geometry.size.width/24)
@@ -175,12 +175,13 @@ struct ChapterContentView: View {
         }
         .navigationBarHidden(true)
         
-        .onAppear(){
-            
-            if (chapterContentViewModel.chapter == MockData.sampleChapter){
-                chapterContentViewModel.setupPlayground(selectedChapter: chaptersViewModel.selectedChapter!)
-            }
-        }
+//        .onAppear(){
+//
+//            /// Loading chapter  playground into the chapterContentViewModel
+//            if (chapterContentViewModel.chapter != chaptersViewModel.selectedChapter!){
+//                chapterContentViewModel.setupPlaygroundQuestions(selectedChapter: chaptersViewModel.selectedChapter!)
+//            }
+//        }
     }
 }
 

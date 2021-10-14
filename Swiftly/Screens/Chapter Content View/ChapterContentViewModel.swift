@@ -11,45 +11,66 @@ import SwiftUI
 final class ChapterContentViewModel: ObservableObject {
     
     
-    /// Representing the current chapter and it's playground blocks
+    /// Representing the current chapter and it's playground questions
     var chapter: Chapter
-    var chapterPlaygroundBlocks: [String]
+    var chapterPlaygroundQuestions: [Playground]
+    var selectedQuestion: Playground
     
     /// This is used to allow interaction with blocks
     @Published var activeBlocks: [InteractiveBlock]
-
     @Published var willQuitChapter = false
     @Published var willStartInteractiveSection = false
-    @Published var willStartQuizSection = false
+    
+    var previewBlocks: [InteractiveBlock]
 
     let columns = [GridItem(.flexible())]
     
-
     /// Init variables with basic data
     init(){
         chapter = MockData.sampleChapter
-        chapterPlaygroundBlocks = chapter.playgroundContent.originalArr
-        activeBlocks = Array(repeating: InteractiveBlock(id: 0, content: ""), count: self.chapterPlaygroundBlocks.count)
+        chapterPlaygroundQuestions = chapter.playgroundArr
+        selectedQuestion = chapterPlaygroundQuestions[0]
+        activeBlocks = Array(repeating: InteractiveBlock(id: 0, content: ""), count: 1)
+        previewBlocks = Array(repeating: InteractiveBlock(id: 0, content: ""), count: 1)
     }
     
     
     /// Called to setup the playground environment
-    func setupPlayground(selectedChapter: Chapter){
+    func setupPlaygroundQuestions(selectedChapter: Chapter){
         
-        /// Grabs chapter and chapter playground content data
+        /// Grabs chapter and chapter playground questions
         chapter = selectedChapter
-        chapterPlaygroundBlocks = chapter.playgroundContent.originalArr
+        chapterPlaygroundQuestions = chapter.playgroundArr
+    }
+    
+    func setupPreviewBlocks(question: Playground){
+        
+        let codeBlocks = question.originalArr
         
         /// Pre-populates array with interactive block objects
-        activeBlocks = Array(repeating: InteractiveBlock(id: 0, content: ""), count: self.chapterPlaygroundBlocks.count)
+        previewBlocks = Array(repeating: InteractiveBlock(id: 0, content: ""), count: codeBlocks.count)
         
         /// Copying content from playground blocks to array active blocks --> active blocks is the array that is copied and
         /// the user interacts with it. It gets compared to the original array to get user score.
-        for i in 0..<chapterPlaygroundBlocks.count {
-            activeBlocks[i] = InteractiveBlock(id: i, content: chapterPlaygroundBlocks[i])
+        for i in 0..<codeBlocks.count {
+            previewBlocks[i] = InteractiveBlock(id: i, content: codeBlocks[i])
         }
     }
     
+    func setupPlayground(){
+        
+        let codeBlocks = selectedQuestion.originalArr
+        
+        /// Pre-populates array with interactive block objects
+        activeBlocks = Array(repeating: InteractiveBlock(id: 0, content: ""), count: codeBlocks.count)
+        
+        /// Copying content from playground blocks to array active blocks --> active blocks is the array that is copied and
+        /// the user interacts with it. It gets compared to the original array to get user score.
+        for i in 0..<codeBlocks.count {
+            activeBlocks[i] = InteractiveBlock(id: i, content: codeBlocks[i])
+        }
+    }
+
     
     func quitChapter(){
         willQuitChapter = true
@@ -60,21 +81,21 @@ final class ChapterContentViewModel: ObservableObject {
     }
     
     /// Compares users results to the results of the original array
-    func completeInteractiveSection(){
-        
-        
-        var userScore = 0
-        
-        for i in 0..<chapterPlaygroundBlocks.count {
-            
-            if (activeBlocks[i].content == chapterPlaygroundBlocks[i]){
-                userScore += 1
-            }
-            
-        }
-        
-        willStartQuizSection = true
-        
-        print("USER SCORE: \(userScore)")
-    }
+//    func completeInteractiveSection(){
+//
+//
+//        var userScore = 0
+//
+//        for i in 0..<chapterPlaygroundBlocks.count {
+//
+//            if (activeBlocks[i].content == chapterPlaygroundBlocks[i]){
+//                userScore += 1
+//            }
+//
+//        }
+//
+//        willStartQuizSection = true
+//
+//        print("USER SCORE: \(userScore)")
+//    }
 }

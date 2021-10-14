@@ -14,8 +14,6 @@ struct InteractiveQuestionsView: View {
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     
     
-    
-    
     var body: some View {
         
         
@@ -46,37 +44,45 @@ struct InteractiveQuestionsView: View {
                     
                     PlaygroundTitleLabel(text: "Playgrounds")
                     
-                    ScrollView(.horizontal) {
+                    ScrollView(.horizontal, showsIndicators: false) {
                         
                         LazyHGrid(rows: [GridItem(.flexible())], spacing: 10){
                             
-                            ForEach(MockData.Chapters) { chapter in
+                            ForEach(chaptersViewModel.selectedChapter!.playgroundArr) { question in
                                 
+                        
                               
                                 VStack{
                                     
                                     VStack(alignment: .leading){
                                         
-                                        Text("Playground Problem 1")
+                                        Text("\(question.title)")
                                             .font(.system(size: 35))
                                             .padding(.leading, 10)
                                             .padding(.top, 20)
                                         
-                                        Text("Problem Description")
-                                            .font(.system(size: 30, weight: .semibold))
-                                            .padding(.leading, 10)
-                                            .padding(.top, 1)
-                                        
-                                        Text("This text contains some information regarding the problem description")
+                                        Text("\(question.description)")
                                             .font(.system(size: 28))
                                             .padding(.leading, 10)
+                                        
+                                        Spacer()
+                                        
+                                        LazyVGrid(columns: chapterContentViewModel.columns, spacing: 20) {
+                                            ForEach(chapterContentViewModel.previewBlocks) { block in
+
+                                                /// Creating the tile view and passing the code block struct to it
+                                                InteractiveTileView(codeBlock: block)
+                                                    .cornerRadius(20)
+                                            }
+                                        }
+
                                         
                                         Spacer()
                                         
                                         VStack{
                                             
                                             Button {
-                                                print("ok")
+                                                chapterContentViewModel.selectedQuestion = question
                                             }label: {
                                                 InteractiveStartButton(text: "Start Playground", textColor: Color.white, backgroundColor: Color.blackCustom)
                                             }
