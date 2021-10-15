@@ -24,6 +24,7 @@ final class SignupViewModel: ObservableObject {
         //initializer
     }
     
+    
     //create newUser variable to store account information to be passed to the database
     
     @Published var newUser = User(firstName: "",
@@ -40,18 +41,17 @@ final class SignupViewModel: ObservableObject {
     ///Todo: Check if user already exists --> if they do, don't add user
     func authenticateUser(user: User){
         Auth.auth().createUser(withEmail: user.email, password: user.password) { authResult, error in
-            // [START_EXCLUDE]
                           guard let user = authResult?.user, error == nil else {
                             return
                           }
-                          print("\(user.email!) created")
-                        // [END_EXCLUDE]
+                          print("\(user.email!) has successfully been added to the authentication database!")
         }
     }
     
     
     func addUser(user: User, accountType: String){
-            // adding a new document in either student or teacher collection depending on account type chosen
+        
+        // creating a new document in either student or teacher collection depending on account type chosen
         
         print("is \(accountType)")
         switch accountType {
@@ -86,10 +86,11 @@ final class SignupViewModel: ObservableObject {
                 }
             }
         default:
-            print("This shouldn't be happening")
+            print("Error in determining between Teacher and Student account type")
         }
         
-        // also add the account to the general users collection
+        // adding user to the "Users" collection in database
+        
         db.collection("Users").document(user.username).setData([
             "password": user.password,
             "user_email": user.email,
@@ -106,8 +107,8 @@ final class SignupViewModel: ObservableObject {
     }
     
     func save(accountType: String){
-//            print(newUser)
         authenticateUser(user: newUser)
+        print("User Successfully authenticated, now to add full user info to database.")
         addUser(user: newUser, accountType: accountType)
     }
     
