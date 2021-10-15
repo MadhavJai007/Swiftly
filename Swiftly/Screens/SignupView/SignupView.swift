@@ -177,7 +177,7 @@ struct SignupView: View {
                     // Create account button
                     Button{
                         //create newUsser variable to push to database
-                        createAccount()
+                        createAccount(accountType: selectedType)
                     }label:{
                         CreateAccountButton(text: "Create Account", textColor: .white, backgroundColor: Color.blackCustom)
                             .padding(geometry.size.width/42)
@@ -189,8 +189,9 @@ struct SignupView: View {
             
     }
     
-    func createAccount() {
-        viewModel.save()
+    func createAccount(accountType: String) {
+        
+        viewModel.save(accountType: accountType)
         self.mode.wrappedValue.dismiss()
     }
 }

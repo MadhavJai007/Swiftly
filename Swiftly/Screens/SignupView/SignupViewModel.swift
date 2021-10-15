@@ -32,7 +32,8 @@ final class SignupViewModel: ObservableObject {
                        email: "",
                        password: "",
                        dob: "",
-                       country: "")
+                       country: ""
+                    )
     
     private var db = Firestore.firestore()
     
@@ -49,8 +50,12 @@ final class SignupViewModel: ObservableObject {
     }
     
     
-    func addUser(user: User){
-            // adding a new document in collection "Students"
+    func addUser(user: User, accountType: String){
+            // adding a new document in either student or teacher collection depending on account type chosen
+        
+        print("is \(accountType)")
+        switch accountType {
+        case "Student":
             db.collection("Students").document(user.username).setData([
                 "country": user.country,
                 "date_of_birth": user.dob,
@@ -62,15 +67,48 @@ final class SignupViewModel: ObservableObject {
                 if let err = err {
                     print("Error writing document: \(err)")
                 } else {
-                    print("Document successfully written!")
+                    print("Student successfully added!")
                 }
             }
+        case "Teacher":
+            db.collection("Teachers").document(user.username).setData([
+                "country": user.country,
+                "date_of_birth": user.dob,
+                "email": user.email,
+                "firstname" : user.firstName,
+                "lastName" : user.lastName,
+                "password" : user.password
+            ]) { err in
+                if let err = err {
+                    print("Error writing document: \(err)")
+                } else {
+                    print("Teacher successfully added!")
+                }
+            }
+        default:
+            print("This shouldn't be happening")
+        }
+        
+        // also add the account to the general users collection
+        db.collection("Users").document(user.username).setData([
+            "password": user.password,
+            "user_email": user.email,
+            "user_type": accountType
+        ]) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+            } else {
+                print("User successfully added!")
+            }
+        }
+            
 
     }
     
-    func save(){
+    func save(accountType: String){
+//            print(newUser)
         authenticateUser(user: newUser)
-        addUser(user: newUser)
+        addUser(user: newUser, accountType: accountType)
     }
     
     
