@@ -9,13 +9,10 @@ struct SignupView: View {
     var userTypes = ["Student", "Teacher"]
     @State private var selectedType = "Student"
     
-    @State private var placeholder = "Placeholder"
-    
-    @StateObject var viewModel = SignupViewModel()
-    
-    
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-    
+    @EnvironmentObject var loginViewModel: LoginViewModel
+    @EnvironmentObject var signupViewModel: SignupViewModel /// view model for this view
+    @EnvironmentObject var chaptersViewModel: ChaptersViewModel
+    @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     
     var body: some View {
         
@@ -29,13 +26,25 @@ struct SignupView: View {
                     .ignoresSafeArea()
                 
                 VStack {
-                
+                    
+                    HStack {
+                        Button{
+                            loginViewModel.isShowingSignupView.toggle()
+                        }label:{
+                            ChapterNavBarIcon(iconName: "chevron.backward")
+                        }
+                        .padding(.leading, 30)
+
+                        Spacer()
+                    }
+                    .padding(.top, geometry.size.width/24)
+                    .padding(.bottom, geometry.size.width/24)
+                    
                     // Title
                     Text("Account Creation")
-                        .font(.system(size: 75,design: .serif))
+                        .font(.system(size: 75))
                         .foregroundColor(.white)
                         .padding(.bottom, geometry.size.width/42)
-                        .padding(.top, -geometry.size.width/42)
                     
                     // Username
                     VStack(alignment: .leading){
@@ -45,7 +54,7 @@ struct SignupView: View {
                         
 
                     
-                        TextField("Username", text : $viewModel.newUser.username)
+                        TextField("Username", text : $signupViewModel.newUser.username)
                             .font(.system(size: 30))
                             .padding()
                             .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
@@ -54,8 +63,8 @@ struct SignupView: View {
                             .cornerRadius(15)
                         
                     }
-                    
-                    
+                    .padding(geometry.size.width/42)
+                         
                     
                     // First and last name
                     HStack(spacing:geometry.size.width/18){
@@ -66,7 +75,7 @@ struct SignupView: View {
                                 .padding(.bottom, -geometry.size.width/120)
                             
                             
-                            TextField("First Name", text : $viewModel.newUser.firstName)
+                            TextField("First Name", text : $signupViewModel.newUser.firstName)
                                 .font(.system(size: 30))
                                 .padding()
                                 .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
@@ -80,7 +89,7 @@ struct SignupView: View {
                             InputFieldLabel(text:"Last Name")
                                 .padding(.bottom, -geometry.size.width/120)
 
-                            TextField("Last Name", text : $viewModel.newUser.lastName)
+                            TextField("Last Name", text : $signupViewModel.newUser.lastName)
                                 .font(.system(size: 30))
                                 .padding()
                                 .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
@@ -88,7 +97,7 @@ struct SignupView: View {
                                 .foregroundColor(.darkGrayCustom)
                                 .cornerRadius(15)
                         }
-                    }.padding(.bottom, geometry.size.width/42)
+                    }.padding(geometry.size.width/42)
                     
                     // Country and DOB
                     HStack(spacing:geometry.size.width/18){
@@ -98,7 +107,7 @@ struct SignupView: View {
                             InputFieldLabel(text:"Country")
                                 .padding(.bottom, -geometry.size.width/120)
                             
-                            TextField("Country", text : $viewModel.newUser.country)
+                            TextField("Country", text : $signupViewModel.newUser.country)
                                 .font(.system(size: 30))
                                 .padding()
                                 .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
@@ -114,7 +123,7 @@ struct SignupView: View {
                             InputFieldLabel(text:"Date of Birth")
                                 .padding(.bottom, -geometry.size.width/120)
                             
-                            TextField("Date of Birth", text : $viewModel.newUser.dob)
+                            TextField("Date of Birth", text : $signupViewModel.newUser.dob)
                                 .font(.system(size: 30))
                                 .padding()
                                 .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
@@ -122,7 +131,8 @@ struct SignupView: View {
                                 .foregroundColor(.darkGrayCustom)
                                 .cornerRadius(15)
                         }
-                    }.padding(.bottom, geometry.size.width/42)
+                    }
+                    .padding(geometry.size.width/42)
                     
                     // Email Address
                     VStack(alignment: .leading){
@@ -130,7 +140,7 @@ struct SignupView: View {
                         InputFieldLabel(text:"Email Address")
                             .padding(.bottom, -geometry.size.width/120)
                         
-                        TextField("Email", text : $viewModel.newUser.email)
+                        TextField("Email", text : $signupViewModel.newUser.email)
                             .font(.system(size: 30))
                             .padding()
                             .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
@@ -138,7 +148,8 @@ struct SignupView: View {
                             .foregroundColor(.darkGrayCustom)
                             .cornerRadius(15)
                         
-                    }.padding(.bottom, geometry.size.width/42)
+                    }
+                    .padding(geometry.size.width/42)
                     
                     // Password
                     VStack(alignment: .leading){
@@ -146,7 +157,7 @@ struct SignupView: View {
                         InputFieldLabel(text:"Password")
                             .padding(.bottom, -geometry.size.width/120)
                         
-                        TextField("Password", text : $viewModel.newUser.password)
+                        TextField("Password", text : $signupViewModel.newUser.password)
                             .font(.system(size: 30))
                             .padding()
                             .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
@@ -154,7 +165,8 @@ struct SignupView: View {
                             .foregroundColor(.darkGrayCustom)
                             .cornerRadius(15)
                         
-                    }.padding(.bottom, geometry.size.width/42)
+                    }
+                    .padding(geometry.size.width/42)
                     
                     HStack{
                         
@@ -176,23 +188,22 @@ struct SignupView: View {
                     
                     // Create account button
                     Button{
-                        //create newUsser variable to push to database
                         createAccount(accountType: selectedType)
                     }label:{
                         CreateAccountButton(text: "Create Account", textColor: .white, backgroundColor: Color.blackCustom)
                             .padding(geometry.size.width/42)
                     }
+                    
                 }
                 Spacer()
             }
+            .navigationBarHidden(true)
         }
-            
     }
     
     func createAccount(accountType: String) {
-        
-        viewModel.save(accountType: accountType)
-        self.mode.wrappedValue.dismiss()
+        signupViewModel.save(accountType: accountType)
+        loginViewModel.isShowingSignupView.toggle()
     }
 }
 
@@ -236,4 +247,3 @@ struct CreateAccountButton: View {
             .cornerRadius(15)
     }
 }
-

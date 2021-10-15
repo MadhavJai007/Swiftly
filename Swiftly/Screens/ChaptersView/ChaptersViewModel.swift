@@ -102,6 +102,9 @@ final class ChaptersViewModel: ObservableObject {
                         
                             
                             self.chaptersArr.append(Chapter(chapterNum: chapterNum, name: chapterName, difficulty: chapterDifficulty, completionStatus: chapterCompletion, lessonCompletion: lessonCompletion, playgroundCompletion: playgroundCompletion, quizCompletion: quizCompletion, summary: chapterSummary, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions))
+                            
+                            self.isUserLoggedIn = true
+                            self.didErrorOccurGrabbingData = false
                         }     
                     }
                     //                    print("Chapter desc:  \(document.data()["chapter_desc"]!)")
@@ -111,8 +114,7 @@ final class ChaptersViewModel: ObservableObject {
                     //                    print("\(document.documentID) => \(document.data())")
                 }
                 
-                self.isUserLoggedIn = true
-                self.didErrorOccurGrabbingData = false
+               
             }
         }
     }

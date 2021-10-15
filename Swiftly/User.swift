@@ -23,4 +23,3 @@ struct User: Hashable, Identifiable, Codable {
 
 }
 
-

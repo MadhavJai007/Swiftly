@@ -92,7 +92,7 @@ struct InteractiveView: View {
                             
                             VStack(alignment: .center){
                                 Button{
-//                                    chapterContentViewModel.completeInteractiveSection()
+                                    chapterContentViewModel.completeInteractiveSection()
                                 }label: {
                                     InteractiveSubTitle(text: "Submit")
                                 }
@@ -108,12 +108,6 @@ struct InteractiveView: View {
             }
         }
         .navigationBarHidden(true)
-        
-        /// Navigation link for showing chapter quiz view
-//        NavigationLink(destination: ChapterQuizView()
-//                        .environmentObject(chaptersViewModel)
-//                        .environmentObject(chapterContentViewModel),
-//                       isActive: $chapterContentViewModel.willStartQuizSection) {EmptyView()}
     }
 }
 

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DA0866AB2717702E00B1999E /* InteractiveQuestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866AA2717702E00B1999E /* InteractiveQuestionsView.swift */; };
+		DA0866B82719CC0D00B1999E /* EditAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866B72719CC0C00B1999E /* EditAccountView.swift */; };
 		DA2122DE26FE07820016587F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2122DD26FE07820016587F /* LoginView.swift */; };
 		DA5C72712703493400E697CD /* ChapterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5C72702703493400E697CD /* ChapterDetailView.swift */; };
 		DA5D90EB270614B20085DE6D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5D90EA270614B20085DE6D /* LoginViewModel.swift */; };
@@ -41,6 +42,7 @@
 		66F71B613F71F71DCB1B8233 /* Pods-Swiftly.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swiftly.release.xcconfig"; path = "Target Support Files/Pods-Swiftly/Pods-Swiftly.release.xcconfig"; sourceTree = "<group>"; };
 		8FDBE6C6B205D978766E6A18 /* Pods-Swiftly.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swiftly.debug.xcconfig"; path = "Target Support Files/Pods-Swiftly/Pods-Swiftly.debug.xcconfig"; sourceTree = "<group>"; };
 		DA0866AA2717702E00B1999E /* InteractiveQuestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveQuestionsView.swift; sourceTree = "<group>"; };
+		DA0866B72719CC0C00B1999E /* EditAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountView.swift; sourceTree = "<group>"; };
 		DA2122DD26FE07820016587F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DA5C72702703493400E697CD /* ChapterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterDetailView.swift; sourceTree = "<group>"; };
 		DA5D90EA270614B20085DE6D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -88,6 +90,22 @@
 				11B3422058B48AC46E6C075C /* Pods_Swiftly.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DA0866B62719CBF600B1999E /* EditAccountView */ = {
+			isa = PBXGroup;
+			children = (
+				DA0866B72719CC0C00B1999E /* EditAccountView.swift */,
+			);
+			path = EditAccountView;
+			sourceTree = "<group>";
+		};
+		DA0866B92719CC1200B1999E /* AccountView */ = {
+			isa = PBXGroup;
+			children = (
+				DAD6B318270A3C71002C8A55 /* UserAccountView.swift */,
+			);
+			path = AccountView;
 			sourceTree = "<group>";
 		};
 		DA5C726D270348F200E697CD /* ChapterDetailView */ = {
@@ -239,7 +257,8 @@
 		DAD6B317270A3C52002C8A55 /* User Account View */ = {
 			isa = PBXGroup;
 			children = (
-				DAD6B318270A3C71002C8A55 /* UserAccountView.swift */,
+				DA0866B92719CC1200B1999E /* AccountView */,
+				DA0866B62719CBF600B1999E /* EditAccountView */,
 				DAD6B31A270A3E63002C8A55 /* UserAccountViewModel.swift */,
 			);
 			path = "User Account View";
@@ -391,6 +410,7 @@
 				DAD6B3162708A3CC002C8A55 /* ChapterContentViewModel.swift in Sources */,
 				DADCC3B12714C8F60071D287 /* InteractiveBlock.swift in Sources */,
 				DAD6B319270A3C71002C8A55 /* UserAccountView.swift in Sources */,
+				DA0866B82719CC0D00B1999E /* EditAccountView.swift in Sources */,
 				DA840A16270CB26800751FB7 /* LeaderboardViewModel.swift in Sources */,
 				DAD6B31D270A4833002C8A55 /* User.swift in Sources */,
 				DA79656326FE3E4B00CAE327 /* Colors.swift in Sources */,

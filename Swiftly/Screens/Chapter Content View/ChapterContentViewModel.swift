@@ -73,21 +73,20 @@ final class ChapterContentViewModel: ObservableObject {
     }
     
     /// Compares users results to the results of the original array
-//    func completeInteractiveSection(){
-//
-//
-//        var userScore = 0
-//
-//        for i in 0..<chapterPlaygroundBlocks.count {
-//
-//            if (activeBlocks[i].content == chapterPlaygroundBlocks[i]){
-//                userScore += 1
-//            }
-//
-//        }
-//
-//        willStartQuizSection = true
-//
-//        print("USER SCORE: \(userScore)")
-//    }
+    func completeInteractiveSection(){
+
+        var userScore = 0
+
+        for i in 0..<selectedQuestion.originalArr.count {
+
+            if (activeBlocks[i].content == selectedQuestion.originalArr[i]){
+                userScore += 1
+            }
+
+        }
+
+        
+
+        print("USER SCORE: \(userScore)")
+    }
 }

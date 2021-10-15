@@ -96,6 +96,9 @@ struct LoginView: View {
                         Alert(title: Text("Uh-Oh"), message: Text("There was an error loading chapters. Please try again later."), dismissButton: .default(Text("OK")))
                     }
                     
+                    
+                    
+                    
                     /// Navigation link for chapters view --> is only toggled when chapters view model is
                     /// finished downloading chapters from remote db.
                     NavigationLink(destination: ChaptersView()
@@ -114,37 +117,43 @@ struct LoginView: View {
                             .font(.system(size: 25, weight: .light))
                             .foregroundColor(.white)
                         
+                        
+                        Button{
+                            loginViewModel.isShowingSignupView.toggle()
+                        }label: {
+                            
+                            LoginSignupButton(text: "Tap to sign up", textColor: .white, backgroundColor: Color.blackCustom)
+                        }
+                        .padding(.bottom, 50)
+                        
                         /// Navigation for signup view
                         NavigationLink(destination: SignupView()
                                         .environmentObject(loginViewModel)
                                         .environmentObject(signupViewModel)
                                         .environmentObject(chaptersViewModel)
-                                        .environmentObject(chapterContentViewModel)) {
-                            
-                            LoginSignupButton(text: "Tap to sign up", textColor: .white, backgroundColor: Color.blackCustom)
-                        }
+                                        .environmentObject(chapterContentViewModel),
+                                       isActive: $loginViewModel.isShowingSignupView) {EmptyView()}
                     }
-                    .padding(.bottom, 50)
                 }
                 
                 /// Shows progress loader while chapters are being downloaded
                 if (loginViewModel.isSuccessful == true){
                     
-                        ZStack {
-                            
-                            Color.blackCustom
-                            
-                            VStack{
-                                ProgressView {
-                                    Text("Loading")
-                                        .foregroundColor(Color.whiteCustom)
-                                        .font(.system(size: 20))
-                                }
-                                .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
+                    ZStack {
+                        
+                        Color.blackCustom
+                        
+                        VStack{
+                            ProgressView {
+                                Text("Loading")
+                                    .foregroundColor(Color.whiteCustom)
+                                    .font(.system(size: 20))
                             }
+                            .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
                         }
-                        .frame(width: 150, height: 115)
-                        .cornerRadius(20)
+                    }
+                    .frame(width: 150, height: 115)
+                    .cornerRadius(20)
                 }
             }
         }
@@ -177,7 +186,7 @@ struct TitleLabel: View {
         
         Text(text)
             .font(.system(size: 75,
-                          weight: .semibold, design: .serif))
+                          weight: .semibold))
             .foregroundColor(.white)
             .padding(.bottom, 100)
     }

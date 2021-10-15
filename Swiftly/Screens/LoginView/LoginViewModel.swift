@@ -17,24 +17,20 @@ final class LoginViewModel: ObservableObject {
         
     }
     
+    @Published var isShowingSignupView = false
     @Published var isSuccessful: Bool = false
     @Published var isBadLogin: Bool = false
     @Published var isLoggedOut: Bool = false
     @Published var accountMode:  String = "something"
+    
+    
     private var db = Firestore.firestore()
     
-    
-//    init(){
-//        isSuccessful = false
-//        isBadLogin = false
-//        isLoggedOut = false
-//    }
-    
-
     
     func testLogin(user: Int, password: Int) -> Bool{
         return user > password
     }
+
     
     /// Called when the user wants to login
     func login(email: String, password: String) {
