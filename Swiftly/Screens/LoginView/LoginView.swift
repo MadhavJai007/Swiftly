@@ -68,16 +68,12 @@ struct LoginView: View {
                         email = ""
                         password = ""
                         
-                        
-                        
                         /// If the login is successful, download chapter content
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                             print("Logging into \(loginViewModel.accountMode) mode...")
                             if (loginViewModel.isSuccessful) {
                                 chaptersViewModel.getChapterDocs()
                             }
-                            
-                            /// Todo: Download user account information here too.
                         }
                         
                     }label: {
@@ -88,17 +84,16 @@ struct LoginView: View {
                     
                     /// Alert for bad login
                     .alert(isPresented: $loginViewModel.isBadLogin) {
-                        Alert(title: Text("Oops!"), message: Text("Email and/or password are incorrect."), dismissButton: .default(Text("OK")))
+                        Alert(title: Text("Bad Login"), message: Text("Email and/or password are incorrect."), dismissButton: .default(Text("OK")))
                     }
                     
-                    /// Alert for when chapters could not be loaded
-                    .alert(isPresented: $chaptersViewModel.didErrorOccurGrabbingData) {
-                        Alert(title: Text("Uh-Oh"), message: Text("There was an error loading chapters. Please try again later."), dismissButton: .default(Text("OK")))
-                    }
+//                    /// Alert for when chapters could not be loaded
+//                    .alert(isPresented: $chaptersViewModel.didErrorOccurGrabbingData) {
+//                        Alert(title: Text("Uh-Oh"), message: Text("There was an error loading chapters. Please try again later."), dismissButton: .default(Text("OK")))
+//                    }
                     
                     
-                    
-                    
+                
                     /// Navigation link for chapters view --> is only toggled when chapters view model is
                     /// finished downloading chapters from remote db.
                     NavigationLink(destination: ChaptersView()

@@ -30,18 +30,22 @@ final class LoginViewModel: ObservableObject {
     func testLogin(user: Int, password: Int) -> Bool{
         return user > password
     }
-
+    
     
     /// Called when the user wants to login
     func login(email: String, password: String) {
+        
+        
+        
         Auth.auth().signIn(withEmail: email, password: password) { [self] result, error in
             if error != nil {
                 self.isSuccessful = false
-            } else{
+                self.isBadLogin = true
+            }else{
                 
                 // check the users collection in firestore for account type
-//                let usersRef = db.collection("Users")
-
+                //                let usersRef = db.collection("Users")
+                
                 // query to get user with specific email field
                 db.collection("Users").whereField("user_email", isEqualTo: email)
                     .getDocuments() { (querySnapshot, err) in
@@ -56,15 +60,16 @@ final class LoginViewModel: ObservableObject {
                             self.accountMode = querySnapshot!.documents[0].data()["user_type"] as! String
                             print("User account type => \(self.accountMode)")
                             
-//                            for document in querySnapshot!.documents {
-//                                print("User email => \(document.data()["user_email"]!)")
-//                                print("User account type => \(document.data()["user_type"]!)")
-//                            }
+                            //                            for document in querySnapshot!.documents {
+                            //                                print("User email => \(document.data()["user_email"]!)")
+                            //                                print("User account type => \(document.data()["user_type"]!)")
+                            //                            }
                         }
                     }
                 
                 
                 self.isSuccessful = true
+                self.isBadLogin = false
             }
         }
     }
