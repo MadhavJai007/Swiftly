@@ -13,10 +13,12 @@ final class UserAccountViewModel: ObservableObject {
 
     var logoutSuccessful = false
     
+    @Published var isEditingAccount = false
+    
     ///Todo: User object needs to be passed down the view hierarch from the login viewmodel
     var user = MockData.sampleUser
     
-    
+
     
     func logoutUser(){
         

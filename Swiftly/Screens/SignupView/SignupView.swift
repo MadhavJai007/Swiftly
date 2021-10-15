@@ -52,8 +52,6 @@ struct SignupView: View {
                         InputFieldLabel(text:"Username")
                             .padding(.bottom, -geometry.size.width/120)
                         
-
-                    
                         TextField("Username", text : $signupViewModel.newUser.username)
                             .font(.system(size: 30))
                             .padding()
@@ -123,7 +121,7 @@ struct SignupView: View {
                             InputFieldLabel(text:"Date of Birth")
                                 .padding(.bottom, -geometry.size.width/120)
                             
-                            TextField("Date of Birth", text : $signupViewModel.newUser.dob)
+                            TextField("DD/MM/YYYY", text : $signupViewModel.newUser.dob)
                                 .font(.system(size: 30))
                                 .padding()
                                 .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
@@ -193,7 +191,6 @@ struct SignupView: View {
                         CreateAccountButton(text: "Create Account", textColor: .white, backgroundColor: Color.blackCustom)
                             .padding(geometry.size.width/42)
                     }
-                    
                 }
                 Spacer()
             }

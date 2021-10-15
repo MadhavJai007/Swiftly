@@ -42,7 +42,7 @@ struct LoginView: View {
                     
                     VStack(spacing: 25){
                         
-                        TextField("Appleseed@example.com", text: $email)
+                        TextField("Email Address", text: $email)
                             .font(.system(size: 30))
                             .padding()
                             .frame(width: 400, height: 75)
@@ -50,7 +50,7 @@ struct LoginView: View {
                             .foregroundColor(Color.blackCustom)
                             .cornerRadius(15)
                         
-                        SecureField("Iloveapples123", text: $password)
+                        SecureField("Password", text: $password)
                             .font(.system(size: 30))
                             .padding()
                             .frame(width: 400, height: 75)

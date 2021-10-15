@@ -22,7 +22,7 @@ struct UserAccountView: View {
         
         GeometryReader { geometry in
             
-            ZStack{
+            ZStack {
                 
                 Color.darkGrayCustom
                     .ignoresSafeArea()
@@ -44,7 +44,7 @@ struct UserAccountView: View {
                         
                         
                         Button{
-                            /// Todo: Edit account
+                            userAccountViewModel.isEditingAccount.toggle()
                         }label:{
                             UserAccountNavBarIcon(iconName: "gearshape")
                         }
@@ -143,6 +143,11 @@ struct UserAccountView: View {
                 }
                 .frame(width: geometry.size.width, height: geometry.size.height/1.15)
             }
+            
+            /// Navigation link for edit account page
+            NavigationLink(destination: EditAccountView()
+                            .environmentObject(userAccountViewModel),
+                           isActive: $userAccountViewModel.isEditingAccount) {EmptyView()}
         }
         .navigationBarHidden(true)
     }
