@@ -41,6 +41,7 @@ struct ChaptersView: View {
                         Button{
                             print(chaptersViewModel.chaptersArr)
                             print("tapped")
+                            print("Logging into \(loginViewModel.accountMode) mode...")
                         }label: {
                             ClassroomInstanceView(text: "Join a class")
                         }
