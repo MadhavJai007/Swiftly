@@ -57,8 +57,8 @@ final class LoginViewModel: ObservableObject {
                             // But the array should have only ONE item in it.
                             // following statements assume that there is only one item in the snapshot array
                             /// TODO:   Implement check that sees if there is more than one item fot whatever reason
-                            self.accountMode = querySnapshot!.documents[0].data()["user_type"] as! String
-                            print("User account type => \(self.accountMode)")
+//                            self.accountMode = querySnapshot!.documents[0].data()["user_type"] as! String
+//                            print("User account type => \(self.accountMode)")
                             
 //                            for document in querySnapshot!.documents {
 //                                print("User email => \(document.data()["user_email"]!)")
