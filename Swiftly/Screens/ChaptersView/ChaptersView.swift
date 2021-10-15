@@ -1,8 +1,7 @@
 //  INFO49635 - CAPSTONE FALL 2021
 //  ChapterScreen.swift
 //  Swiftly
-//
-//  Created by Toby Moktar on 2021-09-26.
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import SwiftUI
 
@@ -110,10 +109,13 @@ struct ChaptersView: View {
         .onAppear {
             chaptersViewModel.isShowingAccountView = false
             chaptersViewModel.didStartChapter = false
+            loginViewModel.attemptingLogin = false /// re-enables login button
             
             if (chapterContentViewModel.willStartInteractiveSection == true){
                 chapterContentViewModel.willStartInteractiveSection = false
             }
+            
+
         }
     }
 }

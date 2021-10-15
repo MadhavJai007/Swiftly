@@ -1,8 +1,7 @@
 //  INFO49635 - CAPSTONE FALL 2021
 //  ChapterTitleView.swift
 //  Swiftly
-//
-//  Created by Toby Moktar on 2021-09-27.
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import SwiftUI
 

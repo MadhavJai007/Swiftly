@@ -1,15 +1,13 @@
 //  INFO49635 - CAPSTONE FALL 2021
 //  UserAccountViewModel.swift
 //  Swiftly
-//
-//  Created by Toby moktar on 2021-10-03.
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import Foundation
 import SwiftUI
 import Firebase
 
 final class UserAccountViewModel: ObservableObject {
-    
 
     var logoutSuccessful = false
     
@@ -19,9 +17,8 @@ final class UserAccountViewModel: ObservableObject {
     var user = MockData.sampleUser
     
 
-    
+    /// Function to logout the user
     func logoutUser(){
-        
         do {
             try Auth.auth().signOut()
             logoutSuccessful = true
@@ -29,9 +26,6 @@ final class UserAccountViewModel: ObservableObject {
         catch {
             print("already logged out")
             logoutSuccessful = false
-            
         }
-        
-        
     }
 }

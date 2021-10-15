@@ -1,8 +1,7 @@
 //  INFO49635 - CAPSTONE FALL 2021
 //  ChapterContentView.swift
 //  Swiftly
-//
-//  Created by Toby Moktar on 2021-10-01.
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import SwiftUI
 import UIKit
@@ -37,13 +36,13 @@ struct ChapterContentView: View {
                         Button{
                             chaptersViewModel.didStartChapter.toggle()
                         }label:{
-                            ChapterNavBarIcon(iconName: "chevron.backward")
+                            NavBarIcon(iconName: "chevron.backward")
                         }
                         .padding(.leading, 30)
                         
                         Spacer()
                         
-                        ChapterNavBarIcon(iconName: "questionmark")
+                        NavBarIcon(iconName: "questionmark")
                             .padding(.trailing, 30)
                     }
                     .padding(.top, geometry.size.width/16)
@@ -219,19 +218,6 @@ struct ChapterTopicIcon: View {
             .frame(width: 40, height: 40)
             .foregroundColor(.white)
         
-    }
-}
-
-struct ChapterNavBarIcon: View {
-    
-    var iconName: String
-    
-    var body: some View {
-        Image(systemName: iconName)
-            .resizable()
-            .foregroundColor(.white)
-            .aspectRatio(contentMode: .fit)
-            .frame(width: 25, height: 25)
     }
 }
 

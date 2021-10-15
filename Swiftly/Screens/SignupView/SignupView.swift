@@ -31,7 +31,7 @@ struct SignupView: View {
                         Button{
                             loginViewModel.isShowingSignupView.toggle()
                         }label:{
-                            ChapterNavBarIcon(iconName: "chevron.backward")
+                            NavBarIcon(iconName: "chevron.backward")
                         }
                         .padding(.leading, 30)
 

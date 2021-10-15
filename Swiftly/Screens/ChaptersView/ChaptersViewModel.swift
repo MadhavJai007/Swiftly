@@ -1,8 +1,7 @@
 //  INFO49635 - CAPSTONE FALL 2021
 //  ChaptersViewModel.swift
 //  Swiftly
-//
-//  Created by Toby Moktar on 2021-09-27.
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import Foundation
 import SwiftUI
@@ -16,7 +15,6 @@ final class ChaptersViewModel: ObservableObject {
     @Published var isShowingAccountView = false
     @Published var chaptersArr = [Chapter]()
     @Published var isUserLoggedIn = false
-    @Published var didErrorOccurGrabbingData = false
     
     var startChapterIntent = false
     
@@ -49,12 +47,10 @@ final class ChaptersViewModel: ObservableObject {
         
         let db = Firestore.firestore()
         
-        
-        
+
         db.collection("Chapters").getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting chapter documents: \(err)")
-                self.didErrorOccurGrabbingData = true
                 self.isUserLoggedIn = false
             } else {
                 
@@ -76,7 +72,6 @@ final class ChaptersViewModel: ObservableObject {
                         
                         if let err = err {
                             print("Error getting chapter documents: \(err)")
-                            self.didErrorOccurGrabbingData = true
                             self.isUserLoggedIn = false
                         } else {
                         
@@ -99,12 +94,10 @@ final class ChaptersViewModel: ObservableObject {
                                 
                                 playgroundQuestions.append(playgroundQuestion)
                             }
-                        
                             
                             self.chaptersArr.append(Chapter(chapterNum: chapterNum, name: chapterName, difficulty: chapterDifficulty, completionStatus: chapterCompletion, lessonCompletion: lessonCompletion, playgroundCompletion: playgroundCompletion, quizCompletion: quizCompletion, summary: chapterSummary, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions))
                             
                             self.isUserLoggedIn = true
-                            self.didErrorOccurGrabbingData = false
                         }     
                     }
                     //                    print("Chapter desc:  \(document.data()["chapter_desc"]!)")

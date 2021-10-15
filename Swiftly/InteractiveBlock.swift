@@ -1,9 +1,7 @@
-//
+//  INFO49635 - CAPSTONE FALL 2021
 //  InteractiveBlock.swift
 //  Swiftly
-//
-//  Created by Toby moktar on 2021-10-11.
-//
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import Foundation
 import SwiftUI

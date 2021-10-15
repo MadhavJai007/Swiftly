@@ -1,23 +1,18 @@
 //  INFO49635 - CAPSTONE FALL 2021
 //  LoginScreen.swift
 //  Swiftly
-//
-//  Created by Toby Moktar on 2021-09-24.
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import SwiftUI
 import Firebase
 
-/// TODO: Disable login fields, login button, and signup button when the login
-/// loading (showing progress view)
-
 struct LoginView: View {
-    
-    @State var isNavigationBarHidden: Bool = false
     
     @State var email: String = ""
     @State var password: String = ""
     
-    @EnvironmentObject var loginViewModel: LoginViewModel /// view model for this view
+    /// Environment View Models being passed down the hierarchy
+    @EnvironmentObject var loginViewModel: LoginViewModel /// --> view model for this view
     @EnvironmentObject var signupViewModel: SignupViewModel
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
@@ -59,25 +54,32 @@ struct LoginView: View {
                             .cornerRadius(15)
                     }
                     
-                    /// Button for logging in --> calls login() from loginViewModel
-                    Button(){
+                    /// Login button --> calls login method from loginViewModel
+                    Button{
                         
-                        loginViewModel.login(email: email, password: password)
-                        userAccountViewModel.logoutSuccessful = false // --> might not need this?
-                        
-                        email = ""
-                        password = ""
-                        
-                        /// If the login is successful, download chapter content
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                            print("Logging into \(loginViewModel.accountMode) mode...")
-                            if (loginViewModel.isSuccessful) {
-                                chaptersViewModel.getChapterDocs()
+                        /// Used to make sure user cannot hit login button while their being logged in
+                        if (loginViewModel.attemptingLogin == false){
+                            
+                            loginViewModel.attemptingLogin = true
+                            loginViewModel.login(email: email, password: password)
+                            
+                            email = ""
+                            password = ""
+                            
+                            /// If the login is successful, download chapter content
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                print("Logging into \(loginViewModel.accountMode) mode...")
+                                if (loginViewModel.isSuccessful) {
+                                    chaptersViewModel.getChapterDocs()
+                                    loginViewModel.attemptingLogin = true
+                                }else{
+                                    // Error getting chapters
+                                    loginViewModel.attemptingLogin = false
+                                }
                             }
                         }
-                        
                     }label: {
-                        LoginSignupButton(text: "Login", textColor: .white, backgroundColor: Color.blackCustom)
+                        ButtonLabelLarge(text: "Login", textColor: .white, backgroundColor: Color.blackCustom)
                     }
                     .padding(.top,50)
                     .padding(.bottom,50)
@@ -87,13 +89,6 @@ struct LoginView: View {
                         Alert(title: Text("Bad Login"), message: Text("Email and/or password are incorrect."), dismissButton: .default(Text("OK")))
                     }
                     
-//                    /// Alert for when chapters could not be loaded
-//                    .alert(isPresented: $chaptersViewModel.didErrorOccurGrabbingData) {
-//                        Alert(title: Text("Uh-Oh"), message: Text("There was an error loading chapters. Please try again later."), dismissButton: .default(Text("OK")))
-//                    }
-                    
-                    
-                
                     /// Navigation link for chapters view --> is only toggled when chapters view model is
                     /// finished downloading chapters from remote db.
                     NavigationLink(destination: ChaptersView()
@@ -108,16 +103,17 @@ struct LoginView: View {
                     Spacer()
                     
                     VStack(spacing: 20){
-                        Text("Need an account?")
-                            .font(.system(size: 25, weight: .light))
-                            .foregroundColor(.white)
-                        
+                        InfoLabelMedium(text:"Need an account?")
                         
                         Button{
-                            loginViewModel.isShowingSignupView.toggle()
-                        }label: {
+                            /// Only let the user tap the sign up button when the user is not trying
+                            /// to login.
+                            if (loginViewModel.attemptingLogin == false){
+                                loginViewModel.isShowingSignupView.toggle()
+                            }
                             
-                            LoginSignupButton(text: "Tap to sign up", textColor: .white, backgroundColor: Color.blackCustom)
+                        }label: {
+                            ButtonLabelLarge(text: "Tap to sign up", textColor: .white, backgroundColor: Color.blackCustom)
                         }
                         .padding(.bottom, 50)
                         
@@ -140,9 +136,7 @@ struct LoginView: View {
                         
                         VStack{
                             ProgressView {
-                                Text("Loading")
-                                    .foregroundColor(Color.whiteCustom)
-                                    .font(.system(size: 20))
+                                SpinnerInfoLabel(text:"Loading...")
                             }
                             .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
                         }
@@ -153,12 +147,14 @@ struct LoginView: View {
             }
         }
         .navigationViewStyle(StackNavigationViewStyle())
+        .navigationBarHidden(true)
         .accentColor(.white)
         
         .onAppear{
             chaptersViewModel.isUserLoggedIn = false
         }
         
+        /// Resetting user input
         .onDisappear {
             self.email = ""
             self.password = ""
@@ -166,43 +162,9 @@ struct LoginView: View {
     }
 }
 
-// Preview 
+/// Preview
 struct LoginScreen_Previews: PreviewProvider {
     static var previews: some View {
         LoginView()
-    }
-}
-
-// Struct representing the title label
-struct TitleLabel: View {
-    
-    var text: String
-    var body: some View {
-        
-        Text(text)
-            .font(.system(size: 75,
-                          weight: .semibold))
-            .foregroundColor(.white)
-            .padding(.bottom, 100)
-    }
-}
-
-
-// Struct representing the label on a button
-struct LoginSignupButton: View {
-    
-    var text: String
-    var textColor: Color
-    var backgroundColor: Color
-    
-    var body: some View {
-        Text(text)
-            .font(.system(size: 35))
-            .fontWeight(.semibold)
-            .padding()
-            .frame(width: 400, height: 75)
-            .background(backgroundColor)
-            .foregroundColor(textColor)
-            .cornerRadius(15)
     }
 }

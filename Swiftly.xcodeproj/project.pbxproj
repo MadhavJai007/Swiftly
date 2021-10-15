@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		DA0866AB2717702E00B1999E /* InteractiveQuestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866AA2717702E00B1999E /* InteractiveQuestionsView.swift */; };
 		DA0866B82719CC0D00B1999E /* EditAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866B72719CC0C00B1999E /* EditAccountView.swift */; };
+		DA0866BE271A0AF900B1999E /* NavBarIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866BD271A0AF900B1999E /* NavBarIconView.swift */; };
+		DA0866C1271A147100B1999E /* LabelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866C0271A147100B1999E /* LabelsView.swift */; };
 		DA2122DE26FE07820016587F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2122DD26FE07820016587F /* LoginView.swift */; };
 		DA5C72712703493400E697CD /* ChapterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5C72702703493400E697CD /* ChapterDetailView.swift */; };
 		DA5D90EB270614B20085DE6D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5D90EA270614B20085DE6D /* LoginViewModel.swift */; };
@@ -43,6 +45,8 @@
 		8FDBE6C6B205D978766E6A18 /* Pods-Swiftly.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swiftly.debug.xcconfig"; path = "Target Support Files/Pods-Swiftly/Pods-Swiftly.debug.xcconfig"; sourceTree = "<group>"; };
 		DA0866AA2717702E00B1999E /* InteractiveQuestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveQuestionsView.swift; sourceTree = "<group>"; };
 		DA0866B72719CC0C00B1999E /* EditAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountView.swift; sourceTree = "<group>"; };
+		DA0866BD271A0AF900B1999E /* NavBarIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarIconView.swift; sourceTree = "<group>"; };
+		DA0866C0271A147100B1999E /* LabelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelsView.swift; sourceTree = "<group>"; };
 		DA2122DD26FE07820016587F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DA5C72702703493400E697CD /* ChapterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterDetailView.swift; sourceTree = "<group>"; };
 		DA5D90EA270614B20085DE6D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -106,6 +110,22 @@
 				DAD6B318270A3C71002C8A55 /* UserAccountView.swift */,
 			);
 			path = AccountView;
+			sourceTree = "<group>";
+		};
+		DA0866BC271A0ACD00B1999E /* Navigation Bar Icons */ = {
+			isa = PBXGroup;
+			children = (
+				DA0866BD271A0AF900B1999E /* NavBarIconView.swift */,
+			);
+			path = "Navigation Bar Icons";
+			sourceTree = "<group>";
+		};
+		DA0866BF271A143C00B1999E /* Labels */ = {
+			isa = PBXGroup;
+			children = (
+				DA0866C0271A147100B1999E /* LabelsView.swift */,
+			);
+			path = Labels;
 			sourceTree = "<group>";
 		};
 		DA5C726D270348F200E697CD /* ChapterDetailView */ = {
@@ -220,6 +240,8 @@
 		DABF368E27020DF3009BF78A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DA0866BF271A143C00B1999E /* Labels */,
+				DA0866BC271A0ACD00B1999E /* Navigation Bar Icons */,
 				DABF369327023677009BF78A /* ChapterTitleView.swift */,
 				DADCC3AA27135E1B0071D287 /* InteractiveTileView.swift */,
 			);
@@ -410,6 +432,7 @@
 				DAD6B3162708A3CC002C8A55 /* ChapterContentViewModel.swift in Sources */,
 				DADCC3B12714C8F60071D287 /* InteractiveBlock.swift in Sources */,
 				DAD6B319270A3C71002C8A55 /* UserAccountView.swift in Sources */,
+				DA0866BE271A0AF900B1999E /* NavBarIconView.swift in Sources */,
 				DA0866B82719CC0D00B1999E /* EditAccountView.swift in Sources */,
 				DA840A16270CB26800751FB7 /* LeaderboardViewModel.swift in Sources */,
 				DAD6B31D270A4833002C8A55 /* User.swift in Sources */,
@@ -421,6 +444,7 @@
 				DADCC3AB27135E1B0071D287 /* InteractiveTileView.swift in Sources */,
 				DA5D90ED270614BD0085DE6D /* SignupViewModel.swift in Sources */,
 				DABF368927020134009BF78A /* Chapter.swift in Sources */,
+				DA0866C1271A147100B1999E /* LabelsView.swift in Sources */,
 				DAD6B31B270A3E63002C8A55 /* UserAccountViewModel.swift in Sources */,
 				DABF369427023677009BF78A /* ChapterTitleView.swift in Sources */,
 				DA2122DE26FE07820016587F /* LoginView.swift in Sources */,

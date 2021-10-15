@@ -1,9 +1,7 @@
-//
+//  INFO49635 - CAPSTONE FALL 2021
 //  User.swift
 //  Swiftly
-//
-//  Created by Toby moktar on 2021-10-03.
-//
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 /// TODO: Needs achievements and other field variables from firestore
 

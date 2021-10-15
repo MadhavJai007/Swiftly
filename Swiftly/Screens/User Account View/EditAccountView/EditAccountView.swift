@@ -1,9 +1,7 @@
-//
+//  INFO49635 - CAPSTONE FALL 2021
 //  EditAccountView.swift
 //  Swiftly
-//
-//  Created by Toby moktar on 2021-10-15.
-//
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import SwiftUI
 
@@ -33,7 +31,7 @@ struct EditAccountView: View {
                         Button{
                             userAccountViewModel.isEditingAccount.toggle()
                         }label:{
-                            ChapterNavBarIcon(iconName: "xmark")
+                            NavBarIcon(iconName: "xmark")
                         }
                         .padding(.leading, 30)
 
@@ -174,7 +172,7 @@ struct EditAccountView: View {
                         /// Todo: Call method in view model that updates user changes
                         userAccountViewModel.isEditingAccount.toggle()
                     }label:{
-                        CreateAccountButton(text: "Save Changes", textColor: .white, backgroundColor: Color.blackCustom)
+                        ButtonLabelLarge(text: "Save Changes", textColor: .white, backgroundColor: Color.blackCustom)
                             .padding(geometry.size.width/42)
                     }
                     

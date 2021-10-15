@@ -1,9 +1,7 @@
-//
+//  INFO49635 - CAPSTONE FALL 2021
 //  Chapter.swift
 //  Swiftly
-//
-//  Created by Toby moktar on 2021-09-27.
-//
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 /// NOTE: This information is placeholder until chaper variables have be finalized (2021-10-03)
 

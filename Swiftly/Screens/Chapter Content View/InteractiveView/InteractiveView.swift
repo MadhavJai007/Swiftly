@@ -1,9 +1,7 @@
-//
+//  INFO49635 - CAPSTONE FALL 2021
 //  InteractiveView.swift
 //  Swiftly
-//
-//  Created by Toby moktar on 2021-10-08.
-//
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import SwiftUI
 import UIKit
@@ -34,7 +32,7 @@ struct InteractiveView: View {
                         Button{
                             chapterContentViewModel.willStartPlaygroundQuestion.toggle()
                         }label:{
-                            ChapterNavBarIcon(iconName: "xmark")
+                            NavBarIcon(iconName: "xmark")
                             
                         }
                         .padding(.leading, 30)

@@ -1,8 +1,7 @@
 //  INFO49635 - CAPSTONE FALL 2021
 //  UserAccountView.swift
 //  Swiftly
-//
-//  Created by Toby Moktar on 2021-10-03.
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 /// Todo: Add functionality that will allow the user to logout. This will change a variable that will pop this view, and ChaptersView.
 
@@ -13,10 +12,6 @@ struct UserAccountView: View {
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel /// view model for this view
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var loginViewModel: LoginViewModel
-    
-    
-    /// Used to manually pop from nav view stack
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
     
     var body: some View {
         

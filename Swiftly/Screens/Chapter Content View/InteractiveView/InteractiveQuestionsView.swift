@@ -1,9 +1,7 @@
-//
+//  INFO49635 - CAPSTONE FALL 2021
 //  InteractiveQuestionsView.swift
 //  Swiftly
-//
-//  Created by Toby Moktar on 2021-10-13.
-//
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import SwiftUI
 
@@ -30,7 +28,7 @@ struct InteractiveQuestionsView: View {
                         Button{
                             chapterContentViewModel.willStartInteractiveSection.toggle()
                         }label:{
-                            ChapterNavBarIcon(iconName: "chevron.backward")
+                            NavBarIcon(iconName: "chevron.backward")
                         }
                         .padding(.leading, 30)
                         
