@@ -38,13 +38,28 @@ final class SignupViewModel: ObservableObject {
     
     private var db = Firestore.firestore()
     
+    //boolean to ensure that email being used has not already been registered with Swiftly
+    var emailNotTaken = true
+    
     ///Todo: Check if user already exists --> if they do, don't add user
     func authenticateUser(user: User){
-        Auth.auth().createUser(withEmail: user.email, password: user.password) { authResult, error in
-                          guard let user = authResult?.user, error == nil else {
-                            return
-                          }
-                          print("\(user.email!) has successfully been added to the authentication database!")
+        
+        
+        //check if email already exists in authentication database
+        Auth.auth().createUser(withEmail: user.email, password: user.password ) { [self] user, error in
+           if let x = error {
+              let err = x as NSError
+              switch err.code {
+              case AuthErrorCode.emailAlreadyInUse.rawValue:
+                 print("email is alreay in use")
+                 self.emailNotTaken = false
+              default:
+                 print("unknown error: \(err.localizedDescription)")
+              }
+              //return
+           } else {
+              //continue to app
+           }
         }
     }
     
@@ -108,12 +123,19 @@ final class SignupViewModel: ObservableObject {
     
     func save(accountType: String){
         authenticateUser(user: newUser)
+        
+        
         print("User Successfully authenticated, now to add full user info to database.")
-        addUser(user: newUser, accountType: accountType)
+        
+        print("The email is not taken is : \(emailNotTaken)")
+        if(emailNotTaken == true){
+            addUser(user: newUser, accountType: accountType)
+        }
+        else{
+            print("email has been taken. Popup informing user will be displaying now.")
+        }
+        
     }
-    
-    
-    
     
     
 }

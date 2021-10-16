@@ -200,6 +200,7 @@ struct SignupView: View {
     
     func createAccount(accountType: String) {
         signupViewModel.save(accountType: accountType)
+        
         loginViewModel.isShowingSignupView.toggle()
     }
 }
