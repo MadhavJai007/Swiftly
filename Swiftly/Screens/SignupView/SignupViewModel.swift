@@ -27,6 +27,8 @@ final class SignupViewModel: ObservableObject {
     
     //create newUser variable to store account information to be passed to the database
     
+    
+    
     @Published var newUser = User(firstName: "",
                        lastName: "",
                        username: "",
@@ -41,32 +43,53 @@ final class SignupViewModel: ObservableObject {
     //boolean to ensure that email being used has not already been registered with Swiftly
     var emailNotTaken = true
     
-    ///Todo: Check if user already exists --> if they do, don't add user
     func authenticateUser(user: User){
+        // check if email already exists in authentication database
+        // referenced from : https://stackoverflow.com/questions/56806437/firebase-auth-and-swift-check-if-email-already-in-database
         
-        
-        //check if email already exists in authentication database
-        Auth.auth().createUser(withEmail: user.email, password: user.password ) { [self] user, error in
+        Auth.auth().createUser(withEmail: user.email, password: user.password) { [self] user, error in
            if let x = error {
               let err = x as NSError
               switch err.code {
+                  
               case AuthErrorCode.emailAlreadyInUse.rawValue:
-                 print("email is alreay in use")
-                 self.emailNotTaken = false
+                print("email is alreay in use. Will NOT be added to authenticator.")
+                emailNotTaken = false
+                print("emailNotTaken is now : \(emailNotTaken)")
+                return
+                
               default:
-                 print("unknown error: \(err.localizedDescription)")
+                print("unknown error: \(err.localizedDescription)")
               }
               //return
            } else {
-              //continue to app
+               self.emailNotTaken = true
+               print("No errors found in users inputted data. Will be added to authenticator.")
+               print("emailNotTaken is now : \(emailNotTaken)")
            }
+            print("Created authenticator successfully")
         }
     }
     
     
     func addUser(user: User, accountType: String){
         
-        // creating a new document in either student or teacher collection depending on account type chosen
+        
+        // This async{} is only supported in iOS 15, so cannot be used in current 14.0 build
+        // its considered experimental
+        
+        //async{
+        //    await authenticateUser(user: newUser)
+        //}
+        
+        
+        
+        // first checking if emailNotTaken boolean is false, automatically returns before pushing to database if it is
+        
+        if(emailNotTaken == false){
+            print("Email is taken, will NOT push to Users or Students/Teachers collection")
+            return
+        }
         
         print("is \(accountType)")
         switch accountType {
@@ -122,17 +145,15 @@ final class SignupViewModel: ObservableObject {
     }
     
     func save(accountType: String){
+        
         authenticateUser(user: newUser)
         
-        
-        print("User Successfully authenticated, now to add full user info to database.")
+        //Issue : automatically progresses to the next line of code, even though authenticateUser() is not complete, since its performed asynchronously. Have to make the system wait for authenticateUser() method to complete before proceeding
         
         print("The email is not taken is : \(emailNotTaken)")
+        
         if(emailNotTaken == true){
             addUser(user: newUser, accountType: accountType)
-        }
-        else{
-            print("email has been taken. Popup informing user will be displaying now.")
         }
         
     }
