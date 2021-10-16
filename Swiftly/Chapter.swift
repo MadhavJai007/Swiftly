@@ -13,10 +13,6 @@ struct Chapter: Hashable, Identifiable {
     let chapterNum: Int
     let name: String
     let difficulty: Int
-    let completionStatus: String
-    let lessonCompletion: String
-    let playgroundCompletion: String
-    let quizCompletion: String
     let summary: String
     let length: Int
     let iconName: String
@@ -29,13 +25,13 @@ struct MockData {
    
     static let sampleUser = User(firstName: "Johhny", lastName: "Appleseed", username: "ilikeapples123", email: "test@email.com", password: "123456", dob: "2000/01/11", country: "Canada")
     
-    static let sampleChapter = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, completionStatus: "Mid", lessonCompletion: "Yes", playgroundCompletion: "No", quizCompletion: "No", summary: "SUmmary", length: 24, iconName: "cpu", playgroundArr: [Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"]), Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"])])
+    static let sampleChapter = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, summary: "SUmmary", length: 24, iconName: "cpu", playgroundArr: [Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"]), Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"])])
     
-    static let sampleChapter2 = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, completionStatus: "Mid", lessonCompletion: "Yes", playgroundCompletion: "No", quizCompletion: "No", summary: "SUmmary", length: 24, iconName: "cpu", playgroundArr: [Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"]), Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"])])
+    static let sampleChapter2 = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, summary: "SUmmary", length: 24, iconName: "cpu", playgroundArr: [Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"]), Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"])])
     
-    static let sampleChapter3 = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, completionStatus: "Mid", lessonCompletion: "Yes", playgroundCompletion: "No", quizCompletion: "No", summary: "SUmmary", length: 24, iconName: "cpu", playgroundArr: [Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"]), Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"])])
+    static let sampleChapter3 = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, summary: "SUmmary", length: 24, iconName: "cpu", playgroundArr: [Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"]), Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"])])
     
-    static let sampleChapter4 = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, completionStatus: "Mid", lessonCompletion: "Yes", playgroundCompletion: "No", quizCompletion: "No", summary: "SUmmary", length: 24, iconName: "cpu", playgroundArr: [Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"]), Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"])])
+    static let sampleChapter4 = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, summary: "SUmmary", length: 24, iconName: "cpu", playgroundArr: [Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"]), Playground(title: "Title", description: "Do this", originalArr: ["CODE", "CODE", "CODE"])])
     
     
     static let Chapters = [

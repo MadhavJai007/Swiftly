@@ -98,7 +98,7 @@ struct InteractiveQuestionsView: View {
                                         
                                     }
                                     .frame(width: geometry.size.width/1.50, height: geometry.size.height/1.5)
-                                    .background(Color.white)
+                                    .background(Color.whiteCustom)
                                     .cornerRadius(40)
                                 }
                                 .frame(width: geometry.size.width/1.20, height: geometry.size.height/1.5)

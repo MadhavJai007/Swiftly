@@ -59,10 +59,6 @@ final class ChaptersViewModel: ObservableObject {
                     let chapterNum = document.data()["chapter_number"]! as! Int
                     let chapterName = document.data()["chapter_title"]! as! String
                     let chapterDifficulty = document.data()["chapter_difficulty"]! as! Int
-                    let chapterCompletion = document.data()["chapter_completion"]! as! String
-                    let lessonCompletion = document.data()["chapter_lesson_completion"]! as! String
-                    let playgroundCompletion = document.data()["chapter_playground_completion"]! as! String
-                    let quizCompletion = document.data()["chapter_quiz_completion"]! as! String
                     let chapterSummary = document.data()["chapter_desc"]! as! String
                     let chapterLength = document.data()["chapter_length"]! as! Int
                     let iconName = document.data()["chapter_icon_name"]! as! String
@@ -95,7 +91,7 @@ final class ChaptersViewModel: ObservableObject {
                                 playgroundQuestions.append(playgroundQuestion)
                             }
                             
-                            self.chaptersArr.append(Chapter(chapterNum: chapterNum, name: chapterName, difficulty: chapterDifficulty, completionStatus: chapterCompletion, lessonCompletion: lessonCompletion, playgroundCompletion: playgroundCompletion, quizCompletion: quizCompletion, summary: chapterSummary, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions))
+                            self.chaptersArr.append(Chapter(chapterNum: chapterNum, name: chapterName, difficulty: chapterDifficulty, summary: chapterSummary, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions))
                             
                             self.isUserLoggedIn = true
                         }     
