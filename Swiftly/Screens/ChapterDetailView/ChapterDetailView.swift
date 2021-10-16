@@ -30,7 +30,7 @@ struct ChapterDetailView: View {
                     
                     HStack{
                         
-                        ChaptersTitle(text: "Chapter \(chaptersViewModel.selectedChapter!.chapterNum)")
+                        TitleLabel(text: "Chapter \(chaptersViewModel.selectedChapter!.chapterNum)")
                             .padding(.trailing, -geometry.size.width/12)
                             .padding(.leading, geometry.size.width/12)
                         

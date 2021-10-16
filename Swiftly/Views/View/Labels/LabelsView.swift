@@ -46,11 +46,41 @@ struct InfoLabelMedium: View {
 
 /// Label 4: SpinnerInfoLabel
 /// Description: Used for representing text in a progress (spinner) view
-struct SpinnerInfoLabel: View{
+struct SpinnerInfoLabel: View {
     var text: String
     var body: some View {
         Text(text)
             .foregroundColor(Color.whiteCustom)
             .font(.system(size: 20))
+    }
+}
+
+/// Label 5: SpecialNavBarIcon
+/// Description: Used mainly for the user account icon in chapters view
+struct SpecialNavBarIcon: View {
+    var text: String
+    var body: some View {
+        Image(systemName: text)
+            .renderingMode(.original)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(width: 44, height: 44)
+            .foregroundColor(Color.white)
+            .padding(.leading, 30)
+    }
+}
+
+struct ButtonLabelSmall: View {
+    var text: String
+    var body: some View {
+        Text(text)
+            .font(.system(size: 25))
+            .fontWeight(.semibold)
+            .padding()
+            .frame(width: 250, height: 75)
+            .background(Color.blackCustom)
+            .foregroundColor(.white)
+            .cornerRadius(15)
+            .padding(.trailing, 30)
     }
 }

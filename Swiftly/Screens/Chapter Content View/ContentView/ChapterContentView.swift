@@ -17,9 +17,6 @@ struct ChapterContentView: View {
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel /// view model for this view
     
-    /// Used to manually pop from nav view stack
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-    
     var body: some View {
         
         GeometryReader { geometry in
@@ -49,13 +46,12 @@ struct ChapterContentView: View {
                     .padding(.bottom, geometry.size.width/16)
                     
                     
-                    /// ** Look at todo at top of file
                     TabView {
                         
                         /// Page 1
                         VStack(alignment: .leading){
                             
-                            ChaptersTitle(text: "Chapter: \(chapterContentViewModel.chapter.chapterNum)")
+                            TitleLabel(text: "Chapter: \(chapterContentViewModel.chapter.chapterNum)")
                                 .padding(.leading, geometry.size.width/32)
                             
                             HStack{

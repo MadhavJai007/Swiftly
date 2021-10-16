@@ -47,7 +47,6 @@ final class ChaptersViewModel: ObservableObject {
         
         let db = Firestore.firestore()
         
-
         db.collection("Chapters").getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting chapter documents: \(err)")
@@ -102,8 +101,6 @@ final class ChaptersViewModel: ObservableObject {
                     //                    print("Chapter length:  \(document.data()["chapter_length"]!)")
                     //                    print("\(document.documentID) => \(document.data())")
                 }
-                
-               
             }
         }
     }
