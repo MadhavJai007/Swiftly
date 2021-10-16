@@ -186,7 +186,8 @@ struct SignupView: View {
                     
                     // Create account button
                     Button{
-                        createAccount(accountType: selectedType)
+                        signupViewModel.save(accountType: selectedType)
+                        loginViewModel.isShowingSignupView.toggle()
                     }label:{
                         CreateAccountButton(text: "Create Account", textColor: .white, backgroundColor: Color.blackCustom)
                             .padding(geometry.size.width/42)
@@ -196,12 +197,6 @@ struct SignupView: View {
             }
             .navigationBarHidden(true)
         }
-    }
-    
-    func createAccount(accountType: String) {
-        signupViewModel.save(accountType: accountType)
-        
-        loginViewModel.isShowingSignupView.toggle()
     }
 }
 
