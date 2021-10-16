@@ -41,55 +41,58 @@ final class SignupViewModel: ObservableObject {
     private var db = Firestore.firestore()
     
     //boolean to ensure that email being used has not already been registered with Swiftly
-    var emailNotTaken = true
+    var emailNotTaken = false
     
     func authenticateUser(user: User){
-        // check if email already exists in authentication database
-        // referenced from : https://stackoverflow.com/questions/56806437/firebase-auth-and-swift-check-if-email-already-in-database
         
         Auth.auth().createUser(withEmail: user.email, password: user.password) { [self] user, error in
-           if let x = error {
-              let err = x as NSError
-              switch err.code {
-                  
-              case AuthErrorCode.emailAlreadyInUse.rawValue:
-                print("email is alreay in use. Will NOT be added to authenticator.")
-                emailNotTaken = false
-                print("emailNotTaken is now : \(emailNotTaken)")
-                return
-                
-              default:
-                print("unknown error: \(err.localizedDescription)")
-              }
-              //return
-           } else {
-               self.emailNotTaken = true
-               print("No errors found in users inputted data. Will be added to authenticator.")
-               print("emailNotTaken is now : \(emailNotTaken)")
-           }
-            print("Created authenticator successfully")
+            
+            print("Created authentication account successfully")
         }
+    }
+    
+    func checkIfEmailExists(user: User){
+        print("Email to be checked if it exists in Users collection is : \(user.email)")
+        
+        
+        // Get your Firebase collection
+           let collectionRef = db.collection("Users")
+
+           // Get all the documents where the field username is equal to the String you pass, loop over all the documents.
+
+        collectionRef.whereField("user_email", isEqualTo: user.email).getDocuments { (snapshot, err) in
+               if let err = err {
+                   print("Error getting document: \(err)")
+               } else if (snapshot?.isEmpty)! {
+                   print("Email is not taken. It is valid.")
+                   self.emailNotTaken = true
+               } else {
+                   for document in (snapshot?.documents)! {
+                       if document.data()["username"] != nil {
+                           print("Email is Taken. It is NOT valid.")
+                           self.emailNotTaken = false
+                       }
+                   }
+               }
+           }
+        
+        /*
+        db.collection("Users").whereField("user_email", isEqualTo: user.email).getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Email already exist in database. It is NOT valid")
+                self.emailNotTaken = false
+            } else {
+                print("Email is not taken. It is valid.")
+                self.emailNotTaken = true
+            }
+        }
+         */
+        
+        
     }
     
     
     func addUser(user: User, accountType: String){
-        
-        
-        // This async{} is only supported in iOS 15, so cannot be used in current 14.0 build
-        // its considered experimental
-        
-        //async{
-        //    await authenticateUser(user: newUser)
-        //}
-        
-        
-        
-        // first checking if emailNotTaken boolean is false, automatically returns before pushing to database if it is
-        
-        if(emailNotTaken == false){
-            print("Email is taken, will NOT push to Users or Students/Teachers collection")
-            return
-        }
         
         print("is \(accountType)")
         switch accountType {
@@ -144,16 +147,32 @@ final class SignupViewModel: ObservableObject {
 
     }
     
+    
     func save(accountType: String){
         
-        authenticateUser(user: newUser)
+        emailNotTaken = false
         
-        //Issue : automatically progresses to the next line of code, even though authenticateUser() is not complete, since its performed asynchronously. Have to make the system wait for authenticateUser() method to complete before proceeding
+        print("First we will check if the email already exists in our database using checkIfEmailExists().")
+        checkIfEmailExists(user: newUser)
+
+        //Current solution to async is to put hardcoded 5 second timers between authenticateUser() and addUser(), so that they only execute AFTER the email check
         
-        print("The email is not taken is : \(emailNotTaken)")
+        let timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [self] (timer) in
+            
+            print("The email is not taken is : \(emailNotTaken)")
+            if(emailNotTaken == true){
+                print("Since the email was valid, now execute authenticateUser() to add user to authenticator")
+                self.authenticateUser(user: newUser)
+            }
+            
+        }
         
-        if(emailNotTaken == true){
-            addUser(user: newUser, accountType: accountType)
+        let timer2 = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { [self] (timer) in
+            if(emailNotTaken == true){
+                print("Finally, since the email was valid, now execute addUser() to add user to collections")
+                self.addUser(user: newUser, accountType: accountType)
+            }
+            
         }
         
     }
