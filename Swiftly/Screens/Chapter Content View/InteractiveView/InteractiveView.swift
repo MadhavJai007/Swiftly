@@ -62,7 +62,7 @@ struct InteractiveView: View {
                                 }
                             }
                             .animation(.default, value: chapterContentViewModel.activeBlocks)
-                            .padding(.top, geometry.size.height/8)
+                            .padding(.top, geometry.size.height/16)
                         }
                         .onDrop(of: [UTType.text], delegate: DropOutsideDelegate(current: $dragging))
                         .hasScrollEnabled(false)

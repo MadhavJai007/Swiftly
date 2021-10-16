@@ -199,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				DA840A12270CB24600751FB7 /* Leaderboard View */,
+				DAD6B317270A3C52002C8A55 /* User Account View */,
 				DAD6B310270748B6002C8A55 /* Chapter Content View */,
 				DA5C726D270348F200E697CD /* ChapterDetailView */,
 				DABF368A270202CE009BF78A /* ChaptersView */,
@@ -269,7 +270,6 @@
 			isa = PBXGroup;
 			children = (
 				DADCC3B22715C2350071D287 /* ContentView */,
-				DAD6B317270A3C52002C8A55 /* User Account View */,
 				DAE45E46271078FF0073BA1C /* InteractiveView */,
 				DAD6B3152708A3CC002C8A55 /* ChapterContentViewModel.swift */,
 			);

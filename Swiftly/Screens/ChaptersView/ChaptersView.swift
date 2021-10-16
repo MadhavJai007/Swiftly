@@ -15,9 +15,6 @@ struct ChaptersView: View {
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel
     @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel
     
-    /// Used to manually pop from nav view stack
-    @Environment(\.presentationMode) var mode: Binding<PresentationMode>
-    
     var body: some View {
         
         GeometryReader { geometry in

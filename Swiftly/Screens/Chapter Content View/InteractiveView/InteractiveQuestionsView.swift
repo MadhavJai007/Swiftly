@@ -47,9 +47,7 @@ struct InteractiveQuestionsView: View {
                         LazyHGrid(rows: [GridItem(.flexible())], spacing: 10){
                             
                             ForEach(chaptersViewModel.selectedChapter!.playgroundArr) { question in
-                                
-                        
-                              
+
                                 VStack{
                                     
                                     VStack(alignment: .leading){
@@ -63,7 +61,29 @@ struct InteractiveQuestionsView: View {
                                             .font(.system(size: 28))
                                             .padding(.leading, 20)
                                             .padding(.trailing, 20)
-                                                                                
+                                        
+                                        Spacer()
+                                        
+                                        HStack{
+                                            
+                                            Spacer()
+                                            VStack{
+                                                ForEach(0..<question.originalArr.count) { i in
+                                                    
+                                                    VStack {
+                                                        Text(String(question.originalArr[i]))
+                                                            .font(.system(size: 12))
+                                                            .foregroundColor(.white)
+                                                            .padding(10)
+                                                    }
+                                                    .frame(width: UIScreen.screenWidth/2, height: 50, alignment: .leading)
+                                                    .background(Color.darkGrayCustom)
+                                                    .cornerRadius(7)
+                                                }
+                                            }
+                                            Spacer()
+                                        }
+                                        
                                         Spacer()
                                         
                                         VStack{
@@ -71,23 +91,19 @@ struct InteractiveQuestionsView: View {
                                             Button {
                                                 chapterContentViewModel.setupPlayground(question: question)
                                             }label: {
-                                                InteractiveStartButton(text: "Start Playground", textColor: Color.white, backgroundColor: Color.blackCustom)
+                                                InteractiveStartButton(text: "Start Playground", textColor: Color.white, backgroundColor: Color.darkGrayCustom)
                                             }
                                             .frame(width: geometry.size.width/1.50, height: 120)
                                         }
-                                       
+                                        
                                     }
-                                    
                                     .frame(width: geometry.size.width/1.50, height: geometry.size.height/1.5)
                                     .background(Color.white)
                                     .cornerRadius(40)
                                 }
                                 .frame(width: geometry.size.width/1.20, height: geometry.size.height/1.5)
-                                
                             }
-                            
                         }
-                        
                     }
                     .frame(width: geometry.size.width/1.20, height: geometry.size.height/1.5)
                     .padding(.top, -50)

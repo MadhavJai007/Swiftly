@@ -5,6 +5,8 @@
 
 import SwiftUI
 
+/// TODO: Chapter completion status has to come from the student collection not the chapter one.
+
 struct ChapterDetailView: View {
     
     let chapter = MockData.sampleChapter
@@ -28,7 +30,7 @@ struct ChapterDetailView: View {
                     
                     HStack{
                         
-                        ChaptersTitle(text: "Chapter 1")
+                        ChaptersTitle(text: "Chapter \(chaptersViewModel.selectedChapter!.chapterNum)")
                             .padding(.trailing, -geometry.size.width/12)
                             .padding(.leading, geometry.size.width/12)
                         
@@ -49,13 +51,13 @@ struct ChapterDetailView: View {
                     
                     HStack{
                         
-                        Text("Chapter Name")
+                        Text("\(chaptersViewModel.selectedChapter!.name)")
                             .font(.system(size: 35,
                                           weight: .bold,
                                           design: .default))
                             .foregroundColor(Color.white)
                         
-                        Image(systemName: "cpu")
+                        Image(systemName: "\(chaptersViewModel.selectedChapter!.iconName)")
                             .resizable()
                             .frame(width: 40, height: 40)
                             .foregroundColor(.white)
@@ -65,24 +67,22 @@ struct ChapterDetailView: View {
                     .padding(.leading, geometry.size.width/12)
                     .padding(.top, -geometry.size.width/24)
                     
-                    
                     VStack(alignment: .leading){
                         
                         VStack(alignment: .leading, spacing: -geometry.size.width/48){
                             
-                            ChapterContentText(text: "Estimated Length: 15 minutes")
+                            ChapterContentText(text: "Estimated Length: \(chaptersViewModel.selectedChapter!.length) minutes")
                             
-                            ChapterContentText(text:"Difficulty Level: 5")
+                            ChapterContentText(text:"Difficulty Level: \(chaptersViewModel.selectedChapter!.difficulty)")
                             
-                            ChapterContentText(text:"Status: Incomplete")
+                            ChapterContentText(text:"Status: \(chaptersViewModel.selectedChapter!.completionStatus)")
                             
-                            ChapterContentText(text: "This is the chapter summary")
+                            ChapterContentText(text: chaptersViewModel.selectedChapter!.summary)
                                 .padding(.trailing, geometry.size.width/6)
                                 .padding(.top, geometry.size.width/24)
                         }
                         
                         Spacer()
-                        
                         
                         Button{
                             isShowingDetailView = false
@@ -93,8 +93,6 @@ struct ChapterDetailView: View {
                         }
                         .padding(.leading, geometry.size.width/12)
                         .padding(.bottom, geometry.size.width/12)
-                        
-                        
                         
                         VStack(alignment: .leading){
                             
@@ -169,7 +167,7 @@ struct StartChapterButton: View {
             .font(.system(size: 40))
             .fontWeight(.medium)
             .padding()
-            .frame(width: 500, height: 120)
+            .frame(width: 500, height: 110)
             .background(backgroundColor)
             .foregroundColor(textColor)
             .cornerRadius(15)
