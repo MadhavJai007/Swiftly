@@ -12,20 +12,10 @@ import FirebaseFirestore
 
 final class SignupViewModel: ObservableObject {
     
-    /// Firebase Steps:
-    ///    1. User signs up with all their info
-    ///    2. Create new authentication element with the user's email, password, and ID
-    ///    3. Create a new user collection element with all ^ this info + the rest
-    ///    4. When the user logs in, grab their ID and then with that ID grab all the rest of their
-    ///       information from the users collection.
-    
     
     init(){
         //initializer
     }
-    
-    
-    //create newUser variable to store account information to be passed to the database
     
     
     
@@ -37,6 +27,8 @@ final class SignupViewModel: ObservableObject {
                        dob: "",
                        country: ""
                     )
+    
+    @Published var isBadSignup: Bool = false
     
     private var db = Firestore.firestore()
     
@@ -71,23 +63,11 @@ final class SignupViewModel: ObservableObject {
                        if document.data()["username"] != nil {
                            print("Email is Taken. It is NOT valid.")
                            self.emailNotTaken = false
+                           
                        }
                    }
                }
            }
-        
-        /*
-        db.collection("Users").whereField("user_email", isEqualTo: user.email).getDocuments() { (querySnapshot, err) in
-            if let err = err {
-                print("Email already exist in database. It is NOT valid")
-                self.emailNotTaken = false
-            } else {
-                print("Email is not taken. It is valid.")
-                self.emailNotTaken = true
-            }
-        }
-         */
-        
         
     }
     
@@ -154,20 +134,34 @@ final class SignupViewModel: ObservableObject {
         
         print("First we will check if the email already exists in our database using checkIfEmailExists().")
         checkIfEmailExists(user: newUser)
-
-        //Current solution to async is to put hardcoded 5 second timers between authenticateUser() and addUser(), so that they only execute AFTER the email check
         
-        let timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [self] (timer) in
+
+        //Current solution to async is to put hardcoded timers between authenticateUser() and addUser(), so that they only executes AFTER the email check
+        
+        
+        let timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { [self] (timer) in
+            
+            print("The email is not taken is : \(emailNotTaken)")
+            if(emailNotTaken == false){
+                self.isBadSignup = true
+            }
+            
+        }
+        
+        let timer2 = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [self] (timer) in
             
             print("The email is not taken is : \(emailNotTaken)")
             if(emailNotTaken == true){
                 print("Since the email was valid, now execute authenticateUser() to add user to authenticator")
                 self.authenticateUser(user: newUser)
             }
+            else{
+                self.isBadSignup = true
+            }
             
         }
         
-        let timer2 = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { [self] (timer) in
+        let timer3 = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { [self] (timer) in
             if(emailNotTaken == true){
                 print("Finally, since the email was valid, now execute addUser() to add user to collections")
                 self.addUser(user: newUser, accountType: accountType)

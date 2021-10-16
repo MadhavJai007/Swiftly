@@ -187,10 +187,12 @@ struct SignupView: View {
                     // Create account button
                     Button{
                         signupViewModel.save(accountType: selectedType)
-                        loginViewModel.isShowingSignupView.toggle()
+                        //loginViewModel.isShowingSignupView.toggle()
                     }label:{
                         CreateAccountButton(text: "Create Account", textColor: .white, backgroundColor: Color.blackCustom)
                             .padding(geometry.size.width/42)
+                    }.alert(isPresented: $signupViewModel.isBadSignup) {
+                        Alert(title: Text("Error during Signup"), message: Text("There was an error during signup"), dismissButton: .default(Text("OK")))
                     }
                 }
                 Spacer()
