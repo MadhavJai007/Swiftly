@@ -18,7 +18,6 @@ final class SignupViewModel: ObservableObject {
     }
     
     
-    
     @Published var newUser = User(firstName: "",
                        lastName: "",
                        username: "",
@@ -35,10 +34,25 @@ final class SignupViewModel: ObservableObject {
     //boolean to ensure that email being used has not already been registered with Swiftly
     var emailNotTaken = false
     
+    
+    
+    //Validation functions
+    
+    func isEmailValid() -> Bool{
+        let emailTest = NSPredicate(format: "SELF MATCHES %@", "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$")
+        return emailTest.evaluate(with: newUser.email)
+    }
+    
+    var isSignUpComplete : Bool {
+        if !isEmailValid(){
+            return false
+        }
+        return true
+    }
+    
     func authenticateUser(user: User){
         
         Auth.auth().createUser(withEmail: user.email, password: user.password) { [self] user, error in
-            
             print("Created authentication account successfully")
         }
     }

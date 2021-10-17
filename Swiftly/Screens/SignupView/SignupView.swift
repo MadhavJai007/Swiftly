@@ -42,7 +42,7 @@ struct SignupView: View {
                     
                     // Title
                     Text("Account Creation")
-                        .font(.system(size: 75))
+                        .font(.system(size: 35))
                         .foregroundColor(.white)
                         .padding(.bottom, geometry.size.width/42)
                     
@@ -59,6 +59,11 @@ struct SignupView: View {
                             .background(Color.white)
                             .foregroundColor(.darkGrayCustom)
                             .cornerRadius(15)
+                        
+                        Text("Missing Username")
+                            .fixedSize(horizontal: false, vertical: true)
+                            .font(.system(size: 13))
+                            .foregroundColor(.red)
                         
                     }
                     .padding(geometry.size.width/42)
@@ -80,6 +85,11 @@ struct SignupView: View {
                                 .background(Color.white)
                                 .foregroundColor(.darkGrayCustom)
                                 .cornerRadius(15)
+                            
+                            Text("Missing First Name")
+                                .fixedSize(horizontal: false, vertical: true)
+                                .font(.system(size: 13))
+                                .foregroundColor(.red)
                         }
                         
                         VStack(alignment: .leading) {
@@ -94,6 +104,11 @@ struct SignupView: View {
                                 .background(Color.white)
                                 .foregroundColor(.darkGrayCustom)
                                 .cornerRadius(15)
+                            
+                            Text("Missing Last Name")
+                                .fixedSize(horizontal: false, vertical: true)
+                                .font(.system(size: 13))
+                                .foregroundColor(.red)
                         }
                     }.padding(geometry.size.width/42)
                     
@@ -113,6 +128,10 @@ struct SignupView: View {
                                 .foregroundColor(.darkGrayCustom)
                                 .cornerRadius(15)
                             
+                            Text("Missing Country Field")
+                                .fixedSize(horizontal: false, vertical: true)
+                                .font(.system(size: 13))
+                                .foregroundColor(.red)
                             
                         }
                         
@@ -128,6 +147,11 @@ struct SignupView: View {
                                 .background(Color.white)
                                 .foregroundColor(.darkGrayCustom)
                                 .cornerRadius(15)
+                            
+                            Text("Missing Date of Birth")
+                                .fixedSize(horizontal: false, vertical: true)
+                                .font(.system(size: 13))
+                                .foregroundColor(.red)
                         }
                     }
                     .padding(geometry.size.width/42)
@@ -146,6 +170,11 @@ struct SignupView: View {
                             .foregroundColor(.darkGrayCustom)
                             .cornerRadius(15)
                         
+                        Text("Missing Email Address")
+                            .fixedSize(horizontal: false, vertical: true)
+                            .font(.system(size: 13))
+                            .foregroundColor(.red)
+                        
                     }
                     .padding(geometry.size.width/42)
                     
@@ -155,13 +184,18 @@ struct SignupView: View {
                         InputFieldLabel(text:"Password")
                             .padding(.bottom, -geometry.size.width/120)
                         
-                        TextField("Password", text : $signupViewModel.newUser.password)
+                        SecureInputView("Password", text : $signupViewModel.newUser.password)
                             .font(.system(size: 30))
                             .padding()
                             .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
                             .background(Color.white)
                             .foregroundColor(.darkGrayCustom)
                             .cornerRadius(15)
+                        
+                        Text("Missing Password")
+                            .fixedSize(horizontal: false, vertical: true)
+                            .font(.system(size: 13))
+                            .foregroundColor(.red)
                         
                     }
                     .padding(geometry.size.width/42)
@@ -191,8 +225,15 @@ struct SignupView: View {
                     }label:{
                         CreateAccountButton(text: "Create Account", textColor: .white, backgroundColor: Color.blackCustom)
                             .padding(geometry.size.width/42)
-                    }.alert(isPresented: $signupViewModel.isBadSignup) {
-                        Alert(title: Text("Error during Signup"), message: Text("There was an error during signup"), dismissButton: .default(Text("OK")))
+                        
+                    }
+                    .opacity(signupViewModel.isSignUpComplete ? 1 : 0.6)
+                    .disabled(!signupViewModel.isSignUpComplete)
+                    .alert(isPresented: $signupViewModel.isBadSignup) {
+                        Alert(title: Text("Email Already Taken"), message: Text("\(signupViewModel.newUser.email) is already taken."), dismissButton: .default(Text("OK")))
+                            
+                            
+
                     }
                 }
                 Spacer()
@@ -240,5 +281,34 @@ struct CreateAccountButton: View {
             .background(backgroundColor)
             .foregroundColor(textColor)
             .cornerRadius(15)
+    }
+}
+
+
+struct SecureInputView: View {
+    
+    @Binding private var text: String
+    @State private var isSecured: Bool = true
+    private var title: String
+    
+    init(_ title: String, text: Binding<String>) {
+        self.title = title
+        self._text = text
+    }
+    
+    var body: some View {
+        ZStack(alignment: .trailing) {
+            if isSecured {
+                SecureField(title, text: $text)
+            } else {
+                TextField(title, text: $text)
+            }
+            Button(action: {
+                isSecured.toggle()
+            }) {
+                Image(systemName: self.isSecured ? "eye.slash" : "eye")
+                    .accentColor(.gray)
+            }
+        }
     }
 }
