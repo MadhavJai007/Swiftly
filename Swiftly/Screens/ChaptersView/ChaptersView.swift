@@ -8,6 +8,7 @@ import SwiftUI
 struct ChaptersView: View {
     
     @State var isActive: Bool = false
+    @State private var showPopup: Bool = false
     
     @EnvironmentObject var loginViewModel: LoginViewModel // view model for this view
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel /// view model for this view
@@ -35,6 +36,7 @@ struct ChaptersView: View {
                         Spacer()
                         
                         Button{
+                            showPopup.toggle()
                             print(chaptersViewModel.chaptersArr)
                             print("Logging into \(loginViewModel.accountMode) mode...")
                         }label: {
@@ -91,6 +93,7 @@ struct ChaptersView: View {
                                    isActive: $chaptersViewModel.didSelectLeaderboard) {EmptyView()}
                 }
                 Spacer()
+                PopupUIView(title: "Join Classroom", message: "Join Classroom", buttonText: "Join", showPopup: $showPopup)
             }
         }
         .navigationBarHidden(true)
@@ -104,7 +107,9 @@ struct ChaptersView: View {
                 chapterContentViewModel.willStartInteractiveSection = false
             }
         }
+        
     }
+
 }
 
 struct ChaptersView_Preview: PreviewProvider {

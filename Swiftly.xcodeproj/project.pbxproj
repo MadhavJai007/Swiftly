@@ -37,6 +37,7 @@
 		DADCC3B12714C8F60071D287 /* InteractiveBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADCC3B02714C8F60071D287 /* InteractiveBlock.swift */; };
 		DADCC3B72715D3B50071D287 /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADCC3B62715D3B50071D287 /* Playground.swift */; };
 		DBC0793536759C50964ACED1 /* Pods_Swiftly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11B3422058B48AC46E6C075C /* Pods_Swiftly.framework */; };
+		EBD10B7C271DBAE9002042D9 /* PopupUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD10B7B271DBAE9002042D9 /* PopupUIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +75,7 @@
 		DADCC3AE271362100071D287 /* InteractiveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveView.swift; sourceTree = "<group>"; };
 		DADCC3B02714C8F60071D287 /* InteractiveBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveBlock.swift; sourceTree = "<group>"; };
 		DADCC3B62715D3B50071D287 /* Playground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playground.swift; sourceTree = "<group>"; };
+		EBD10B7B271DBAE9002042D9 /* PopupUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupUIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -240,6 +242,7 @@
 		DABF368E27020DF3009BF78A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				EBD10B7A271DBAC2002042D9 /* Popup */,
 				DA0866BF271A143C00B1999E /* Labels */,
 				DA0866BC271A0ACD00B1999E /* Navigation Bar Icons */,
 				DABF369327023677009BF78A /* ChapterTitleView.swift */,
@@ -310,6 +313,14 @@
 				66F71B613F71F71DCB1B8233 /* Pods-Swiftly.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		EBD10B7A271DBAC2002042D9 /* Popup */ = {
+			isa = PBXGroup;
+			children = (
+				EBD10B7B271DBAE9002042D9 /* PopupUIView.swift */,
+			);
+			path = Popup;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -446,6 +457,7 @@
 				DABF368927020134009BF78A /* Chapter.swift in Sources */,
 				DA0866C1271A147100B1999E /* LabelsView.swift in Sources */,
 				DAD6B31B270A3E63002C8A55 /* UserAccountViewModel.swift in Sources */,
+				EBD10B7C271DBAE9002042D9 /* PopupUIView.swift in Sources */,
 				DABF369427023677009BF78A /* ChapterTitleView.swift in Sources */,
 				DA2122DE26FE07820016587F /* LoginView.swift in Sources */,
 				DADCC3B72715D3B50071D287 /* Playground.swift in Sources */,
