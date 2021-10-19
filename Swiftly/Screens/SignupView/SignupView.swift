@@ -196,8 +196,12 @@ struct SignupView: View {
                     // Create account button
                     Button{
                         signupViewModel.save(accountType: selectedType)
-                        let timer2 = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { [self] (timer) in
-                            loginViewModel.isShowingSignupView.toggle()
+
+                        let timer2 = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [self] (timer) in
+                            if(signupViewModel.emailNotTaken == true){
+                                loginViewModel.isShowingSignupView.toggle()
+                            }
+                                
                         }
                     }label:{
                         CreateAccountButton(text: "Create Account", textColor: .white, backgroundColor: Color.blackCustom)

@@ -26,10 +26,12 @@ final class SignupViewModel: ObservableObject {
     
     @Published var isBadSignup: Bool = false
     
+    //boolean to ensure that email being used has not already been registered with Swiftly
+    @Published var emailNotTaken: Bool = false
+    
     private var db = Firestore.firestore()
     
-    //boolean to ensure that email being used has not already been registered with Swiftly
-    var emailNotTaken = false
+
     
     
     
@@ -136,6 +138,10 @@ final class SignupViewModel: ObservableObject {
        
     }
     
+    func checkIfEmailExistsCompletion(user: User, completion: () -> Void){
+        print("check for students")
+    }
+    
     //adding user data to authentication database and Students/Teachers/Experts and Users firestore collections
     
     func authenticateUser(user: User){
@@ -201,6 +207,10 @@ final class SignupViewModel: ObservableObject {
     
     
     func save(accountType: String){
+        
+        checkIfEmailExistsCompletion(user: newUser, completion:{
+            print("now check for teachers")
+        })
         
         emailNotTaken = false
         
