@@ -60,11 +60,6 @@ struct SignupView: View {
                             .foregroundColor(.darkGrayCustom)
                             .cornerRadius(15)
                         
-                        Text("Missing Username")
-                            .fixedSize(horizontal: false, vertical: true)
-                            .font(.system(size: 13))
-                            .foregroundColor(.red)
-                        
                     }
                     .padding(geometry.size.width/42)
                          
@@ -85,11 +80,6 @@ struct SignupView: View {
                                 .background(Color.white)
                                 .foregroundColor(.darkGrayCustom)
                                 .cornerRadius(15)
-                            
-                            Text("Missing First Name")
-                                .fixedSize(horizontal: false, vertical: true)
-                                .font(.system(size: 13))
-                                .foregroundColor(.red)
                         }
                         
                         VStack(alignment: .leading) {
@@ -104,11 +94,6 @@ struct SignupView: View {
                                 .background(Color.white)
                                 .foregroundColor(.darkGrayCustom)
                                 .cornerRadius(15)
-                            
-                            Text("Missing Last Name")
-                                .fixedSize(horizontal: false, vertical: true)
-                                .font(.system(size: 13))
-                                .foregroundColor(.red)
                         }
                     }.padding(geometry.size.width/42)
                     
@@ -128,11 +113,6 @@ struct SignupView: View {
                                 .foregroundColor(.darkGrayCustom)
                                 .cornerRadius(15)
                             
-                            Text("Missing Country Field")
-                                .fixedSize(horizontal: false, vertical: true)
-                                .font(.system(size: 13))
-                                .foregroundColor(.red)
-                            
                         }
                         
                         VStack(alignment: .leading) {
@@ -147,11 +127,6 @@ struct SignupView: View {
                                 .background(Color.white)
                                 .foregroundColor(.darkGrayCustom)
                                 .cornerRadius(15)
-                            
-                            Text("Missing Date of Birth")
-                                .fixedSize(horizontal: false, vertical: true)
-                                .font(.system(size: 13))
-                                .foregroundColor(.red)
                         }
                     }
                     .padding(geometry.size.width/42)
@@ -170,11 +145,6 @@ struct SignupView: View {
                             .foregroundColor(.darkGrayCustom)
                             .cornerRadius(15)
                         
-                        Text("Missing Email Address")
-                            .fixedSize(horizontal: false, vertical: true)
-                            .font(.system(size: 13))
-                            .foregroundColor(.red)
-                        
                     }
                     .padding(geometry.size.width/42)
                     
@@ -191,11 +161,6 @@ struct SignupView: View {
                             .background(Color.white)
                             .foregroundColor(.darkGrayCustom)
                             .cornerRadius(15)
-                        
-                        Text("Missing Password")
-                            .fixedSize(horizontal: false, vertical: true)
-                            .font(.system(size: 13))
-                            .foregroundColor(.red)
                         
                     }
                     .padding(geometry.size.width/42)

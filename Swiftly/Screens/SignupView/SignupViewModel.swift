@@ -7,9 +7,6 @@ import SwiftUI
 import Firebase
 import FirebaseFirestore
 
-
-/// Todo: Make sure user cannot create account with same username or email.
-
 final class SignupViewModel: ObservableObject {
     
     
@@ -43,18 +40,40 @@ final class SignupViewModel: ObservableObject {
         return emailTest.evaluate(with: newUser.email)
     }
     
+    func isUserNameValid() -> Bool{
+        return newUser.username != ""
+    }
+    
+    func isFirstNameValid() -> Bool{
+        return newUser.firstName != ""
+    }
+    
+    func isLastNameValid() -> Bool{
+        return newUser.lastName != ""
+    }
+    
+    func isCountryValid() -> Bool{
+        return newUser.country != ""
+    }
+    
+    
     var isSignUpComplete : Bool {
         if !isEmailValid(){
             return false
         }
-        return true
-    }
-    
-    func authenticateUser(user: User){
-        
-        Auth.auth().createUser(withEmail: user.email, password: user.password) { [self] user, error in
-            print("Created authentication account successfully")
+        if !isUserNameValid(){
+            return false
         }
+        if !isFirstNameValid(){
+            return false
+        }
+        if !isLastNameValid(){
+            return false
+        }
+        if !isCountryValid(){
+            return false
+        }
+        return true
     }
     
     func checkIfEmailExists(user: User){
@@ -64,7 +83,7 @@ final class SignupViewModel: ObservableObject {
         // Get your Firebase collection
            let collectionRef = db.collection("Users")
 
-           // Get all the documents where the field username is equal to the String you pass, loop over all the documents.
+        // Get all the documents where the field username is equal to the String you pass, loop over all the documents.
 
         collectionRef.whereField("user_email", isEqualTo: user.email).getDocuments { (snapshot, err) in
                if let err = err {
@@ -82,9 +101,17 @@ final class SignupViewModel: ObservableObject {
                    }
                }
            }
-        
+       
     }
     
+    //adding user data to authentication database and Students/Teachers/Experts and Users firestore collections
+    
+    func authenticateUser(user: User){
+        
+        Auth.auth().createUser(withEmail: user.email, password: user.password) { [self] user, error in
+            print("Created authentication account successfully")
+        }
+    }
     
     func addUser(user: User, accountType: String){
         
@@ -153,7 +180,7 @@ final class SignupViewModel: ObservableObject {
         //Current solution to async is to put hardcoded timers between authenticateUser() and addUser(), so that they only executes AFTER the email check
         
         
-        let timer = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { [self] (timer) in
+        let timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [self] (timer) in
             
             print("The email is not taken is : \(emailNotTaken)")
             if(emailNotTaken == false){
@@ -162,7 +189,7 @@ final class SignupViewModel: ObservableObject {
             
         }
         
-        let timer2 = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [self] (timer) in
+        let timer2 = Timer.scheduledTimer(withTimeInterval: 8.0, repeats: false) { [self] (timer) in
             
             print("The email is not taken is : \(emailNotTaken)")
             if(emailNotTaken == true){
