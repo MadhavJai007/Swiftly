@@ -1,4 +1,4 @@
-//
+//  INFO49635 - CAPSTONE FALL 2021
 //  DropdownView.swift
 //  Swiftly
 //
@@ -20,7 +20,7 @@ struct DropdownView: View {
         VStack(){
             VStack(spacing: 30){
                 HStack {
-                    Text(dropdownText)
+                    Text(expand ? "Select account type" : dropdownText)
                         .fontWeight(.light)
                         .font(.system(size: 30))
                         .foregroundColor(.white)
@@ -49,6 +49,7 @@ struct DropdownView: View {
                         }.foregroundColor(.whiteCustom)
                     }
                     
+                    // disabled Experts button. will be worked on later.
                     Button(action: {
                         print("Expert sign in chosen")
                         self.expand.toggle()

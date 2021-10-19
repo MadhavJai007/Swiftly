@@ -37,6 +37,7 @@
 		DADCC3B12714C8F60071D287 /* InteractiveBlock.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADCC3B02714C8F60071D287 /* InteractiveBlock.swift */; };
 		DADCC3B72715D3B50071D287 /* Playground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DADCC3B62715D3B50071D287 /* Playground.swift */; };
 		DBC0793536759C50964ACED1 /* Pods_Swiftly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 11B3422058B48AC46E6C075C /* Pods_Swiftly.framework */; };
+		EBCD8FC0271F0A1B0084B2ED /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBCD8FBF271F0A1B0084B2ED /* Alert.swift */; };
 		EBD10B7C271DBAE9002042D9 /* PopupUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD10B7B271DBAE9002042D9 /* PopupUIView.swift */; };
 		EBD10B7F271E3338002042D9 /* DropdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD10B7E271E3338002042D9 /* DropdownView.swift */; };
 /* End PBXBuildFile section */
@@ -76,6 +77,7 @@
 		DADCC3AE271362100071D287 /* InteractiveView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractiveView.swift; sourceTree = "<group>"; };
 		DADCC3B02714C8F60071D287 /* InteractiveBlock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveBlock.swift; sourceTree = "<group>"; };
 		DADCC3B62715D3B50071D287 /* Playground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Playground.swift; sourceTree = "<group>"; };
+		EBCD8FBF271F0A1B0084B2ED /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		EBD10B7B271DBAE9002042D9 /* PopupUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupUIView.swift; sourceTree = "<group>"; };
 		EBD10B7E271E3338002042D9 /* DropdownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -220,6 +222,7 @@
 				DAD6B31C270A4832002C8A55 /* User.swift */,
 				DADCC3B02714C8F60071D287 /* InteractiveBlock.swift */,
 				DADCC3B62715D3B50071D287 /* Playground.swift */,
+				EBCD8FBF271F0A1B0084B2ED /* Alert.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -471,6 +474,7 @@
 				DAD6B31B270A3E63002C8A55 /* UserAccountViewModel.swift in Sources */,
 				EBD10B7C271DBAE9002042D9 /* PopupUIView.swift in Sources */,
 				DABF369427023677009BF78A /* ChapterTitleView.swift in Sources */,
+				EBCD8FC0271F0A1B0084B2ED /* Alert.swift in Sources */,
 				DA2122DE26FE07820016587F /* LoginView.swift in Sources */,
 				DADCC3B72715D3B50071D287 /* Playground.swift in Sources */,
 				DA0866AB2717702E00B1999E /* InteractiveQuestionsView.swift in Sources */,

@@ -10,6 +10,7 @@ struct LoginView: View {
     
     @State var email: String = ""
     @State var password: String = ""
+    
     var accountTypeOptions = ["Student", "Teacher"]
     
     /// Environment View Models being passed down the hierarchy
@@ -71,28 +72,25 @@ struct LoginView: View {
                     
                     /// Login button --> calls login method from loginViewModel
                     Button{
-                        
+                        print("Logging into \(loginViewModel.accountMode) mode...")
                         /// Used to make sure user cannot hit login button while their being logged in
                         if (loginViewModel.attemptingLogin == false){
-                            
-                            print("Logging into \(loginViewModel.accountMode) mode...")
 //                            loginViewModel.attemptingLogin = true
-//                            loginViewModel.login(email: email, password: password)
-//
-//                            email = ""
-//                            password = ""
-//
-//                            /// If the login is successful, download chapter content
-//                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-//                                print("Logging into \(loginViewModel.accountMode) mode...")
-//                                if (loginViewModel.isSuccessful) {
-//                                    chaptersViewModel.getChapterDocs()
-//                                    loginViewModel.attemptingLogin = true
-//                                }else{
-//                                    // Error getting chapters
-//                                    loginViewModel.attemptingLogin = false
-//                                }
-//                            }
+                            loginViewModel.login(email: email, password: password)
+
+                            /// If the login is successful, download chapter content
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                                if (loginViewModel.isSuccessful) {
+                                    email = ""
+                                    password = ""
+                                    print("Logging into \(loginViewModel.accountMode) mode...")
+                                    chaptersViewModel.getChapterDocs()
+                                    loginViewModel.attemptingLogin = true
+                                }else{
+                                    // Error getting chapters
+                                    loginViewModel.attemptingLogin = false
+                                }
+                            }
                         }
                     }label: {
                         ButtonLabelLarge(text: "Login", textColor: .white, backgroundColor: Color.blackCustom)
@@ -101,9 +99,16 @@ struct LoginView: View {
                     .padding(.bottom,50)
                     
                     /// Alert for bad login
-                    .alert(isPresented: $loginViewModel.isBadLogin) {
-                        Alert(title: Text("Bad Login"), message: Text("Email and/or password are incorrect."), dismissButton: .default(Text("OK")))
-                    }
+                    .alert(item: $loginViewModel.alertInfo, content: { info in
+                        Alert(title: Text(info.title), message: Text(info.message))
+                    })
+//                    .alert(isPresented: $loginViewModel.isBadLogin) {
+//                        Alert(title: Text("Bad Login"), message: Text("Email and/or password are incorrect."), dismissButton: .default(Text("OK")))
+//                    }
+//                    .alert(isPresented: $loginViewModel.accountTypeNotChosen) {
+//                        Alert(title: Text("Couldn't login"), message: Text("Please select your account type"),
+//                            dismissButton: .default(Text("OK")))
+//                    }
                     .animation(.spring())
                     
                     /// Navigation link for chapters view --> is only toggled when chapters view model is
