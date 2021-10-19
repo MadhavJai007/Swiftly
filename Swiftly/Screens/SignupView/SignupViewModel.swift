@@ -21,7 +21,7 @@ final class SignupViewModel: ObservableObject {
                        email: "",
                        password: "",
                        dob : "",
-                       country: ""
+                       country: "Canada"
                     )
     
     @Published var isBadSignup: Bool = false

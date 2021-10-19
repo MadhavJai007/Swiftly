@@ -60,7 +60,7 @@ struct LoginView: View {
                             .foregroundColor(Color.blackCustom)
                             .cornerRadius(15)
                         
-                        SecureField("Password", text: $password)
+                        SecureInputView("Password", text: $password)
                             .font(.system(size: 30))
                             .padding()
                             .frame(width: 400, height: 75)
@@ -193,3 +193,5 @@ struct LoginScreen_Previews: PreviewProvider {
         LoginView()
     }
 }
+
+

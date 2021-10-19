@@ -7,7 +7,7 @@ import SwiftUI
 struct SignupView: View {
     
     var userTypes = ["Student", "Teacher"]
-    var countries = ["Canada", "United States"]
+    var countries = ["Canada", "United States", "United Kingdom", "Australia"]
     @State private var selectedType = "Student"
     
     @EnvironmentObject var loginViewModel: LoginViewModel
@@ -161,7 +161,7 @@ struct SignupView: View {
                         InputFieldLabel(text:"Password")
                             .padding(.bottom, -geometry.size.width/120)
                         
-                        TextField("Password", text : $signupViewModel.newUser.password)
+                        SecureInputView("Password", text : $signupViewModel.newUser.password)
                             .font(.system(size: 30))
                             .padding()
                             .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
@@ -196,7 +196,9 @@ struct SignupView: View {
                     // Create account button
                     Button{
                         signupViewModel.save(accountType: selectedType)
-                        //loginViewModel.isShowingSignupView.toggle()
+                        let timer2 = Timer.scheduledTimer(withTimeInterval: 3.0, repeats: false) { [self] (timer) in
+                            loginViewModel.isShowingSignupView.toggle()
+                        }
                     }label:{
                         CreateAccountButton(text: "Create Account", textColor: .white, backgroundColor: Color.blackCustom)
                             .padding(geometry.size.width/42)
