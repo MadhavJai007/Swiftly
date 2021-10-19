@@ -10,6 +10,7 @@ struct LoginView: View {
     
     @State var email: String = ""
     @State var password: String = ""
+    var accountTypeOptions = ["Student", "Teacher"]
     
     /// Environment View Models being passed down the hierarchy
     @EnvironmentObject var loginViewModel: LoginViewModel /// --> view model for this view
@@ -38,9 +39,11 @@ struct LoginView: View {
                         
                         TitleLabel(text:"Swiftly")
                     }
+                    .frame(alignment: .topLeading)
+                
                     
                     VStack{
-                        DropdownView()
+                        DropdownView(optionArray: accountTypeOptions)
                     }
                     .padding()
                     
@@ -72,23 +75,24 @@ struct LoginView: View {
                         /// Used to make sure user cannot hit login button while their being logged in
                         if (loginViewModel.attemptingLogin == false){
                             
-                            loginViewModel.attemptingLogin = true
-                            loginViewModel.login(email: email, password: password)
-                            
-                            email = ""
-                            password = ""
-                            
-                            /// If the login is successful, download chapter content
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                                print("Logging into \(loginViewModel.accountMode) mode...")
-                                if (loginViewModel.isSuccessful) {
-                                    chaptersViewModel.getChapterDocs()
-                                    loginViewModel.attemptingLogin = true
-                                }else{
-                                    // Error getting chapters
-                                    loginViewModel.attemptingLogin = false
-                                }
-                            }
+                            print("Logging into \(loginViewModel.accountMode) mode...")
+//                            loginViewModel.attemptingLogin = true
+//                            loginViewModel.login(email: email, password: password)
+//
+//                            email = ""
+//                            password = ""
+//
+//                            /// If the login is successful, download chapter content
+//                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+//                                print("Logging into \(loginViewModel.accountMode) mode...")
+//                                if (loginViewModel.isSuccessful) {
+//                                    chaptersViewModel.getChapterDocs()
+//                                    loginViewModel.attemptingLogin = true
+//                                }else{
+//                                    // Error getting chapters
+//                                    loginViewModel.attemptingLogin = false
+//                                }
+//                            }
                         }
                     }label: {
                         ButtonLabelLarge(text: "Login", textColor: .white, backgroundColor: Color.blackCustom)

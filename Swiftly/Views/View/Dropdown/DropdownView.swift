@@ -9,6 +9,10 @@ import SwiftUI
 
 struct DropdownView: View {
     @State var expand = false
+    @State var dropdownText = "Select account type"
+    var optionArray = [String]()
+    
+    @EnvironmentObject var loginViewModel: LoginViewModel
     
     // The view is used to make a dropdown menu that can be used for different purposes
     var body: some View {
@@ -16,7 +20,7 @@ struct DropdownView: View {
         VStack(){
             VStack(spacing: 30){
                 HStack {
-                    Text("Select account type")
+                    Text(dropdownText)
                         .fontWeight(.light)
                         .font(.system(size: 30))
                         .foregroundColor(.white)
@@ -29,24 +33,32 @@ struct DropdownView: View {
                 }
                 // when the dropdown menu is expanded, show the options
                 if expand {
+                    
+                    ForEach(optionArray, id: \.self) { anOption in
+                        
+                        Button(action: {
+                            print("\(anOption) sign in chosen")
+                            self.dropdownText = anOption
+                            loginViewModel.accountMode = self.dropdownText
+                            self.expand.toggle()
+                        }){
+                            Text(anOption)
+                                .fontWeight(.semibold)
+                                .font(.system(size: 30))
+                                .padding()
+                        }.foregroundColor(.whiteCustom)
+                    }
+                    
                     Button(action: {
-                        print("Student sign in chosen")
+                        print("Expert sign in chosen")
                         self.expand.toggle()
                     }){
-                        Text("Student")
+                        Text("Expert")
                             .fontWeight(.semibold)
                             .font(.system(size: 30))
                             .padding()
                     }.foregroundColor(.whiteCustom)
-                    Button(action: {
-                        print("Teacher sign in chosen")
-                        self.expand.toggle()
-                    }){
-                        Text("Teacher")
-                            .fontWeight(.semibold)
-                            .font(.system(size: 30))
-                            .padding()
-                    }.foregroundColor(.whiteCustom)
+                        .disabled(true)
                     
                 }
                 

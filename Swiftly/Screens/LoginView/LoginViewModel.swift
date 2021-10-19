@@ -17,6 +17,7 @@ final class LoginViewModel: ObservableObject {
     @Published var isBadLogin: Bool = false
     @Published var isLoggedOut: Bool = false
     @Published var accountMode:  String = "Undefined"
+
     
     var attemptingLogin: Bool = false
     
