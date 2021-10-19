@@ -15,6 +15,7 @@ final class ChaptersViewModel: ObservableObject {
     @Published var isShowingAccountView = false
     @Published var chaptersArr = [Chapter]()
     @Published var isUserLoggedIn = false
+    @Published var classroomCode: String = ""
     
     var startChapterIntent = false
     

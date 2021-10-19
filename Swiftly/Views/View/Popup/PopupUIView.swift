@@ -16,6 +16,8 @@ struct PopupUIView: View {
     
     @State var classCode: String = ""
     
+    @EnvironmentObject var chaptersViewModel: ChaptersViewModel
+    
     // holds view of the popup window.
     /// TODO: Generalize it for many purposes
     var body: some View {
@@ -46,6 +48,11 @@ struct PopupUIView: View {
                         // Dismiss the PopUp
                         withAnimation(.linear(duration: 0.3)) {
                             showPopup = false
+                            chaptersViewModel.classroomCode = self.classCode
+                            print("Joining class \(self.classCode)...")
+                            print("Joining class \(chaptersViewModel.classroomCode)...")
+                            
+                            /// TODO: call function which searches the teachers collection for classrooms which have the entered classroom code in the classCode field
                         }
                     }, label: {
                         Text(buttonText)

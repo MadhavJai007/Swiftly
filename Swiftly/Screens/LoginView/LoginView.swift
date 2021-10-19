@@ -28,15 +28,26 @@ struct LoginView: View {
                 Color.darkGrayCustom
                     .ignoresSafeArea()
                 
+                
+                
                 VStack {
                     
-                    Spacer()
-                    Spacer()
+                    VStack{
+                        Spacer()
+                        Spacer()
+                        
+                        TitleLabel(text:"Swiftly")
+                    }
                     
-                    TitleLabel(text:"Swiftly")
+                    VStack{
+                        DropdownView()
+                    }
+                    .padding()
+                    
                     
                     VStack(spacing: 25){
                         
+                                                
                         TextField("Email Address", text: $email)
                             .font(.system(size: 30))
                             .padding()
@@ -53,6 +64,7 @@ struct LoginView: View {
                             .foregroundColor(Color.blackCustom)
                             .cornerRadius(15)
                     }
+                    
                     
                     /// Login button --> calls login method from loginViewModel
                     Button{
@@ -88,6 +100,7 @@ struct LoginView: View {
                     .alert(isPresented: $loginViewModel.isBadLogin) {
                         Alert(title: Text("Bad Login"), message: Text("Email and/or password are incorrect."), dismissButton: .default(Text("OK")))
                     }
+                    .animation(.spring())
                     
                     /// Navigation link for chapters view --> is only toggled when chapters view model is
                     /// finished downloading chapters from remote db.
@@ -125,6 +138,7 @@ struct LoginView: View {
                                         .environmentObject(chapterContentViewModel),
                                        isActive: $loginViewModel.isShowingSignupView) {EmptyView()}
                     }
+                    
                 }
                 
                 /// Shows progress loader while chapters are being downloaded
@@ -143,8 +157,10 @@ struct LoginView: View {
                     }
                     .frame(width: 150, height: 115)
                     .cornerRadius(20)
+                    .animation(.spring())
                 }
             }
+            .animation(.spring())
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .navigationBarHidden(true)
