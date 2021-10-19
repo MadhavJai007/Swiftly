@@ -20,7 +20,7 @@ final class SignupViewModel: ObservableObject {
                        username: "",
                        email: "",
                        password: "",
-                       dob: "",
+                       dob : "",
                        country: ""
                     )
     
@@ -36,8 +36,29 @@ final class SignupViewModel: ObservableObject {
     //Validation functions
     
     func isEmailValid() -> Bool{
+        
+        //must be in email@email.com format
+        
         let emailTest = NSPredicate(format: "SELF MATCHES %@", "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$")
         return emailTest.evaluate(with: newUser.email)
+    }
+    
+    
+    func isDateValid() -> Bool{
+        
+        //must be in dd/mm/yyyy format, only numerics
+        
+        let dateTest = NSPredicate(format: "SELF MATCHES %@", "^\\d{2}\\/\\d{2}\\/\\d{4}$")
+        return dateTest.evaluate(with: newUser.dob)
+    }
+    
+    
+    func isPasswordValid() -> Bool{
+        
+        //Password must be at least 8 characters, no more than 15 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.
+        
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=[^\\d_].*?\\d)\\w(\\w|[!@#$%]){7,20}")
+        return passwordTest.evaluate(with: newUser.password)
     }
     
     func isUserNameValid() -> Bool{
@@ -61,6 +82,14 @@ final class SignupViewModel: ObservableObject {
         if !isEmailValid(){
             return false
         }
+        
+        if !isPasswordValid(){
+            return false
+        }
+        
+        if !isDateValid(){
+            return false
+        }
         if !isUserNameValid(){
             return false
         }
@@ -79,13 +108,16 @@ final class SignupViewModel: ObservableObject {
     func checkIfEmailExists(user: User){
         print("Email to be checked if it exists in Users collection is : \(user.email)")
         
+        let emailCompared = user.email.lowercased()
+        
+        print("After lowercased its : \(emailCompared)")
         
         // Get your Firebase collection
            let collectionRef = db.collection("Users")
 
         // Get all the documents where the field username is equal to the String you pass, loop over all the documents.
 
-        collectionRef.whereField("user_email", isEqualTo: user.email).getDocuments { (snapshot, err) in
+        collectionRef.whereField("user_email", isEqualTo: emailCompared).getDocuments { (snapshot, err) in
                if let err = err {
                    print("Error getting document: \(err)")
                } else if (snapshot?.isEmpty)! {
@@ -121,7 +153,7 @@ final class SignupViewModel: ObservableObject {
             db.collection("Students").document(user.username).setData([
                 "country": user.country,
                 "date_of_birth": user.dob,
-                "email": user.email,
+                "email": user.email.lowercased(),
                 "firstname" : user.firstName,
                 "lastName" : user.lastName,
                 "password" : user.password
@@ -136,7 +168,7 @@ final class SignupViewModel: ObservableObject {
             db.collection("Teachers").document(user.username).setData([
                 "country": user.country,
                 "date_of_birth": user.dob,
-                "email": user.email,
+                "email": user.email.lowercased(),
                 "firstname" : user.firstName,
                 "lastName" : user.lastName,
                 "password" : user.password
@@ -154,8 +186,7 @@ final class SignupViewModel: ObservableObject {
         // adding user to the "Users" collection in database
         
         db.collection("Users").document(user.username).setData([
-            "password": user.password,
-            "user_email": user.email,
+            "user_email": user.email.lowercased(),
             "user_type": accountType
         ]) { err in
             if let err = err {
@@ -175,9 +206,6 @@ final class SignupViewModel: ObservableObject {
         
         print("First we will check if the email already exists in our database using checkIfEmailExists().")
         checkIfEmailExists(user: newUser)
-        
-
-        //Current solution to async is to put hardcoded timers between authenticateUser() and addUser(), so that they only executes AFTER the email check
         
         
         let timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [self] (timer) in

@@ -7,6 +7,7 @@ import SwiftUI
 struct SignupView: View {
     
     var userTypes = ["Student", "Teacher"]
+    var countries = ["Canada", "United States"]
     @State private var selectedType = "Student"
     
     @EnvironmentObject var loginViewModel: LoginViewModel
@@ -105,13 +106,16 @@ struct SignupView: View {
                             InputFieldLabel(text:"Country")
                                 .padding(.bottom, -geometry.size.width/120)
                             
-                            TextField("Country", text : $signupViewModel.newUser.country)
-                                .font(.system(size: 30))
-                                .padding()
-                                .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
-                                .background(Color.white)
-                                .foregroundColor(.darkGrayCustom)
-                                .cornerRadius(15)
+                            Picker("", selection: $signupViewModel.newUser.country) {
+                                            ForEach(countries, id: \.self) {
+                                                           
+                                                Text($0)
+                                                    .font(.system(size: 30))
+                                            }
+                                        }
+                            .frame(width: 100, height: 50)
+                            .background(Color.blackCustom)
+                            .cornerRadius(15)
                             
                         }
                         
@@ -119,6 +123,8 @@ struct SignupView: View {
                             
                             InputFieldLabel(text:"Date of Birth")
                                 .padding(.bottom, -geometry.size.width/120)
+                            
+                            
                             
                             TextField("DD/MM/YYYY", text : $signupViewModel.newUser.dob)
                                 .font(.system(size: 30))
@@ -144,6 +150,7 @@ struct SignupView: View {
                             .background(Color.white)
                             .foregroundColor(.darkGrayCustom)
                             .cornerRadius(15)
+
                         
                     }
                     .padding(geometry.size.width/42)
@@ -154,13 +161,16 @@ struct SignupView: View {
                         InputFieldLabel(text:"Password")
                             .padding(.bottom, -geometry.size.width/120)
                         
-                        SecureInputView("Password", text : $signupViewModel.newUser.password)
+                        TextField("Password", text : $signupViewModel.newUser.password)
                             .font(.system(size: 30))
                             .padding()
                             .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
                             .background(Color.white)
                             .foregroundColor(.darkGrayCustom)
                             .cornerRadius(15)
+                        Text("Must be 8-15 characters in length, start with a letter, and contain atleast 1 number")
+                            .font(.system(size: 15))
+                            .foregroundColor(.white)
                         
                     }
                     .padding(geometry.size.width/42)
