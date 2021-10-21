@@ -35,12 +35,11 @@ struct LoginView: View {
                 VStack {
                     
                     VStack{
-                        Spacer()
-                        Spacer()
                         
                         TitleLabel(text:"Swiftly")
                     }
                     .frame(alignment: .topLeading)
+                    .padding(.top, 250)
                 
                     
                     VStack{
@@ -148,7 +147,10 @@ struct LoginView: View {
                                        isActive: $loginViewModel.isShowingSignupView) {EmptyView()}
                     }
                     
+                    Spacer()
+                    
                 }
+                .padding(.bottom, 250)
                 
                 /// Shows progress loader while chapters are being downloaded
                 if (loginViewModel.isSuccessful == true){

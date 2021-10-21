@@ -34,7 +34,6 @@ struct InteractiveQuestionsView: View {
                         
                         Spacer()
                         
-                        
                     }
                     .padding(.top, geometry.size.width/16)
                     .padding(.bottom, geometry.size.width/32)
@@ -89,7 +88,7 @@ struct InteractiveQuestionsView: View {
                                         VStack{
                                             
                                             Button {
-                                                chapterContentViewModel.setupPlayground(question: question)
+                                                chapterContentViewModel.setupPlayground(question: question, questionIndex: chaptersViewModel.selectedChapter!.playgroundArr.firstIndex(of: question)!)
                                             }label: {
                                                 InteractiveStartButton(text: "Start Playground", textColor: Color.white, backgroundColor: Color.darkGrayCustom)
                                             }

@@ -9,7 +9,7 @@ import UniformTypeIdentifiers
 
 struct InteractiveView: View {
     
-    
+    @State var willUpdateView = false
     
     @State private var dragging: InteractiveBlock?
     
@@ -33,14 +33,27 @@ struct InteractiveView: View {
                             chapterContentViewModel.willStartPlaygroundQuestion.toggle()
                         }label:{
                             NavBarIcon(iconName: "xmark")
-                            
                         }
                         .padding(.leading, 30)
                         
                         Spacer()
+                        
+                        Button{
+                            /// save progress
+                        }label:{
+                            NavBarIcon(iconName: "square.and.arrow.down")
+                        }
+                        .padding(.trailing, 30)
+                        
                     }
                     .padding(.top, geometry.size.width/16)
                     .padding(.bottom, geometry.size.width/32)
+                    
+                    HStack{
+                        Spacer()
+                        InteractiveSubTitle(text: chapterContentViewModel.selectedQuestion.title)
+                        Spacer()
+                    }
                     
                     /// For the tiles
                     VStack{
@@ -79,24 +92,36 @@ struct InteractiveView: View {
                             .ignoresSafeArea()
                         
                         HStack{
-                            VStack(alignment: .leading){
-                                InteractiveSubTitle(text:"Challenge")
-                                InteractiveContentText(text:"Your challenge is to reconstruct the code for X that you learned about in the previous section.")
+                            
+                            
+                            InteractiveContentText(text: chapterContentViewModel.selectedQuestion.description)
+                                .padding(.leading, 15)
+                                .padding(.bottom, 20)
+                                .padding(.top, -10)
                                 
-                                Spacer()
-                            }.frame(width: geometry.size.width/1.5)
-                                .padding(.top, 30)
-                            
-                            
-                            VStack(alignment: .center){
+                            Spacer()
+                
+                            VStack(alignment: .leading){
                                 Button{
-                                    chapterContentViewModel.completeInteractiveSection()
+                                    
+                                    if (chapterContentViewModel.isFinalChapter == false){
+                                        chapterContentViewModel.startNextPlaygroundQuestion()
+                                        willUpdateView.toggle()
+                                    }else{
+                                        /// Call function to end playground
+                                        chapterContentViewModel.completeInteractiveSection()
+                                    }
+                                    
                                 }label: {
-                                    InteractiveSubTitle(text: "Submit")
+                                    InteractiveSubTitle(text: chapterContentViewModel.chapterButtonText)
                                 }
                                 .frame(width: geometry.size.width/5, height: geometry.size.width/10)
                                 .background(Color.blackCustom)
                                 .cornerRadius(15)
+                                .padding(.bottom, 20)
+                                .padding(.trailing, 15)
+                                .padding(.top, -10)
+                                
                                 
                             }.frame(width: geometry.size.width/4, alignment: .center)
                         }
@@ -106,6 +131,10 @@ struct InteractiveView: View {
             }
         }
         .navigationBarHidden(true)
+    
+        .onDisappear {
+            chapterContentViewModel.willStartNextQuestion = false
+        }
     }
 }
 
@@ -122,9 +151,7 @@ struct InteractiveSubTitle: View {
     
     var body: some View {
         Text(text)
-            .font(.system(size: 40,
-                          weight: .bold,
-                          design: .default))
+            .font(.system(size: 35, weight: .medium))
             .foregroundColor(Color.white)
     }
 }
@@ -136,8 +163,9 @@ struct InteractiveContentText: View {
     
     var body: some View {
         Text(text)
-            .font(.system(size: 30))
+            .font(.system(size: 25))
             .foregroundColor(Color.white)
+            .minimumScaleFactor(0.5)
     }
 }
 

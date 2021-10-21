@@ -14,12 +14,17 @@ final class ChapterContentViewModel: ObservableObject {
     var chapter: Chapter
     var chapterPlaygroundQuestions: [Playground]
     var selectedQuestion: Playground
+    var selectedQuestionIndex: Int
     
     /// This is used to allow interaction with blocks
     @Published var activeBlocks: [InteractiveBlock]
     @Published var willQuitChapter = false
     @Published var willStartInteractiveSection = false
     @Published var willStartPlaygroundQuestion = false
+    
+    @Published var chapterButtonText = "Next"
+    @Published var isFinalChapter = false
+    @Published var willStartNextQuestion = false
     
     let columns = [GridItem(.flexible())]
     
@@ -28,10 +33,23 @@ final class ChapterContentViewModel: ObservableObject {
         chapter = MockData.sampleChapter
         chapterPlaygroundQuestions = chapter.playgroundArr
         selectedQuestion = chapterPlaygroundQuestions[0]
+        selectedQuestionIndex = 0
         activeBlocks = Array(repeating: InteractiveBlock(id: 0, content: ""), count: 1)
     }
     
-    
+    /// Function which modifies the button text in the view
+    func checkQuestionInfo(){
+        
+        /// If the question is the last one, otherwise ...
+        if (selectedQuestionIndex == chapterPlaygroundQuestions.count-1){
+            chapterButtonText = "Submit"
+            isFinalChapter = true
+        }else{
+            chapterButtonText = "Next"
+            isFinalChapter = false
+        }
+    }
+
     /// Called to setup the playground environment
     func setupPlaygroundQuestions(selectedChapter: Chapter){
         
@@ -40,12 +58,25 @@ final class ChapterContentViewModel: ObservableObject {
         chapterPlaygroundQuestions = chapter.playgroundArr
     }
     
-
+    /// Called to start the next playground question
+    func startNextPlaygroundQuestion(){
+        
+        /// Incrementing to next chapter
+        selectedQuestionIndex += 1
+        selectedQuestion = chapterPlaygroundQuestions[selectedQuestionIndex]
+        
+        /// Setting up the next playground
+        setupPlayground(question: selectedQuestion, questionIndex: selectedQuestionIndex)
+        
+        willStartNextQuestion = true
+    }
     
-    func setupPlayground(question: Playground){
+
+    /// Called from InteractiveQuestionsView
+    func setupPlayground(question: Playground, questionIndex: Int){
         
-        self.selectedQuestion = question
-        
+        selectedQuestion = question
+        selectedQuestionIndex = questionIndex
         
         let codeBlocks = selectedQuestion.originalArr
         
@@ -59,7 +90,11 @@ final class ChapterContentViewModel: ObservableObject {
         }
         
         /// This will make navigation go
-        self.willStartPlaygroundQuestion = true
+        willStartPlaygroundQuestion = true
+        
+        /// Checking question info 
+        checkQuestionInfo()
+        
     }
 
 
