@@ -74,11 +74,14 @@ final class ChapterContentViewModel: ObservableObject {
 
     /// Called from InteractiveQuestionsView
     func setupPlayground(question: Playground, questionIndex: Int){
-        
+    
         selectedQuestion = question
         selectedQuestionIndex = questionIndex
         
-        let codeBlocks = selectedQuestion.originalArr
+        var codeBlocks = selectedQuestion.originalArr
+        
+        /// TODO: Only call this if the user does not have save data for this
+        codeBlocks.shuffle()
         
         /// Pre-populates array with interactive block objects
         activeBlocks = Array(repeating: InteractiveBlock(id: 0, content: ""), count: codeBlocks.count)
@@ -97,18 +100,19 @@ final class ChapterContentViewModel: ObservableObject {
         
     }
 
-
+    /// Quits the current chapter
     func quitChapter(){
         willQuitChapter = true
     }
     
+    /// Starts interactive section of chapter
     func startInteractiveSection(){
         willStartInteractiveSection = true
     }
     
-    /// Compares users results to the results of the original array
-    func completeInteractiveSection(){
-
+    /// Used to retrieve the score of the user
+    func getQuestionScore(){
+        
         var userScore = 0
 
         for i in 0..<selectedQuestion.originalArr.count {
@@ -116,11 +120,13 @@ final class ChapterContentViewModel: ObservableObject {
             if (activeBlocks[i].content == selectedQuestion.originalArr[i]){
                 userScore += 1
             }
-
         }
 
-        
-
         print("USER SCORE: \(userScore)")
+    }
+    
+    /// Finishes the playground section and returns to the playground questions view
+    func completeInteractiveSection(){
+       willStartPlaygroundQuestion = false
     }
 }

@@ -202,7 +202,7 @@ struct ChapterTopic: View {
 }
 
 
-/// struct representing chapter icon
+/// Struct representing chapter icon
 struct ChapterTopicIcon: View {
     
     var iconName: String

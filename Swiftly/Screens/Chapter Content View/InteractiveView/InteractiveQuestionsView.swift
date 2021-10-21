@@ -36,7 +36,6 @@ struct InteractiveQuestionsView: View {
                         
                     }
                     .padding(.top, geometry.size.width/16)
-                    .padding(.bottom, geometry.size.width/32)
                     
                     
                     PlaygroundTitleLabel(text: "Playgrounds")
@@ -46,7 +45,7 @@ struct InteractiveQuestionsView: View {
                         LazyHGrid(rows: [GridItem(.flexible())], spacing: 10){
                             
                             ForEach(chaptersViewModel.selectedChapter!.playgroundArr) { question in
-
+                                
                                 VStack{
                                     
                                     VStack(alignment: .leading){
@@ -55,17 +54,21 @@ struct InteractiveQuestionsView: View {
                                             .font(.system(size: 35, weight: .medium))
                                             .padding(.leading, 20)
                                             .padding(.top, 20)
+                                            .minimumScaleFactor(0.5)
                                         
                                         Text("\(question.description)")
                                             .font(.system(size: 28))
                                             .padding(.leading, 20)
                                             .padding(.trailing, 20)
+                                            .minimumScaleFactor(0.5)
                                         
                                         Spacer()
                                         
                                         HStack{
                                             
                                             Spacer()
+                                            
+                                            /// This is for the preview of interactive blocks
                                             VStack{
                                                 ForEach(0..<question.originalArr.count) { i in
                                                     
@@ -100,12 +103,25 @@ struct InteractiveQuestionsView: View {
                                     .background(Color.whiteCustom)
                                     .cornerRadius(40)
                                 }
-                                .frame(width: geometry.size.width/1.20, height: geometry.size.height/1.5)
+                                .frame(width: geometry.size.width/1.20, height: geometry.size.height/1.75)
                             }
                         }
                     }
                     .frame(width: geometry.size.width/1.20, height: geometry.size.height/1.5)
-                    .padding(.top, -50)
+                    .padding(.top, -60)
+                    
+                    HStack(){
+                        Button{
+                            print("tapped")
+                        }label:{
+                            ButtonLabelLarge(text: "Next Chapter", textColor: .white, backgroundColor: .green)
+                                .opacity(0.25)
+                        }
+                    }.frame(width: geometry.size.width, alignment: .center)
+                        .padding(20)
+                    
+                    
+
                     
                     NavigationLink(destination: InteractiveView()
                                     .environmentObject(chaptersViewModel)

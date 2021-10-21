@@ -70,6 +70,7 @@ struct SpecialNavBarIcon: View {
     }
 }
 
+/// Label 6: ButtonLabelSmall
 struct ButtonLabelSmall: View {
     var text: String
     var body: some View {

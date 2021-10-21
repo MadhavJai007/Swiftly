@@ -41,10 +41,10 @@ struct InteractiveView: View {
                         Button{
                             /// save progress
                         }label:{
-                            NavBarIcon(iconName: "square.and.arrow.down")
+                            Text("Save")
+                                .font(.system(size: 20, weight: .bold))
                         }
                         .padding(.trailing, 30)
-                        
                     }
                     .padding(.top, geometry.size.width/16)
                     .padding(.bottom, geometry.size.width/32)
@@ -57,7 +57,6 @@ struct InteractiveView: View {
                     
                     /// For the tiles
                     VStack{
-                        
                         ScrollView {
                             
                             LazyVGrid(columns: chapterContentViewModel.columns, spacing: 20) {
@@ -85,15 +84,12 @@ struct InteractiveView: View {
                         
                     
                     
-                    Spacer()
-                    
                     ZStack{
                         Color.darkGrayCustom
                             .ignoresSafeArea()
                         
                         HStack{
-                            
-                            
+
                             InteractiveContentText(text: chapterContentViewModel.selectedQuestion.description)
                                 .padding(.leading, 15)
                                 .padding(.bottom, 20)
@@ -103,6 +99,8 @@ struct InteractiveView: View {
                 
                             VStack(alignment: .leading){
                                 Button{
+                                    
+                                    chapterContentViewModel.getQuestionScore()
                                     
                                     if (chapterContentViewModel.isFinalChapter == false){
                                         chapterContentViewModel.startNextPlaygroundQuestion()
@@ -131,7 +129,6 @@ struct InteractiveView: View {
             }
         }
         .navigationBarHidden(true)
-    
         .onDisappear {
             chapterContentViewModel.willStartNextQuestion = false
         }
