@@ -10,12 +10,18 @@ import UniformTypeIdentifiers
 struct InteractiveView: View {
     
     @State var willUpdateView = false
-    
     @State private var dragging: InteractiveBlock?
     
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
-
+    
+    
+    init() {
+        //        UITableView.appearance().separatorStyle = Color.white
+        UITableView.appearance().separatorColor = UIColor(Color.clear)
+        UITableView.appearance().isScrollEnabled = false
+        UITableView.appearance().backgroundColor = .clear
+    }
     
     var body: some View {
         
@@ -57,46 +63,67 @@ struct InteractiveView: View {
                     
                     /// For the tiles
                     VStack{
-                        ScrollView {
+                        
+                        Group {
                             
-                            LazyVGrid(columns: chapterContentViewModel.columns, spacing: 20) {
-                                ForEach(chapterContentViewModel.activeBlocks) { block in
-
-                                    /// Creating the tile view and passing the code block struct to it
-                                    InteractiveTileView(codeBlock: block)
-                                        .overlay(dragging?.id == block.id ? Color.white.opacity(0.8) : Color.clear)
-                                        .cornerRadius(20)
-                                        .onDrag {
-                                            self.dragging = block
-                                            return NSItemProvider(object: String(block.id) as NSString)
+                            if (chapterContentViewModel.selectedQuestion.type == "code_blocks"){
+                                
+                                ScrollView {
+                                    
+                                    LazyVGrid(columns: chapterContentViewModel.columns, spacing: 20) {
+                                        ForEach(chapterContentViewModel.activeBlocks) { block in
+                                            
+                                            /// Creating the tile view and passing the code block struct to it
+                                            InteractiveTileView(codeBlock: block)
+                                                .overlay(dragging?.id == block.id ? Color.white.opacity(0.8) : Color.clear)
+                                                .cornerRadius(20)
+                                                .onDrag {
+                                                    self.dragging = block
+                                                    return NSItemProvider(object: String(block.id) as NSString)
+                                                }
+                                                .onDrop(of: [UTType.text], delegate: DragRelocateDelegate(item: block, listData: $chapterContentViewModel.activeBlocks, current: $dragging))
                                         }
-                                        .onDrop(of: [UTType.text], delegate: DragRelocateDelegate(item: block, listData: $chapterContentViewModel.activeBlocks, current: $dragging))
+                                        Spacer()
+                                    }
+                                    .animation(.default, value: chapterContentViewModel.activeBlocks)
+                                    .padding(.top, geometry.size.height/16)
                                 }
+                                .onDrop(of: [UTType.text], delegate: DropOutsideDelegate(current: $dragging))
+                                .hasScrollEnabled(false)
+                            }else{
+                                
+                                    ForEach(chapterContentViewModel.items, id: \.self) { item in
+                                        MultipleSelectionRow(title: item, isSelected: chapterContentViewModel.selections.contains(item)) {
+                                            if chapterContentViewModel.selections.contains(item) {
+                                                chapterContentViewModel.selections.removeAll(where: { $0 == item })
+                                            }
+                                            else {
+                                                chapterContentViewModel.selections.append(item)
+                                            }
+                                        }
+                                        .listRowBackground(Color.clear)
+                                    }
+                                    .frame(width: UIScreen.screenWidth/1.25, height: 100, alignment: .leading)
+                                
+                                Spacer()
+                             
                             }
-                            .animation(.default, value: chapterContentViewModel.activeBlocks)
-                            .padding(.top, geometry.size.height/16)
                         }
-                        .onDrop(of: [UTType.text], delegate: DropOutsideDelegate(current: $dragging))
-                        .hasScrollEnabled(false)
-                        
-                        
-                    }.frame(width: geometry.size.width/1.05, height: geometry.size.height/1.50, alignment: .center)
-                        
-                    
+                    }.frame(width: geometry.size.width/1.25, height: geometry.size.height/1.50, alignment: .center)
                     
                     ZStack{
                         Color.darkGrayCustom
                             .ignoresSafeArea()
                         
                         HStack{
-
+                            
                             InteractiveContentText(text: chapterContentViewModel.selectedQuestion.description)
                                 .padding(.leading, 15)
                                 .padding(.bottom, 20)
                                 .padding(.top, -10)
-                                
+                            
                             Spacer()
-                
+                            
                             VStack(alignment: .leading){
                                 Button{
                                     
@@ -119,7 +146,6 @@ struct InteractiveView: View {
                                 .padding(.bottom, 20)
                                 .padding(.trailing, 15)
                                 .padding(.top, -10)
-                                
                                 
                             }.frame(width: geometry.size.width/4, alignment: .center)
                         }
@@ -182,3 +208,41 @@ extension View {
         }
     }
 }
+
+
+struct MultipleSelectionRow: View {
+    var title: String
+    var isSelected: Bool
+    var action: () -> Void
+    
+    var body: some View {
+        
+        GeometryReader { geometry in
+            
+            ZStack{
+                
+                if self.isSelected {
+                    Color.green
+                        .opacity(1)
+                }else{
+                    Color.lightGrayCustom
+                        .opacity(0.75)
+                }
+                
+                Button(action: self.action) {
+                    
+                    Text(self.title)
+                        .font(.system(size: 25))
+                        .foregroundColor(.white)
+                        .padding(.leading, 10)
+                        .frame(width: UIScreen.screenWidth/1.25, height: 100, alignment: .leading)
+                        .cornerRadius(15)
+                    
+    
+                }
+            }.frame(width: UIScreen.screenWidth/1.25, height: 100, alignment: .leading)
+                .cornerRadius(15)
+        }
+    }
+}
+
