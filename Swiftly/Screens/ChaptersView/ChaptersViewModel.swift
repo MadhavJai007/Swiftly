@@ -62,6 +62,7 @@ final class ChaptersViewModel: ObservableObject {
                     let chapterSummary = document.data()["chapter_desc"]! as! String
                     let chapterLength = document.data()["chapter_length"]! as! Int
                     let iconName = document.data()["chapter_icon_name"]! as! String
+            
                     
                     db.collection("Chapters").document(document.documentID).collection("playground").getDocuments() {
                         (querySnapshot, err) in
@@ -73,10 +74,13 @@ final class ChaptersViewModel: ObservableObject {
                         
                             var playgroundQuestions = [Playground]()
                             
+                            
+                            
                             for playgroundDocument in querySnapshot!.documents {
                                 
                                 let title = playgroundDocument.data()["question_title"]! as! String
                                 let description = playgroundDocument.data()["question_description"]! as! String
+                                let type = playgroundDocument.data()["question_type"]! as! String
                                 var blocks = playgroundDocument.data()["code_blocks"]! as! [String]
                                 
                                 
@@ -86,7 +90,7 @@ final class ChaptersViewModel: ObservableObject {
                                     blocks[i] = blocks[i].replacingOccurrences(of: "$n", with: "\n")
                                 }
                                 
-                                let playgroundQuestion = Playground(title: title, description: description, originalArr: blocks)
+                                let playgroundQuestion = Playground(title: title, description: description, type: type, originalArr: blocks)
                                 
                                 playgroundQuestions.append(playgroundQuestion)
                             }

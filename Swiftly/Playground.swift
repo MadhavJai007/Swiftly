@@ -10,5 +10,6 @@ struct Playground: Identifiable, Hashable {
     let id = UUID()
     let title: String
     let description: String
+    let type: String
     let originalArr: [String]    
 }

@@ -26,6 +26,9 @@ final class ChapterContentViewModel: ObservableObject {
     @Published var isFinalChapter = false
     @Published var willStartNextQuestion = false
     
+    @Published var items: [String] = []
+    @Published var selections: [String] = []
+    
     let columns = [GridItem(.flexible())]
     
     /// Init variables with basic data
@@ -78,18 +81,23 @@ final class ChapterContentViewModel: ObservableObject {
         selectedQuestion = question
         selectedQuestionIndex = questionIndex
         
-        var codeBlocks = selectedQuestion.originalArr
+        if (selectedQuestion.type == "code_blocks"){
         
-        /// TODO: Only call this if the user does not have save data for this
-        codeBlocks.shuffle()
-        
-        /// Pre-populates array with interactive block objects
-        activeBlocks = Array(repeating: InteractiveBlock(id: 0, content: ""), count: codeBlocks.count)
-        
-        /// Copying content from playground blocks to array active blocks --> active blocks is the array that is copied and
-        /// the user interacts with it. It gets compared to the original array to get user score.
-        for i in 0..<codeBlocks.count {
-            activeBlocks[i] = InteractiveBlock(id: i, content: codeBlocks[i])
+            var codeBlocks = selectedQuestion.originalArr
+            
+            /// TODO: Only call this if the user does not have save data for this
+            codeBlocks.shuffle()
+            
+            /// Pre-populates array with interactive block objects
+            activeBlocks = Array(repeating: InteractiveBlock(id: 0, content: ""), count: codeBlocks.count)
+            
+            /// Copying content from playground blocks to array active blocks --> active blocks is the array that is copied and
+            /// the user interacts with it. It gets compared to the original array to get user score.
+            for i in 0..<codeBlocks.count {
+                activeBlocks[i] = InteractiveBlock(id: i, content: codeBlocks[i])
+            }
+        }else if (selectedQuestion.type == "mcq"){
+            items = selectedQuestion.originalArr
         }
         
         /// This will make navigation go
