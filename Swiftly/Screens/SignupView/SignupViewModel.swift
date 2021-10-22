@@ -29,12 +29,11 @@ final class SignupViewModel: ObservableObject {
     //boolean to ensure that email being used has not already been registered with Swiftly
     @Published var emailNotTaken: Bool = false
     
+    @Published var alertInfo: AlertModel?
+    
     private var db = Firestore.firestore()
     
 
-    
-    
-    
     //Validation functions
     
     func isEmailValid() -> Bool{
@@ -113,7 +112,19 @@ final class SignupViewModel: ObservableObject {
         let emailCompared = user.email.lowercased()
         
         print("After lowercased its : \(emailCompared)")
-        
+//
+//        switch accountType {
+//        case "Student":
+//            print("search student collection")
+//            let collectionRef = db.collection("Students")
+//
+//        case "Teacher":
+//            print("search teacher collection")
+//            let collectionRef = db.collection("Teachers")
+//        default:
+//            print("there is no default case")
+//
+//        }
         // Get your Firebase collection
            let collectionRef = db.collection("Users")
 
@@ -208,27 +219,32 @@ final class SignupViewModel: ObservableObject {
     
     func save(accountType: String){
         
+        print("email: \(newUser.email)");
+        print("password: \(newUser.password)")
+        print("account type: \(accountType)")
+        
         checkIfEmailExistsCompletion(user: newUser, completion:{
             print("now check for teachers")
         })
         
+    
         emailNotTaken = false
-        
+
         print("First we will check if the email already exists in our database using checkIfEmailExists().")
         checkIfEmailExists(user: newUser)
-        
-        
+
+
         let timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [self] (timer) in
-            
+
             print("The email is not taken is : \(emailNotTaken)")
             if(emailNotTaken == false){
                 self.isBadSignup = true
             }
             
         }
-        
+
         let timer2 = Timer.scheduledTimer(withTimeInterval: 8.0, repeats: false) { [self] (timer) in
-            
+
             print("The email is not taken is : \(emailNotTaken)")
             if(emailNotTaken == true){
                 print("Since the email was valid, now execute authenticateUser() to add user to authenticator")
@@ -237,15 +253,15 @@ final class SignupViewModel: ObservableObject {
             else{
                 self.isBadSignup = true
             }
-            
+
         }
-        
+
         let timer3 = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { [self] (timer) in
             if(emailNotTaken == true){
                 print("Finally, since the email was valid, now execute addUser() to add user to collections")
                 self.addUser(user: newUser, accountType: accountType)
             }
-            
+
         }
         
     }

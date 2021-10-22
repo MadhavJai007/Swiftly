@@ -94,6 +94,7 @@ struct UserAccountView: View {
                                 if (userAccountViewModel.logoutSuccessful){
                                     /// Called to pop to login view
                                     loginViewModel.isSuccessful = false
+                                    loginViewModel.isLoading = false
                                     chaptersViewModel.chaptersArr.removeAll()
                                     chaptersViewModel.isUserLoggedIn.toggle()
                                 }else{

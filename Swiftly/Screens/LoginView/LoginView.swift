@@ -72,6 +72,7 @@ struct LoginView: View {
                     /// Login button --> calls login method from loginViewModel
                     Button{
                         print("Logging into \(loginViewModel.accountMode) mode...")
+                        loginViewModel.isLoading.toggle()
                         /// Used to make sure user cannot hit login button while their being logged in
                         if (loginViewModel.attemptingLogin == false){
 //                            loginViewModel.attemptingLogin = true
@@ -88,6 +89,7 @@ struct LoginView: View {
                                 }else{
                                     // Error getting chapters
                                     loginViewModel.attemptingLogin = false
+                                    loginViewModel.isLoading = false
                                 }
                             }
                         }
@@ -96,18 +98,12 @@ struct LoginView: View {
                     }
                     .padding(.top,50)
                     .padding(.bottom,50)
-                    
+                    .opacity(loginViewModel.isLoading ? 0.24 : 1)
+                    .disabled(loginViewModel.isLoading)
                     /// Alert for bad login
                     .alert(item: $loginViewModel.alertInfo, content: { info in
                         Alert(title: Text(info.title), message: Text(info.message))
                     })
-//                    .alert(isPresented: $loginViewModel.isBadLogin) {
-//                        Alert(title: Text("Bad Login"), message: Text("Email and/or password are incorrect."), dismissButton: .default(Text("OK")))
-//                    }
-//                    .alert(isPresented: $loginViewModel.accountTypeNotChosen) {
-//                        Alert(title: Text("Couldn't login"), message: Text("Please select your account type"),
-//                            dismissButton: .default(Text("OK")))
-//                    }
                     .animation(.spring())
                     
                     /// Navigation link for chapters view --> is only toggled when chapters view model is

@@ -18,6 +18,7 @@ final class LoginViewModel: ObservableObject {
     @Published var isLoggedOut: Bool = false
     @Published var accountMode:  String = "Undefined"
     @Published var accountTypeNotChosen: Bool =  false
+    @Published var isLoading: Bool = false
     
     @Published var alertInfo: AlertModel?
     
@@ -36,6 +37,7 @@ final class LoginViewModel: ObservableObject {
             print("Please select account type")
             alertInfo = AlertModel(id: .noAccountType, title: "Couldn't login", message: "Please select your account type")
             self.accountTypeNotChosen = true
+            self.isLoading = false
         }
         else {
             Auth.auth().signIn(withEmail: emailLowercased, password: password) { [self] result, error in
@@ -44,6 +46,7 @@ final class LoginViewModel: ObservableObject {
                     print("cmon dud")
                     self.isSuccessful = false
                     self.isBadLogin = true
+                    self.isLoading = false
                 }else{
                     switch self.accountMode {
                     case "Student":
@@ -56,6 +59,7 @@ final class LoginViewModel: ObservableObject {
                                 print("cmon dud")
                                 self.isSuccessful = false
                                 self.isBadLogin = true
+                                self.isLoading = false
                                 print(err)
                             } else {
                                 print(querySnapshot!.documents)
@@ -64,6 +68,7 @@ final class LoginViewModel: ObservableObject {
                                     alertInfo = AlertModel(id: .emailNotFoundInCollection, title: "Error", message: "Email exists in google auth but was not found in firestore \(accountMode) collection. Please contact an administrator")
                                     self.isSuccessful = false
                                     self.isBadLogin = true
+                                    self.isLoading = false
                                 }
                             
                                 else {
@@ -73,6 +78,7 @@ final class LoginViewModel: ObservableObject {
                                     self.isSuccessful = true
                                     self.isBadLogin = false
                                     self.accountTypeNotChosen = false
+                                    
                                 }
                             }
                         }
@@ -87,6 +93,7 @@ final class LoginViewModel: ObservableObject {
                                 self.isSuccessful = false
                                 self.isBadLogin = true
                                 print(err)
+                                self.isLoading = false
                             } else {
                                 print(querySnapshot!.documents)
                                 // no users like that in collection
@@ -94,6 +101,7 @@ final class LoginViewModel: ObservableObject {
                                     alertInfo = AlertModel(id: .emailNotFoundInCollection, title: "Error", message: "Email exists in google auth but was not found in firestore \(accountMode) collection. Please contact an administrator")
                                     self.isSuccessful = false
                                     self.isBadLogin = true
+                                    self.isLoading = false
                                 }
                             
                                 else {
@@ -103,6 +111,7 @@ final class LoginViewModel: ObservableObject {
                                     self.isSuccessful = true
                                     self.isBadLogin = false
                                     self.accountTypeNotChosen = false
+                                    
                                 }
                             }
                         }
@@ -116,6 +125,7 @@ final class LoginViewModel: ObservableObject {
                                 print("cmon dud")
                                 self.isSuccessful = false
                                 self.isBadLogin = true
+                                self.isLoading = false
                                 print(err)
                             } else {
                                 print(querySnapshot!.documents)
@@ -124,6 +134,7 @@ final class LoginViewModel: ObservableObject {
                                     alertInfo = AlertModel(id: .emailNotFoundInCollection, title: "Error", message: "Email exists in google auth but was not found in firestore \(accountMode) collection. Please contact an administrator")
                                     self.isSuccessful = false
                                     self.isBadLogin = true
+                                    self.isLoading = false
                                 }
                             
                                 else {
@@ -133,12 +144,14 @@ final class LoginViewModel: ObservableObject {
                                     self.isSuccessful = true
                                     self.isBadLogin = false
                                     self.accountTypeNotChosen = false
+                                    
                                 }
                             }
                         }
                     default:
                         print("This shouldnt ever and will never happen")
                         self.accountTypeNotChosen = true
+                        self.isLoading.toggle()
                     }
 //                     query to get user with specific email field
 //                    db.collection("Users").whereField("user_email", isEqualTo: email).getDocuments() { (querySnapshot, err) in
