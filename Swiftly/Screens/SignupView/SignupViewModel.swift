@@ -168,7 +168,7 @@ final class SignupViewModel: ObservableObject {
         print("is \(accountType)")
         switch accountType {
         case "Student":
-            db.collection("Students").document().setData([
+            db.collection("Students").document(user.username).setData([
                 "country": user.country,
                 "date_of_birth": user.dob,
                 "email": user.email,
@@ -184,7 +184,7 @@ final class SignupViewModel: ObservableObject {
                 }
             }
         case "Teacher":
-            db.collection("Teachers").document().setData([
+            db.collection("Teachers").document(user.username).setData([
                 "country": user.country,
                 "date_of_birth": user.dob,
                 "email": user.email,
