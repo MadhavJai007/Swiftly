@@ -81,6 +81,7 @@ struct LoginView: View {
                             /// If the login is successful, download chapter content
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                                 if (loginViewModel.isSuccessful) {
+                                    LoginViewModel.loggedInEmail = email
                                     email = ""
                                     password = ""
                                     print("Logging into \(loginViewModel.accountMode) mode...")

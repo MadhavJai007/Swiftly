@@ -12,6 +12,8 @@ import FirebaseFirestore
 
 final class LoginViewModel: ObservableObject {
     
+    static public var loggedInEmail : String = "test"
+    
     @Published var isShowingSignupView = false
     @Published var isSuccessful: Bool = false
     @Published var isBadLogin: Bool = false

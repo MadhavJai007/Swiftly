@@ -13,12 +13,30 @@ final class UserAccountViewModel: ObservableObject {
     
     @Published var isEditingAccount = false
     
+    
     ///Todo: User object needs to be passed down the view hierarch from the login viewmodel
+    
+    @Published var loggedInUser = User(firstName: "",
+                       lastName: "",
+                       username: "",
+                       email: "",
+                       password: "",
+                       dob : "",
+                       country: ""
+                    )
+    
+    
+
+    
+    
+    
     var user = MockData.sampleUser
     
 
     /// Function to logout the user
     func logoutUser(){
+        print(LoginViewModel.loggedInEmail)
+        LoginViewModel.loggedInEmail = ""
         do {
             try Auth.auth().signOut()
             logoutSuccessful = true

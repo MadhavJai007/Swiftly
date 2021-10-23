@@ -17,6 +17,7 @@ struct ChapterContentView: View {
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel /// view model for this view
     
+    
     var body: some View {
         
         GeometryReader { geometry in

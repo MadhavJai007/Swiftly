@@ -1,6 +1,7 @@
 //  INFO49635 - CAPSTONE FALL 2021
 //  SignupView.swift
 //  Swiftly
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import SwiftUI
 
