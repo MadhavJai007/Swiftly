@@ -28,7 +28,15 @@ struct ChaptersView: View {
                     HStack {
                         
                         Button{
+                            // load data
+                            print(userAccountViewModel.loggedInUser)
+                            if(!userAccountViewModel.isUserInfoRetrieved){
+                                print("First time downloading user info")
+                                userAccountViewModel.loadUserData(loggedInEmail: loginViewModel.loggedInEmail, accountType: loginViewModel.accountMode)
+                            }
+                
                             chaptersViewModel.isShowingAccountView.toggle()
+                            
                         }label: {
                             SpecialNavBarIcon(text: "person.crop.circle")
                         }

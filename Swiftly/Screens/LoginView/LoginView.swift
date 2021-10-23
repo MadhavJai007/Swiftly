@@ -56,6 +56,7 @@ struct LoginView: View {
                             .padding()
                             .frame(width: 400, height: 75)
                             .background(Color.white)
+                            .autocapitalization(.none)
                             .foregroundColor(Color.blackCustom)
                             .cornerRadius(15)
                         
@@ -81,9 +82,10 @@ struct LoginView: View {
                             /// If the login is successful, download chapter content
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                                 if (loginViewModel.isSuccessful) {
-                                    LoginViewModel.loggedInEmail = email
+                                    loginViewModel.loggedInEmail = email
                                     email = ""
                                     password = ""
+                                    print("Loggin into \(loginViewModel.loggedInEmail)")
                                     print("Logging into \(loginViewModel.accountMode) mode...")
                                     chaptersViewModel.getChapterDocs()
                                     loginViewModel.attemptingLogin = true

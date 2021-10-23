@@ -12,7 +12,7 @@ import FirebaseFirestore
 
 final class LoginViewModel: ObservableObject {
     
-    static public var loggedInEmail : String = "test"
+    @Published var loggedInEmail : String = ""
     
     @Published var isShowingSignupView = false
     @Published var isSuccessful: Bool = false
@@ -30,9 +30,9 @@ final class LoginViewModel: ObservableObject {
     
     /// Called when the user wants to login
     func login(email: String, password: String) {
-        let emailLowercased = email.lowercased()
+//        let emailLowercased = email.lowercased()
         
-        print(emailLowercased)
+        print(email)
         print(password)
         
         if self.accountMode == "Undefined" {
@@ -42,7 +42,7 @@ final class LoginViewModel: ObservableObject {
             self.isLoading = false
         }
         else {
-            Auth.auth().signIn(withEmail: emailLowercased, password: password) { [self] result, error in
+            Auth.auth().signIn(withEmail: email, password: password) { [self] result, error in
                 if error != nil {
                     alertInfo = AlertModel(id: .noAccountType, title: "Bad login", message: "Email and/or password are incorrect.")
                     print("cmon dud")
@@ -54,7 +54,7 @@ final class LoginViewModel: ObservableObject {
                     case "Student":
                         print("Checking the students collection...")
                         // query to get user with specific email field
-                        db.collection("Students").whereField("email", isEqualTo: emailLowercased).getDocuments() { (querySnapshot, err) in
+                        db.collection("Students").whereField("email", isEqualTo: email).getDocuments() { (querySnapshot, err) in
                             if let err = err {
                                 print("Email exists in google auth but was not found in firestore \(accountMode) collection.\n")
                                 alertInfo = AlertModel(id: .emailNotFoundInCollection, title: "Error", message: "Email exists in google auth but was not found in firestore \(accountMode) collection. Please contact an administrator")
@@ -87,7 +87,7 @@ final class LoginViewModel: ObservableObject {
                     case "Teacher":
                         print("Checking the teachers collection...")
                         // query to get user with specific email field
-                        db.collection("Teachers").whereField("email", isEqualTo: emailLowercased).getDocuments() { (querySnapshot, err) in
+                        db.collection("Teachers").whereField("email", isEqualTo: email).getDocuments() { (querySnapshot, err) in
                             if let err = err {
                                 print("Email exists in google auth but was not found in firestore \(accountMode) collection.\n")
                                 alertInfo = AlertModel(id: .emailNotFoundInCollection, title: "Error", message: "Email exists in google auth but was not found in firestore \(accountMode) collection. Please contact an administrator")
@@ -120,7 +120,7 @@ final class LoginViewModel: ObservableObject {
                     case "Experts":
                         print("Checking the experts collection...")
                         // query to get user with specific email field
-                        db.collection("Students").whereField("email", isEqualTo: emailLowercased).getDocuments() { (querySnapshot, err) in
+                        db.collection("Students").whereField("email", isEqualTo: email).getDocuments() { (querySnapshot, err) in
                             if let err = err {
                                 print("Email exists in google auth but was not found in firestore \(accountMode) collection.\n")
                                 alertInfo = AlertModel(id: .emailNotFoundInCollection, title: "Error", message: "Email exists in google auth but was not found in firestore \(accountMode) collection. Please contact an administrator")

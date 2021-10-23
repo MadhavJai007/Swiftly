@@ -110,9 +110,9 @@ final class SignupViewModel: ObservableObject {
     func checkIfEmailExists(user: User){
         print("Email to be checked if it exists in Users collection is : \(user.email)")
         
-        let emailCompared = user.email.lowercased()
+        let emailCompared = user.email
         
-        print("After lowercased its : \(emailCompared)")
+//        print("After lowercased its : \(emailCompared)")
 //
 //        switch accountType {
 //        case "Student":
@@ -171,7 +171,7 @@ final class SignupViewModel: ObservableObject {
             db.collection("Students").document().setData([
                 "country": user.country,
                 "date_of_birth": user.dob,
-                "email": user.email.lowercased(),
+                "email": user.email,
                 "firstname" : user.firstName,
                 "username" : user.username,
                 "lastName" : user.lastName,
@@ -187,7 +187,7 @@ final class SignupViewModel: ObservableObject {
             db.collection("Teachers").document().setData([
                 "country": user.country,
                 "date_of_birth": user.dob,
-                "email": user.email.lowercased(),
+                "email": user.email,
                 "firstname" : user.firstName,
                 "lastName" : user.lastName,
                 "username" : user.username,
@@ -206,7 +206,7 @@ final class SignupViewModel: ObservableObject {
         // adding user to the "Users" collection in database
         
         db.collection("Users").document(user.username).setData([
-            "user_email": user.email.lowercased(),
+            "user_email": user.email,
             "user_type": accountType
         ]) { err in
             if let err = err {

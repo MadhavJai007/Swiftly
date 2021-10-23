@@ -58,49 +58,68 @@ struct UserAccountView: View {
                             
                             VStack(alignment: .leading){
                                 InfoHeader(text:"Username")
-                                InfoLabel(text: MockData.sampleUser.username)
+                                InfoLabel(text: userAccountViewModel.loggedInUser.username)
                             }
                             
                             VStack(alignment: .leading){
                                 InfoHeader(text:"Name")
-                                InfoLabel(text: "\(MockData.sampleUser.firstName) \(MockData.sampleUser.lastName)")
+                                InfoLabel(text: "\(userAccountViewModel.loggedInUser.firstName) \(userAccountViewModel.loggedInUser.lastName)")
                             }
                             
                             VStack(alignment: .leading){
                                 InfoHeader(text:"Country")
-                                InfoLabel(text: MockData.sampleUser.country)
+                                InfoLabel(text: userAccountViewModel.loggedInUser.country)
                             }
                             
                             VStack(alignment: .leading){
                                 InfoHeader(text:"Date of Birth")
-                                InfoLabel(text: MockData.sampleUser.dob)
+                                InfoLabel(text: userAccountViewModel.loggedInUser.dob)
                             }
                             
                             VStack(alignment: .leading){
                                 InfoHeader(text:"Email Address")
-                                InfoLabel(text: MockData.sampleUser.email)
+                                InfoLabel(text: userAccountViewModel.loggedInUser.email)
                             }
                             
                             VStack(alignment: .leading){
                                 InfoHeader(text:"Password")
-                                InfoLabel(text: MockData.sampleUser.password)
+                                InfoLabel(text: userAccountViewModel.loggedInUser.password)
                             }
                             
                             Button{
-                                userAccountViewModel.loadUserData()
                                 
                                 /// Actually logs user out
+                                print("logging out of \(loginViewModel.loggedInEmail)")
                                 userAccountViewModel.logoutUser()
                                 
-                                if (userAccountViewModel.logoutSuccessful){
-                                    /// Called to pop to login view
-                                    loginViewModel.isSuccessful = false
-                                    loginViewModel.isLoading = false
-                                    chaptersViewModel.chaptersArr.removeAll()
-                                    chaptersViewModel.isUserLoggedIn.toggle()
-                                }else{
-                                    /// Todo: Show some alert
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                    if(userAccountViewModel.logoutSuccessful){
+                                        
+                                        // reseting logged in email to empty string (none)
+                                        loginViewModel.loggedInEmail = ""
+                                        // resetting account mode to Undefined (none)
+                                        loginViewModel.accountMode = "Undefined"
+                                        print("login view model's loggedInEmail reset to empty string")
+                                        loginViewModel.isSuccessful = false
+                                        loginViewModel.isLoading = false
+                                        chaptersViewModel.chaptersArr.removeAll()
+                                        chaptersViewModel.isUserLoggedIn.toggle()
+                                    }
+                                    else{
+                                        print("login view model's loggedInEmail has not been reset")
+                                        /// Todo: Show some alert
+                                    }
                                 }
+                                
+//                                if (userAccountViewModel.logoutSuccessful){
+//                                    /// Called to pop to login view
+//                                    loginViewModel.isSuccessful = false
+//                                    loginViewModel.isLoading = false
+//                                    chaptersViewModel.chaptersArr.removeAll()
+//                                    chaptersViewModel.isUserLoggedIn.toggle()
+//                                }else{
+//                                    /// Todo: Show some alert
+//                                }
                                 
                                 
                             }label: {
