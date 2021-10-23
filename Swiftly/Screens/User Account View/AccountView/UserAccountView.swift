@@ -87,6 +87,7 @@ struct UserAccountView: View {
                             }
                             
                             Button{
+                                userAccountViewModel.loadUserData()
                                 
                                 /// Actually logs user out
                                 userAccountViewModel.logoutUser()

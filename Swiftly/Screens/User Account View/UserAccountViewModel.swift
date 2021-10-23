@@ -16,6 +16,8 @@ final class UserAccountViewModel: ObservableObject {
     
     ///Todo: User object needs to be passed down the view hierarch from the login viewmodel
     
+    private var db = Firestore.firestore()
+    
     @Published var loggedInUser = User(firstName: "",
                        lastName: "",
                        username: "",
@@ -32,6 +34,29 @@ final class UserAccountViewModel: ObservableObject {
     
     var user = MockData.sampleUser
     
+    
+    func loadUserData(){
+        let collectionRef = db.collection("Students")
+        print("searching with \(LoginViewModel.loggedInEmail)")
+
+     // Get all the documents where the field username is equal to the String you pass, loop over all the documents.
+
+        collectionRef.whereField("email", isEqualTo: LoginViewModel.loggedInEmail).getDocuments { (snapshot, err) in
+            if let err = err {
+                print("Error getting document: \(err)")
+            } else if (snapshot?.isEmpty)! {
+                print("Account not found. Shouldn't occur in this situation since user is already logged in.")
+            } else {
+                for document in (snapshot?.documents)! {
+                    if document.data()["username"] != nil {
+                        print("Account found!")
+                        
+                    }
+                }
+            }
+        }
+
+    }
 
     /// Function to logout the user
     func logoutUser(){
