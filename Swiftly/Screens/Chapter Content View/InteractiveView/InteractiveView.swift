@@ -61,11 +61,12 @@ struct InteractiveView: View {
                         Spacer()
                     }
                     
-                    /// For the tiles
+                    /// For actual interactive section
                     VStack{
                         
                         Group {
                             
+                            /// For code blocks method
                             if (chapterContentViewModel.selectedQuestion.type == "code_blocks"){
                                 
                                 ScrollView {
@@ -90,23 +91,26 @@ struct InteractiveView: View {
                                 }
                                 .onDrop(of: [UTType.text], delegate: DropOutsideDelegate(current: $dragging))
                                 .hasScrollEnabled(false)
-                            }else{
                                 
-                                    ForEach(chapterContentViewModel.items, id: \.self) { item in
-                                        MultipleSelectionRow(title: item, isSelected: chapterContentViewModel.selections.contains(item)) {
-                                            if chapterContentViewModel.selections.contains(item) {
-                                                chapterContentViewModel.selections.removeAll(where: { $0 == item })
-                                            }
-                                            else {
-                                                chapterContentViewModel.selections.append(item)
-                                            }
+                                /// For mcq method
+                            }else{
+                                Spacer()
+                                
+                                ForEach(chapterContentViewModel.items, id: \.self) { item in
+                                    MultipleSelectionRow(title: item, isSelected: chapterContentViewModel.selections.contains(item)) {
+                                        if chapterContentViewModel.selections.contains(item) {
+                                            chapterContentViewModel.selections.removeAll(where: { $0 == item })
                                         }
-                                        .listRowBackground(Color.clear)
+                                        else {
+                                            chapterContentViewModel.selections.append(item)
+                                        }
                                     }
-                                    .frame(width: UIScreen.screenWidth/1.25, height: 100, alignment: .leading)
+                                    .listRowBackground(Color.clear)
+                                }
+                                .frame(width: UIScreen.screenWidth/1.25, height: 100, alignment: .leading)
                                 
                                 Spacer()
-                             
+                                
                             }
                         }
                     }.frame(width: geometry.size.width/1.25, height: geometry.size.height/1.50, alignment: .center)
@@ -223,25 +227,31 @@ struct MultipleSelectionRow: View {
                 
                 if self.isSelected {
                     Color.green
-                        .opacity(1)
-                }else{
-                    Color.lightGrayCustom
                         .opacity(0.75)
+                }else{
+                    Color.clear
                 }
                 
-                Button(action: self.action) {
+                VStack{
                     
-                    Text(self.title)
-                        .font(.system(size: 25))
-                        .foregroundColor(.white)
-                        .padding(.leading, 10)
-                        .frame(width: UIScreen.screenWidth/1.25, height: 100, alignment: .leading)
-                        .cornerRadius(15)
-                    
-    
+                    Button(action: self.action) {
+                        
+                        Text(self.title)
+                            .font(.system(size: 25))
+                            .foregroundColor(.white)
+                            .padding(.leading, 10)
+                            .frame(width: UIScreen.screenWidth/1.25, height: 75, alignment: .leading)
+                            .cornerRadius(15)
+                        
+                    }
                 }
-            }.frame(width: UIScreen.screenWidth/1.25, height: 100, alignment: .leading)
+            }.frame(width: UIScreen.screenWidth/1.25, height: 75, alignment: .leading)
                 .cornerRadius(15)
+                .overlay(
+                        RoundedRectangle(cornerRadius: 15)
+                            .stroke(Color.white, lineWidth: 2)
+                    )
+                
         }
     }
 }

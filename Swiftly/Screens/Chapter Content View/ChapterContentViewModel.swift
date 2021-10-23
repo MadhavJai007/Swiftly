@@ -52,7 +52,7 @@ final class ChapterContentViewModel: ObservableObject {
             isFinalChapter = false
         }
     }
-
+    
     /// Called to setup the playground environment
     func setupPlaygroundQuestions(selectedChapter: Chapter){
         
@@ -74,15 +74,15 @@ final class ChapterContentViewModel: ObservableObject {
         willStartNextQuestion = true
     }
     
-
+    
     /// Called from InteractiveQuestionsView
     func setupPlayground(question: Playground, questionIndex: Int){
-    
+        
         selectedQuestion = question
         selectedQuestionIndex = questionIndex
         
         if (selectedQuestion.type == "code_blocks"){
-        
+            
             var codeBlocks = selectedQuestion.originalArr
             
             /// TODO: Only call this if the user does not have save data for this
@@ -103,11 +103,11 @@ final class ChapterContentViewModel: ObservableObject {
         /// This will make navigation go
         willStartPlaygroundQuestion = true
         
-        /// Checking question info 
+        /// Checking question info
         checkQuestionInfo()
         
     }
-
+    
     /// Quits the current chapter
     func quitChapter(){
         willQuitChapter = true
@@ -122,19 +122,24 @@ final class ChapterContentViewModel: ObservableObject {
     func getQuestionScore(){
         
         var userScore = 0
-
-        for i in 0..<selectedQuestion.originalArr.count {
-
-            if (activeBlocks[i].content == selectedQuestion.originalArr[i]){
-                userScore += 1
+        
+        if (selectedQuestion.type == "code_blocks"){
+            
+            for i in 0..<selectedQuestion.originalArr.count {
+                
+                if (activeBlocks[i].content == selectedQuestion.originalArr[i]){
+                    userScore += 1
+                }
             }
+        }else{
+            
         }
-
+        
         print("USER SCORE: \(userScore)")
     }
     
     /// Finishes the playground section and returns to the playground questions view
     func completeInteractiveSection(){
-       willStartPlaygroundQuestion = false
+        willStartPlaygroundQuestion = false
     }
 }
