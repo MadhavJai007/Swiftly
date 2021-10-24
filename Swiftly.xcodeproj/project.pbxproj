@@ -28,6 +28,7 @@
 		DABF368C270202EA009BF78A /* ChaptersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF368B270202EA009BF78A /* ChaptersViewModel.swift */; };
 		DABF369427023677009BF78A /* ChapterTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF369327023677009BF78A /* ChapterTitleView.swift */; };
 		DAC63907272593B50094FC92 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC63906272593B50094FC92 /* Extensions.swift */; };
+		DAC6390A2725E67E0094FC92 /* ImageViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC639092725E67E0094FC92 /* ImageViews.swift */; };
 		DAD6B312270748CA002C8A55 /* ChapterContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD6B311270748CA002C8A55 /* ChapterContentView.swift */; };
 		DAD6B3162708A3CC002C8A55 /* ChapterContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD6B3152708A3CC002C8A55 /* ChapterContentViewModel.swift */; };
 		DAD6B319270A3C71002C8A55 /* UserAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD6B318270A3C71002C8A55 /* UserAccountView.swift */; };
@@ -70,6 +71,7 @@
 		DABF368B270202EA009BF78A /* ChaptersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersViewModel.swift; sourceTree = "<group>"; };
 		DABF369327023677009BF78A /* ChapterTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterTitleView.swift; sourceTree = "<group>"; };
 		DAC63906272593B50094FC92 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		DAC639092725E67E0094FC92 /* ImageViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViews.swift; sourceTree = "<group>"; };
 		DAD6B311270748CA002C8A55 /* ChapterContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterContentView.swift; sourceTree = "<group>"; };
 		DAD6B3152708A3CC002C8A55 /* ChapterContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterContentViewModel.swift; sourceTree = "<group>"; };
 		DAD6B318270A3C71002C8A55 /* UserAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountView.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 		DABF368E27020DF3009BF78A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DAC639082725E6720094FC92 /* Images */,
 				EBD10B7D271E3316002042D9 /* Dropdown */,
 				EBD10B7A271DBAC2002042D9 /* Popup */,
 				DA0866BF271A143C00B1999E /* Labels */,
@@ -276,6 +279,14 @@
 				DA5D90EC270614BD0085DE6D /* SignupViewModel.swift */,
 			);
 			path = SignupView;
+			sourceTree = "<group>";
+		};
+		DAC639082725E6720094FC92 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				DAC639092725E67E0094FC92 /* ImageViews.swift */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 		DAD6B310270748B6002C8A55 /* Chapter Content View */ = {
@@ -463,6 +474,7 @@
 				DAD6B319270A3C71002C8A55 /* UserAccountView.swift in Sources */,
 				DA0866BE271A0AF900B1999E /* NavBarIconView.swift in Sources */,
 				DA0866B82719CC0D00B1999E /* EditAccountView.swift in Sources */,
+				DAC6390A2725E67E0094FC92 /* ImageViews.swift in Sources */,
 				DA840A16270CB26800751FB7 /* LeaderboardViewModel.swift in Sources */,
 				DAD6B31D270A4833002C8A55 /* User.swift in Sources */,
 				DA79656326FE3E4B00CAE327 /* Colors.swift in Sources */,

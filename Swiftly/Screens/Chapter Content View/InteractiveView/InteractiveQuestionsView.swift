@@ -30,7 +30,8 @@ struct InteractiveQuestionsView: View {
                     }
                     .padding(.top, geometry.size.width/16)
                     
-                    PlaygroundTitleLabel(text: "Playgrounds")
+                    TitleLabel(text: "Playgrounds")
+                        .padding(.bottom, 75)
                     
                     /// ScrollView for playground questions
                     ScrollView(.horizontal, showsIndicators: false) {

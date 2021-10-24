@@ -22,26 +22,19 @@ struct LoginView: View {
     @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel
     
     var body: some View {
-        
         NavigationView {
-            
             ZStack {
                 
                 Color.darkGrayCustom
                     .ignoresSafeArea()
-                
-                
-                
+                 
                 VStack {
-                    
                     VStack{
-                        
                         TitleLabel(text:"Swiftly")
                     }
                     .frame(alignment: .topLeading)
                     .padding(.top, 250)
                 
-                    
                     VStack{
                         DropdownView(optionArray: accountTypeOptions)
                     }
@@ -49,8 +42,6 @@ struct LoginView: View {
                     
                     
                     VStack(spacing: 25){
-                        
-                                                
                         TextField("Email Address", text: $email)
                             .font(.system(size: 30))
                             .padding()
@@ -124,14 +115,12 @@ struct LoginView: View {
                     
                     VStack(spacing: 20){
                         InfoLabelMedium(text:"Need an account?")
-                        
                         Button{
                             /// Only let the user tap the sign up button when the user is not trying
                             /// to login.
                             if (loginViewModel.attemptingLogin == false){
                                 loginViewModel.isShowingSignupView.toggle()
                             }
-                            
                         }label: {
                             ButtonLabelLarge(text: "Tap to sign up", textColor: .white, backgroundColor: Color.blackCustom)
                         }
@@ -145,17 +134,13 @@ struct LoginView: View {
                                         .environmentObject(chapterContentViewModel),
                                        isActive: $loginViewModel.isShowingSignupView) {EmptyView()}
                     }
-                    
                     Spacer()
-                    
                 }
                 .padding(.bottom, 250)
                 
                 /// Shows progress loader while chapters are being downloaded
                 if (loginViewModel.isSuccessful == true){
-                    
                     ZStack {
-                        
                         Color.blackCustom
                         
                         VStack{
@@ -194,5 +179,3 @@ struct LoginScreen_Previews: PreviewProvider {
         LoginView()
     }
 }
-
-

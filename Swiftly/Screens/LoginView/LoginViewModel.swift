@@ -8,12 +8,10 @@ import SwiftUI
 import Firebase
 import FirebaseFirestore
 
-/// Todo: Only grab chapter information after user has logged in --> can be done with a completion handler.
-
 final class LoginViewModel: ObservableObject {
     
+    /// Published variables
     @Published var loggedInEmail : String = ""
-    
     @Published var isShowingSignupView = false
     @Published var isSuccessful: Bool = false
     @Published var isBadLogin: Bool = false
@@ -21,11 +19,11 @@ final class LoginViewModel: ObservableObject {
     @Published var accountMode:  String = "Undefined"
     @Published var accountTypeNotChosen: Bool =  false
     @Published var isLoading: Bool = false
-    
     @Published var alertInfo: AlertModel?
     
     var attemptingLogin: Bool = false
     
+    /// Firestore
     private var db = Firestore.firestore()
     
     /// Called when the user wants to login
@@ -178,9 +176,7 @@ final class LoginViewModel: ObservableObject {
 //                            self.accountTypeNotChosen = false
 //                        }
 //                    }
-        }
-        
-                
+        } 
             }
         }
     }

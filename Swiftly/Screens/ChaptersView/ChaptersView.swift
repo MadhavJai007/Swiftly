@@ -7,43 +7,38 @@ import SwiftUI
 
 struct ChaptersView: View {
     
+    /// View responsive variables
     @State var isActive: Bool = false
     @State private var showPopup: Bool = false
-    
-    @EnvironmentObject var loginViewModel: LoginViewModel // view model for this view
-    @EnvironmentObject var chaptersViewModel: ChaptersViewModel /// view model for this view
+    @EnvironmentObject var loginViewModel: LoginViewModel
+    @EnvironmentObject var chaptersViewModel: ChaptersViewModel /// --> view model for this view
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel
     @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel
     
     var body: some View {
-        
         GeometryReader { geometry in
-            
             ZStack {
                 Color.darkGrayCustom
                     .ignoresSafeArea()
                 
                 VStack{
                     HStack {
-                        
-                        Button{
-                            // load data
+                        Button {
+                            /// Loading data
                             print(userAccountViewModel.loggedInUser)
                             if(!userAccountViewModel.isUserInfoRetrieved){
                                 print("First time downloading user info")
                                 userAccountViewModel.loadUserData(loggedInEmail: loginViewModel.loggedInEmail, accountType: loginViewModel.accountMode)
                             }
-                
                             chaptersViewModel.isShowingAccountView.toggle()
-                            
                         }label: {
                             SpecialNavBarIcon(text: "person.crop.circle")
                         }
                         
                         Spacer()
                         
-                        Button{
+                        Button {
                             showPopup.toggle()
                             print(chaptersViewModel.chaptersArr)
                             print("Logging into \(loginViewModel.accountMode) mode...")
@@ -94,10 +89,11 @@ struct ChaptersView: View {
                                     .environmentObject(loginViewModel),
                                    isActive: $chaptersViewModel.isShowingAccountView) {EmptyView()}
                     
-                    // Nav link to accessing user account
+                    /// Nav link to accessing user account
                     NavigationLink(destination: LeaderboardView()
                                     .environmentObject(userAccountViewModel)
-                                    .environmentObject(leaderboardViewModel),
+                                    .environmentObject(leaderboardViewModel)
+                                    .environmentObject(chaptersViewModel),
                                    isActive: $chaptersViewModel.didSelectLeaderboard) {EmptyView()}
                 }
                 Spacer()
@@ -115,11 +111,10 @@ struct ChaptersView: View {
                 chapterContentViewModel.willStartInteractiveSection = false
             }
         }
-        
     }
-
 }
 
+/// Preview
 struct ChaptersView_Preview: PreviewProvider {
     static var previews: some View {
         ChaptersView()

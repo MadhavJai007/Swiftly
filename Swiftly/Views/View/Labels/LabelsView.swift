@@ -11,7 +11,7 @@ struct TitleLabel: View {
     var text: String
     var body: some View {
         Text(text)
-            .font(.system(size: 75, weight: .medium))
+            .font(.system(size: 75, weight: .light))
             .foregroundColor(.white)
     }
 }
@@ -55,22 +55,8 @@ struct SpinnerInfoLabel: View {
     }
 }
 
-/// Label 5: SpecialNavBarIcon
-/// Description: Used mainly for the user account icon in chapters view
-struct SpecialNavBarIcon: View {
-    var text: String
-    var body: some View {
-        Image(systemName: text)
-            .renderingMode(.original)
-            .resizable()
-            .aspectRatio(contentMode: .fit)
-            .frame(width: 44, height: 44)
-            .foregroundColor(Color.white)
-            .padding(.leading, 30)
-    }
-}
 
-/// Label 6: ButtonLabelSmall
+/// Label 5: ButtonLabelSmall
 /// Description: Used throughout app for smaller button labels
 struct ButtonLabelSmall: View {
     var text: String
@@ -88,7 +74,7 @@ struct ButtonLabelSmall: View {
 }
 
 
-/// Label 7: MultipleSelectionRow
+/// Label 6: MultipleSelectionRow
 /// Description: Used for the MCQ part of the playground section
 struct MultipleSelectionRow: View {
     var title: String
@@ -123,7 +109,7 @@ struct MultipleSelectionRow: View {
     }
 }
 
-/// Label 8: InteractiveSubTitle
+/// Label 7: InteractiveSubTitle
 /// Description: Used in the interactive section
 struct InteractiveSubTitle: View {
     var text: String
@@ -135,7 +121,7 @@ struct InteractiveSubTitle: View {
 }
 
 
-/// Label 9: InteractiveContentText
+/// Label 8: InteractiveContentText
 /// Description: Used in interactive section
 struct InteractiveContentText: View {
     var text: String
@@ -147,7 +133,7 @@ struct InteractiveContentText: View {
     }
 }
 
-/// Label 10: InteractiveContentText
+/// Label 9: InteractiveContentText
 /// Description: Used in playground preview
 struct InteractiveContentTextPreview: View {
     var text: String
@@ -159,7 +145,7 @@ struct InteractiveContentTextPreview: View {
     }
 }
 
-/// Label 11: InteractiveSubTitlePreview
+/// Label 10: InteractiveSubTitlePreview
 /// Description: Used in the playground preview
 struct InteractiveSubTitlePreview: View {
     var text: String
@@ -171,7 +157,7 @@ struct InteractiveSubTitlePreview: View {
 }
 
 
-/// Label 12: InteractiveBlockTextPreview
+/// Label 11: InteractiveBlockTextPreview
 /// Description: Used in the playground preview (for the code block text)
 struct InteractiveBlockTextPreview: View {
     var text: String
@@ -183,22 +169,7 @@ struct InteractiveBlockTextPreview: View {
     }
 }
 
-/// Label 13: PlaygroundTitleLabel
-/// Description: Used in the interaction questions view for the playground title
-struct PlaygroundTitleLabel: View {
-    
-    var text: String
-    var body: some View {
-        
-        Text(text)
-            .font(.system(size: 75,
-                          weight: .light))
-            .foregroundColor(.white)
-            .padding(.bottom, 75)
-    }
-}
-
-/// Label 14: InteractiveStartButton
+/// Label 12: InteractiveStartButton
 /// Description: Used in playground questions view that lets users start the playground question
 struct InteractiveStartButton: View {
     
@@ -215,5 +186,27 @@ struct InteractiveStartButton: View {
             .background(backgroundColor)
             .foregroundColor(textColor)
             .cornerRadius(15)
+    }
+}
+
+/// Label 13: LeaderboardTableHeader
+/// Description: Used in the leaderboard view for the table header
+struct LeaderboardTableHeader: View {
+    var text: String
+    var body: some View {
+        Text(text)
+            .font(.system(size: 30, weight: .semibold))
+            .foregroundColor(Color.blackCustom)
+    }
+}
+
+/// Label 14: LeaderboardSubTitle
+/// Description: Subtitle label used in the leaderboard page
+struct LeaderboardSubTitle: View {
+    var text: String
+    var body: some View {
+        Text(text)
+            .font(.system(size: 30))
+            .foregroundColor(Color.white)
     }
 }

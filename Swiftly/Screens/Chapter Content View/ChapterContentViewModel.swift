@@ -142,8 +142,7 @@ final class ChapterContentViewModel: ObservableObject {
                     }
                 }
             }
-        }
-        
+        } 
         print("USER SCORE: \(userScore)")
     }
     

@@ -7,34 +7,38 @@ import SwiftUI
 
 struct LeaderboardView: View {
     
-    @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel // view model for this view
+    /// Environment variables
+    @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel /// --> view model for this view
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel
+    @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     
     var body: some View {
-        
         GeometryReader { geometry in
-            
             ZStack{
-                
                 Color.darkGrayCustom
                     .ignoresSafeArea()
                 
-                
                 VStack(alignment: .leading, spacing: 15){
+                    
+                    HStack {
+                        Button{
+                            chaptersViewModel.didSelectLeaderboard.toggle()
+                        }label:{
+                            NavBarIcon(iconName: "chevron.backward")
+                        }
+                        .padding(.leading, 30)
+                        Spacer()
+                    }
+                    .padding(.top, geometry.size.width/16)
                     
                     HStack{
                         
-                        LeaderboardTitle(text:"Leaderboard")
+                        TitleLabel(text:"Leaderboard")
                             .padding(.leading,  geometry.size.width/24)
-                        
-                        
-                        Image(systemName: "chart.bar.xaxis")
-                            .resizable()
-                            .foregroundColor(.white)
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 65, height: 65)
-                        
+                        ImageViewLarge(imageName: "chart.bar.xaxis")
+
                     }
+                    
                     LeaderboardSubTitle(text: "Classroom: Global")
                         .padding(.leading,  geometry.size.width/24)
                     
@@ -57,12 +61,10 @@ struct LeaderboardView: View {
                     .padding(.leading,  geometry.size.width/24)
                     
                     VStack{
-                        
                         ZStack{
                             Color.whiteCustom
                             
                             VStack{
-                                
                                 HStack(spacing: geometry.size.width/8){
                                     LeaderboardTableHeader(text: "Username")
                                     LeaderboardTableHeader(text: "Chapter Time")
@@ -72,71 +74,24 @@ struct LeaderboardView: View {
                                 .padding(.top, 25)
                                 Spacer()
                             }
-                            
                         }
                         .frame(width: geometry.size.width/1.10, height: geometry.size.height/1.35, alignment: .center)
                         .cornerRadius(40)
-                        
-                        
-                        
                     }
                     .frame(width: geometry.size.width)
                     .padding(.top, 15)
-                    
-                    
-                    
-                    
                 }.frame(width: geometry.size.width, alignment: .leading)
                 
                 Spacer()
             }
+            .navigationBarHidden(true)
         }
     }
 }
 
+/// Preview
 struct LeaderboardView_Previews: PreviewProvider {
     static var previews: some View {
         LeaderboardView()
     }
-}
-
-
-// Struct representing the title label
-struct LeaderboardTitle: View {
-    
-    var text: String
-    var body: some View {
-        
-        Text(text)
-            .font(.system(size: 75,
-                          weight: .medium, design: .default))
-            .foregroundColor(.white)
-    }
-}
-
-
-struct LeaderboardSubTitle: View {
-    
-    var text: String
-    
-    var body: some View {
-        Text(text)
-            .font(.system(size: 30))
-            .foregroundColor(Color.white)
-    }
-    
-    
-}
-
-struct LeaderboardTableHeader: View {
-    
-    var text: String
-    
-    var body: some View {
-        Text(text)
-            .font(.system(size: 30, weight: .semibold))
-            .foregroundColor(Color.blackCustom)
-    }
-    
-    
 }
