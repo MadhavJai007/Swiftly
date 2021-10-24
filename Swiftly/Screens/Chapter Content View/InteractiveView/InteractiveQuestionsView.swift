@@ -5,25 +5,20 @@
 
 import SwiftUI
 
-
 struct InteractiveQuestionsView: View {
     
+    /// View responsive variables
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     
-    
+    /// View
     var body: some View {
-        
-        
         GeometryReader { geometry in
-            
             ZStack{
-                
                 Color.blackCustom
                     .ignoresSafeArea()
                 
                 VStack{
-                    
                     HStack {
                         Button{
                             chapterContentViewModel.willStartInteractiveSection.toggle()
@@ -31,52 +26,38 @@ struct InteractiveQuestionsView: View {
                             NavBarIcon(iconName: "chevron.backward")
                         }
                         .padding(.leading, 30)
-                        
                         Spacer()
-                        
                     }
                     .padding(.top, geometry.size.width/16)
                     
-                    
                     PlaygroundTitleLabel(text: "Playgrounds")
                     
+                    /// ScrollView for playground questions
                     ScrollView(.horizontal, showsIndicators: false) {
-                        
                         LazyHGrid(rows: [GridItem(.flexible())], spacing: 10){
-                            
                             ForEach(chaptersViewModel.selectedChapter!.playgroundArr) { question in
-                                
                                 VStack{
-                                    
                                     VStack(alignment: .leading){
                                         
-                                        Text("\(question.title)")
-                                            .font(.system(size: 35, weight: .medium))
+                                        InteractiveSubTitlePreview(text: question.title)
                                             .padding(.leading, 20)
                                             .padding(.top, 20)
                                             .minimumScaleFactor(0.5)
                                         
-                                        Text("\(question.description)")
-                                            .font(.system(size: 28))
+                                        InteractiveContentTextPreview(text:question.description)
                                             .padding(.leading, 20)
                                             .padding(.trailing, 20)
                                             .minimumScaleFactor(0.5)
                                         
                                         Spacer()
                                         
+                                        /// This is for the preview of interactive blocks
                                         HStack{
-                                            
                                             Spacer()
-                                            
-                                            /// This is for the preview of interactive blocks
                                             VStack{
                                                 ForEach(0..<question.originalArr.count) { i in
-                                                    
                                                     VStack {
-                                                        Text(String(question.originalArr[i]))
-                                                            .font(.system(size: 12))
-                                                            .foregroundColor(.white)
-                                                            .padding(10)
+                                                        InteractiveBlockTextPreview(text: String(question.originalArr[i]))
                                                     }
                                                     .frame(width: UIScreen.screenWidth/2, height: 50, alignment: .leading)
                                                     .background(Color.darkGrayCustom)
@@ -88,8 +69,8 @@ struct InteractiveQuestionsView: View {
                                         
                                         Spacer()
                                         
+                                        /// This is for the start playground button
                                         VStack{
-                                            
                                             Button {
                                                 chapterContentViewModel.setupPlayground(question: question, questionIndex: chaptersViewModel.selectedChapter!.playgroundArr.firstIndex(of: question)!)
                                             }label: {
@@ -97,7 +78,6 @@ struct InteractiveQuestionsView: View {
                                             }
                                             .frame(width: geometry.size.width/1.50, height: 120)
                                         }
-                                        
                                     }
                                     .frame(width: geometry.size.width/1.50, height: geometry.size.height/1.5)
                                     .background(Color.whiteCustom)
@@ -110,7 +90,8 @@ struct InteractiveQuestionsView: View {
                     .frame(width: geometry.size.width/1.20, height: geometry.size.height/1.5)
                     .padding(.top, -60)
                     
-                    HStack(){
+                    /// HStack for next chapter button
+                    HStack{
                         Button{
                             print("tapped")
                         }label:{
@@ -120,14 +101,11 @@ struct InteractiveQuestionsView: View {
                     }.frame(width: geometry.size.width, alignment: .center)
                         .padding(20)
                     
-                    
-
-                    
+                    /// Navigation link for starting a playground question
                     NavigationLink(destination: InteractiveView()
                                     .environmentObject(chaptersViewModel)
                                     .environmentObject(chapterContentViewModel),
                                    isActive: $chapterContentViewModel.willStartPlaygroundQuestion) {EmptyView()}
-                    
                     Spacer()
                 }
             }
@@ -136,41 +114,9 @@ struct InteractiveQuestionsView: View {
     }
 }
 
+/// Preview
 struct InteractiveQuestionsView_Previews: PreviewProvider {
     static var previews: some View {
         InteractiveQuestionsView()
-    }
-}
-
-// Struct representing the label on a button
-struct InteractiveStartButton: View {
-    
-    var text: String
-    var textColor: Color
-    var backgroundColor: Color
-    
-    var body: some View {
-        Text(text)
-            .font(.system(size: 35))
-            .fontWeight(.semibold)
-            .padding()
-            .frame(width: 400, height: 75)
-            .background(backgroundColor)
-            .foregroundColor(textColor)
-            .cornerRadius(15)
-    }
-}
-
-// Struct representing the title label
-struct PlaygroundTitleLabel: View {
-    
-    var text: String
-    var body: some View {
-        
-        Text(text)
-            .font(.system(size: 75,
-                          weight: .light))
-            .foregroundColor(.white)
-            .padding(.bottom, 75)
     }
 }

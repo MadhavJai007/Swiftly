@@ -16,20 +16,19 @@ final class ChapterContentViewModel: ObservableObject {
     var selectedQuestion: Playground
     var selectedQuestionIndex: Int
     
+    let columns = [GridItem(.flexible())]
+    
     /// This is used to allow interaction with blocks
     @Published var activeBlocks: [InteractiveBlock]
     @Published var willQuitChapter = false
     @Published var willStartInteractiveSection = false
     @Published var willStartPlaygroundQuestion = false
-    
     @Published var chapterButtonText = "Next"
     @Published var isFinalChapter = false
     @Published var willStartNextQuestion = false
-    
     @Published var mcqOptions: [String] = []
     @Published var mcqUserAnswers: [String] = []
     
-    let columns = [GridItem(.flexible())]
     
     /// Init variables with basic data
     init(){
@@ -133,7 +132,7 @@ final class ChapterContentViewModel: ObservableObject {
                 }
             }
             
-            /// Checking mcq answer
+        /// Checking mcq answer
         }else{
             
             if (mcqUserAnswers.isEmpty == false){

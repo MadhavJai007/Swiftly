@@ -9,31 +9,28 @@ import UniformTypeIdentifiers
 
 struct InteractiveView: View {
     
+    /// View responsive variables
     @State var willUpdateView = false
     @State private var dragging: InteractiveBlock?
-    
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     
-    
+    /// Init for view
     init() {
-        //        UITableView.appearance().separatorStyle = Color.white
         UITableView.appearance().separatorColor = UIColor(Color.clear)
         UITableView.appearance().isScrollEnabled = false
         UITableView.appearance().backgroundColor = .clear
     }
     
+    /// View
     var body: some View {
         
         GeometryReader { geometry in
-            
             ZStack{
-                
                 Color.blackCustom
                     .ignoresSafeArea()
                 
                 VStack{
-                    
                     HStack {
                         Button{
                             chapterContentViewModel.willStartPlaygroundQuestion.toggle()
@@ -63,7 +60,6 @@ struct InteractiveView: View {
                     
                     /// For actual interactive section
                     VStack{
-                        
                         Group {
                             
                             /// For code blocks method
@@ -92,7 +88,7 @@ struct InteractiveView: View {
                                 .onDrop(of: [UTType.text], delegate: DropOutsideDelegate(current: $dragging))
                                 .hasScrollEnabled(false)
                                 
-                                /// For mcq method
+                            /// For mcq method
                             }else{
                                 Spacer()
                                 
@@ -110,7 +106,6 @@ struct InteractiveView: View {
                                 .frame(width: UIScreen.screenWidth/1.25, height: 100, alignment: .leading)
                                 
                                 Spacer()
-                                
                             }
                         }
                     }.frame(width: geometry.size.width/1.25, height: geometry.size.height/1.50, alignment: .center)
@@ -118,9 +113,7 @@ struct InteractiveView: View {
                     ZStack{
                         Color.darkGrayCustom
                             .ignoresSafeArea()
-                        
                         HStack{
-                            
                             InteractiveContentText(text: chapterContentViewModel.selectedQuestion.description)
                                 .padding(.leading, 15)
                                 .padding(.bottom, 20)
@@ -131,16 +124,16 @@ struct InteractiveView: View {
                             VStack(alignment: .leading){
                                 Button{
                                     
+                                    /// Getting the user score
                                     chapterContentViewModel.getQuestionScore()
                                     
+                                    /// Used to either proceed to next question, or finish interactive section
                                     if (chapterContentViewModel.isFinalChapter == false){
                                         chapterContentViewModel.startNextPlaygroundQuestion()
                                         willUpdateView.toggle()
                                     }else{
-                                        /// Call function to end playground
                                         chapterContentViewModel.completeInteractiveSection()
                                     }
-                                    
                                 }label: {
                                     InteractiveSubTitle(text: chapterContentViewModel.chapterButtonText)
                                 }
@@ -150,11 +143,9 @@ struct InteractiveView: View {
                                 .padding(.bottom, 20)
                                 .padding(.trailing, 15)
                                 .padding(.top, -10)
-                                
                             }.frame(width: geometry.size.width/4, alignment: .center)
                         }
-                    }
-                    .frame(width: geometry.size.width, height: geometry.size.height/5)
+                    }.frame(width: geometry.size.width, height: geometry.size.height/5)
                 }
             }
         }
@@ -165,9 +156,9 @@ struct InteractiveView: View {
     }
 }
 
+/// Preview
 struct InteractiveView_Previews: PreviewProvider {
     static var previews: some View {
         InteractiveView()
     }
 }
-

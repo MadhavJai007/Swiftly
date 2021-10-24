@@ -146,3 +146,74 @@ struct InteractiveContentText: View {
             .minimumScaleFactor(0.5)
     }
 }
+
+/// Label 10: InteractiveContentText
+/// Description: Used in playground preview
+struct InteractiveContentTextPreview: View {
+    var text: String
+    var body: some View {
+        Text(text)
+            .font(.system(size: 28))
+            .foregroundColor(Color.blackCustom)
+            .minimumScaleFactor(0.5)
+    }
+}
+
+/// Label 11: InteractiveSubTitlePreview
+/// Description: Used in the playground preview
+struct InteractiveSubTitlePreview: View {
+    var text: String
+    var body: some View {
+        Text(text)
+            .font(.system(size: 35, weight: .medium))
+            .foregroundColor(Color.blackCustom)
+    }
+}
+
+
+/// Label 12: InteractiveBlockTextPreview
+/// Description: Used in the playground preview (for the code block text)
+struct InteractiveBlockTextPreview: View {
+    var text: String
+    var body: some View {
+        Text(text)
+            .font(.system(size: 12))
+            .foregroundColor(.white)
+            .padding(10)
+    }
+}
+
+/// Label 13: PlaygroundTitleLabel
+/// Description: Used in the interaction questions view for the playground title
+struct PlaygroundTitleLabel: View {
+    
+    var text: String
+    var body: some View {
+        
+        Text(text)
+            .font(.system(size: 75,
+                          weight: .light))
+            .foregroundColor(.white)
+            .padding(.bottom, 75)
+    }
+}
+
+/// Label 14: InteractiveStartButton
+/// Description: Used in playground questions view that lets users start the playground question
+struct InteractiveStartButton: View {
+    
+    var text: String
+    var textColor: Color
+    var backgroundColor: Color
+    
+    var body: some View {
+        Text(text)
+            .font(.system(size: 35))
+            .fontWeight(.semibold)
+            .padding()
+            .frame(width: 400, height: 75)
+            .background(backgroundColor)
+            .foregroundColor(textColor)
+            .cornerRadius(15)
+    }
+}
