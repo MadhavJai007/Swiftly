@@ -26,8 +26,8 @@ final class ChapterContentViewModel: ObservableObject {
     @Published var isFinalChapter = false
     @Published var willStartNextQuestion = false
     
-    @Published var items: [String] = []
-    @Published var selections: [String] = []
+    @Published var mcqOptions: [String] = []
+    @Published var mcqUserAnswers: [String] = []
     
     let columns = [GridItem(.flexible())]
     
@@ -97,7 +97,7 @@ final class ChapterContentViewModel: ObservableObject {
                 activeBlocks[i] = InteractiveBlock(id: i, content: codeBlocks[i])
             }
         }else if (selectedQuestion.type == "mcq"){
-            items = selectedQuestion.originalArr
+            mcqOptions = selectedQuestion.originalArr
         }
         
         /// This will make navigation go
@@ -123,6 +123,7 @@ final class ChapterContentViewModel: ObservableObject {
         
         var userScore = 0
         
+        /// Checking code block answer
         if (selectedQuestion.type == "code_blocks"){
             
             for i in 0..<selectedQuestion.originalArr.count {
@@ -131,8 +132,17 @@ final class ChapterContentViewModel: ObservableObject {
                     userScore += 1
                 }
             }
+            
+            /// Checking mcq answer
         }else{
             
+            if (mcqUserAnswers.isEmpty == false){
+                for i in 0..<mcqUserAnswers.count {
+                    if (selectedQuestion.originalArr.contains(mcqUserAnswers[i])){
+                        userScore += 1
+                    }
+                }
+            }
         }
         
         print("USER SCORE: \(userScore)")

@@ -71,6 +71,7 @@ struct SpecialNavBarIcon: View {
 }
 
 /// Label 6: ButtonLabelSmall
+/// Description: Used throughout app for smaller button labels
 struct ButtonLabelSmall: View {
     var text: String
     var body: some View {
@@ -83,5 +84,65 @@ struct ButtonLabelSmall: View {
             .foregroundColor(.white)
             .cornerRadius(15)
             .padding(.trailing, 30)
+    }
+}
+
+
+/// Label 7: MultipleSelectionRow
+/// Description: Used for the MCQ part of the playground section
+struct MultipleSelectionRow: View {
+    var title: String
+    var isSelected: Bool
+    var action: () -> Void
+    
+    var body: some View {
+        GeometryReader { geometry in
+            ZStack{
+                if self.isSelected {
+                    Color.green
+                        .opacity(0.60)
+                }else{
+                    Color.clear
+                }
+                
+                VStack{
+                    Button(action: self.action) {
+                        Text(self.title)
+                            .font(.system(size: 25))
+                            .foregroundColor(.white)
+                            .padding(.leading, 10)
+                            .frame(width: UIScreen.screenWidth/1.25, height: 75, alignment: .leading)
+                            .cornerRadius(15)
+                    }
+                }
+            }.frame(width: UIScreen.screenWidth/1.25, height: 75, alignment: .leading)
+                .cornerRadius(15)
+                .overlay(RoundedRectangle(cornerRadius: 15)
+                            .stroke(Color.white, lineWidth: 2))
+        }
+    }
+}
+
+/// Label 8: InteractiveSubTitle
+/// Description: Used in the interactive section
+struct InteractiveSubTitle: View {
+    var text: String
+    var body: some View {
+        Text(text)
+            .font(.system(size: 35, weight: .medium))
+            .foregroundColor(Color.white)
+    }
+}
+
+
+/// Label 9: InteractiveContentText
+/// Description: Used in interactive section
+struct InteractiveContentText: View {
+    var text: String
+    var body: some View {
+        Text(text)
+            .font(.system(size: 25))
+            .foregroundColor(Color.white)
+            .minimumScaleFactor(0.5)
     }
 }

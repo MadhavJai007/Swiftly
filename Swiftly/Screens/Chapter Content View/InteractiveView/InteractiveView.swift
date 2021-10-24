@@ -96,13 +96,13 @@ struct InteractiveView: View {
                             }else{
                                 Spacer()
                                 
-                                ForEach(chapterContentViewModel.items, id: \.self) { item in
-                                    MultipleSelectionRow(title: item, isSelected: chapterContentViewModel.selections.contains(item)) {
-                                        if chapterContentViewModel.selections.contains(item) {
-                                            chapterContentViewModel.selections.removeAll(where: { $0 == item })
+                                ForEach(chapterContentViewModel.mcqOptions, id: \.self) { item in
+                                    MultipleSelectionRow(title: item, isSelected: chapterContentViewModel.mcqUserAnswers.contains(item)) {
+                                        if chapterContentViewModel.mcqUserAnswers.contains(item) {
+                                            chapterContentViewModel.mcqUserAnswers.removeAll(where: { $0 == item })
                                         }
                                         else {
-                                            chapterContentViewModel.selections.append(item)
+                                            chapterContentViewModel.mcqUserAnswers.append(item)
                                         }
                                     }
                                     .listRowBackground(Color.clear)
@@ -168,91 +168,6 @@ struct InteractiveView: View {
 struct InteractiveView_Previews: PreviewProvider {
     static var previews: some View {
         InteractiveView()
-    }
-}
-
-
-struct InteractiveSubTitle: View {
-    
-    var text: String
-    
-    var body: some View {
-        Text(text)
-            .font(.system(size: 35, weight: .medium))
-            .foregroundColor(Color.white)
-    }
-}
-
-
-struct InteractiveContentText: View {
-    
-    var text: String
-    
-    var body: some View {
-        Text(text)
-            .font(.system(size: 25))
-            .foregroundColor(Color.white)
-            .minimumScaleFactor(0.5)
-    }
-}
-
-
-/// Used to get the screen dimensions without geometry reader
-extension UIScreen{
-    static let screenWidth = UIScreen.main.bounds.size.width
-    static let screenHeight = UIScreen.main.bounds.size.height
-    static let screenSize = UIScreen.main.bounds.size
-}
-
-/// Used to disable scroll for any view
-extension View {
-    func hasScrollEnabled(_ value: Bool) -> some View {
-        self.onAppear {
-            UIScrollView.appearance().bounces = value
-        }
-    }
-}
-
-
-struct MultipleSelectionRow: View {
-    var title: String
-    var isSelected: Bool
-    var action: () -> Void
-    
-    var body: some View {
-        
-        GeometryReader { geometry in
-            
-            ZStack{
-                
-                if self.isSelected {
-                    Color.green
-                        .opacity(0.75)
-                }else{
-                    Color.clear
-                }
-                
-                VStack{
-                    
-                    Button(action: self.action) {
-                        
-                        Text(self.title)
-                            .font(.system(size: 25))
-                            .foregroundColor(.white)
-                            .padding(.leading, 10)
-                            .frame(width: UIScreen.screenWidth/1.25, height: 75, alignment: .leading)
-                            .cornerRadius(15)
-                        
-                    }
-                }
-            }.frame(width: UIScreen.screenWidth/1.25, height: 75, alignment: .leading)
-                .cornerRadius(15)
-                .overlay(
-                        RoundedRectangle(cornerRadius: 15)
-                            .stroke(Color.white, lineWidth: 2)
-                    )
-                
-        }
     }
 }
 

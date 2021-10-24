@@ -28,6 +28,7 @@
 		DABF368927020134009BF78A /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF368827020134009BF78A /* Chapter.swift */; };
 		DABF368C270202EA009BF78A /* ChaptersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF368B270202EA009BF78A /* ChaptersViewModel.swift */; };
 		DABF369427023677009BF78A /* ChapterTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF369327023677009BF78A /* ChapterTitleView.swift */; };
+		DAC63907272593B50094FC92 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC63906272593B50094FC92 /* Extensions.swift */; };
 		DAD6B312270748CA002C8A55 /* ChapterContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD6B311270748CA002C8A55 /* ChapterContentView.swift */; };
 		DAD6B3162708A3CC002C8A55 /* ChapterContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD6B3152708A3CC002C8A55 /* ChapterContentViewModel.swift */; };
 		DAD6B319270A3C71002C8A55 /* UserAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAD6B318270A3C71002C8A55 /* UserAccountView.swift */; };
@@ -70,6 +71,7 @@
 		DABF368827020134009BF78A /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
 		DABF368B270202EA009BF78A /* ChaptersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersViewModel.swift; sourceTree = "<group>"; };
 		DABF369327023677009BF78A /* ChapterTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterTitleView.swift; sourceTree = "<group>"; };
+		DAC63906272593B50094FC92 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		DAD6B311270748CA002C8A55 /* ChapterContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterContentView.swift; sourceTree = "<group>"; };
 		DAD6B3152708A3CC002C8A55 /* ChapterContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterContentViewModel.swift; sourceTree = "<group>"; };
 		DAD6B318270A3C71002C8A55 /* UserAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountView.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				DA79656226FE3E4B00CAE327 /* Colors.swift */,
+				DAC63906272593B50094FC92 /* Extensions.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -473,6 +476,7 @@
 				DADCC3AB27135E1B0071D287 /* InteractiveTileView.swift in Sources */,
 				DA5D90ED270614BD0085DE6D /* SignupViewModel.swift in Sources */,
 				DABF368927020134009BF78A /* Chapter.swift in Sources */,
+				DAC63907272593B50094FC92 /* Extensions.swift in Sources */,
 				DA0866C1271A147100B1999E /* LabelsView.swift in Sources */,
 				2CF2F9572723769500CB5D19 /* EditAccountViewModel.swift in Sources */,
 				DAD6B31B270A3E63002C8A55 /* UserAccountViewModel.swift in Sources */,
