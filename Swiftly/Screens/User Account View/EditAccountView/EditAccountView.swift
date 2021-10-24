@@ -62,6 +62,8 @@ struct EditAccountView: View {
                             .cornerRadius(15)
                     }
                     .padding(geometry.size.width/42)
+                    .opacity(0.75)
+                    .disabled(true)
                          
                     
                     // First and last name
@@ -171,6 +173,8 @@ struct EditAccountView: View {
                     Button{
                         /// Todo: Add check for valid input fields
                         /// Todo: Call method in view model that updates user changes
+                        
+                        userAccountViewModel.updateAccount()
                         userAccountViewModel.isEditingAccount.toggle()
                     }label:{
                         ButtonLabelLarge(text: "Save Changes", textColor: .white, backgroundColor: Color.blackCustom)

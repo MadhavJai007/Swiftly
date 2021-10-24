@@ -40,7 +40,7 @@ struct UserAccountView: View {
                         
                         
                         Button{
-                            userAccountViewModel.updateAccountinfo()
+                            userAccountViewModel.retrieveAccountinfo()
                             userAccountViewModel.isEditingAccount.toggle()
                         }label:{
                             UserAccountNavBarIcon(iconName: "gearshape")

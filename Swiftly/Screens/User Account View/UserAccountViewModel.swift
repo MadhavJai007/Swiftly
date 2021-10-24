@@ -104,7 +104,7 @@ final class UserAccountViewModel: ObservableObject {
     
     //function for passing currently logged in users info into another User variable to be used for updating account info
     
-    func updateAccountinfo(){
+    func retrieveAccountinfo(){
         updatedUser.firstName = loggedInUser.firstName
         updatedUser.lastName = loggedInUser.lastName
         updatedUser.username = loggedInUser.username
@@ -112,6 +112,39 @@ final class UserAccountViewModel: ObservableObject {
         updatedUser.password = loggedInUser.password
         updatedUser.dob = loggedInUser.dob
         updatedUser.country = loggedInUser.country
+    }
+    
+    
+    
+    func updateAccount(){
+        
+        //first update the firebase authentication with new information (password specifically)
+        
+        /*
+        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+        changeRequest?.displayName = ""
+        changeRequest?.commitChanges { error in
+          // ...
+        }
+         */
+        
+        //now update the Students/Teachers collections document with new information
+        let updatingRef = db.collection("Students").document(loggedInUser.username)
+
+        updatingRef.updateData([
+            "country": updatedUser.country,
+            "date_of_birth": updatedUser.dob,
+            "firstname" : updatedUser.firstName,
+            "lastname" : updatedUser.lastName,
+            "password" : updatedUser.password,
+        ]) { err in
+            if let err = err {
+                print("Error updating document: \(err)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+        
     }
     
     
