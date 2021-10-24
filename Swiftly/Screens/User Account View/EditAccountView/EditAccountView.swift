@@ -14,6 +14,7 @@ struct EditAccountView: View {
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var loginViewModel: LoginViewModel
     
+    
     var body: some View {
         
         
@@ -52,7 +53,7 @@ struct EditAccountView: View {
                         InputFieldLabel(text:"Username")
                             .padding(.bottom, -geometry.size.width/120)
                     
-                        TextField("",text: $user.username)
+                        TextField("Username",text: $userAccountViewModel.updatedUser.username)
                             .font(.system(size: 30))
                             .padding()
                             .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
@@ -72,7 +73,7 @@ struct EditAccountView: View {
                                 .padding(.bottom, -geometry.size.width/120)
                             
                             
-                            TextField("First Name", text : $user.firstName)
+                            TextField("First Name", text : $userAccountViewModel.updatedUser.firstName)
                                 .font(.system(size: 30))
                                 .padding()
                                 .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
@@ -86,7 +87,7 @@ struct EditAccountView: View {
                             InputFieldLabel(text:"Last Name")
                                 .padding(.bottom, -geometry.size.width/120)
 
-                            TextField("Last Name", text : $user.lastName)
+                            TextField("Last Name", text : $userAccountViewModel.updatedUser.lastName)
                                 .font(.system(size: 30))
                                 .padding()
                                 .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
@@ -104,7 +105,7 @@ struct EditAccountView: View {
                             InputFieldLabel(text:"Country")
                                 .padding(.bottom, -geometry.size.width/120)
                             
-                            TextField("Country", text : $user.country)
+                            TextField("Country", text : $userAccountViewModel.updatedUser.country)
                                 .font(.system(size: 30))
                                 .padding()
                                 .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
@@ -118,7 +119,7 @@ struct EditAccountView: View {
                             InputFieldLabel(text:"Date of Birth")
                                 .padding(.bottom, -geometry.size.width/120)
                             
-                            TextField("Date of Birth", text : $user.dob)
+                            TextField("Date of Birth", text : $userAccountViewModel.updatedUser.dob)
                                 .font(.system(size: 30))
                                 .padding()
                                 .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
@@ -135,7 +136,7 @@ struct EditAccountView: View {
                         InputFieldLabel(text:"Email Address")
                             .padding(.bottom, -geometry.size.width/120)
                         
-                        TextField("Email", text : $user.email)
+                        TextField("Email", text : $userAccountViewModel.updatedUser.email)
                             .font(.system(size: 30))
                             .padding()
                             .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
@@ -154,7 +155,7 @@ struct EditAccountView: View {
                         InputFieldLabel(text:"Password")
                             .padding(.bottom, -geometry.size.width/120)
                         
-                        TextField("Password", text : $user.password)
+                        SecureInputView("Password", text : $userAccountViewModel.updatedUser.password)
                             .font(.system(size: 30))
                             .padding()
                             .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
@@ -166,7 +167,7 @@ struct EditAccountView: View {
                     .padding(geometry.size.width/42)
                     
                     
-                    // Create account button
+                    // Update account button
                     Button{
                         /// Todo: Add check for valid input fields
                         /// Todo: Call method in view model that updates user changes
@@ -174,7 +175,8 @@ struct EditAccountView: View {
                     }label:{
                         ButtonLabelLarge(text: "Save Changes", textColor: .white, backgroundColor: Color.blackCustom)
                             .padding(geometry.size.width/42)
-                    }
+                    }.opacity(userAccountViewModel.isEditingComplete ? 1 : 0.6)
+                        .disabled(!userAccountViewModel.isEditingComplete)
                     
                 }
                 Spacer()

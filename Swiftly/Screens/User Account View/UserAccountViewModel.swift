@@ -28,7 +28,91 @@ final class UserAccountViewModel: ObservableObject {
                     )
     @Published var isUserInfoRetrieved = false
     
-
+    
+    @Published var updatedUser = User(firstName: "",
+                       lastName: "",
+                       username: "",
+                       email: "",
+                       password: "",
+                       dob : "",
+                       country: ""
+                    )
+    
+    
+    
+    //validation methods for updating account
+    
+    
+    func isDateValid() -> Bool{
+        
+        //must be in dd/mm/yyyy format, only numerics
+        
+        let dateTest = NSPredicate(format: "SELF MATCHES %@", "^\\d{2}\\/\\d{2}\\/\\d{4}$")
+        return dateTest.evaluate(with: updatedUser.dob)
+    }
+    
+    
+    func isPasswordValid() -> Bool{
+        
+        //Password must be at least 8 characters, no more than 15 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.
+        
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=[^\\d_].*?\\d)\\w(\\w|[!@#$%]){7,20}")
+        return passwordTest.evaluate(with: updatedUser.password)
+    }
+    
+    func isUserNameValid() -> Bool{
+        return updatedUser.username != ""
+    }
+    
+    func isFirstNameValid() -> Bool{
+        return updatedUser.firstName != ""
+    }
+    
+    func isLastNameValid() -> Bool{
+        return updatedUser.lastName != ""
+    }
+    
+    func isCountryValid() -> Bool{
+        return updatedUser.country != ""
+    }
+    
+    
+    var isEditingComplete : Bool {
+        
+        if !isPasswordValid(){
+            return false
+        }
+        
+        if !isDateValid(){
+            return false
+        }
+        if !isUserNameValid(){
+            return false
+        }
+        if !isFirstNameValid(){
+            return false
+        }
+        if !isLastNameValid(){
+            return false
+        }
+        if !isCountryValid(){
+            return false
+        }
+        return true
+    }
+    
+    
+    //function for passing currently logged in users info into another User variable to be used for updating account info
+    
+    func updateAccountinfo(){
+        updatedUser.firstName = loggedInUser.firstName
+        updatedUser.lastName = loggedInUser.lastName
+        updatedUser.username = loggedInUser.username
+        updatedUser.email = loggedInUser.email
+        updatedUser.password = loggedInUser.password
+        updatedUser.dob = loggedInUser.dob
+        updatedUser.country = loggedInUser.country
+    }
     
     
     

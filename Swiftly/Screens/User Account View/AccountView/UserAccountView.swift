@@ -12,6 +12,7 @@ struct UserAccountView: View {
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel /// view model for this view
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var loginViewModel: LoginViewModel
+    @EnvironmentObject var editAccountViewModel: EditAccountViewModel
     
     var body: some View {
         
@@ -28,6 +29,7 @@ struct UserAccountView: View {
                     HStack {
                         
                         Button{
+                            
                             chaptersViewModel.isShowingAccountView.toggle()
                         }label:{
                             UserAccountNavBarIcon(iconName: "chevron.backward")
@@ -39,6 +41,7 @@ struct UserAccountView: View {
                         
                         
                         Button{
+                            userAccountViewModel.updateAccountinfo()
                             userAccountViewModel.isEditingAccount.toggle()
                         }label:{
                             UserAccountNavBarIcon(iconName: "gearshape")
