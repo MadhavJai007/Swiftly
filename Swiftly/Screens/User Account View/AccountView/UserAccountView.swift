@@ -12,7 +12,6 @@ struct UserAccountView: View {
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel /// view model for this view
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var loginViewModel: LoginViewModel
-    @EnvironmentObject var editAccountViewModel: EditAccountViewModel
     
     var body: some View {
         
