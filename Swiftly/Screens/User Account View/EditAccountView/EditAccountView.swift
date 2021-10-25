@@ -10,6 +10,8 @@ struct EditAccountView: View {
     /// Todo: Change to @Published and move it into the viewmodel
     @State var user = MockData.sampleUser
     
+    var countries = ["Canada", "United States", "United Kingdom", "Australia"]
+    
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel /// view model for this view
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var loginViewModel: LoginViewModel
@@ -107,13 +109,18 @@ struct EditAccountView: View {
                             InputFieldLabel(text:"Country")
                                 .padding(.bottom, -geometry.size.width/120)
                             
-                            TextField("Country", text : $userAccountViewModel.updatedUser.country)
-                                .font(.system(size: 30))
-                                .padding()
-                                .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
-                                .background(Color.white)
-                                .foregroundColor(.darkGrayCustom)
-                                .cornerRadius(15)
+                            
+                            Picker("", selection: $userAccountViewModel.updatedUser.country) {
+                                            ForEach(countries, id: \.self) {
+                                                           
+                                                Text($0)
+                                                    .font(.system(size: 30))
+                                            }
+                                        }
+                            .frame(width: 100, height: 50)
+                            .background(Color.blackCustom)
+                            .cornerRadius(15)
+                            
                         }
                         
                         VStack(alignment: .leading) {
@@ -188,10 +195,11 @@ struct EditAccountView: View {
             .navigationBarHidden(true)
         }
     }
-}
+
 
 struct EditAccountView_Previews: PreviewProvider {
     static var previews: some View {
         EditAccountView()
     }
+}
 }
