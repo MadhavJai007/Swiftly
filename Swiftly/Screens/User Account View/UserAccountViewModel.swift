@@ -120,13 +120,22 @@ final class UserAccountViewModel: ObservableObject {
         
         //first update the firebase authentication with new information (password specifically)
         
-        /*
-        let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
-        changeRequest?.displayName = ""
-        changeRequest?.commitChanges { error in
-          // ...
+        let user = Auth.auth().currentUser
+        var credential: AuthCredential = EmailAuthProvider.credential(withEmail: loggedInUser.email, password: loggedInUser.password)
+
+        
+        
+        user?.reauthenticate(with: credential, completion: {(authResult, error) in
+                    if let error = error {
+                        print("error occured while reauthenticating")
+                    }else{
+                        print("Successfully Reauthenticated! ")
+                    }
+                })
+        
+        Auth.auth().currentUser?.updatePassword(to: updatedUser.password) { (error) in
+          print("successfully updated password!")
         }
-         */
         
         //now update the Students/Teachers collections document with new information
         let updatingRef = db.collection("Students").document(loggedInUser.username)
@@ -150,7 +159,6 @@ final class UserAccountViewModel: ObservableObject {
     
     
 //    var user = MockData.sampleUser
-    
     
     func loadUserData(loggedInEmail: String, accountType: String){
         print("searching with \(loggedInEmail)")
