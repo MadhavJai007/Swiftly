@@ -28,6 +28,8 @@ final class UserAccountViewModel: ObservableObject {
                     )
     @Published var isUserInfoRetrieved = false
     
+    var loggedInAccountType : String = ""
+    
     
     @Published var updatedUser = User(firstName: "",
                        lastName: "",
@@ -138,7 +140,9 @@ final class UserAccountViewModel: ObservableObject {
         }
         
         //now update the Students/Teachers collections document with new information
-        let updatingRef = db.collection("Students").document(loggedInUser.username)
+        
+        
+        let updatingRef = db.collection(loggedInAccountType).document(loggedInUser.username)
 
         updatingRef.updateData([
             "country": updatedUser.country,
@@ -173,7 +177,7 @@ final class UserAccountViewModel: ObservableObject {
                     print("Account not found. Shouldn't occur in this situation since user is already logged in.")
                 } else {
                     let userObj = snapshot!.documents[0].data()
-                    
+                    self.loggedInAccountType = "Students"
                     self.loggedInUser.firstName = userObj["firstname"] as! String
                     self.loggedInUser.lastName = userObj["lastName"] as! String
                     self.loggedInUser.email = userObj["email"] as! String
@@ -202,7 +206,7 @@ final class UserAccountViewModel: ObservableObject {
                     print("Account not found. Shouldn't occur in this situation since user is already logged in.")
                 } else {
                     let userObj = snapshot!.documents[0].data()
-                    
+                    self.loggedInAccountType =  "Teachers"
                     self.loggedInUser.firstName = userObj["firstname"] as! String
                     self.loggedInUser.lastName = userObj["lastName"] as! String
                     self.loggedInUser.email = userObj["email"] as! String
@@ -239,7 +243,7 @@ final class UserAccountViewModel: ObservableObject {
             try Auth.auth().signOut()
             self.isUserInfoRetrieved = false
             logoutSuccessful = true
-            
+            loggedInAccountType = ""
             loggedInUser = User(firstName: "",
                                 lastName: "",
                                 username: "",

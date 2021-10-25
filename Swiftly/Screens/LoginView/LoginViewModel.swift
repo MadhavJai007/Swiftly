@@ -23,6 +23,8 @@ final class LoginViewModel: ObservableObject {
     
     var attemptingLogin: Bool = false
     
+    
+    
     /// Firestore
     private var db = Firestore.firestore()
     
