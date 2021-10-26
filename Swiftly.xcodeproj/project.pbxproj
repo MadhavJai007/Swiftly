@@ -24,6 +24,7 @@
 		DA884F2126FE04D000F58E4A /* SwiftlyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA884F2026FE04D000F58E4A /* SwiftlyApp.swift */; };
 		DA884F2526FE04D200F58E4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA884F2426FE04D200F58E4A /* Assets.xcassets */; };
 		DA884F2826FE04D200F58E4A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA884F2726FE04D200F58E4A /* Preview Assets.xcassets */; };
+		DABA3B252728A3B600A2AB34 /* ChapterLesson.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABA3B242728A3B600A2AB34 /* ChapterLesson.swift */; };
 		DABF368927020134009BF78A /* Chapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF368827020134009BF78A /* Chapter.swift */; };
 		DABF368C270202EA009BF78A /* ChaptersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF368B270202EA009BF78A /* ChaptersViewModel.swift */; };
 		DABF369427023677009BF78A /* ChapterTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DABF369327023677009BF78A /* ChapterTitleView.swift */; };
@@ -67,6 +68,7 @@
 		DA884F2426FE04D200F58E4A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA884F2726FE04D200F58E4A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DA884F2926FE04D200F58E4A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DABA3B242728A3B600A2AB34 /* ChapterLesson.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterLesson.swift; sourceTree = "<group>"; };
 		DABF368827020134009BF78A /* Chapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chapter.swift; sourceTree = "<group>"; };
 		DABF368B270202EA009BF78A /* ChaptersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChaptersViewModel.swift; sourceTree = "<group>"; };
 		DABF369327023677009BF78A /* ChapterTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterTitleView.swift; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				DADCC3B02714C8F60071D287 /* InteractiveBlock.swift */,
 				DADCC3B62715D3B50071D287 /* Playground.swift */,
 				EBCD8FBF271F0A1B0084B2ED /* Alert.swift */,
+				DABA3B242728A3B600A2AB34 /* ChapterLesson.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -474,6 +477,7 @@
 				DAD6B319270A3C71002C8A55 /* UserAccountView.swift in Sources */,
 				DA0866BE271A0AF900B1999E /* NavBarIconView.swift in Sources */,
 				DA0866B82719CC0D00B1999E /* EditAccountView.swift in Sources */,
+				DABA3B252728A3B600A2AB34 /* ChapterLesson.swift in Sources */,
 				DAC6390A2725E67E0094FC92 /* ImageViews.swift in Sources */,
 				DA840A16270CB26800751FB7 /* LeaderboardViewModel.swift in Sources */,
 				DAD6B31D270A4833002C8A55 /* User.swift in Sources */,

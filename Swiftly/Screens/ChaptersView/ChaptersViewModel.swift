@@ -9,6 +9,8 @@ import Firebase
 
 final class ChaptersViewModel: ObservableObject {
     
+
+    
     @Published var didStartChapter = false
     @Published var didSelectLeaderboard  = false
     @Published var isShowingChapterDetailView = false
@@ -62,8 +64,35 @@ final class ChaptersViewModel: ObservableObject {
                     let chapterSummary = document.data()["chapter_desc"]! as! String
                     let chapterLength = document.data()["chapter_length"]! as! Int
                     let iconName = document.data()["chapter_icon_name"]! as! String
-            
                     
+                    var chapterLessons = [ChapterLesson]()
+                    
+                    /// Getting lesson information
+                    db.collection("Chapters").document(document.documentID).collection("lessons").getDocuments() {
+                        (querySnapshot, err) in
+                        
+                        if let err = err {
+                            print("Error getting chapter lesson documents: \(err)")
+                            self.isUserLoggedIn = false
+                        } else {
+                        
+                            
+                            
+                            /// Grabbing the lesson data and appending it to the chapterLessons array
+                            for chapterLessonDocument in querySnapshot!.documents {
+                                
+                                let title = chapterLessonDocument.data()["lesson_title"]! as! String
+                                let lesson_data = chapterLessonDocument.data()["lesson_content"]! as! [String]
+                                
+                                let newLesson = ChapterLesson(title: title, content: lesson_data)
+                                
+                                chapterLessons.append(newLesson)
+                            }
+                        }
+                        
+                    }
+            
+                    /// Getting playground information
                     db.collection("Chapters").document(document.documentID).collection("playground").getDocuments() {
                         (querySnapshot, err) in
                         
@@ -95,7 +124,7 @@ final class ChaptersViewModel: ObservableObject {
                                 playgroundQuestions.append(playgroundQuestion)
                             }
                             
-                            self.chaptersArr.append(Chapter(chapterNum: chapterNum, name: chapterName, difficulty: chapterDifficulty, summary: chapterSummary, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions))
+                            self.chaptersArr.append(Chapter(chapterNum: chapterNum, name: chapterName, difficulty: chapterDifficulty, summary: chapterSummary, lessons: chapterLessons, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions))
                             
                             self.isUserLoggedIn = true
                         }     

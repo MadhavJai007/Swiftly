@@ -67,13 +67,13 @@ struct ChaptersView: View {
                                     .environmentObject(leaderboardViewModel)
                             }
                         }
-                        .padding(30)
                         .sheet(isPresented: $chaptersViewModel.isShowingChapterDetailView) {
                             ChapterDetailView(isShowingDetailView: $chaptersViewModel.isShowingChapterDetailView)
                                 .environmentObject(chaptersViewModel)
                                 .environmentObject(chapterContentViewModel)
                         }
                     }
+                    .padding(.trailing, 30)
                     
                     /// Nav link to accessing chapter content
                     NavigationLink(destination: ChapterContentView()
