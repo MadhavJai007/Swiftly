@@ -16,6 +16,8 @@ final class ChapterContentViewModel: ObservableObject {
     var selectedQuestion: Playground
     var selectedQuestionIndex: Int
     
+    var isFirstLesson = true
+    
     let columns = [GridItem(.flexible())]
     
     /// This is used to allow interaction with blocks
@@ -28,8 +30,7 @@ final class ChapterContentViewModel: ObservableObject {
     @Published var willStartNextQuestion = false
     @Published var mcqOptions: [String] = []
     @Published var mcqUserAnswers: [String] = []
-    
-    
+  
     /// Init variables with basic data
     init(){
         chapter = MockData.sampleChapter
@@ -132,7 +133,7 @@ final class ChapterContentViewModel: ObservableObject {
                 }
             }
             
-        /// Checking mcq answer
+            /// Checking mcq answer
         }else{
             
             if (mcqUserAnswers.isEmpty == false){
@@ -142,7 +143,7 @@ final class ChapterContentViewModel: ObservableObject {
                     }
                 }
             }
-        } 
+        }
         print("USER SCORE: \(userScore)")
     }
     
@@ -151,4 +152,3 @@ final class ChapterContentViewModel: ObservableObject {
         willStartPlaygroundQuestion = false
     }
 }
-

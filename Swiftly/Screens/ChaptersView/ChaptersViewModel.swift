@@ -80,11 +80,9 @@ final class ChaptersViewModel: ObservableObject {
                             
                             /// Grabbing the lesson data and appending it to the chapterLessons array
                             for chapterLessonDocument in querySnapshot!.documents {
-                                
-                                let title = chapterLessonDocument.data()["lesson_title"]! as! String
                                 let lesson_data = chapterLessonDocument.data()["lesson_content"]! as! [String]
                                 
-                                let newLesson = ChapterLesson(title: title, content: lesson_data)
+                                let newLesson = ChapterLesson(content: lesson_data)
                                 
                                 chapterLessons.append(newLesson)
                             }

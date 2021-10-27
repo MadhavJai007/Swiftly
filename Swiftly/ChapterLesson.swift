@@ -9,6 +9,5 @@ import Foundation
 
 struct ChapterLesson:Identifiable,Equatable, Hashable {
     let id = UUID()
-    let title: String
     let content: [String]
 }
