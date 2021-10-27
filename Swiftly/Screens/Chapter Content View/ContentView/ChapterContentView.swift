@@ -147,7 +147,7 @@ struct ChapterContentView: View {
                                             
                                             Spacer()
                                         }
-                                        .padding(.bottom, geometry.size.width/24)
+                                        .padding(.bottom, geometry.size.width/12)
                                     }
                                     .frame(width: geometry.size.width, height: geometry.size.height/1.10, alignment: .leading)
                                 }
