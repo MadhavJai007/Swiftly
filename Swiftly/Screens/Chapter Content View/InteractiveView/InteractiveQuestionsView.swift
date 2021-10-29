@@ -33,9 +33,11 @@ struct InteractiveQuestionsView: View {
                     TitleLabel(text: "Playgrounds")
                         .padding(.bottom, 75)
                     
+                    TabView {
+                    
                     /// ScrollView for playground questions
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        LazyHGrid(rows: [GridItem(.flexible())], spacing: 10){
+//                    ScrollView(.horizontal, showsIndicators: false) {
+                        
                             ForEach(chaptersViewModel.selectedChapter!.playgroundArr) { question in
                                 VStack{
                                     VStack(alignment: .leading){
@@ -86,10 +88,11 @@ struct InteractiveQuestionsView: View {
                                 }
                                 .frame(width: geometry.size.width/1.20, height: geometry.size.height/1.75)
                             }
-                        }
+                        
                     }
                     .frame(width: geometry.size.width/1.20, height: geometry.size.height/1.5)
                     .padding(.top, -60)
+                    .tabViewStyle(.page(indexDisplayMode: .never))
                     
                     /// HStack for next chapter button
                     HStack{

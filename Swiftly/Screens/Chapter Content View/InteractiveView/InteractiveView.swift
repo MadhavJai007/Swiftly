@@ -144,7 +144,7 @@ struct InteractiveView: View {
                         message: Text("You scored: \(chapterContentViewModel.userScore)/\(chapterContentViewModel.totalScore)"),
                         dismissButton: .default(Text("OK"), action: {
                             
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                 /// Used to either proceed to next question, or finish interactive section
                                 if (chapterContentViewModel.isFinalChapter == false){
                                     chapterContentViewModel.startNextPlaygroundQuestion()

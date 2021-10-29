@@ -10,11 +10,11 @@ struct ChapterTitleView: View {
     let chapter: Chapter
     
     var width: CGFloat
-
+    
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel // view model for this view
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel
-
+    
     var body: some View {
         
         VStack{
@@ -38,9 +38,21 @@ struct ChapterTitleView: View {
                 
                 ChapterInfoLabel(text: "\(chapter.name)")
                 ChapterInfoLabel(text: "Estimated Length: \(chapter.length)")
-                ChapterInfoLabel(text: "Difficulty: \(chapter.difficulty)")
                 
-                HStack(){
+                
+                HStack{
+                    ChapterInfoLabel(text: "Difficulty: ")
+                    
+                    ForEach(1..<chapter.difficulty+1) { index in
+                        Image(systemName: "star.fill")
+                            .resizable()
+                            .frame(width: 30, height: 30)
+                            .foregroundColor(Color.yellow)
+                    }
+                    .minimumScaleFactor(0.5)
+                }
+            
+                HStack{
                     
                     Spacer()
                     
@@ -50,6 +62,7 @@ struct ChapterTitleView: View {
                     }label: {
                         ViewLeaderboardButtonLabel(text: "View Leaderboard")
                     }.padding(.top, 20)
+                    
                 }
                 .frame(width: width, height: 30, alignment: .center)
                 
@@ -83,8 +96,6 @@ struct ChapterTitleView_Previews: PreviewProvider {
     }
 }
 
-
-
 struct ViewLeaderboardButtonLabel: View {
     
     var text: String
@@ -98,7 +109,7 @@ struct ViewLeaderboardButtonLabel: View {
             .padding(.trailing, 10)
             .background(Color.leaderboardBtnBackground)
             .cornerRadius(10)
-            .padding(.trailing, -5)
+            .padding(.trailing, -7.5)
             .padding(.leading, 5)
     }
 }
