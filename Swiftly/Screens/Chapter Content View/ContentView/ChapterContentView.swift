@@ -46,10 +46,13 @@ struct ChapterContentView: View {
                     .padding(.bottom, geometry.size.width/16)
                     
                     /// Horizontal scroll view for left-->right of content
-                    ScrollView(.horizontal, showsIndicators: false) {
+                
+                    TabView {
+                    
+//                    ScrollView(.horizontal, showsIndicators: false) {
                         
                         /// Grid containg cells which are the lessons
-                        LazyHGrid(rows: [GridItem(.flexible())]){
+                        
                             
                             /// Looping through each lesson
                             ForEach(0..<chaptersViewModel.selectedChapter!.lessons.count) { i in
@@ -91,7 +94,7 @@ struct ChapterContentView: View {
                                             }
                                             Spacer()
                                         }
-                                        .frame(width: geometry.size.width, height: geometry.size.height/1.10, alignment: .leading)
+                                        .frame(width: geometry.size.width, alignment: .leading)
                                     }
                                 }else{
                                     
@@ -102,8 +105,9 @@ struct ChapterContentView: View {
                                             VStack(alignment: .leading){
                                                 
                                                 /// Going through the content for each section
+                                
                                                 ForEach(lesson.content, id: \.self) { content in
-                                                    
+
                                                     if (lesson.content.firstIndex(of: content) == 0){
                                                         ChapterSubTitle(text: content)
                                                             .padding(.leading, geometry.size.width/24)
@@ -147,14 +151,20 @@ struct ChapterContentView: View {
                                             
                                             Spacer()
                                         }
+                                        
+                                        .padding(.top, geometry.size.width/24)
                                         .padding(.bottom, geometry.size.width/12)
                                     }
-                                    .frame(width: geometry.size.width, height: geometry.size.height/1.10, alignment: .leading)
+                                    .frame(width: geometry.size.width, alignment: .leading)
                                 }
                             }
-                        }
+                        
+//                    }
+                   
                     }
                     .frame(width: geometry.size.width, height: geometry.size.height/1.10)
+                    .padding(.top, 10)
+                    .tabViewStyle(.page(indexDisplayMode: .never))
                 }
             }
             

@@ -45,6 +45,7 @@ final class ChaptersViewModel: ObservableObject {
         self.didStartChapter = false
     }
     
+    /// TODO: Organize chapters so that they are in the correct order
     /// Downloading chapters from Firebase and appending them to the chapters array
     func getChapterDocs() {
         
@@ -137,3 +138,5 @@ final class ChaptersViewModel: ObservableObject {
         }
     }
 }
+
+
