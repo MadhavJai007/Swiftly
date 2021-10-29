@@ -18,6 +18,9 @@ final class ChapterContentViewModel: ObservableObject {
     
     var isFirstLesson = true
     
+    var userScore = 0
+    var totalScore = 0
+    
     let columns = [GridItem(.flexible())]
     
     /// This is used to allow interaction with blocks
@@ -30,6 +33,7 @@ final class ChapterContentViewModel: ObservableObject {
     @Published var willStartNextQuestion = false
     @Published var mcqOptions: [String] = []
     @Published var mcqUserAnswers: [String] = []
+    @Published var isShowingScore = false
   
     /// Init variables with basic data
     init(){
@@ -96,6 +100,7 @@ final class ChapterContentViewModel: ObservableObject {
             for i in 0..<codeBlocks.count {
                 activeBlocks[i] = InteractiveBlock(id: i, content: codeBlocks[i])
             }
+            
         }else if (selectedQuestion.type == "mcq"){
             mcqOptions = selectedQuestion.originalArr
         }
@@ -121,11 +126,12 @@ final class ChapterContentViewModel: ObservableObject {
     /// Used to retrieve the score of the user
     func getQuestionScore(){
         
-        var userScore = 0
+        userScore = 0
+        
+        totalScore = selectedQuestion.originalArr.count
         
         /// Checking code block answer
         if (selectedQuestion.type == "code_blocks"){
-            
             for i in 0..<selectedQuestion.originalArr.count {
                 
                 if (activeBlocks[i].content == selectedQuestion.originalArr[i]){
@@ -133,18 +139,17 @@ final class ChapterContentViewModel: ObservableObject {
                 }
             }
             
-            /// Checking mcq answer
         }else{
-            
             if (mcqUserAnswers.isEmpty == false){
                 for i in 0..<mcqUserAnswers.count {
-                    if (selectedQuestion.originalArr.contains(mcqUserAnswers[i])){
+                    if (selectedQuestion.mcqAnswers.contains(mcqUserAnswers[i])){
                         userScore += 1
                     }
                 }
             }
         }
-        print("USER SCORE: \(userScore)")
+        
+        self.isShowingScore = true
     }
     
     /// Finishes the playground section and returns to the playground questions view

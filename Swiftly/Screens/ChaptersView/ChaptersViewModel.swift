@@ -9,7 +9,7 @@ import Firebase
 
 final class ChaptersViewModel: ObservableObject {
     
-
+    
     
     @Published var didStartChapter = false
     @Published var didSelectLeaderboard  = false
@@ -76,7 +76,7 @@ final class ChaptersViewModel: ObservableObject {
                             print("Error getting chapter lesson documents: \(err)")
                             self.isUserLoggedIn = false
                         } else {
-                        
+                            
                             
                             
                             /// Grabbing the lesson data and appending it to the chapterLessons array
@@ -90,7 +90,7 @@ final class ChaptersViewModel: ObservableObject {
                         }
                         
                     }
-            
+                    
                     /// Getting playground information
                     db.collection("Chapters").document(document.documentID).collection("playground").getDocuments() {
                         (querySnapshot, err) in
@@ -99,7 +99,7 @@ final class ChaptersViewModel: ObservableObject {
                             print("Error getting chapter documents: \(err)")
                             self.isUserLoggedIn = false
                         } else {
-                        
+                            
                             var playgroundQuestions = [Playground]()
                             
                             
@@ -118,15 +118,31 @@ final class ChaptersViewModel: ObservableObject {
                                     blocks[i] = blocks[i].replacingOccurrences(of: "$n", with: "\n")
                                 }
                                 
-                                let playgroundQuestion = Playground(title: title, description: description, type: type, originalArr: blocks)
-                                
-                                playgroundQuestions.append(playgroundQuestion)
+                                /// Only download mcq answers if the question type is MCQ
+                                if (type == "mcq"){
+                                    
+                                    let mcqAnswers = playgroundDocument.data()["mcq_answers"]! as! [String]
+                                    
+                                    var playgroundQuestion = Playground(title: title, description: description, type: type, originalArr: blocks)
+                                    
+                                    playgroundQuestion.mcqAnswers = mcqAnswers
+                                    
+                                    playgroundQuestions.append(playgroundQuestion)
+                                }else{
+                                    
+                                    let playgroundQuestion = Playground(title: title, description: description, type: type, originalArr: blocks)
+                                    playgroundQuestions.append(playgroundQuestion)
+                                    
+                                }
                             }
+                            
+                            
+                            
                             
                             self.chaptersArr.append(Chapter(chapterNum: chapterNum, name: chapterName, difficulty: chapterDifficulty, summary: chapterSummary, lessons: chapterLessons, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions))
                             
                             self.isUserLoggedIn = true
-                        }     
+                        }
                     }
                     //                    print("Chapter desc:  \(document.data()["chapter_desc"]!)")
                     //                    print("Chapter difficulty:  \(document.data()["chapter_difficulty"]!)")

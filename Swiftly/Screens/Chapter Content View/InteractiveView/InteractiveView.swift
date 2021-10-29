@@ -61,7 +61,6 @@ struct InteractiveView: View {
                     /// For actual interactive section
                     VStack{
                         Group {
-                            
                             /// For code blocks method
                             if (chapterContentViewModel.selectedQuestion.type == "code_blocks"){
                                 
@@ -88,7 +87,7 @@ struct InteractiveView: View {
                                 .onDrop(of: [UTType.text], delegate: DropOutsideDelegate(current: $dragging))
                                 .hasScrollEnabled(false)
                                 
-                            /// For mcq method
+                                /// For mcq method
                             }else{
                                 Spacer()
                                 
@@ -122,18 +121,10 @@ struct InteractiveView: View {
                             Spacer()
                             
                             VStack(alignment: .leading){
+                                
                                 Button{
-                                    
                                     /// Getting the user score
                                     chapterContentViewModel.getQuestionScore()
-                                    
-                                    /// Used to either proceed to next question, or finish interactive section
-                                    if (chapterContentViewModel.isFinalChapter == false){
-                                        chapterContentViewModel.startNextPlaygroundQuestion()
-                                        willUpdateView.toggle()
-                                    }else{
-                                        chapterContentViewModel.completeInteractiveSection()
-                                    }
                                 }label: {
                                     InteractiveSubTitle(text: chapterContentViewModel.chapterButtonText)
                                 }
@@ -147,12 +138,39 @@ struct InteractiveView: View {
                         }
                     }.frame(width: geometry.size.width, height: geometry.size.height/5)
                 }
+                .alert(isPresented: $chapterContentViewModel.isShowingScore){
+                    Alert(
+                        title: Text("Your Score"),
+                        message: Text("You scored: \(chapterContentViewModel.userScore)/\(chapterContentViewModel.totalScore)"),
+                        dismissButton: .default(Text("OK"), action: {
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                /// Used to either proceed to next question, or finish interactive section
+                                if (chapterContentViewModel.isFinalChapter == false){
+                                    chapterContentViewModel.startNextPlaygroundQuestion()
+                                    willUpdateView.toggle()
+                                }else{
+                                    chapterContentViewModel.completeInteractiveSection()
+                                }
+                            }
+                        })
+                    )
+                }
             }
         }
         .navigationBarHidden(true)
         .onDisappear {
             chapterContentViewModel.willStartNextQuestion = false
+            chapterContentViewModel.isShowingScore = false
         }
+        /// For clearing user input when they exit
+//        .onAppear(){
+//            chapterContentViewModel.mcqUserAnswers.removeAll()
+//
+//            for i in 0..<chapterContentViewModel.selectedQuestion.originalArr.count {
+//                chapterContentViewModel.activeBlocks[i] = InteractiveBlock(id: i, content: chapterContentViewModel.selectedQuestion.originalArr[i])
+//            }
+//        }
     }
 }
 

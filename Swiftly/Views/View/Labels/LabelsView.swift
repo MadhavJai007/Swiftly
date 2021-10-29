@@ -84,21 +84,33 @@ struct MultipleSelectionRow: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack{
-                if self.isSelected {
-                    Color.green
-                        .opacity(0.60)
-                }else{
-                    Color.clear
-                }
+                
+                Color.clear
                 
                 VStack{
-                    Button(action: self.action) {
-                        Text(self.title)
-                            .font(.system(size: 25))
-                            .foregroundColor(.white)
-                            .padding(.leading, 10)
-                            .frame(width: UIScreen.screenWidth/1.25, height: 75, alignment: .leading)
-                            .cornerRadius(15)
+                    HStack{
+                        
+                        if self.isSelected {
+                            Image(systemName: "largecircle.fill.circle")
+                                .frame(width: 44, height: 44)
+                                .padding(.leading, 10)
+                                .foregroundColor(Color.white)
+                        }else{
+                            Image(systemName: "circle")
+                                .frame(width: 44, height: 44)
+                                .padding(.leading, 10)
+                                .foregroundColor(Color.white)
+                        }
+                        
+                        
+                        Button(action: self.action) {
+                            Text(self.title)
+                                .font(.system(size: 25))
+                                .foregroundColor(.white)
+                                .padding(.leading, 10)
+                                .frame(width: UIScreen.screenWidth/1.25, height: 75, alignment: .leading)
+                                .cornerRadius(15)
+                        }
                     }
                 }
             }.frame(width: UIScreen.screenWidth/1.25, height: 75, alignment: .leading)

@@ -11,5 +11,6 @@ struct Playground: Identifiable, Hashable {
     let title: String
     let description: String
     let type: String
-    let originalArr: [String]    
+    let originalArr: [String]
+    var mcqAnswers = [""]
 }
