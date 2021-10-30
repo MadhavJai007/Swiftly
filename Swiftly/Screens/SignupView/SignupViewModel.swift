@@ -173,7 +173,10 @@ final class SignupViewModel: ObservableObject {
         print("is \(accountType)")
         switch accountType {
         case "Student":
-            db.collection("Students").document(user.username).setData([
+            
+            var newStudentRef = db.collection("Students").document(user.username)
+            
+            newStudentRef.setData([
                 "country": user.country,
                 "date_of_birth": user.dob,
                 "email": user.email,
@@ -188,8 +191,14 @@ final class SignupViewModel: ObservableObject {
                     print("Student successfully added!")
                 }
             }
+            
+            newStudentRef.collection("Classrooms").document("clasroom_1").setData(["id" : "placeholder"])
+            
         case "Teacher":
-            db.collection("Teachers").document(user.username).setData([
+            
+            var newTeacherRef = db.collection("Teachers").document(user.username)
+            
+            newTeacherRef.setData([
                 "country": user.country,
                 "date_of_birth": user.dob,
                 "email": user.email,
@@ -204,6 +213,7 @@ final class SignupViewModel: ObservableObject {
                     print("Teacher successfully added!")
                 }
             }
+            newTeacherRef.collection("Classrooms").document("clasroom_1").setData(["id" : "placeholder"])
         default:
             print("Error in determining between Teacher and Student account type")
         }
