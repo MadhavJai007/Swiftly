@@ -34,6 +34,11 @@ final class SignupViewModel: ObservableObject {
     
     private var db = Firestore.firestore()
     
+    @Published var chaptersArr = [Chapter]()
+    
+    var chapterNum = 72
+    
+    
 
     //Validation functions
     
@@ -219,6 +224,102 @@ final class SignupViewModel: ObservableObject {
 
     }
     
+    func downloadChapterData(){
+        db.collection("Chapters").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting chapter documents: \(err)")
+            } else {
+                
+                for document in querySnapshot!.documents {
+                    
+                    self.chapterNum = document.data()["chapter_number"]! as! Int
+                    let chapterName = document.data()["chapter_title"]! as! String
+                    let chapterDifficulty = document.data()["chapter_difficulty"]! as! Int
+                    let chapterSummary = document.data()["chapter_desc"]! as! String
+                    let chapterLength = document.data()["chapter_length"]! as! Int
+                    let iconName = document.data()["chapter_icon_name"]! as! String
+                    
+                    var chapterLessons = [ChapterLesson]()
+                    
+                    /// Getting lesson information
+                    self.db.collection("Chapters").document(document.documentID).collection("lessons").getDocuments() {
+                        (querySnapshot, err) in
+                        
+                        if let err = err {
+                            print("Error getting chapter lesson documents: \(err)")
+                        } else {
+                            
+                            
+                            
+                            /// Grabbing the lesson data and appending it to the chapterLessons array
+                            for chapterLessonDocument in querySnapshot!.documents {
+                                let lesson_data = chapterLessonDocument.data()["lesson_content"]! as! [String]
+                                
+                                let newLesson = ChapterLesson(content: lesson_data)
+                                
+                                chapterLessons.append(newLesson)
+                            }
+                        }
+                        
+                    }
+                    
+                    self.db.collection("Chapters").document(document.documentID).collection("playground").getDocuments() {
+                        (querySnapshot, err) in
+                        
+                        if let err = err {
+                            print("Error getting chapter documents: \(err)")
+                        } else {
+                            
+                            var playgroundQuestions = [Playground]()
+                            
+                            
+                            
+                            for playgroundDocument in querySnapshot!.documents {
+                                
+                                let title = playgroundDocument.data()["question_title"]! as! String
+                                let description = playgroundDocument.data()["question_description"]! as! String
+                                let type = playgroundDocument.data()["question_type"]! as! String
+                                var blocks = playgroundDocument.data()["code_blocks"]! as! [String]
+                                
+                                
+                                /// Since Firestore doesn't store line break, we have to save them as $s, then
+                                /// once we download the data, we have to replace them with \n
+                                for i in 0..<blocks.count {
+                                    blocks[i] = blocks[i].replacingOccurrences(of: "$n", with: "\n")
+                                }
+                                
+                                /// Only download mcq answers if the question type is MCQ
+                                if (type == "mcq"){
+                                    
+                                    let mcqAnswers = playgroundDocument.data()["mcq_answers"]! as! [String]
+                                    
+                                    var playgroundQuestion = Playground(title: title, description: description, type: type, originalArr: blocks)
+                                    
+                                    playgroundQuestion.mcqAnswers = mcqAnswers
+                                    
+                                    playgroundQuestions.append(playgroundQuestion)
+                                }else{
+                                    
+                                    let playgroundQuestion = Playground(title: title, description: description, type: type, originalArr: blocks)
+                                    playgroundQuestions.append(playgroundQuestion)
+                                    
+                                }
+                            }
+                            
+                            
+                            
+                            
+                            self.chaptersArr.append(Chapter(chapterNum: self.chapterNum, name: chapterName, difficulty: chapterDifficulty, summary: chapterSummary, lessons: chapterLessons, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions))
+    
+                        }
+                    }
+                }
+            }
+        }
+        
+        
+    }
+    
     
     func save(accountType: String){
         
@@ -250,6 +351,7 @@ final class SignupViewModel: ObservableObject {
 
             print("The email is not taken is : \(emailNotTaken)")
             if(emailNotTaken == true){
+                self.downloadChapterData()
                 print("Since the email was valid, now execute authenticateUser() to add user to authenticator")
                 self.authenticateUser(user: newUser)
             }
@@ -257,6 +359,7 @@ final class SignupViewModel: ObservableObject {
 
         let timer3 = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { [self] (timer) in
             if(emailNotTaken == true){
+                print("The chapter num (if it worked) is: \(chapterNum)")
                 print("Finally, since the email was valid, now execute addUser() to add user to collections")
                 self.addUser(user: newUser, accountType: accountType)
             }
