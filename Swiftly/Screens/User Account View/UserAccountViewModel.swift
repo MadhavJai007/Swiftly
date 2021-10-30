@@ -155,6 +155,15 @@ final class UserAccountViewModel: ObservableObject {
                 print("Error updating document: \(err)")
             } else {
                 print("Document successfully updated")
+                
+                self.loggedInUser.firstName = self.updatedUser.firstName
+                self.loggedInUser.lastName = self.updatedUser.lastName
+                self.loggedInUser.username = self.updatedUser.username
+                self.loggedInUser.email = self.updatedUser.email
+                self.loggedInUser.password = self.updatedUser.password
+                self.loggedInUser.dob = self.updatedUser.dob
+                self.loggedInUser.country = self.updatedUser.country
+                
             }
         }
         
