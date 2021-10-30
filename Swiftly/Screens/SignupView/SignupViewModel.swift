@@ -182,7 +182,7 @@ final class SignupViewModel: ObservableObject {
                 "email": user.email,
                 "firstname" : user.firstName,
                 "username" : user.username,
-                "lastName" : user.lastName,
+                "lastname" : user.lastName,
                 "password" : user.password
             ]) { err in
                 if let err = err {
@@ -203,7 +203,7 @@ final class SignupViewModel: ObservableObject {
                 "date_of_birth": user.dob,
                 "email": user.email,
                 "firstname" : user.firstName,
-                "lastName" : user.lastName,
+                "lastname" : user.lastName,
                 "username" : user.username,
                 "password" : user.password
             ]) { err in
