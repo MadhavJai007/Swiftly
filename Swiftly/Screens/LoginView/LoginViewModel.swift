@@ -23,8 +23,7 @@ final class LoginViewModel: ObservableObject {
     
     var attemptingLogin: Bool = false
     
-    
-    
+
     /// Firestore
     private var db = Firestore.firestore()
     
@@ -42,17 +41,23 @@ final class LoginViewModel: ObservableObject {
             self.isLoading = false
         }
         else {
+            
             Auth.auth().signIn(withEmail: email, password: password) { [self] result, error in
+                
                 if error != nil {
                     alertInfo = AlertModel(id: .noAccountType, title: "Bad login", message: "Email and/or password are incorrect.")
                     print("cmon dud")
                     self.isSuccessful = false
                     self.isBadLogin = true
                     self.isLoading = false
+                    
                 }else{
+                    
                     switch self.accountMode {
+                        
                     case "Student":
                         print("Checking the students collection...")
+                        
                         // query to get user with specific email field
                         db.collection("Students").whereField("email", isEqualTo: email).getDocuments() { (querySnapshot, err) in
                             if let err = err {

@@ -9,8 +9,7 @@ import Firebase
 
 final class ChaptersViewModel: ObservableObject {
     
-    
-    
+    /// Published variables
     @Published var didStartChapter = false
     @Published var didSelectLeaderboard  = false
     @Published var isShowingChapterDetailView = false
@@ -45,7 +44,7 @@ final class ChaptersViewModel: ObservableObject {
         self.didStartChapter = false
     }
     
-    /// TODO: Organize chapters so that they are in the correct order
+    /// Todo: Default to some value if unwrapped value from firebase is nil.
     /// Downloading chapters from Firebase and appending them to the chapters array
     func getChapterDocs() {
         
@@ -135,24 +134,26 @@ final class ChaptersViewModel: ObservableObject {
                                     
                                 }
                             }
-                            
-                            
-                            
+
+                        
                             
                             self.chaptersArr.append(Chapter(chapterNum: chapterNum, name: chapterName, difficulty: chapterDifficulty, summary: chapterSummary, lessons: chapterLessons, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions))
                             
+                            /// Bubble sort used to sort the chapters via their chapter num
+                            for i in 0..<self.chaptersArr.count {
+                              for j in 1..<self.chaptersArr.count {
+                                  if self.chaptersArr[j].chapterNum < self.chaptersArr[j-1].chapterNum {
+                                  let tmp = self.chaptersArr[j-1]
+                                    self.chaptersArr[j-1] = self.chaptersArr[j]
+                                    self.chaptersArr[j] = tmp
+                                }
+                              }
+                            }
                             self.isUserLoggedIn = true
                         }
                     }
-                    //                    print("Chapter desc:  \(document.data()["chapter_desc"]!)")
-                    //                    print("Chapter difficulty:  \(document.data()["chapter_difficulty"]!)")
-                    //                    print("Chapter title:  \(document.data()["chapter_title"]!)")
-                    //                    print("Chapter length:  \(document.data()["chapter_length"]!)")
-                    //                    print("\(document.documentID) => \(document.data())")
                 }
             }
         }
     }
 }
-
-
