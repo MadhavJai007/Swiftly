@@ -36,6 +36,8 @@ final class SignupViewModel: ObservableObject {
     
     @Published var chaptersArr = [Chapter]()
     
+    @Published var chapterNameArr = []
+    
     var chapterNum = 72
     
     
@@ -192,7 +194,23 @@ final class SignupViewModel: ObservableObject {
                 }
             }
             
-            newStudentRef.collection("Classrooms").document("clasroom_1").setData(["id" : "placeholder"])
+            
+            newStudentRef = newStudentRef.collection("Classrooms").document("classroom_1")
+            newStudentRef.setData(["instructor_id" : "placeholder"])
+            
+            /*
+            newStudentRef = newStudentRef.collection("Chapters").document(chapterNameArr[1] as! String)
+            newStudentRef.setData(["playground_status" : "incomplete", "status" : "incomplete", "theory_status" : "incomplete", "title" : "Placeholder_title"])
+             */
+            
+            for i in chapterNameArr{
+                newStudentRef.collection("Chapters").addDocument(data: ["playground_status" : "incomplete", "status" : "incomplete", "theory_status" : "incomplete", "title" : "Placeholder_title"])
+            }
+            
+            
+            /*
+            newStudentRef.collection("Classrooms").document("classroom_1").setData(["chapters" : ["playground_status" : "incomplete", "status" : "incomplete", "theory_status" : "incomplete", "title" : "Placeholder_title"]])
+            */
             
         case "Teacher":
             
@@ -213,7 +231,7 @@ final class SignupViewModel: ObservableObject {
                     print("Teacher successfully added!")
                 }
             }
-            newTeacherRef.collection("Classrooms").document("clasroom_1").setData(["id" : "placeholder"])
+            newTeacherRef.collection("Classrooms").document("classroom_1").setData(["id" : "placeholder"])
         default:
             print("Error in determining between Teacher and Student account type")
         }
@@ -320,6 +338,8 @@ final class SignupViewModel: ObservableObject {
                             
                             
                             self.chaptersArr.append(Chapter(chapterNum: self.chapterNum, name: chapterName, difficulty: chapterDifficulty, summary: chapterSummary, lessons: chapterLessons, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions))
+                            
+                            self.chapterNameArr.append(chapterName)
     
                         }
                     }
