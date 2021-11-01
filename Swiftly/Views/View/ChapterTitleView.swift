@@ -44,14 +44,16 @@ struct ChapterTitleView: View {
                     ChapterInfoLabel(text: "Difficulty: ")
                     
                     ForEach(1..<chapter.difficulty+1) { index in
+                        
+                        
                         Image(systemName: "star.fill")
                             .resizable()
                             .frame(width: 30, height: 30)
-                            .foregroundColor(Color.yellow)
+                            .foregroundColor(Color.black)
                     }
                     .minimumScaleFactor(0.5)
                 }
-            
+                
                 HStack{
                     
                     Spacer()

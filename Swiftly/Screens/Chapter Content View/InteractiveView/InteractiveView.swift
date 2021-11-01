@@ -89,7 +89,7 @@ struct InteractiveView: View {
                                 
                                 /// For mcq method
                             }else{
-                                Spacer()
+                                
                                 
                                 ForEach(chapterContentViewModel.mcqOptions, id: \.self) { item in
                                     MultipleSelectionRow(title: item, isSelected: chapterContentViewModel.mcqUserAnswers.contains(item)) {
@@ -103,11 +103,13 @@ struct InteractiveView: View {
                                     .listRowBackground(Color.clear)
                                 }
                                 .frame(width: UIScreen.screenWidth/1.25, height: 100, alignment: .leading)
+                                .padding(.top, 10)
                                 
                                 Spacer()
+                                
                             }
                         }
-                    }.frame(width: geometry.size.width/1.25, height: geometry.size.height/1.50, alignment: .center)
+                    }.frame(width: geometry.size.width/1.0, height: geometry.size.height/1.50, alignment: .center)
                     
                     ZStack{
                         Color.darkGrayCustom

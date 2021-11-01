@@ -12,8 +12,6 @@ import UIKit
 
 struct ChapterContentView: View {
     
-    var chapter = MockData.sampleChapter
-    
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel /// view model for this view
     
@@ -46,27 +44,70 @@ struct ChapterContentView: View {
                     .padding(.bottom, geometry.size.width/16)
                     
                     /// Horizontal scroll view for left-->right of content
-                
-                    TabView {
                     
-//                    ScrollView(.horizontal, showsIndicators: false) {
+                    TabView {
+                        
+                        //                    ScrollView(.horizontal, showsIndicators: false) {
                         
                         /// Grid containg cells which are the lessons
                         
+                        
+                        /// Looping through each lesson
+                        ForEach(0..<chaptersViewModel.selectedChapter!.lessons.count) { i in
                             
-                            /// Looping through each lesson
-                            ForEach(0..<chaptersViewModel.selectedChapter!.lessons.count) { i in
+                            let lesson = chaptersViewModel.selectedChapter!.lessons[i]
+                            
+                            if (i != chaptersViewModel.selectedChapter!.lessons.count-1){
                                 
-                                let lesson = chaptersViewModel.selectedChapter!.lessons[i]
-                                
-                                if (i != chaptersViewModel.selectedChapter!.lessons.count-1){
+                                /// Vertical scroll view for each lesson
+                                ScrollView(.vertical, showsIndicators: false) {
                                     
-                                    /// Vertical scroll view for each lesson
+                                    VStack(alignment: .leading){
+                                        
+                                        /// Going through the content for each section
+                                        ForEach(lesson.content, id: \.self) { content in
+                                            
+                                            if (lesson.content.firstIndex(of: content) == 0){
+                                                ChapterSubTitle(text: content)
+                                                    .padding(.leading, geometry.size.width/24)
+                                            }else{
+                                                
+                                                if (content.starts(with: "data:image")){
+                                                    
+                                                    let imgBase64 = content.dropFirst(22)
+                                                    
+                                                    HStack{
+                                                        Spacer()
+                                                        Image(base64String: String(imgBase64))!
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fit)
+                                                            .frame(width: geometry.size.width/1.50)
+                                                        Spacer()
+                                                    }
+                                                    .padding(.bottom, geometry.size.width/48)
+                                                    
+                                                }else{
+                                                    InteractiveContentText(text:content)
+                                                        .padding(.leading, geometry.size.width/24)
+                                                        .padding(.bottom, geometry.size.width/48)
+                                                        .padding(.trailing, geometry.size.width/24)
+                                                }
+                                            }
+                                        }
+                                        Spacer()
+                                    }
+                                    .frame(width: geometry.size.width, alignment: .leading)
+                                }
+                            }else{
+                                
+                                VStack{
+                                    
                                     ScrollView(.vertical, showsIndicators: false) {
                                         
                                         VStack(alignment: .leading){
                                             
                                             /// Going through the content for each section
+                                            
                                             ForEach(lesson.content, id: \.self) { content in
                                                 
                                                 if (lesson.content.firstIndex(of: content) == 0){
@@ -80,7 +121,10 @@ struct ChapterContentView: View {
                                                         
                                                         HStack{
                                                             Spacer()
-                                                            Image(base64String: String(imgBase64))
+                                                            Image(base64String: String(imgBase64))!
+                                                                .resizable()
+                                                                .aspectRatio(contentMode: .fit)
+                                                                .frame(width: geometry.size.width/1.50)
                                                             Spacer()
                                                         }
                                                         .padding(.bottom, geometry.size.width/48)
@@ -89,78 +133,40 @@ struct ChapterContentView: View {
                                                         InteractiveContentText(text:content)
                                                             .padding(.leading, geometry.size.width/24)
                                                             .padding(.bottom, geometry.size.width/48)
+                                                            .padding(.trailing, geometry.size.width/24)
                                                     }
                                                 }
                                             }
                                             Spacer()
                                         }
-                                        .frame(width: geometry.size.width, alignment: .leading)
                                     }
-                                }else{
                                     
-                                    VStack{
+                                    HStack{
+                                        Spacer()
                                         
-                                        ScrollView(.vertical, showsIndicators: false) {
-                                            
-                                            VStack(alignment: .leading){
-                                                
-                                                /// Going through the content for each section
-                                
-                                                ForEach(lesson.content, id: \.self) { content in
-
-                                                    if (lesson.content.firstIndex(of: content) == 0){
-                                                        ChapterSubTitle(text: content)
-                                                            .padding(.leading, geometry.size.width/24)
-                                                    }else{
-                                                        
-                                                        if (content.starts(with: "data:image")){
-                                                            
-                                                            let imgBase64 = content.dropFirst(22)
-                                                            
-                                                            HStack{
-                                                                Spacer()
-                                                                Image(base64String: String(imgBase64))
-                                                                Spacer()
-                                                            }
-                                                            .padding(.bottom, geometry.size.width/48)
-                                                            
-                                                        }else{
-                                                            InteractiveContentText(text:content)
-                                                                .padding(.leading, geometry.size.width/24)
-                                                                .padding(.bottom, geometry.size.width/48)
-                                                        }
-                                                    }
-                                                }
-                                                Spacer()
-                                            }
+                                        Button{
+                                            chapterContentViewModel.startInteractiveSection()
+                                        }label: {
+                                            Text("Start Interactive Section")
+                                                .font(.system(size: 30, weight: .semibold))
+                                                .foregroundColor(Color.white)
                                         }
-
-                                        HStack{
-                                            Spacer()
-                                            
-                                            Button{
-                                                chapterContentViewModel.startInteractiveSection()
-                                            }label: {
-                                                Text("Start Interactive Section")
-                                                    .font(.system(size: 30, weight: .semibold))
-                                                    .foregroundColor(Color.white)
-                                            }
-                                            .frame(width: geometry.size.width/2, height: geometry.size.height/12)
-                                            .background(Color.blackCustom)
-                                            .cornerRadius(15)
-                                            
-                                            Spacer()
-                                        }
+                                        .frame(width: geometry.size.width/2, height: geometry.size.height/12)
+                                        .background(Color.blackCustom)
+                                        .cornerRadius(15)
                                         
-                                        .padding(.top, geometry.size.width/24)
-                                        .padding(.bottom, geometry.size.width/12)
+                                        Spacer()
                                     }
-                                    .frame(width: geometry.size.width, alignment: .leading)
+                                    
+                                    .padding(.top, geometry.size.width/24)
+                                    .padding(.bottom, geometry.size.width/12)
                                 }
+                                .frame(width: geometry.size.width, alignment: .leading)
                             }
+                        }
                         
-//                    }
-                   
+                        //                    }
+                        
                     }
                     .frame(width: geometry.size.width, height: geometry.size.height/1.10)
                     .padding(.top, 10)
