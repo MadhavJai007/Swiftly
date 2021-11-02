@@ -9,7 +9,7 @@ struct ChatbotView: View {
     
     init() {
         UITableView.appearance().separatorStyle = .none
-        UITableView.appearance().backgroundColor = UIColor(Color.blackCustom)
+        UITableView.appearance().backgroundColor = UIColor(Color.white)
     }
     
     @EnvironmentObject var chatbotViewModel: ChatbotViewModel
@@ -22,7 +22,7 @@ struct ChatbotView: View {
             
             ZStack{
                 
-                Color.whiteCustom
+                Color.blackCustom
                     .ignoresSafeArea()
                 
                 VStack{
@@ -47,14 +47,8 @@ struct ChatbotView: View {
                         
                         HStack{
                             
-                            ChatbotTitleLabel(text: "Swiftly Assistant")
+                            ChatbotTitleLabel(text: "Swiftly Help")
                                 .padding(.leading, 30)
-                            
-                            Image(systemName: "person.circle.fill")
-                                .resizable()
-                                .foregroundColor(Color.blackCustom)
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 60, height: 60)
                             
                             Spacer()
                         }
@@ -63,50 +57,56 @@ struct ChatbotView: View {
                         /// For the messages with chatbot
                         List {
                             
+                            
                             ForEach(chatbotViewModel.allMessages, id: \.id) { msg in
                                 
                                 /// If sender is user
                                 if (msg.sender == Message.Sender.user){
                                     
-                                    VStack{
+                                    HStack{
+                                        
+                                        Spacer()
                                         
                                         VStack{
                                             Text(msg.text)
                                                 .font(.system(size: 20, weight: .medium))
-                                                .foregroundColor(Color.black)
+                                                .foregroundColor(Color.white)
                                                 .padding(.leading, 5)
                                                 .padding(.trailing, 5)
                                             
                                         }
-                                        .frame(width: geometry.size.width/2, alignment: .leading)
+                                        .frame(alignment: .leading)
                                         .padding(.top, 10)
                                         .padding(.bottom, 10)
-                                        .background(Color.white)
+                                        .background(Color.blackCustom)
                                         .cornerRadius(5)
                                     }
-                                    .frame(width: geometry.size.width/1.10, alignment: .trailing)
+//                                    .frame(width: geometry.size.width/1.10)
                                     .listRowBackground(Color.clear)
                                     
                                     
                                 /// If sender is the chatbot
                                 }else if (msg.sender == Message.Sender.chatbot){
-                                    VStack{
+                                    HStack{
+                                        
                                         
                                         VStack{
                                             Text(msg.text)
                                                 .font(.system(size: 20, weight: .medium))
-                                                .foregroundColor(Color.black)
+                                                .foregroundColor(Color.white)
                                                 .padding(.leading, 5)
                                                 .padding(.trailing, 5)
                                             
                                         }
-                                        .frame(width: geometry.size.width/2, alignment: .leading)
+                                        .frame(alignment: .leading)
                                         .padding(.top, 10)
                                         .padding(.bottom, 10)
-                                        .background(Color.white)
+                                        .background(Color.blackCustom)
                                         .cornerRadius(5)
+                                        
+                                        Spacer()
                                     }
-                                    .frame(width: geometry.size.width/1.10, alignment: .leading)
+//                                    .frame(width: geometry.size.width/1.10, alignment: .leading)
                                     .listRowBackground(Color.clear)
                                 }
                             }
@@ -133,7 +133,7 @@ struct ChatbotView: View {
                             }label:{
                                 Image(systemName: "arrow.up.circle.fill")
                                     .resizable()
-                                    .foregroundColor(Color.blackCustom)
+                                    .foregroundColor(Color.whiteCustom)
                             }
                             .frame(width: 44, height: 44)
                         }
@@ -169,8 +169,8 @@ struct ChatbotTitleLabel: View {
     var text: String
     var body: some View {
         Text(text)
-            .font(.system(size: 75, weight: .light))
-            .foregroundColor(Color.blackCustom)
+            .font(.system(size: 60, weight: .light))
+            .foregroundColor(Color.whiteCustom)
     }
 }
 
@@ -180,7 +180,7 @@ struct ChatbotNavBarIcon: View {
     var body: some View {
         Image(systemName: iconName)
             .resizable()
-            .foregroundColor(Color.blackCustom)
+            .foregroundColor(Color.whiteCustom)
             .aspectRatio(contentMode: .fit)
             .frame(width: 25, height: 25)
     }

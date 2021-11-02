@@ -157,6 +157,66 @@
 			path = "Chatbot View";
 			sourceTree = "<group>";
 		};
+		DA1281ED2731BCC1002EAC2F /* Chatbot */ = {
+			isa = PBXGroup;
+			children = (
+				DA1281EB2731712F002EAC2F /* WatsonAssistant.swift */,
+			);
+			name = Chatbot;
+			sourceTree = "<group>";
+		};
+		DA1281EE2731BCCD002EAC2F /* Interactive */ = {
+			isa = PBXGroup;
+			children = (
+				DADCC3B02714C8F60071D287 /* InteractiveBlock.swift */,
+				DADCC3B62715D3B50071D287 /* Playground.swift */,
+			);
+			name = Interactive;
+			sourceTree = "<group>";
+		};
+		DA1281EF2731BCDE002EAC2F /* Lesson */ = {
+			isa = PBXGroup;
+			children = (
+				DABA3B242728A3B600A2AB34 /* ChapterLesson.swift */,
+			);
+			name = Lesson;
+			sourceTree = "<group>";
+		};
+		DA1281F02731BCE7002EAC2F /* User */ = {
+			isa = PBXGroup;
+			children = (
+				DAD6B31C270A4832002C8A55 /* User.swift */,
+			);
+			name = User;
+			sourceTree = "<group>";
+		};
+		DA1281F12731BCF5002EAC2F /* Chapter */ = {
+			isa = PBXGroup;
+			children = (
+				DABF368827020134009BF78A /* Chapter.swift */,
+				DA1281EF2731BCDE002EAC2F /* Lesson */,
+				DA1281EE2731BCCD002EAC2F /* Interactive */,
+			);
+			name = Chapter;
+			sourceTree = "<group>";
+		};
+		DA1281F22731BD07002EAC2F /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				EBCD8FBF271F0A1B0084B2ED /* Alert.swift */,
+			);
+			name = Alert;
+			sourceTree = "<group>";
+		};
+		DA1281F32731BE07002EAC2F /* Chapter */ = {
+			isa = PBXGroup;
+			children = (
+				DABF369327023677009BF78A /* ChapterTitleView.swift */,
+				DADCC3AA27135E1B0071D287 /* InteractiveTileView.swift */,
+			);
+			path = Chapter;
+			sourceTree = "<group>";
+		};
 		DA5C726D270348F200E697CD /* ChapterDetailView */ = {
 			isa = PBXGroup;
 			children = (
@@ -243,13 +303,10 @@
 		DABF368727020115009BF78A /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				DABF368827020134009BF78A /* Chapter.swift */,
-				DAD6B31C270A4832002C8A55 /* User.swift */,
-				DADCC3B02714C8F60071D287 /* InteractiveBlock.swift */,
-				DADCC3B62715D3B50071D287 /* Playground.swift */,
-				EBCD8FBF271F0A1B0084B2ED /* Alert.swift */,
-				DABA3B242728A3B600A2AB34 /* ChapterLesson.swift */,
-				DA1281EB2731712F002EAC2F /* WatsonAssistant.swift */,
+				DA1281F22731BD07002EAC2F /* Alert */,
+				DA1281F12731BCF5002EAC2F /* Chapter */,
+				DA1281F02731BCE7002EAC2F /* User */,
+				DA1281ED2731BCC1002EAC2F /* Chatbot */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -274,13 +331,12 @@
 		DABF368E27020DF3009BF78A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DA1281F32731BE07002EAC2F /* Chapter */,
 				DAC639082725E6720094FC92 /* Images */,
 				EBD10B7D271E3316002042D9 /* Dropdown */,
 				EBD10B7A271DBAC2002042D9 /* Popup */,
 				DA0866BF271A143C00B1999E /* Labels */,
 				DA0866BC271A0ACD00B1999E /* Navigation Bar Icons */,
-				DABF369327023677009BF78A /* ChapterTitleView.swift */,
-				DADCC3AA27135E1B0071D287 /* InteractiveTileView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
