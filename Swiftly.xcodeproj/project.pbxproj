@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -11,6 +11,10 @@
 		DA0866B82719CC0D00B1999E /* EditAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866B72719CC0C00B1999E /* EditAccountView.swift */; };
 		DA0866BE271A0AF900B1999E /* NavBarIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866BD271A0AF900B1999E /* NavBarIconView.swift */; };
 		DA0866C1271A147100B1999E /* LabelsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866C0271A147100B1999E /* LabelsView.swift */; };
+		DA1281E027315F41002EAC2F /* ChatbotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1281DF27315F41002EAC2F /* ChatbotView.swift */; };
+		DA1281E227316165002EAC2F /* ChatbotViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1281E127316165002EAC2F /* ChatbotViewModel.swift */; };
+		DA1281EA27316EC5002EAC2F /* AssistantV2 in Frameworks */ = {isa = PBXBuildFile; productRef = DA1281E927316EC5002EAC2F /* AssistantV2 */; };
+		DA1281EC2731712F002EAC2F /* WatsonAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1281EB2731712F002EAC2F /* WatsonAssistant.swift */; };
 		DA2122DE26FE07820016587F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2122DD26FE07820016587F /* LoginView.swift */; };
 		DA5C72712703493400E697CD /* ChapterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5C72702703493400E697CD /* ChapterDetailView.swift */; };
 		DA5D90EB270614B20085DE6D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5D90EA270614B20085DE6D /* LoginViewModel.swift */; };
@@ -53,6 +57,9 @@
 		DA0866B72719CC0C00B1999E /* EditAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountView.swift; sourceTree = "<group>"; };
 		DA0866BD271A0AF900B1999E /* NavBarIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavBarIconView.swift; sourceTree = "<group>"; };
 		DA0866C0271A147100B1999E /* LabelsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelsView.swift; sourceTree = "<group>"; };
+		DA1281DF27315F41002EAC2F /* ChatbotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatbotView.swift; sourceTree = "<group>"; };
+		DA1281E127316165002EAC2F /* ChatbotViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatbotViewModel.swift; sourceTree = "<group>"; };
+		DA1281EB2731712F002EAC2F /* WatsonAssistant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatsonAssistant.swift; sourceTree = "<group>"; };
 		DA2122DD26FE07820016587F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		DA5C72702703493400E697CD /* ChapterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterDetailView.swift; sourceTree = "<group>"; };
 		DA5D90EA270614B20085DE6D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -94,6 +101,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBC0793536759C50964ACED1 /* Pods_Swiftly.framework in Frameworks */,
+				DA1281EA27316EC5002EAC2F /* AssistantV2 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,6 +146,15 @@
 				DA0866C0271A147100B1999E /* LabelsView.swift */,
 			);
 			path = Labels;
+			sourceTree = "<group>";
+		};
+		DA1281DE27315EDE002EAC2F /* Chatbot View */ = {
+			isa = PBXGroup;
+			children = (
+				DA1281DF27315F41002EAC2F /* ChatbotView.swift */,
+				DA1281E127316165002EAC2F /* ChatbotViewModel.swift */,
+			);
+			path = "Chatbot View";
 			sourceTree = "<group>";
 		};
 		DA5C726D270348F200E697CD /* ChapterDetailView */ = {
@@ -211,6 +228,7 @@
 		DA884F2F26FE064700F58E4A /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				DA1281DE27315EDE002EAC2F /* Chatbot View */,
 				DA840A12270CB24600751FB7 /* Leaderboard View */,
 				DAD6B317270A3C52002C8A55 /* User Account View */,
 				DAD6B310270748B6002C8A55 /* Chapter Content View */,
@@ -231,6 +249,7 @@
 				DADCC3B62715D3B50071D287 /* Playground.swift */,
 				EBCD8FBF271F0A1B0084B2ED /* Alert.swift */,
 				DABA3B242728A3B600A2AB34 /* ChapterLesson.swift */,
+				DA1281EB2731712F002EAC2F /* WatsonAssistant.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -372,6 +391,9 @@
 			dependencies = (
 			);
 			name = Swiftly;
+			packageProductDependencies = (
+				DA1281E927316EC5002EAC2F /* AssistantV2 */,
+			);
 			productName = Swiftly;
 			productReference = DA884F1D26FE04D000F58E4A /* Swiftly.app */;
 			productType = "com.apple.product-type.application";
@@ -399,6 +421,9 @@
 				Base,
 			);
 			mainGroup = DA884F1426FE04D000F58E4A;
+			packageReferences = (
+				DA1281E827316EC5002EAC2F /* XCRemoteSwiftPackageReference "swift-sdk" */,
+			);
 			productRefGroup = DA884F1E26FE04D000F58E4A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -476,9 +501,11 @@
 				EBD10B7F271E3338002042D9 /* DropdownView.swift in Sources */,
 				DAD6B319270A3C71002C8A55 /* UserAccountView.swift in Sources */,
 				DA0866BE271A0AF900B1999E /* NavBarIconView.swift in Sources */,
+				DA1281E227316165002EAC2F /* ChatbotViewModel.swift in Sources */,
 				DA0866B82719CC0D00B1999E /* EditAccountView.swift in Sources */,
 				DABA3B252728A3B600A2AB34 /* ChapterLesson.swift in Sources */,
 				DAC6390A2725E67E0094FC92 /* ImageViews.swift in Sources */,
+				DA1281E027315F41002EAC2F /* ChatbotView.swift in Sources */,
 				DA840A16270CB26800751FB7 /* LeaderboardViewModel.swift in Sources */,
 				DAD6B31D270A4833002C8A55 /* User.swift in Sources */,
 				DA79656326FE3E4B00CAE327 /* Colors.swift in Sources */,
@@ -494,6 +521,7 @@
 				DAD6B31B270A3E63002C8A55 /* UserAccountViewModel.swift in Sources */,
 				EBD10B7C271DBAE9002042D9 /* PopupUIView.swift in Sources */,
 				DABF369427023677009BF78A /* ChapterTitleView.swift in Sources */,
+				DA1281EC2731712F002EAC2F /* WatsonAssistant.swift in Sources */,
 				EBCD8FC0271F0A1B0084B2ED /* Alert.swift in Sources */,
 				DA2122DE26FE07820016587F /* LoginView.swift in Sources */,
 				DADCC3B72715D3B50071D287 /* Playground.swift in Sources */,
@@ -690,6 +718,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DA1281E827316EC5002EAC2F /* XCRemoteSwiftPackageReference "swift-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/watson-developer-cloud/swift-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		DA1281E927316EC5002EAC2F /* AssistantV2 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DA1281E827316EC5002EAC2F /* XCRemoteSwiftPackageReference "swift-sdk" */;
+			productName = AssistantV2;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = DA884F1526FE04D000F58E4A /* Project object */;
 }

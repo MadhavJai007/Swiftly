@@ -11,6 +11,9 @@ import Firebase
 @main
 struct SwiftlyApp: App {
     
+    
+    static var incomingChatbotMessages = [Message]()
+    
     // Creating view models as environment objects
     @StateObject var loginViewModel = LoginViewModel()
     @StateObject var signupViewModel = SignupViewModel()
@@ -18,6 +21,7 @@ struct SwiftlyApp: App {
     @StateObject var chapterContentViewModel = ChapterContentViewModel()
     @StateObject var userAccountViewModel = UserAccountViewModel()
     @StateObject var leaderboardViewModel = LeaderboardViewModel()
+    @StateObject var chatbotViewModel = ChatbotViewModel()
     
     
     init(){
@@ -35,6 +39,7 @@ struct SwiftlyApp: App {
                 .environmentObject(chapterContentViewModel)
                 .environmentObject(userAccountViewModel)
                 .environmentObject(leaderboardViewModel)
+                .environmentObject(chatbotViewModel)
         }
     }
 }

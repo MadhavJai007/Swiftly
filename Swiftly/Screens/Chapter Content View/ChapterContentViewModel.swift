@@ -34,6 +34,7 @@ final class ChapterContentViewModel: ObservableObject {
     @Published var mcqOptions: [String] = []
     @Published var mcqUserAnswers: [String] = []
     @Published var isShowingScore = false
+    @Published var isShowingChabot = false
   
     /// Init variables with basic data
     init(){

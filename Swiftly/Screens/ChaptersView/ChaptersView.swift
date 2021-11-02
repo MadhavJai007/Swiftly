@@ -15,6 +15,7 @@ struct ChaptersView: View {
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel
     @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel
+    @EnvironmentObject var chatbotViewModel: ChatbotViewModel
     
     var body: some View {
         GeometryReader { geometry in
@@ -79,7 +80,8 @@ struct ChaptersView: View {
                     NavigationLink(destination: ChapterContentView()
                                     .environmentObject(chaptersViewModel)
                                     .environmentObject(chapterContentViewModel)
-                                    .environmentObject(userAccountViewModel),
+                                    .environmentObject(userAccountViewModel)
+                                    .environmentObject(chatbotViewModel),
                                    isActive: $chaptersViewModel.didStartChapter) {EmptyView()}
                     
                     /// Nav link to accessing user account

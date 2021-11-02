@@ -12,8 +12,10 @@ import UIKit
 
 struct ChapterContentView: View {
     
+    
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel /// view model for this view
+    @EnvironmentObject var chatbotViewModel: ChatbotViewModel
     
     var body: some View {
         
@@ -37,21 +39,25 @@ struct ChapterContentView: View {
                         
                         Spacer()
                         
-                        NavBarIcon(iconName: "questionmark")
-                            .padding(.trailing, 30)
+                        
+                        Button{
+                            chapterContentViewModel.isShowingChabot.toggle()
+                        }label:{
+                            NavBarIcon(iconName: "questionmark")
+                        }
+                        .padding(.trailing, 30)
+                        .fullScreenCover(isPresented: $chapterContentViewModel.isShowingChabot){
+                            ChatbotView()
+                                .environmentObject(chatbotViewModel)
+                                .environmentObject(chapterContentViewModel)
+                        }
+                       
                     }
                     .padding(.top, geometry.size.width/16)
                     .padding(.bottom, geometry.size.width/16)
                     
-                    /// Horizontal scroll view for left-->right of content
-                    
+
                     TabView {
-                        
-                        //                    ScrollView(.horizontal, showsIndicators: false) {
-                        
-                        /// Grid containg cells which are the lessons
-                        
-                        
                         /// Looping through each lesson
                         ForEach(0..<chaptersViewModel.selectedChapter!.lessons.count) { i in
                             
@@ -107,7 +113,6 @@ struct ChapterContentView: View {
                                         VStack(alignment: .leading){
                                             
                                             /// Going through the content for each section
-                                            
                                             ForEach(lesson.content, id: \.self) { content in
                                                 
                                                 if (lesson.content.firstIndex(of: content) == 0){
@@ -164,9 +169,6 @@ struct ChapterContentView: View {
                                 .frame(width: geometry.size.width, alignment: .leading)
                             }
                         }
-                        
-                        //                    }
-                        
                     }
                     .frame(width: geometry.size.width, height: geometry.size.height/1.10)
                     .padding(.top, 10)
@@ -180,14 +182,6 @@ struct ChapterContentView: View {
                            isActive: $chapterContentViewModel.willStartInteractiveSection) {EmptyView()}
         }
         .navigationBarHidden(true)
-        
-        //        .onAppear(){
-        //
-        //            /// Loading chapter  playground into the chapterContentViewModel
-        //            if (chapterContentViewModel.chapter != chaptersViewModel.selectedChapter!){
-        //                chapterContentViewModel.setupPlaygroundQuestions(selectedChapter: chaptersViewModel.selectedChapter!)
-        //            }
-        //        }
     }
 }
 
