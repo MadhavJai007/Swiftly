@@ -65,6 +65,7 @@ struct ChatbotView: View {
                             
                             ForEach(chatbotViewModel.allMessages, id: \.id) { msg in
                                 
+                                /// If sender is user
                                 if (msg.sender == Message.Sender.user){
                                     
                                     VStack{
@@ -87,7 +88,7 @@ struct ChatbotView: View {
                                     .listRowBackground(Color.clear)
                                     
                                     
-                                    
+                                /// If sender is the chatbot
                                 }else if (msg.sender == Message.Sender.chatbot){
                                     VStack{
                                         
@@ -108,7 +109,6 @@ struct ChatbotView: View {
                                     .frame(width: geometry.size.width/1.10, alignment: .leading)
                                     .listRowBackground(Color.clear)
                                 }
-                                
                             }
                         }
                         .frame(width: geometry.size.width/1.10)
@@ -139,6 +139,7 @@ struct ChatbotView: View {
                         }
                         .frame(width: geometry.size.width/1.10)
                         .padding(.bottom, 15)
+                        .padding(.top, 15)
                         
                         
                         

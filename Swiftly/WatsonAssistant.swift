@@ -26,7 +26,7 @@ class WatsonAssistant: ObservableObject {
     static let instance = WatsonAssistant()
     private let authenticator = WatsonIAMAuthenticator(apiKey: "AjB3RJCwfpoTATa05-3ZsEKHtIXKXno2HgTMVPizvFyi")
     private let assistant: Assistant
-    private let assistantID = "2667a8e7-a81a-494e-b0dc-0e36bac81ecc"
+    private let assistantID = "38f70976-e9af-4332-b33a-0f4197c09bd9"
     private var context: MessageContextStateless = MessageContextStateless()
 
     init(){
