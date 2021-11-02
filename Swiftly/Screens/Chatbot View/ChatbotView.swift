@@ -7,6 +7,11 @@ import SwiftUI
 
 struct ChatbotView: View {
     
+    init() {
+        UITableView.appearance().separatorStyle = .none
+        UITableView.appearance().backgroundColor = UIColor(Color.blackCustom)
+    }
+    
     @EnvironmentObject var chatbotViewModel: ChatbotViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     @State var userMessage: String = ""
@@ -19,7 +24,6 @@ struct ChatbotView: View {
                 
                 Color.whiteCustom
                     .ignoresSafeArea()
-                
                 
                 VStack{
                     
@@ -37,15 +41,15 @@ struct ChatbotView: View {
                         
                     }
                     .padding(.top, geometry.size.width/16)
-                    .padding(.bottom, geometry.size.width/16)
+                    .padding(.bottom, geometry.size.width/32)
                     
                     VStack{
                         
                         HStack{
-                        
+                            
                             ChatbotTitleLabel(text: "Swiftly Assistant")
                                 .padding(.leading, 30)
-                        
+                            
                             Image(systemName: "person.circle.fill")
                                 .resizable()
                                 .foregroundColor(Color.blackCustom)
@@ -54,49 +58,74 @@ struct ChatbotView: View {
                             
                             Spacer()
                         }
-                            
+                        .padding(.bottom, -10)
+                        
+                        /// For the messages with chatbot
                         List {
+                            
                             ForEach(chatbotViewModel.allMessages, id: \.id) { msg in
                                 
                                 if (msg.sender == Message.Sender.user){
                                     
-                                    ZStack{
+                                    VStack{
                                         
-                                        Color.blue
-                                        
-                                        Text(msg.text)
-                                            .foregroundColor(Color.white)
+                                        VStack{
+                                            Text(msg.text)
+                                                .font(.system(size: 20, weight: .medium))
+                                                .foregroundColor(Color.black)
+                                                .padding(.leading, 5)
+                                                .padding(.trailing, 5)
+                                            
+                                        }
+                                        .frame(width: geometry.size.width/2, alignment: .leading)
+                                        .padding(.top, 10)
+                                        .padding(.bottom, 10)
+                                        .background(Color.white)
+                                        .cornerRadius(5)
                                     }
-                                    .cornerRadius(3)
+                                    .frame(width: geometry.size.width/1.10, alignment: .trailing)
                                     .listRowBackground(Color.clear)
                                     
                                     
                                     
                                 }else if (msg.sender == Message.Sender.chatbot){
-                                    ZStack{
+                                    VStack{
                                         
-                                        Color.green
-                                        
-                                        Text(msg.text)
-                                            .foregroundColor(Color.white)
+                                        VStack{
+                                            Text(msg.text)
+                                                .font(.system(size: 20, weight: .medium))
+                                                .foregroundColor(Color.black)
+                                                .padding(.leading, 5)
+                                                .padding(.trailing, 5)
+                                            
+                                        }
+                                        .frame(width: geometry.size.width/2, alignment: .leading)
+                                        .padding(.top, 10)
+                                        .padding(.bottom, 10)
+                                        .background(Color.white)
+                                        .cornerRadius(5)
                                     }
-                                    .cornerRadius(3)
+                                    .frame(width: geometry.size.width/1.10, alignment: .leading)
                                     .listRowBackground(Color.clear)
                                 }
                                 
                             }
                         }
+                        .frame(width: geometry.size.width/1.10)
+                        .cornerRadius(10)
                         
                         Spacer()
                         
                         HStack{
                             
                             TextField("Say something...", text: $userMessage)
-                                .font(.system(size: 18))
-                                .frame(width: geometry.size.width/1.3, height: 50)
+                                .font(.system(size: 20, weight: .medium))
+                                .frame(width: geometry.size.width/1.2, height: 50)
                                 .background(Color.white)
-                                .foregroundColor(Color.blue)
-                                .cornerRadius(15)
+                                .foregroundColor(Color.black)
+                                .cornerRadius(10)
+                            
+                            Spacer()
                             
                             Button{
                                 chatbotViewModel.send(text: userMessage)
@@ -104,11 +133,11 @@ struct ChatbotView: View {
                             }label:{
                                 Image(systemName: "arrow.up.circle.fill")
                                     .resizable()
-                                
+                                    .foregroundColor(Color.blackCustom)
                             }
                             .frame(width: 44, height: 44)
                         }
-                        .frame(width: geometry.size.width)
+                        .frame(width: geometry.size.width/1.10)
                         .padding(.bottom, 15)
                         
                         
@@ -119,6 +148,11 @@ struct ChatbotView: View {
                     Spacer()
                 }
             }
+        }
+        .onAppear(){
+            chatbotViewModel.allMessages.removeAll()
+            chatbotViewModel.chatlog.removeAll()
+            SwiftlyApp.incomingChatbotMessages.removeAll()
         }
     }
 }
