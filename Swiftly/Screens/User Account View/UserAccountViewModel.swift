@@ -148,7 +148,7 @@ final class UserAccountViewModel: ObservableObject {
             "country": updatedUser.country,
             "date_of_birth": updatedUser.dob,
             "firstname" : updatedUser.firstName,
-            "lastname" : updatedUser.lastName,
+            "lastName" : updatedUser.lastName,
             "password" : updatedUser.password,
         ]) { err in
             if let err = err {

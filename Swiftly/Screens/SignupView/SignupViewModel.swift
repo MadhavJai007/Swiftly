@@ -34,11 +34,9 @@ final class SignupViewModel: ObservableObject {
     
     private var db = Firestore.firestore()
     
+    
+    
     @Published var chaptersArr = [Chapter]()
-    
-    @Published var chapterNameArr = []
-    
-    var chapterNum = 72
     
     
 
@@ -203,14 +201,28 @@ final class SignupViewModel: ObservableObject {
             newStudentRef.setData(["playground_status" : "incomplete", "status" : "incomplete", "theory_status" : "incomplete", "title" : "Placeholder_title"])
              */
             
-            for i in chapterNameArr{
-                newStudentRef.collection("Chapters").addDocument(data: ["playground_status" : "incomplete", "status" : "incomplete", "theory_status" : "incomplete", "title" : "Placeholder_title"])
+            for i in  0...chaptersArr.count-1{
+                var playgroundArray = chaptersArr[i].playgroundArr
+                
+                newStudentRef.collection("Chapters").addDocument(data: ["chapters_num" : chaptersArr[i].chapterNum,"chapters_name" : chaptersArr[i].name, "playground_status" : "incomplete", "chapter_status" : "incomplete", "theory_status" : "incomplete", "question_1_type" : playgroundArray[0].type])
+                print("ChaptersArr[i].playgroundArr = \(chaptersArr[i].playgroundArr)")
+                
+                if(playgroundArray[0] != nil){
+                    print("playgroundArray[0] = \(playgroundArray[0])")
+                    print("playgroundArray[0].type = \(playgroundArray[0].type)")
+                }
+                else{
+                    print("playgroundArray[0] is nil")
+                }
+                
+                
+                
+                //print("ChaptersArr[i].playgroundArr = \(chaptersArr[i].playgroundArr[0])")
+                
+                
+                
             }
             
-            
-            /*
-            newStudentRef.collection("Classrooms").document("classroom_1").setData(["chapters" : ["playground_status" : "incomplete", "status" : "incomplete", "theory_status" : "incomplete", "title" : "Placeholder_title"]])
-            */
             
         case "Teacher":
             
@@ -260,7 +272,7 @@ final class SignupViewModel: ObservableObject {
                 
                 for document in querySnapshot!.documents {
                     
-                    self.chapterNum = document.data()["chapter_number"]! as! Int
+                    let chapterNum = document.data()["chapter_number"]! as! Int
                     let chapterName = document.data()["chapter_title"]! as! String
                     let chapterDifficulty = document.data()["chapter_difficulty"]! as! Int
                     let chapterSummary = document.data()["chapter_desc"]! as! String
@@ -337,9 +349,7 @@ final class SignupViewModel: ObservableObject {
                             
                             
                             
-                            self.chaptersArr.append(Chapter(chapterNum: self.chapterNum, name: chapterName, difficulty: chapterDifficulty, summary: chapterSummary, lessons: chapterLessons, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions))
-                            
-                            self.chapterNameArr.append(chapterName)
+                            self.chaptersArr.append(Chapter(chapterNum: chapterNum, name: chapterName, difficulty: chapterDifficulty, summary: chapterSummary, lessons: chapterLessons, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions))
     
                         }
                     }
@@ -389,7 +399,6 @@ final class SignupViewModel: ObservableObject {
 
         let timer3 = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { [self] (timer) in
             if(emailNotTaken == true){
-                print("The chapter num (if it worked) is: \(chapterNum)")
                 print("Finally, since the email was valid, now execute addUser() to add user to collections")
                 self.addUser(user: newUser, accountType: accountType)
             }
