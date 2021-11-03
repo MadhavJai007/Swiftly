@@ -18,6 +18,8 @@ final class ChaptersViewModel: ObservableObject {
     @Published var isUserLoggedIn = false
     @Published var classroomCode: String = ""
     
+    var willStartNextChapter = false
+    
     var startChapterIntent = false
     
     var selectedChapter: Chapter? {

@@ -112,6 +112,18 @@ struct ChaptersView: View {
             if (chapterContentViewModel.willStartInteractiveSection == true){
                 chapterContentViewModel.willStartInteractiveSection = false
             }
+            
+            
+            if (chaptersViewModel.willStartNextChapter){
+                
+                chaptersViewModel.willStartNextChapter = false
+                
+                var chapIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)
+                
+                chaptersViewModel.selectedChapter = chaptersViewModel.chaptersArr[chapIndex!+1]
+                
+                
+            }
         }
     }
 }

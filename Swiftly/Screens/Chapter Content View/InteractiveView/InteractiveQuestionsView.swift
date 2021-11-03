@@ -97,7 +97,15 @@ struct InteractiveQuestionsView: View {
                     /// HStack for next chapter button
                     HStack{
                         Button{
-                            print("tapped")
+                            
+                            /// If it's not the last chapter
+                            if (chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!) != chaptersViewModel.chaptersArr.count){
+                                
+                                chaptersViewModel.willStartNextChapter = true
+                                chapterContentViewModel.willStartInteractiveSection.toggle()
+                                chaptersViewModel.didStartChapter.toggle()
+                            }
+                            
                         }label:{
                             ButtonLabelLarge(text: "Next Chapter", textColor: .white, backgroundColor: .green)
                                 .opacity(0.25)
