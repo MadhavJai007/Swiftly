@@ -196,10 +196,6 @@ final class SignupViewModel: ObservableObject {
             newStudentRef = newStudentRef.collection("Classrooms").document("classroom_1")
             newStudentRef.setData(["instructor_id" : "placeholder"])
             
-            /*
-            newStudentRef = newStudentRef.collection("Chapters").document(chapterNameArr[1] as! String)
-            newStudentRef.setData(["playground_status" : "incomplete", "status" : "incomplete", "theory_status" : "incomplete", "title" : "Placeholder_title"])
-             */
             
             for i in  0...chaptersArr.count-1{
                 var playgroundArray = chaptersArr[i].playgroundArr
@@ -212,8 +208,6 @@ final class SignupViewModel: ObservableObject {
                     
                     document.updateData(["question_\(j+1)_score" : 0])
                     
-                    
-                    //print("playgroundArray[\(i)][\(j)] = \(playgroundArray[j])")
                     
                 }
                 
