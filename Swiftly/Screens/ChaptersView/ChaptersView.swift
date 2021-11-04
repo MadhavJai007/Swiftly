@@ -118,7 +118,7 @@ struct ChaptersView: View {
                 
                 chaptersViewModel.willStartNextChapter = false
                 
-                var chapIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)
+                let chapIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)
                 
                 chaptersViewModel.selectedChapter = chaptersViewModel.chaptersArr[chapIndex!+1]
                 
