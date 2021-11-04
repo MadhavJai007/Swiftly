@@ -204,23 +204,22 @@ final class SignupViewModel: ObservableObject {
             for i in  0...chaptersArr.count-1{
                 var playgroundArray = chaptersArr[i].playgroundArr
                 
-                newStudentRef.collection("Chapters").addDocument(data: ["chapters_num" : chaptersArr[i].chapterNum,"chapters_name" : chaptersArr[i].name, "playground_status" : "incomplete", "chapter_status" : "incomplete", "theory_status" : "incomplete", "question_1_type" : playgroundArray[0].type])
-                print("ChaptersArr[i].playgroundArr = \(chaptersArr[i].playgroundArr)")
+                newStudentRef.collection("Chapters").document("chapter_\(i+1)").setData(["chapters_num" : chaptersArr[i].chapterNum,"chapters_name" : chaptersArr[i].name, "playground_status" : "incomplete", "chapter_status" : "incomplete", "theory_status" : "incomplete"])
                 
-                if(playgroundArray[0] != nil){
-                    print("playgroundArray[0] = \(playgroundArray[0])")
-                    print("playgroundArray[0].type = \(playgroundArray[0].type)")
+                for j in 0...playgroundArray.count-1{
+                    
+                    var document = newStudentRef.collection("Chapters").document("chapter_\(i+1)")
+                    
+                    document.updateData(["question_\(j+1)_score" : 0])
+                    
+                    
+                    print("playgroundArray[\(i)][\(j)] = \(playgroundArray[j])")
+                    
                 }
-                else{
-                    print("playgroundArray[0] is nil")
-                }
                 
-                
-                
-                //print("ChaptersArr[i].playgroundArr = \(chaptersArr[i].playgroundArr[0])")
-                
-                
-                
+                //print("ChaptersArr[i].playgroundArr = \(chaptersArr[i].playgroundArr)")
+                //print("playgroundArray[0] = \(playgroundArray[0])")
+                //print("playgroundArray[0].type = \(playgroundArray[0].type)")
             }
             
             
