@@ -210,10 +210,6 @@ final class SignupViewModel: ObservableObject {
                     
                     
                 }
-                
-                //print("ChaptersArr[i].playgroundArr = \(chaptersArr[i].playgroundArr)")
-                //print("playgroundArray[0] = \(playgroundArray[0])")
-                //print("playgroundArray[0].type = \(playgroundArray[0].type)")
             }
             
             
@@ -236,7 +232,27 @@ final class SignupViewModel: ObservableObject {
                     print("Teacher successfully added!")
                 }
             }
-            newTeacherRef.collection("Classrooms").document("classroom_1").setData(["id" : "placeholder"])
+            
+            newTeacherRef = newTeacherRef.collection("Classrooms").document("classroom_1")
+            newTeacherRef.setData(["instructor_id" : "placeholder"])
+            
+            for i in  0...chaptersArr.count-1{
+                var playgroundArray = chaptersArr[i].playgroundArr
+                
+                newTeacherRef.collection("Chapters").document("chapter_\(chaptersArr[i].chapterNum)").setData(["chapters_num" : chaptersArr[i].chapterNum,"chapters_name" : chaptersArr[i].name, "playground_status" : "incomplete", "chapter_status" : "incomplete", "theory_status" : "incomplete"])
+                
+                for j in 0...playgroundArray.count-1{
+                    
+                    var document = newTeacherRef.collection("Chapters").document("chapter_\(chaptersArr[i].chapterNum)")
+                    
+                    document.updateData(["question_\(j+1)_score" : 0])
+                    
+                    
+                }
+            }
+            
+            
+            
         default:
             print("Error in determining between Teacher and Student account type")
         }
