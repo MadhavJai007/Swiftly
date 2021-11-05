@@ -172,11 +172,6 @@ final class UserAccountViewModel: ObservableObject {
         
     }
     
-    func loadUserProgress(loggedInEmail: String, accountType: String){
-        var userProgress = db.collection("Students").document(loggedInUser.username).collection("Chapters").document("chapter_1")
-
-    }
-    
     
 //    var user = MockData.sampleUser
     
