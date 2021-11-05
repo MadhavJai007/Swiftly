@@ -202,14 +202,14 @@ final class SignupViewModel: ObservableObject {
                 
                 newStudentRef.collection("Chapters").document("chapter_\(chaptersArr[i].chapterNum)").setData(["chapters_num" : chaptersArr[i].chapterNum,"chapters_name" : chaptersArr[i].name, "playground_status" : "incomplete", "chapter_status" : "incomplete", "theory_status" : "incomplete"])
                 
+                var questionsArray : [Int] = []
+                
                 for j in 0...playgroundArray.count-1{
-                    
-                    var document = newStudentRef.collection("Chapters").document("chapter_\(chaptersArr[i].chapterNum)")
-                    
-                    document.updateData(["question_\(j+1)_score" : 0])
-                    
+                    questionsArray.append(0)
                     
                 }
+                var document = newStudentRef.collection("Chapters").document("chapter_\(chaptersArr[i].chapterNum)")
+                document.updateData(["question_scores" : questionsArray])
             }
             
             
@@ -241,14 +241,14 @@ final class SignupViewModel: ObservableObject {
                 
                 newTeacherRef.collection("Chapters").document("chapter_\(chaptersArr[i].chapterNum)").setData(["chapters_num" : chaptersArr[i].chapterNum,"chapters_name" : chaptersArr[i].name, "playground_status" : "incomplete", "chapter_status" : "incomplete", "theory_status" : "incomplete"])
                 
+                var questionsArray : [Int] = []
+                
                 for j in 0...playgroundArray.count-1{
-                    
-                    var document = newTeacherRef.collection("Chapters").document("chapter_\(chaptersArr[i].chapterNum)")
-                    
-                    document.updateData(["question_\(j+1)_score" : 0])
-                    
+                    questionsArray.append(0)
                     
                 }
+                var document = newTeacherRef.collection("Chapters").document("chapter_\(chaptersArr[i].chapterNum)")
+                document.updateData(["question_scores" : questionsArray])
             }
             
             
