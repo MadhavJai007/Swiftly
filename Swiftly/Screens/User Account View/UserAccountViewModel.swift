@@ -26,6 +26,9 @@ final class UserAccountViewModel: ObservableObject {
                        dob : "",
                        country: ""
                     )
+    
+    @Published var userProgress = []
+    
     @Published var isUserInfoRetrieved = false
     
     var loggedInAccountType : String = ""
@@ -169,6 +172,10 @@ final class UserAccountViewModel: ObservableObject {
         
     }
     
+    func loadUserProgress(loggedInEmail: String, accountType: String){
+        var userProgress = db.collection("Students").document(loggedInUser.username).collection("Chapters").document("chapter_1")
+
+    }
     
     
 //    var user = MockData.sampleUser
@@ -186,6 +193,8 @@ final class UserAccountViewModel: ObservableObject {
                     print("Account not found. Shouldn't occur in this situation since user is already logged in.")
                 } else {
                     let userObj = snapshot!.documents[0].data()
+                    
+
                     self.loggedInAccountType = "Students"
                     self.loggedInUser.firstName = userObj["firstname"] as! String
                     self.loggedInUser.lastName = userObj["lastName"] as! String
@@ -194,6 +203,23 @@ final class UserAccountViewModel: ObservableObject {
                     self.loggedInUser.username = userObj["username"] as! String
                     self.loggedInUser.country = userObj["country"] as! String
                     self.loggedInUser.dob = userObj["date_of_birth"] as! String
+                    
+                    var collectionRefProgress = self.db.collection("Students").document(self.loggedInUser.username).collection("Classrooms").document("classroom_1").collection("Chapters")
+                    collectionRefProgress.getDocuments { (snapshot, err) in
+                        if let err = err{
+                            print("Checking with username \(self.loggedInUser.username)")
+                            print("error getting user progress")
+                        }
+                        else if(snapshot?.isEmpty)!{
+                            print("Checking with username \(self.loggedInUser.username)")
+                            print("user progress not found")
+                        }
+                        else{
+                            print("Checking with username \(self.loggedInUser.username)")
+                            let userProgress = snapshot!.documents[0].data()
+                            print("User progress retrievede with value of \(userProgress)")
+                        }
+                    }
                     
                     self.isUserInfoRetrieved = true
 //                    for document in (snapshot?.documents)! {
@@ -223,6 +249,10 @@ final class UserAccountViewModel: ObservableObject {
                     self.loggedInUser.username = userObj["username"] as! String
                     self.loggedInUser.country = userObj["country"] as! String
                     self.loggedInUser.dob = userObj["date_of_birth"] as! String
+                    
+                    
+                    var userProgress = self.db.collection("Students").document(self.loggedInUser.username).collection("Chapters").document("chapter_1")
+                    print(userProgress)
                     
                     self.isUserInfoRetrieved = true
                     
