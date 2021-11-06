@@ -29,6 +29,11 @@ final class UserAccountViewModel: ObservableObject {
     
     @Published var isUserInfoRetrieved = false
     
+    @Published var userChapterCompletionCount = 0
+    
+    
+    @Published var userScoreAverage = 0.0
+    
     var loggedInAccountType : String = ""
     
     
@@ -220,7 +225,13 @@ final class UserAccountViewModel: ObservableObject {
                             /// Looping through each classroom
                             for i in 0..<snapshot!.documents.count {
                             
-                                var userClassroom = UserClassroom() /// TODO: Grab classroom id from firestore
+                                var userClassroom = UserClassroom()
+                                
+                                ///retrieving classroom document name from firebase
+                                userClassroom.classroomName = snapshot!.documents[i].documentID
+                                print("Classroom name : \(userClassroom.classroomName)")
+                                
+                                
                                 
                                 /// Grabbing the current collection of chapters for chapter i
                                 let classroomChapters = enrolledClasrooms.document("classroom_\(i+1)").collection("Chapters")
@@ -252,6 +263,19 @@ final class UserAccountViewModel: ObservableObject {
                                             let playgroundStatus = data["playground_status"] as! String
                                             let questionScores = data["question_scores"] as! [Int]
                                             let theoryStatus = data["theory_status"] as! String
+                                            
+                                            /// calculating chapter completion count
+                                            
+                                            //print("Chaptur Status : \(chapterStatus)")
+                                            if chapterStatus == "complete"{
+                                                self.userChapterCompletionCount += 1
+                                            }
+                                            
+                                            ///calculating user score average
+                                            
+                                            for i in 0...questionScores.count-1{
+                                                self.userScoreAverage += Double(questionScores[i])
+                                            }
                                             
                                             /// Creating chapter object
                                             let chapter  =  UserChapterProgress(chapterStatus: chapterStatus, chapterName: chapterName, chapterNum: chapterNum, playgroundStatus: playgroundStatus, questionScores: questionScores, theoryStatus: theoryStatus)

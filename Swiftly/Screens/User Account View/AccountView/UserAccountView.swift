@@ -150,9 +150,15 @@ struct UserAccountView: View {
                                 
                             }.padding(.leading, geometry.size.width/24)
                             
-                            VStack(alignment: .leading){
-                                InfoLabel(text: "dafasdf")
-//                                InfoLabel(text: userAccountViewModel.loggedInUser.classroom[0].chapterProgress[0] as! String)
+                            
+                            VStack(alignment: .leading, spacing: geometry.size.width/20){
+                                
+                                ForEach(0..<userAccountViewModel.loggedInUser.classroom.count){_ in
+                                    Text("Classroom: \(userAccountViewModel.loggedInUser.classroom[0].classroomName)")
+                                    Text("Chapter's Completed: \(String(userAccountViewModel.userChapterCompletionCount))")
+                                    Text("Interactive Score Average: \(String(userAccountViewModel.userScoreAverage))")
+                                }
+                                
                             }
                             
                         }.frame(width: geometry.size.width/2, height: geometry.size.height/1.25, alignment: .leading)

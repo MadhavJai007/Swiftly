@@ -22,6 +22,7 @@ struct User: Hashable, Identifiable, Codable {
 
 struct UserClassroom: Hashable, Identifiable, Codable {
     var id = UUID()
+    var classroomName = ""
     var subCode = ""
     var chapterProgress = [UserChapterProgress]()
     var clasroomTheoryStatus = "incomplete"
