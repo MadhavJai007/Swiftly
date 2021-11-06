@@ -199,6 +199,8 @@ final class UserAccountViewModel: ObservableObject {
                     self.loggedInUser.country = userObj["country"] as! String
                     self.loggedInUser.dob = userObj["date_of_birth"] as! String
                     
+                    
+                    //now to collect user progress and scores
                     var collectionRefProgress = self.db.collection("Students").document(self.loggedInUser.username).collection("Classrooms").document("classroom_1").collection("Chapters")
                     collectionRefProgress.getDocuments { (snapshot, err) in
                         if let err = err{
@@ -211,8 +213,13 @@ final class UserAccountViewModel: ObservableObject {
                         }
                         else{
                             print("Checking with username \(self.loggedInUser.username)")
-                            let userProgress = snapshot!.documents[0].data()
-                            print("User progress retrievede with value of \(userProgress)")
+                            
+                            for i in 0...snapshot!.documents.count-1{
+                                print("array count : \(i)")
+                                self.userProgress.append(snapshot!.documents[i].data())
+                                print("User progress retrievede with value of \(self.userProgress[i])")
+                            }
+                            
                         }
                     }
                     
