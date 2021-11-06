@@ -150,6 +150,9 @@ struct UserAccountView: View {
                                 
                             }.padding(.leading, geometry.size.width/24)
                             
+                            VStack(alignment: .leading){
+                                InfoLabel(text: userAccountViewModel.userProgress[0] as! String)
+                            }
                             
                         }.frame(width: geometry.size.width/2, height: geometry.size.height/1.25, alignment: .leading)
                             .cornerRadius(40)
@@ -220,6 +223,18 @@ struct InfoLabel: View {
     }
 }
 
+
+struct InfoLabelBlack: View {
+    
+    var text: String
+    
+    var body: some View {
+        
+        Text(text)
+            .font(.system(size: 35, weight: .semibold))
+            .foregroundColor(Color.blackCustom)
+    }
+}
 
 // Struct for custom nav bar icon
 struct UserAccountNavBarIcon: View {
