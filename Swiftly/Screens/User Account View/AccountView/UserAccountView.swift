@@ -151,7 +151,8 @@ struct UserAccountView: View {
                             }.padding(.leading, geometry.size.width/24)
                             
                             VStack(alignment: .leading){
-                                InfoLabel(text: userAccountViewModel.userProgress[0] as! String)
+                                InfoLabel(text: "dafasdf")
+//                                InfoLabel(text: userAccountViewModel.loggedInUser.classroom[0].chapterProgress[0] as! String)
                             }
                             
                         }.frame(width: geometry.size.width/2, height: geometry.size.height/1.25, alignment: .leading)

@@ -17,5 +17,24 @@ struct User: Hashable, Identifiable, Codable {
     var password: String
     var dob: String
     var country: String
+    var classroom: [UserClassroom]
+}
+
+struct UserClassroom: Hashable, Identifiable, Codable {
+    var id = UUID()
+    var subCode = ""
+    var chapterProgress = [UserChapterProgress]()
+    var clasroomTheoryStatus = "incomplete"
+    var classroomPlaygroundStatus = "incomplete"
+}
+
+struct UserChapterProgress: Hashable, Identifiable, Codable {
+    var id = UUID()
+    var chapterStatus: String
+    var chapterName: String
+    var chapterNum: Int
+    var playgroundStatus: String
+    var questionScores: [Int]
+    var theoryStatus: String
 }
 

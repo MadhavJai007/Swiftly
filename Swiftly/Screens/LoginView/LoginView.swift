@@ -64,24 +64,33 @@ struct LoginView: View {
                     /// Login button --> calls login method from loginViewModel
                     Button{
                         print("Logging into \(loginViewModel.accountMode) mode...")
+                        
                         loginViewModel.isLoading.toggle()
+                        
                         /// Used to make sure user cannot hit login button while their being logged in
                         if (loginViewModel.attemptingLogin == false){
-//                            loginViewModel.attemptingLogin = true
                             loginViewModel.login(email: email, password: password)
 
                             /// If the login is successful, download chapter content
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                                
                                 if (loginViewModel.isSuccessful) {
+                                    
                                     loginViewModel.loggedInEmail = email
-                                    email = ""
-                                    password = ""
+                                    
                                     print("Loggin into \(loginViewModel.loggedInEmail)")
                                     print("Logging into \(loginViewModel.accountMode) mode...")
-                                    chaptersViewModel.getChapterDocs()
+                                    
+                                    /// Loading all user data
+                                    chaptersViewModel.loadUserData(loggedInEmail: email, accountType: loginViewModel.accountMode)
+                                    
+                                    email = ""
+                                    password = ""
+                                    
                                     loginViewModel.attemptingLogin = true
+                                    
                                 }else{
-                                    // Error getting chapters
+                                    /// Error getting chapters
                                     loginViewModel.attemptingLogin = false
                                     loginViewModel.isLoading = false
                                 }
@@ -94,6 +103,7 @@ struct LoginView: View {
                     .padding(.bottom,50)
                     .opacity(loginViewModel.isLoading ? 0.24 : 1)
                     .disabled(loginViewModel.isLoading)
+                    
                     /// Alert for bad login
                     .alert(item: $loginViewModel.alertInfo, content: { info in
                         Alert(title: Text(info.title), message: Text(info.message))

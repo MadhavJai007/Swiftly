@@ -26,12 +26,14 @@ struct ChaptersView: View {
                 VStack{
                     HStack {
                         Button {
-                            /// Loading data
-                            print(userAccountViewModel.loggedInUser)
+                            /// Downloading user account data moved to .onAppear()
+                            
+                            /// Downloading user account information
                             if(!userAccountViewModel.isUserInfoRetrieved){
                                 print("First time downloading user info")
                                 userAccountViewModel.loadUserData(loggedInEmail: loginViewModel.loggedInEmail, accountType: loginViewModel.accountMode)
                             }
+                            
                             chaptersViewModel.isShowingAccountView.toggle()
                         }label: {
                             SpecialNavBarIcon(text: "person.crop.circle")
@@ -105,6 +107,8 @@ struct ChaptersView: View {
         .navigationBarHidden(true)
         
         .onAppear {
+            
+            /// Resetting  variables
             chaptersViewModel.isShowingAccountView = false
             chaptersViewModel.didStartChapter = false
             loginViewModel.attemptingLogin = false /// re-enables login button
@@ -113,16 +117,14 @@ struct ChaptersView: View {
                 chapterContentViewModel.willStartInteractiveSection = false
             }
             
-            
+            /// If the user wants to start the next chapter
             if (chaptersViewModel.willStartNextChapter){
                 
                 chaptersViewModel.willStartNextChapter = false
                 
+                /// Get current chapter index and grab next chapter
                 let chapIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)
-                
                 chaptersViewModel.selectedChapter = chaptersViewModel.chaptersArr[chapIndex!+1]
-                
-                
             }
         }
     }
