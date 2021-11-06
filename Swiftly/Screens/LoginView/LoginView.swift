@@ -84,6 +84,8 @@ struct LoginView: View {
                                     /// Loading all user data
                                     chaptersViewModel.loadUserData(loggedInEmail: email, accountType: loginViewModel.accountMode)
                                     
+                                    
+                                    
                                     email = ""
                                     password = ""
                                     

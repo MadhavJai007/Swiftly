@@ -9,11 +9,15 @@ struct ChapterTitleView: View {
     
     let chapter: Chapter
     
+   
+    
+    
     var width: CGFloat
     
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel // view model for this view
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel
+    
     
     var body: some View {
         
@@ -70,19 +74,63 @@ struct ChapterTitleView: View {
                 
                 Spacer()
                 
-                HStack{
-                    Button{
-                        chaptersViewModel.selectedChapter = chapter
-                    } label: {
-                        Text("Select Chapter")
-                            .font(.system(size: 20, weight: .semibold, design: .default))
-                            .foregroundColor(Color.white)
-                            .frame(width: width, height: 60)
+                Group{
+                    
+                    let chapIndex = chaptersViewModel.chaptersArr.firstIndex(of: chapter)
+                    let chapterStat = chaptersViewModel.chaptersStatus[chapIndex!]
+                    
+                    if (chapterStat == "incomplete"){
+                        HStack{
+                            Button{
+                                chaptersViewModel.selectedChapter = chapter
+                                
+                                chaptersViewModel.selectedChapterIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)!
+                                
+                            } label: {
+                                Text("Select Chapter")
+                                    .font(.system(size: 20, weight: .semibold, design: .default))
+                                    .foregroundColor(Color.white)
+                                    .frame(width: width, height: 60)
+                            }
+                        }
+                        .frame(width: width, height: 60)
+                        .cornerRadius(30)
+                        .background(Color.lightGrayCustom)
+                        
+                    }else if (chapterStat == "inprogress"){
+                        HStack{
+                            Button{
+                                chaptersViewModel.selectedChapter = chapter
+                            } label: {
+                                Text("Select Chapter")
+                                    .font(.system(size: 20, weight: .semibold, design: .default))
+                                    .foregroundColor(Color.white)
+                                    .frame(width: width, height: 60)
+                            }
+                        }
+                        .frame(width: width, height: 60)
+                        .cornerRadius(30)
+                        .background(Color.yellow)
                     }
+                    else if (chapterStat == "complete"){
+                        HStack{
+                            Button{
+                                chaptersViewModel.selectedChapter = chapter
+                            } label: {
+                                Text("Select Chapter")
+                                    .font(.system(size: 20, weight: .semibold, design: .default))
+                                    .foregroundColor(Color.white)
+                                    .frame(width: width, height: 60)
+                            }
+                        }
+                        .frame(width: width, height: 60)
+                        .cornerRadius(30)
+                        .background(Color.green)
+                    }
+                
+                    
+                    
                 }
-                .frame(width: width, height: 60)
-                .cornerRadius(30)
-                .background(Color.lightGrayCustom)
                 
             }.frame(width: width, height:275, alignment: .leading)
                 .background(Color.whiteCustom)
@@ -92,11 +140,11 @@ struct ChapterTitleView: View {
 }
 
 
-struct ChapterTitleView_Previews: PreviewProvider {
-    static var previews: some View {
-        ChapterTitleView(chapter: MockData.sampleChapter, width: 325)
-    }
-}
+//struct ChapterTitleView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ChapterTitleView(chapter: MockData.sampleChapter, width: 325)
+//    }
+//}
 
 struct ViewLeaderboardButtonLabel: View {
     

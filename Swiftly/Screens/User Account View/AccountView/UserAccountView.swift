@@ -95,7 +95,8 @@ struct UserAccountView: View {
                                 userAccountViewModel.logoutUser()
                                 
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    if(userAccountViewModel.logoutSuccessful){
+                                    
+                                    if (userAccountViewModel.logoutSuccessful){
                                         
                                         // reseting logged in email to empty string (none)
                                         loginViewModel.loggedInEmail = ""
@@ -104,7 +105,6 @@ struct UserAccountView: View {
                                         print("login view model's loggedInEmail reset to empty string")
                                         loginViewModel.isSuccessful = false
                                         loginViewModel.isLoading = false
-                                        chaptersViewModel.chaptersArr.removeAll()
                                         chaptersViewModel.isUserLoggedIn.toggle()
                                     }
                                     else{

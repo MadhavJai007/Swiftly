@@ -18,21 +18,24 @@ final class ChaptersViewModel: ObservableObject {
     @Published var isUserLoggedIn = false
     @Published var classroomCode: String = ""
     
+    @Published var chaptersStatus = [String]()
+    
     var loggedInAccountType : String = ""
     
     var loggedInUser = User(firstName: "",
-                       lastName: "",
-                       username: "",
-                       email: "",
-                       password: "",
-                       dob : "",
-                       country: "",
-                       classroom: [])
+                            lastName: "",
+                            username: "",
+                            email: "",
+                            password: "",
+                            dob : "",
+                            country: "",
+                            classroom: [])
     
     var willStartNextChapter = false
     
     var startChapterIntent = false
     
+    var selectedChapterIndex = 0
     var selectedChapter: Chapter? {
         didSet {
             isShowingChapterDetailView = true
@@ -58,8 +61,21 @@ final class ChaptersViewModel: ObservableObject {
     }
     
     
+    
     func changeClassroom(){
         print("changeClassroom")
+    }
+    
+    func grabChapterStatus(){
+        
+        //        for i in 0..<loggedInUser.classroom[0].chapterProgress.count {
+        //
+        //            chaptersStatus.append((loggedInUser.classroom[0].chapterProgress[i].chapterStatus))
+        //
+        //
+        //        }
+        
+        
     }
     
     /// Todo: Default to some value if unwrapped value from firebase is nil.
@@ -152,22 +168,25 @@ final class ChaptersViewModel: ObservableObject {
                                     
                                 }
                             }
-
-                        
+                            
+                            
                             
                             self.chaptersArr.append(Chapter(chapterNum: chapterNum, name: chapterName, difficulty: chapterDifficulty, summary: chapterSummary, lessons: chapterLessons, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions))
                             
                             /// Bubble sort used to sort the chapters via their chapter num
                             for i in 0..<self.chaptersArr.count {
-                              for j in 1..<self.chaptersArr.count {
-                                  if self.chaptersArr[j].chapterNum < self.chaptersArr[j-1].chapterNum {
-                                  let tmp = self.chaptersArr[j-1]
-                                    self.chaptersArr[j-1] = self.chaptersArr[j]
-                                    self.chaptersArr[j] = tmp
+                                for j in 1..<self.chaptersArr.count {
+                                    if self.chaptersArr[j].chapterNum < self.chaptersArr[j-1].chapterNum {
+                                        let tmp = self.chaptersArr[j-1]
+                                        self.chaptersArr[j-1] = self.chaptersArr[j]
+                                        self.chaptersArr[j] = tmp
+                                    }
                                 }
-                              }
                             }
-                            self.isUserLoggedIn = true
+                            
+                            DispatchQueue.main.async{
+                                self.isUserLoggedIn = true
+                            }
                         }
                     }
                 }
@@ -214,33 +233,36 @@ final class ChaptersViewModel: ObservableObject {
                     let enrolledClasrooms = db.collection("Students").document(self.loggedInUser.username).collection("Classrooms")
                     
                     enrolledClasrooms.getDocuments { (snapshot, err) in
-                            
+                        
                         if err != nil {
-                            print("Error: Something went wrong...")
+                            print("Error: Couldn't grab user classrooms")
                         }
                         else if (snapshot?.isEmpty)!{
-                            print("Error: User progress not found")
+                            print("Error: User classrooms not found")
                         }
                         else{
+                            print("Found classrooms...")
                             
                             /// Looping through each classroom
-                            for i in 0..<snapshot!.documents.count {
-                            
+                            for j in 0..<snapshot!.documents.count {
+                                
                                 var userClassroom = UserClassroom() /// TODO: Grab classroom id from firestore
                                 
                                 /// Grabbing the current collection of chapters for chapter i
-                                let classroomChapters = enrolledClasrooms.document("classroom_\(i+1)").collection("Chapters")
+                                let classroomChapters = enrolledClasrooms.document("classroom_\(j+1)").collection("Chapters")
                                 
                                 /// Grabbing documents for chapter i
                                 classroomChapters.getDocuments { (snapshot, err) in
                                     
                                     if err != nil {
-                                        print("Error: Something went wrong...")
+                                        print("Error: Couldn't grab chapters...")
                                     }
                                     else if (snapshot?.isEmpty)!{
-                                        print("Error: User progress not found")
+                                        print("Error: User chapters not found")
                                     }
                                     else{
+                                        
+                                        print("Found chapters...")
                                         
                                         /// Creating empty user chapter array
                                         var chaptersProgress = [UserChapterProgress]()
@@ -259,61 +281,88 @@ final class ChaptersViewModel: ObservableObject {
                                             let questionScores = data["question_scores"] as! [Int]
                                             let theoryStatus = data["theory_status"] as! String
                                             
+                                            self.chaptersStatus.append(chapterStatus)
+                                            
                                             /// Creating chapter object
                                             let chapter  =  UserChapterProgress(chapterStatus: chapterStatus, chapterName: chapterName, chapterNum: chapterNum, playgroundStatus: playgroundStatus, questionScores: questionScores, theoryStatus: theoryStatus)
                                             
                                             /// Appending chapter
                                             chaptersProgress.append(chapter)
+                                            
                                         }
                                         
+                                        
+                                        
                                         /// Updating classroom chapter progress with the chapter progress
+                                        /// Array of UserChapterProgress objects
                                         userClassroom.chapterProgress = chaptersProgress
+                                        
+                                        /// Appending classroom to user classrooms
+                                        self.loggedInUser.classroom.append(userClassroom)
                                         
                                     }
                                 }
+                            }
+                        }
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                        
+                        print("CLASSROOMCOUNT:\(self.loggedInUser.classroom.count)")
+                        
+                        for k in 0..<self.loggedInUser.classroom.count{
+                            
+                            for i in 0..<self.loggedInUser.classroom[k].chapterProgress.count {
                                 
-                                /// Appending clasroom to user classrooms
-                                self.loggedInUser.classroom.append(userClassroom)
+                                for j in 1..<self.loggedInUser.classroom[k].chapterProgress.count {
+                                    
+                                    if self.loggedInUser.classroom[k].chapterProgress[j].chapterNum < self.loggedInUser.classroom[k].chapterProgress[j-1].chapterNum {
+                                        let tmp = self.loggedInUser.classroom[k].chapterProgress[j-1].chapterNum
+                                        self.loggedInUser.classroom[k].chapterProgress[j-1].chapterNum = self.loggedInUser.classroom[k].chapterProgress[j].chapterNum
+                                        self.loggedInUser.classroom[k].chapterProgress[j].chapterNum = tmp
+                                    }
+                                }
                             }
                         }
                     }
                     
-                    /// After user account information has been downloaded, download the chapter data
-                    self.getChapterDocs()
+                    DispatchQueue.main.async{
+                        /// After user account information has been downloaded, download the chapter data
+                        self.getChapterDocs()
+                    }
                 }
             }
-
+            
         case "Teacher":
-                print("Teacher")
-//            let collectionRef = db.collection("Teachers")
-//            collectionRef.whereField("email", isEqualTo: loggedInEmail).getDocuments { (snapshot, err) in
-//                if let err = err {
-//                    print("Error getting document: \(err)")
-//                } else if (snapshot?.isEmpty)! {
-//                    print("Account not found. Shouldn't occur in this situation since user is already logged in.")
-//                } else {
-//                    let userObj = snapshot!.documents[0].data()
-//                    self.loggedInAccountType =  "Teachers"
-//                    self.loggedInUser.firstName = userObj["firstname"] as! String
-//                    self.loggedInUser.lastName = userObj["lastName"] as! String
-//                    self.loggedInUser.email = userObj["email"] as! String
-//                    self.loggedInUser.password = userObj["password"] as! String
-//                    self.loggedInUser.username = userObj["username"] as! String
-//                    self.loggedInUser.country = userObj["country"] as! String
-//                    self.loggedInUser.dob = userObj["date_of_birth"] as! String
-//
-//
-//                    var userProgress = db.collection("Students").document(self.loggedInUser.username).collection("Chapters").document("chapter_1")
-//                }
-//            }
-
+            print("Teacher")
+            //            let collectionRef = db.collection("Teachers")
+            //            collectionRef.whereField("email", isEqualTo: loggedInEmail).getDocuments { (snapshot, err) in
+            //                if let err = err {
+            //                    print("Error getting document: \(err)")
+            //                } else if (snapshot?.isEmpty)! {
+            //                    print("Account not found. Shouldn't occur in this situation since user is already logged in.")
+            //                } else {
+            //                    let userObj = snapshot!.documents[0].data()
+            //                    self.loggedInAccountType =  "Teachers"
+            //                    self.loggedInUser.firstName = userObj["firstname"] as! String
+            //                    self.loggedInUser.lastName = userObj["lastName"] as! String
+            //                    self.loggedInUser.email = userObj["email"] as! String
+            //                    self.loggedInUser.password = userObj["password"] as! String
+            //                    self.loggedInUser.username = userObj["username"] as! String
+            //                    self.loggedInUser.country = userObj["country"] as! String
+            //                    self.loggedInUser.dob = userObj["date_of_birth"] as! String
+            //
+            //
+            //                    var userProgress = db.collection("Students").document(self.loggedInUser.username).collection("Chapters").document("chapter_1")
+            //                }
+            //            }
+            
         default:
             print("This default clause is not needed")
         }
-  
-
-     // Get all the documents where the field username is equal to the String you pass, loop over all the documents.
- 
-
+        
+        
+        // Get all the documents where the field username is equal to the String you pass, loop over all the documents.
+        
+        
     }
 }
