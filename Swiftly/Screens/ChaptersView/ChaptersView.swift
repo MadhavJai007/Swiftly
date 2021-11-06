@@ -53,7 +53,20 @@ struct ChaptersView: View {
                     
                     VStack(alignment: .leading){
                         TitleLabel(text:"All Chapters")
-                        InfoLabelMedium(text:"Classroom: Global")
+                        
+                        HStack{
+                        
+                            InfoLabelMedium(text:"Classroom: Global")
+                        
+                            Menu{
+                                ForEach(chaptersViewModel.loggedInUser.classroom){ classroom in
+                                    Button("Classroom: sdf", action: chaptersViewModel.changeClassroom)
+                                }
+                            }label: {
+                                Image(systemName: "chevron.down")
+                            }
+                        }
+                        .padding(.top, -35)
                     }
                     .frame(width: geometry.size.width, alignment: .leading)
                     .padding(.leading, 30)

@@ -27,7 +27,7 @@ final class ChaptersViewModel: ObservableObject {
                        password: "",
                        dob : "",
                        country: "",
-                       classroom: [UserClassroom()])
+                       classroom: [])
     
     var willStartNextChapter = false
     
@@ -55,6 +55,11 @@ final class ChaptersViewModel: ObservableObject {
     /// Called from views to pop to chapters view model
     func quitChapter(){
         self.didStartChapter = false
+    }
+    
+    
+    func changeClassroom(){
+        print("changeClassroom")
     }
     
     /// Todo: Default to some value if unwrapped value from firebase is nil.
