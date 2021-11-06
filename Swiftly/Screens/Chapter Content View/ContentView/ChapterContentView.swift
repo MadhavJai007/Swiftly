@@ -182,6 +182,21 @@ struct ChapterContentView: View {
                            isActive: $chapterContentViewModel.willStartInteractiveSection) {EmptyView()}
         }
         .navigationBarHidden(true)
+        
+        .onAppear(){
+            
+            let chapIndex = chaptersViewModel.selectedChapterIndex
+            let userTheoryProgress = chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].theoryStatus
+            
+            print(" CHANGING STATUS FOR INDEX: \(chapIndex)")
+            
+            if (userTheoryProgress == "incomplete"){
+                chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].theoryStatus = "inprogress"
+                chaptersViewModel.loggedInUser.classroom[0].clasroomTheoryStatus = "inprogress"
+                chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].chapterStatus = "inprogress"
+                chaptersViewModel.chaptersStatus[chapIndex] = "inprogress"
+            }
+        }
     }
 }
 

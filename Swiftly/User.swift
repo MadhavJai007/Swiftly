@@ -27,6 +27,7 @@ struct UserClassroom: Hashable, Identifiable, Codable {
     var chapterProgress = [UserChapterProgress]()
     var clasroomTheoryStatus = "incomplete"
     var classroomPlaygroundStatus = "incomplete"
+    var classroomStatus = "incomplete"
 }
 
 struct UserChapterProgress: Hashable, Identifiable, Codable {

@@ -85,6 +85,9 @@ struct ChapterDetailView: View {
                         Spacer()
                         
                         Button{
+                            
+                            chaptersViewModel.selectedChapterIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)!
+                            
                             isShowingDetailView = false
                             chaptersViewModel.startChapterIntent = true
                             

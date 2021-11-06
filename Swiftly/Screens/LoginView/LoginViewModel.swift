@@ -29,7 +29,6 @@ final class LoginViewModel: ObservableObject {
     
     /// Called when the user wants to login
     func login(email: String, password: String) {
-//        let emailLowercased = email.lowercased()
         
         print(email)
         print(password)

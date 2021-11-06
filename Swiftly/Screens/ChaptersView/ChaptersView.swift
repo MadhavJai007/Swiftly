@@ -76,11 +76,14 @@ struct ChaptersView: View {
                     /// ScrollView containing all chapters
                     ScrollView {
                         LazyVGrid(columns: chaptersViewModel.columns, spacing: 50) {
-                            ForEach(chaptersViewModel.chaptersArr) { chapter in
-                                ChapterTitleView(chapter: chapter, width: geometry.size.width/2.35)
+                            
+                            ForEach(0..<chaptersViewModel.chaptersArr.count) { index in
+                            
+                                ChapterTitleView(chapter: chaptersViewModel.chaptersArr[index], width: geometry.size.width/2.35)
                                     .environmentObject(chaptersViewModel)
                                     .environmentObject(chapterContentViewModel)
                                     .environmentObject(leaderboardViewModel)
+                            
                             }
                         }
                         .sheet(isPresented: $chaptersViewModel.isShowingChapterDetailView) {
@@ -121,10 +124,13 @@ struct ChaptersView: View {
         
         .onAppear {
             
+            print(chaptersViewModel.loggedInUser.classroom[0].chapterProgress)
+            
             /// Resetting  variables
             chaptersViewModel.isShowingAccountView = false
             chaptersViewModel.didStartChapter = false
             loginViewModel.attemptingLogin = false /// re-enables login button
+        
             
             if (chapterContentViewModel.willStartInteractiveSection == true){
                 chapterContentViewModel.willStartInteractiveSection = false
@@ -139,6 +145,24 @@ struct ChaptersView: View {
                 let chapIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)
                 chaptersViewModel.selectedChapter = chaptersViewModel.chaptersArr[chapIndex!+1]
             }
+        }
+        
+        .onDisappear {
+            
+            if (chaptersViewModel.selectedChapter != nil){
+            
+                chaptersViewModel.selectedChapterIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)!
+                
+                print(chaptersViewModel.selectedChapterIndex)
+                print(chaptersViewModel.selectedChapter!.chapterNum)
+            }
+            
+            if (chaptersViewModel.isUserLoggedIn == false){
+                chaptersViewModel.chaptersArr.removeAll()
+            }
+            
+            
+            
         }
     }
 }
