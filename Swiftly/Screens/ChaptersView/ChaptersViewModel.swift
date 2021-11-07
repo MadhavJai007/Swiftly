@@ -381,8 +381,7 @@ final class ChaptersViewModel: ObservableObject {
                                             
                                             /// Creating chapter object
                                             let chapter = UserChapterProgress(chapterStatus: chapterStatus, chapterName: chapterName, chapterNum: chapterNum, playgroundStatus: playgroundStatus, questionScores: questionScores, questionAnswers: userQuestionAnswers, questionProgress: questionProgress, theoryStatus: theoryStatus)
-                                            
-                                            print("QUESTION ANSWERS: \(userQuestionAnswers.count)")
+                 
                                             
                                             /// Appending chapter
                                             chaptersProgress.append(chapter)

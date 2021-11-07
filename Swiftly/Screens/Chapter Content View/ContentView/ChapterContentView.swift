@@ -217,10 +217,10 @@ struct ChapterContentView: View {
                     chaptersViewModel.loggedInUser.classroom[0].classroomStatus = "inprogress"
                 }
                 
-                //chaptersViewModel.saveUserProgress()
+                chaptersViewModel.saveUserProgress()
             }
             
-//            chaptersViewModel.saveUserProgress()
+            chaptersViewModel.saveUserProgress()
             
             
         }

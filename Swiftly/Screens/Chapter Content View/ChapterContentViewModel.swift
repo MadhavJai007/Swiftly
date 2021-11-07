@@ -86,7 +86,7 @@ final class ChapterContentViewModel: ObservableObject {
         selectedQuestion = chapterPlaygroundQuestions[selectedQuestionIndex]
         
         /// Setting up the next playground
-        setupPlayground(question: selectedQuestion, questionIndex: selectedQuestionIndex, userAnswers: [""])
+        setupPlayground(question: selectedQuestion, questionIndex: selectedQuestionIndex, userAnswers: userAnswers)
         
         willStartNextQuestion = true
     }
@@ -126,7 +126,7 @@ final class ChapterContentViewModel: ObservableObject {
             
         }else if (selectedQuestion.type == "mcq"){
             
-            if (userAnswers.isEmpty == false){
+            if (userAnswers.isEmpty == true){
                 mcqOptions = selectedQuestion.originalArr
             }else{
                 mcqOptions = userAnswers

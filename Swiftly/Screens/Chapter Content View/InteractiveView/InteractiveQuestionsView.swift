@@ -83,7 +83,9 @@ struct InteractiveQuestionsView: View {
                                             /// Getting index of question and the status of the question
                                             let index = chaptersViewModel.selectedChapter!.playgroundArr.firstIndex(of: question)
                                             
-                                            let questionStatus = chapterContentViewModel.playgroundQuestionStatus[index!]
+                                            let questionStatus = chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionProgress[index!]
+                                            
+//                                            let questionStatus = chapterContentViewModel.playgroundQuestionStatus[index!]
                                             
                                             /// If the status is incomplete
                                             if (questionStatus == "incomplete") {
@@ -164,7 +166,11 @@ struct InteractiveQuestionsView: View {
                                 /// Only showing next chapter button if user is finished playground questions
                                 Group {
                                     
-                                    if chapterContentViewModel.playgroundQuestionStatus.contains("incomplete"){
+                                    /// Chapter index
+                                    let chapIndex = chaptersViewModel.selectedChapterIndex
+                               
+                                    if chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionProgress.contains("incomplete")
+                                    {
                                         Button{
                                             
                                         }label:{

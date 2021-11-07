@@ -133,6 +133,9 @@ struct InteractiveView: View {
                                     /// Getting the question index
                                     let index = chapterContentViewModel.selectedQuestionIndex
                                     
+                                    /// Saving chapter score
+                                    chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionProgress[index] = "completed"
+                                    
                                     /// If question type is code blocks, loop through the code blocks and
                                     /// save each of their contents to the users
                                     if (chapterContentViewModel.selectedQuestion.type == "code_blocks"){
@@ -143,9 +146,7 @@ struct InteractiveView: View {
                                             
                                             chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index].answers.append(chapterContentViewModel.activeBlocks[i].content)
                                         }
-                                        
-                                        
-                                        
+                                         
                                     }else{
                                         chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index].answers = chapterContentViewModel.mcqUserAnswers
                                     }

@@ -124,6 +124,8 @@ struct ChaptersView: View {
         
         .onAppear {
             
+    
+            
             chaptersViewModel.saveUserProgress()
             
             print(chaptersViewModel.loggedInUser.classroom[0].chapterProgress)
