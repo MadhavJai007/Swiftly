@@ -137,11 +137,14 @@ struct InteractiveView: View {
                                     /// save each of their contents to the users
                                     if (chapterContentViewModel.selectedQuestion.type == "code_blocks"){
                                         
+                                        chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index].answers.removeAll()
                                         
                                         for i in 0..<chapterContentViewModel.activeBlocks.count {
                                             
                                             chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index].answers.append(chapterContentViewModel.activeBlocks[i].content)
                                         }
+                                        
+                                        
                                         
                                     }else{
                                         chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index].answers = chapterContentViewModel.mcqUserAnswers
@@ -149,8 +152,6 @@ struct InteractiveView: View {
                                     
                                     /// Getting the user score
                                     let score = chapterContentViewModel.getQuestionScore()
-                                    
-                                   
                                     
                                     /// Saving the score, and setting status to complete
                                     chapterContentViewModel.playgroundQuestionScores[index] = score
@@ -204,11 +205,14 @@ struct InteractiveView: View {
                             
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                 
-                                let index = chapterContentViewModel.selectedQuestionIndex
                                 
                                 /// Used to either proceed to next question, or finish interactive section
                                 if (chapterContentViewModel.isFinalChapter == false){
+                                    
+                                    let index = chapterContentViewModel.selectedQuestionIndex + 1
+                                    
                                     chapterContentViewModel.startNextPlaygroundQuestion(userAnswers: chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chaptersViewModel.selectedChapterIndex].questionAnswers[index].answers)
+                                    
                                     willUpdateView.toggle()
                                 }else{
                                     chapterContentViewModel.completeInteractiveSection()

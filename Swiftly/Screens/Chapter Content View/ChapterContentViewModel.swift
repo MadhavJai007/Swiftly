@@ -95,13 +95,16 @@ final class ChapterContentViewModel: ObservableObject {
     /// Called from InteractiveQuestionsView
     func setupPlayground(question: Playground, questionIndex: Int, userAnswers: [String]){
         
+        print("USER ANSWERS: \(userAnswers)")
+        
+        
         
         selectedQuestion = question
         selectedQuestionIndex = questionIndex
         
         if (selectedQuestion.type == "code_blocks"){
             
-            var codeBlocks = [""]
+            var codeBlocks: [String] = []
             
             /// If the user's answers is empty (first time doing question) then use default values
             if (userAnswers.isEmpty){
@@ -135,7 +138,6 @@ final class ChapterContentViewModel: ObservableObject {
         
         /// Checking question info
         checkQuestionInfo()
-        
     }
     
     /// Quits the current chapter
@@ -158,7 +160,6 @@ final class ChapterContentViewModel: ObservableObject {
         /// Checking code block answer
         if (selectedQuestion.type == "code_blocks"){
             for i in 0..<selectedQuestion.originalArr.count {
-                
                 if (activeBlocks[i].content == selectedQuestion.originalArr[i]){
                     userScore += 1
                 }

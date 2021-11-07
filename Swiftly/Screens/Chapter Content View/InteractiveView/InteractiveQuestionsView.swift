@@ -92,6 +92,7 @@ struct InteractiveQuestionsView: View {
                                                     Button {
                                                         
                                                         chapterContentViewModel.selectedQuestionIndex = index!
+                                                        
                                                         chapterContentViewModel.setupPlayground(question: question, questionIndex: index!, userAnswers: chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index!].answers)
                                                     }label: {
                                                         InteractiveStartButton(text: "Start Playground", textColor: Color.white, backgroundColor: Color.darkGrayCustom)
@@ -188,15 +189,9 @@ struct InteractiveQuestionsView: View {
                                         .frame(width: geometry.size.width, alignment: .center)
                                         .padding(20)
                                     }
-                                    
-                                    
                                 }
-                                
-                                
                             }
-                            
                         }
-                        
                     }
                     
                     /// Navigation link for starting a playground question
@@ -216,6 +211,9 @@ struct InteractiveQuestionsView: View {
             
             let userTheoryProgress = chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].theoryStatus
             let userPlaygroundProgress = chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].playgroundStatus
+            
+            print("ODJF: \(chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers.count)")
+            
             
             /// If user theory progress is inprogress
             if (userTheoryProgress == "inprogress"){

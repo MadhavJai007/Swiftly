@@ -65,7 +65,6 @@ final class ChaptersViewModel: ObservableObject {
     }
     
     
-    
     func changeClassroom(){
         print("changeClassroom")
     }
@@ -77,28 +76,42 @@ final class ChaptersViewModel: ObservableObject {
         let user = Auth.auth().currentUser
         
         let credential: AuthCredential = EmailAuthProvider.credential(withEmail: loggedInUser.email, password: loggedInUser.password)
-
         
         user?.reauthenticate(with: credential, completion: {(authResult, error) in
-                    if error != nil {
-                        print("error occured while reauthenticating")
-                    }else{
-                        print("Successfully Reauthenticated! ")
-                    }
-                })
+            if error != nil {
+                print("error occured while reauthenticating")
+            }else{
+                print("Successfully Reauthenticated! ")
+            }
+        })
         
         /// Updating user progress
-        for i in 0..<loggedInUser.classroom[0].chapterProgress.count{
-            let updatingRef = db.collection(loggedInAccountType).document(loggedInUser.username).collection("Classrooms").document("classroom_1").collection("Chapters").document("chapter_\(i+1)")
-            
-        
+        for j in 0..<loggedInUser.classroom[0].chapterProgress.count{
+
+            let updatingRef = db.collection(loggedInAccountType).document(loggedInUser.username).collection("Classrooms").document("classroom_1").collection("Chapters").document("chapter_\(j+1)")
+
+            for i in 0..<loggedInUser.classroom[0].chapterProgress[j].questionAnswers.count
+            {
+
+                let data = loggedInUser.classroom[0].chapterProgress[j].questionAnswers[i].answers
+
+                updatingRef.updateData([
+                    "question_\(i+1)_answer": data
+                ]){ err in
+                    if let err = err {
+                        print("Error updating document: \(err)")
+                    } else {
+                        print("Document successfully updated")
+                    }
+                }
+            }
+
             updatingRef.updateData([
-                "chapter_status": loggedInUser.classroom[0].chapterProgress[i].chapterStatus,
-                "playground_status": loggedInUser.classroom[0].chapterProgress[i].playgroundStatus,
-                "theory_status": loggedInUser.classroom[0].chapterProgress[i].theoryStatus,
-                "question_scores": loggedInUser.classroom[0].chapterProgress[i].questionScores,
-                "question_answers": loggedInUser.classroom[0].chapterProgress[i].questionAnswers,
-                "question_progress": loggedInUser.classroom[0].chapterProgress[i].questionProgress
+                "chapter_status": loggedInUser.classroom[0].chapterProgress[j].chapterStatus,
+                "playground_status": loggedInUser.classroom[0].chapterProgress[j].playgroundStatus,
+                "theory_status": loggedInUser.classroom[0].chapterProgress[j].theoryStatus,
+                "question_scores": loggedInUser.classroom[0].chapterProgress[j].questionScores,
+                "question_progress": loggedInUser.classroom[0].chapterProgress[j].questionProgress
             ]){ err in
                 if let err = err {
                     print("Error updating document: \(err)")
@@ -154,7 +167,6 @@ final class ChaptersViewModel: ObservableObject {
                             }
                             
                             newChapter.lessons = chapterLessons
-                            
                             
                             
                             self.chaptersArr.append(newChapter)
@@ -250,7 +262,7 @@ final class ChaptersViewModel: ObservableObject {
                             print("Name: \(self.chaptersArr[chapterNum-1].name)")
                             print("Lessons: \(self.chaptersArr[chapterNum-1].lessons.count)")
                             print("Playgrounds: \(self.chaptersArr[chapterNum-1].playgroundArr.count)")
-                        
+                            
                             
                             self.isUserLoggedIn = true
                             
@@ -342,7 +354,7 @@ final class ChaptersViewModel: ObservableObject {
                                             /// Data from firestore for chapter i
                                             let data = snapshot!.documents[i].data()
                                             
-                                            var questionAnswers = [UserQuestionAnswer]()
+                                            var userQuestionAnswers = [UserQuestionAnswer]()
                                             
                                             /// Grabbing chapter info
                                             let chapterStatus = data["chapter_status"] as! String
@@ -353,23 +365,24 @@ final class ChaptersViewModel: ObservableObject {
                                             let theoryStatus = data["theory_status"] as! String
                                             let questionProgress = data["question_progress"] as! [String]
                                             
-                                            var counter = 0
                                             
-                                            while (data["question_answers_\(counter)"] != nil){
+                                            var counter = 1
+                                            while (data["question_\(counter)_answer"] != nil){
                                                 
-                                                let answer = data["question_answers_\(counter)"] as! [String]
+                                                let answer = data["question_\(counter)_answer"] as! [String]
                                                 
                                                 let newAnswer = UserQuestionAnswer(answers: answer)
-                                              
-                                                questionAnswers.append(newAnswer)
+                                                userQuestionAnswers.append(newAnswer)
                                                 
+                                                counter += 1
                                             }
-                                                                                                     
                                             
                                             self.chaptersStatus.append(chapterStatus)
                                             
                                             /// Creating chapter object
-                                            let chapter = UserChapterProgress(chapterStatus: chapterStatus, chapterName: chapterName, chapterNum: chapterNum, playgroundStatus: playgroundStatus, questionScores: questionScores, questionAnswers: questionAnswers, questionProgress: questionProgress, theoryStatus: theoryStatus)
+                                            let chapter = UserChapterProgress(chapterStatus: chapterStatus, chapterName: chapterName, chapterNum: chapterNum, playgroundStatus: playgroundStatus, questionScores: questionScores, questionAnswers: userQuestionAnswers, questionProgress: questionProgress, theoryStatus: theoryStatus)
+                                            
+                                            print("QUESTION ANSWERS: \(userQuestionAnswers.count)")
                                             
                                             /// Appending chapter
                                             chaptersProgress.append(chapter)
