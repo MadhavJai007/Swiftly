@@ -78,9 +78,8 @@ final class ChaptersViewModel: ObservableObject {
         
     }
     
-    /// Todo: Default to some value if unwrapped value from firebase is nil.
-    /// Downloading chapters from Firebase and appending them to the chapters array
-    func getChapterDocs() {
+    /// Function that downloads the lessons (and chapters)
+    func downloadLessons() {
         
         let db = Firestore.firestore()
         
@@ -100,6 +99,9 @@ final class ChaptersViewModel: ObservableObject {
                     let iconName = document.data()["chapter_icon_name"]! as! String
                     
                     var chapterLessons = [ChapterLesson]()
+                    let playgroundQuestions = [Playground]()
+                    
+                    var newChapter = Chapter(chapterNum: chapterNum, name: chapterName, difficulty: chapterDifficulty, summary: chapterSummary, lessons: chapterLessons, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions)
                     
                     /// Getting lesson information
                     db.collection("Chapters").document(document.documentID).collection("lessons").getDocuments() {
@@ -111,7 +113,6 @@ final class ChaptersViewModel: ObservableObject {
                         } else {
                             
                             
-                            
                             /// Grabbing the lesson data and appending it to the chapterLessons array
                             for chapterLessonDocument in querySnapshot!.documents {
                                 let lesson_data = chapterLessonDocument.data()["lesson_content"]! as! [String]
@@ -120,9 +121,55 @@ final class ChaptersViewModel: ObservableObject {
                                 
                                 chapterLessons.append(newLesson)
                             }
+                            
+                            newChapter.lessons = chapterLessons
+                            
+                            
+                            
+                            self.chaptersArr.append(newChapter)
+                            
+                            print("LESSON CALL")
+                            print("Name: \(newChapter.name)")
+                            print("Lessons: \(newChapter.lessons.count)")
+                            print("Playgrounds: \(newChapter.playgroundArr.count)")
+                            
+                            
+                            /// Bubble sort used to sort the chapters via their chapter num
+                            for i in 0..<self.chaptersArr.count {
+                                for j in 1..<self.chaptersArr.count {
+                                    if self.chaptersArr[j].chapterNum < self.chaptersArr[j-1].chapterNum {
+                                        let tmp = self.chaptersArr[j-1]
+                                        self.chaptersArr[j-1] = self.chaptersArr[j]
+                                        self.chaptersArr[j] = tmp
+                                    }
+                                }
+                            }
                         }
-                        
                     }
+                }
+                
+            }
+        }
+    }
+    
+    
+    /// Function that downloads the users playgrounds
+    func downloadPlaygrounds(){
+        
+        let db = Firestore.firestore()
+        
+        
+        db.collection("Chapters").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting chapter documents: \(err)")
+                self.isUserLoggedIn = false
+            } else {
+                
+                for document in querySnapshot!.documents {
+                    
+                    let chapterNum = document.data()["chapter_number"]! as! Int
+                    
+                    var playgroundQuestions = [Playground]()
                     
                     /// Getting playground information
                     db.collection("Chapters").document(document.documentID).collection("playground").getDocuments() {
@@ -132,10 +179,6 @@ final class ChaptersViewModel: ObservableObject {
                             print("Error getting chapter documents: \(err)")
                             self.isUserLoggedIn = false
                         } else {
-                            
-                            var playgroundQuestions = [Playground]()
-                            
-                            
                             
                             for playgroundDocument in querySnapshot!.documents {
                                 
@@ -169,29 +212,24 @@ final class ChaptersViewModel: ObservableObject {
                                 }
                             }
                             
+                            self.chaptersArr[chapterNum-1].playgroundArr = playgroundQuestions
                             
                             
-                            self.chaptersArr.append(Chapter(chapterNum: chapterNum, name: chapterName, difficulty: chapterDifficulty, summary: chapterSummary, lessons: chapterLessons, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions))
+                            print("PLAYGROUND CALL")
+                            print("Name: \(self.chaptersArr[chapterNum-1].name)")
+                            print("Lessons: \(self.chaptersArr[chapterNum-1].lessons.count)")
+                            print("Playgrounds: \(self.chaptersArr[chapterNum-1].playgroundArr.count)")
+                        
                             
-                            /// Bubble sort used to sort the chapters via their chapter num
-                            for i in 0..<self.chaptersArr.count {
-                                for j in 1..<self.chaptersArr.count {
-                                    if self.chaptersArr[j].chapterNum < self.chaptersArr[j-1].chapterNum {
-                                        let tmp = self.chaptersArr[j-1]
-                                        self.chaptersArr[j-1] = self.chaptersArr[j]
-                                        self.chaptersArr[j] = tmp
-                                    }
-                                }
-                            }
+                            self.isUserLoggedIn = true
                             
-                            DispatchQueue.main.async{
-                                self.isUserLoggedIn = true
-                            }
                         }
                     }
                 }
             }
         }
+        
+        
     }
     
     /// Downloading all user data
@@ -305,29 +343,29 @@ final class ChaptersViewModel: ObservableObject {
                             }
                         }
                     }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                        
-                        print("CLASSROOMCOUNT:\(self.loggedInUser.classroom.count)")
-                        
-                        for k in 0..<self.loggedInUser.classroom.count{
-                            
-                            for i in 0..<self.loggedInUser.classroom[k].chapterProgress.count {
-                                
-                                for j in 1..<self.loggedInUser.classroom[k].chapterProgress.count {
-                                    
-                                    if self.loggedInUser.classroom[k].chapterProgress[j].chapterNum < self.loggedInUser.classroom[k].chapterProgress[j-1].chapterNum {
-                                        let tmp = self.loggedInUser.classroom[k].chapterProgress[j-1].chapterNum
-                                        self.loggedInUser.classroom[k].chapterProgress[j-1].chapterNum = self.loggedInUser.classroom[k].chapterProgress[j].chapterNum
-                                        self.loggedInUser.classroom[k].chapterProgress[j].chapterNum = tmp
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    //                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+                    //
+                    //                        print("CLASSROOMCOUNT:\(self.loggedInUser.classroom.count)")
+                    //
+                    //                        for k in 0..<self.loggedInUser.classroom.count{
+                    //
+                    //                            for i in 0..<self.loggedInUser.classroom[k].chapterProgress.count {
+                    //
+                    //                                for j in 1..<self.loggedInUser.classroom[k].chapterProgress.count {
+                    //
+                    //                                    if self.loggedInUser.classroom[k].chapterProgress[j].chapterNum < self.loggedInUser.classroom[k].chapterProgress[j-1].chapterNum {
+                    //                                        let tmp = self.loggedInUser.classroom[k].chapterProgress[j-1].chapterNum
+                    //                                        self.loggedInUser.classroom[k].chapterProgress[j-1].chapterNum = self.loggedInUser.classroom[k].chapterProgress[j].chapterNum
+                    //                                        self.loggedInUser.classroom[k].chapterProgress[j].chapterNum = tmp
+                    //                                    }
+                    //                                }
+                    //                            }
+                    //                        }
+                    //                    }
                     
                     DispatchQueue.main.async{
                         /// After user account information has been downloaded, download the chapter data
-                        self.getChapterDocs()
+                        //                        self.getChapterDocs()
                     }
                 }
             }
@@ -361,7 +399,10 @@ final class ChaptersViewModel: ObservableObject {
         }
         
         
-        // Get all the documents where the field username is equal to the String you pass, loop over all the documents.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            self.downloadPlaygrounds()
+        }
+        
         
         
     }

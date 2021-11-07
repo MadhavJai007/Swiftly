@@ -14,10 +14,10 @@ struct Chapter: Hashable, Identifiable {
     let name: String
     let difficulty: Int
     let summary: String
-    let lessons: [ChapterLesson]
+    var lessons: [ChapterLesson]
     let length: Int
     let iconName: String
-    let playgroundArr: [Playground]
+    var playgroundArr: [Playground]
 }
 
 

@@ -175,6 +175,12 @@ struct LoginView: View {
         
         .onAppear{
             chaptersViewModel.isUserLoggedIn = false
+            
+            chaptersViewModel.chaptersArr.removeAll()
+            
+            if (chaptersViewModel.chaptersArr.isEmpty){
+                chaptersViewModel.downloadLessons()
+            }
         }
         
         /// Resetting user input
