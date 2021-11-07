@@ -41,13 +41,7 @@ struct InteractiveView: View {
                         
                         Spacer()
                         
-                        Button{
-                            /// save progress
-                        }label:{
-                            Text("Save")
-                                .font(.system(size: 20, weight: .bold))
-                        }
-                        .padding(.trailing, 30)
+
                     }
                     .padding(.top, geometry.size.width/16)
                     .padding(.bottom, geometry.size.width/32)
