@@ -224,12 +224,13 @@ final class UserAccountViewModel: ObservableObject {
                             
                             /// Looping through each classroom
                             for i in 0..<snapshot!.documents.count {
-                            
-                                var userClassroom = UserClassroom()
+                                
                                 
                                 ///retrieving classroom document name from firebase
+
+                                var userClassroom = UserClassroom()
                                 userClassroom.classroomName = snapshot!.documents[i].documentID
-                                print("Classroom name : \(userClassroom.classroomName)")
+                                
                                 
                                 
                                 
@@ -285,13 +286,16 @@ final class UserAccountViewModel: ObservableObject {
                                         }
                                         
                                         /// Updating classroom chapter progress with the chapter progress
+                                        
                                         userClassroom.chapterProgress = chaptersProgress
                                         
                                     }
+                                    
                                 }
                                 
                                 /// Appending clasroom to user classrooms
                                 self.loggedInUser.classroom.append(userClassroom)
+                                print("Classroom name : \(userClassroom.classroomName)")
                             }
                         }
                     }

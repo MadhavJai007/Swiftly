@@ -152,12 +152,20 @@ struct UserAccountView: View {
                             
                             
                             VStack(alignment: .leading, spacing: geometry.size.width/20){
+                                /// foreach loop to display classroom name, chapters completed and interactive score average for each classroom
                                 
-                                ForEach(0..<userAccountViewModel.loggedInUser.classroom.count){_ in
-                                    Text("Classroom: \(userAccountViewModel.loggedInUser.classroom[0].classroomName)")
+                                ForEach(0..<userAccountViewModel.loggedInUser.classroom.count){ i in
+                                    Text("Classroom Name: \(String(userAccountViewModel.loggedInUser.classroom[i].classroomName))")
                                     Text("Chapter's Completed: \(String(userAccountViewModel.userChapterCompletionCount))")
                                     Text("Interactive Score Average: \(String(userAccountViewModel.userScoreAverage))")
                                 }
+                                 
+                                
+                                /*
+                                Text("Classroom Name: \(String(userAccountViewModel.loggedInUser.classroom[0].classroomName))")
+                                Text("Chapter's Completed: \(String(userAccountViewModel.userChapterCompletionCount))")
+                                Text("Interactive Score Average: \(String(userAccountViewModel.userScoreAverage))")
+                                 */
                                 
                             }
                             
