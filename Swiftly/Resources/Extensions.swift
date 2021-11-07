@@ -22,3 +22,14 @@ extension View {
         }
     }
 }
+
+/// Used to capitalize first letter in a string
+extension String {
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).capitalized + dropFirst()
+    }
+
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
+    }
+}

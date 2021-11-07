@@ -223,7 +223,10 @@ final class SignupViewModel: ObservableObject {
                     document.updateData(["question_\(j+1)_answer" : playgroundAnswers])
                 }
                 
+
                 document.updateData(["question_scores" : questionsArray, "question_progress" : playgroundProgress])
+
+              
                 
             }
             

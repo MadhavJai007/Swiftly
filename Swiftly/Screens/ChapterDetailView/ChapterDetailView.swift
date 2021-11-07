@@ -75,8 +75,18 @@ struct ChapterDetailView: View {
                             
                             ChapterContentText(text:"Difficulty Level: \(chaptersViewModel.selectedChapter!.difficulty)")
                             
-                            ChapterContentText(text:"Status: need to grab from student")
-                            
+                            Group{
+                                
+                                /// Chapter index
+                                let chapIndex = chaptersViewModel.selectedChapterIndex
+                                
+                                /// Getting the question index
+                                let index = chapterContentViewModel.selectedQuestionIndex
+                                
+                                var status = chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].chapterStatus
+                                
+                                ChapterContentText(text:"Status: \(status.capitalizingFirstLetter())")
+                            }
                             ChapterContentText(text: chaptersViewModel.selectedChapter!.summary)
                                 .padding(.trailing, geometry.size.width/6)
                                 .padding(.top, geometry.size.width/24)
