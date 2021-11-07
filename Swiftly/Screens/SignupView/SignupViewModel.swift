@@ -25,18 +25,21 @@ final class SignupViewModel: ObservableObject {
                        country: "Canada",
                        classroom: [UserClassroom()])
                     
-    
+    //boolean to check if email exists in database
     @Published var isBadSignup: Bool = false
     
     //boolean to ensure that email being used has not already been registered with Swiftly
     @Published var emailNotTaken: Bool = false
     
+    //variable used for alert notification
     @Published var alertInfo: AlertModel?
     
+    
+    //db variable for firestore information
     private var db = Firestore.firestore()
     
     
-    
+    //array for storing chapter information
     @Published var chaptersArr = [Chapter]()
     
     
@@ -45,7 +48,7 @@ final class SignupViewModel: ObservableObject {
     
     func isEmailValid() -> Bool{
         
-        //must be in email@email.com format
+        ///must be in email@email.com format
         
         let emailTest = NSPredicate(format: "SELF MATCHES %@", "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$")
         return emailTest.evaluate(with: newUser.email)
@@ -54,7 +57,7 @@ final class SignupViewModel: ObservableObject {
     
     func isDateValid() -> Bool{
         
-        //must be in dd/mm/yyyy format, only numerics
+        ///must be in dd/mm/yyyy format, only numerics
         
         let dateTest = NSPredicate(format: "SELF MATCHES %@", "^\\d{2}\\/\\d{2}\\/\\d{4}$")
         return dateTest.evaluate(with: newUser.dob)
@@ -63,7 +66,7 @@ final class SignupViewModel: ObservableObject {
     
     func isPasswordValid() -> Bool{
         
-        //Password must be at least 8 characters, no more than 15 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.
+        ///Password must be at least 8 characters, no more than 15 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.
         
         let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=[^\\d_].*?\\d)\\w(\\w|[!@#$%]){7,20}")
         return passwordTest.evaluate(with: newUser.password)
@@ -85,7 +88,7 @@ final class SignupViewModel: ObservableObject {
         return newUser.country != ""
     }
     
-    
+    ///Boolean variable that determines if user credentials are valid, based on previous validation functions
     var isSignUpComplete : Bool {
         if !isEmailValid(){
             return false
@@ -113,6 +116,7 @@ final class SignupViewModel: ObservableObject {
         return true
     }
     
+    ///function to check if email already exists in Swiftly database
     func checkIfEmailExists(user: User){
         print("Email to be checked if it exists in Users collection is : \(user.email)")
         
@@ -132,10 +136,10 @@ final class SignupViewModel: ObservableObject {
 //            print("there is no default case")
 //
 //        }
-        // Get your Firebase collection
+        /// retrieving  Firebase collection
            let collectionRef = db.collection("Users")
 
-        // Get all the documents where the field username is equal to the String you pass, loop over all the documents.
+        /// getting all the documents where the field username is equal to the String you pass, loop over all the documents.
 
         collectionRef.whereField("user_email", isEqualTo: emailCompared).getDocuments { (snapshot, err) in
                if let err = err {
@@ -160,8 +164,7 @@ final class SignupViewModel: ObservableObject {
         print("check for students")
     }
     
-    //adding user data to authentication database and Students/Teachers/Experts and Users firestore collections
-    
+    ///fucntion for adding user data to authentication database and Students/Teachers and Users firestore collections
     func authenticateUser(user: User){
         
         Auth.auth().createUser(withEmail: user.email, password: user.password) { [self] user, error in
@@ -172,11 +175,15 @@ final class SignupViewModel: ObservableObject {
     func addUser(user: User, accountType: String){
         
         print("is \(accountType)")
+        
+        ///switch case for creating a new "Student' or "Teacher' account
         switch accountType {
+        ///Student case
         case "Student":
             
             var newStudentRef = db.collection("Students").document(user.username)
             
+            ///setting all user information based on user input for signupview
             newStudentRef.setData([
                 "country": user.country,
                 "date_of_birth": user.dob,
@@ -197,7 +204,7 @@ final class SignupViewModel: ObservableObject {
             newStudentRef = newStudentRef.collection("Classrooms").document("classroom_1")
             newStudentRef.setData(["instructor_id" : "placeholder"])
             
-            
+            ///creating collection for user classrooms, which will contain users progress, answers and scores for each chapter
             for i in  0...chaptersArr.count-1{
                 var playgroundArray = chaptersArr[i].playgroundArr
                 
@@ -219,7 +226,7 @@ final class SignupViewModel: ObservableObject {
                 
             }
             
-            
+        ///teacher case
         case "Teacher":
             
             var newTeacherRef = db.collection("Teachers").document(user.username)
@@ -280,6 +287,7 @@ final class SignupViewModel: ObservableObject {
 
     }
     
+    ///function for downloading all chapter data, used to created user progress collections
     func downloadChapterData(){
         db.collection("Chapters").getDocuments() { (querySnapshot, err) in
             if let err = err {
