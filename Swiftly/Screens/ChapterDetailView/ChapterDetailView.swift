@@ -151,7 +151,7 @@ struct ChapterDetailView: View {
                                         Button{
                                             chaptersViewModel.selectedChapterIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)!
                                             
-                                            
+
                                             isShowingDetailView = false
                                             chaptersViewModel.startChapterIntent = true
                                             chaptersViewModel.jumpToPlayground = true

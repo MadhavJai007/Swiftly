@@ -278,8 +278,9 @@ final class UserAccountViewModel: ObservableObject {
                                                 self.userScoreAverage += Double(questionScores[i])
                                             }
                                             
+                                            /// TODO: UserQuestionAnswers and Questionprogress are dummy values 
                                             /// Creating chapter object
-                                            let chapter  =  UserChapterProgress(chapterStatus: chapterStatus, chapterName: chapterName, chapterNum: chapterNum, playgroundStatus: playgroundStatus, questionScores: questionScores, theoryStatus: theoryStatus)
+                                            let chapter  =  UserChapterProgress(chapterStatus: chapterStatus, chapterName: chapterName, chapterNum: chapterNum, playgroundStatus: playgroundStatus, questionScores: questionScores, questionAnswers: [UserQuestionAnswer(answers: [""])], questionProgress: [""], theoryStatus: theoryStatus)
                                             
                                             /// Appending chapter
                                             chaptersProgress.append(chapter)

@@ -38,7 +38,7 @@ final class ChapterContentViewModel: ObservableObject {
     @Published var mcqUserAnswers: [String] = []
     @Published var isShowingScore = false
     @Published var isShowingChabot = false
-  
+    
     /// Init variables with basic data
     init(){
         chapter = MockData.sampleChapter
@@ -61,7 +61,7 @@ final class ChapterContentViewModel: ObservableObject {
         }
     }
     
-    /// Called to setup the playground environment
+    /// Called to setup the playground environment (all questions)
     func setupPlaygroundQuestions(selectedChapter: Chapter){
         
         /// Grabs chapter and chapter playground questions
@@ -70,7 +70,7 @@ final class ChapterContentViewModel: ObservableObject {
         
         playgroundQuestionStatus.removeAll()
         playgroundQuestionScores.removeAll()
-
+        
         /// Setting up playground question status arr --> used to keep track of individual question progress
         for i in 0..<chapterPlaygroundQuestions.count{
             playgroundQuestionStatus.append("incomplete")
@@ -79,31 +79,37 @@ final class ChapterContentViewModel: ObservableObject {
     }
     
     /// Called to start the next playground question
-    func startNextPlaygroundQuestion(){
+    func startNextPlaygroundQuestion(userAnswers: [String]){
         
         /// Incrementing to next chapter
         selectedQuestionIndex += 1
         selectedQuestion = chapterPlaygroundQuestions[selectedQuestionIndex]
         
         /// Setting up the next playground
-        setupPlayground(question: selectedQuestion, questionIndex: selectedQuestionIndex)
+        setupPlayground(question: selectedQuestion, questionIndex: selectedQuestionIndex, userAnswers: [""])
         
         willStartNextQuestion = true
     }
     
     
     /// Called from InteractiveQuestionsView
-    func setupPlayground(question: Playground, questionIndex: Int){
+    func setupPlayground(question: Playground, questionIndex: Int, userAnswers: [String]){
+        
         
         selectedQuestion = question
         selectedQuestionIndex = questionIndex
         
         if (selectedQuestion.type == "code_blocks"){
             
-            var codeBlocks = selectedQuestion.originalArr
+            var codeBlocks = [""]
             
-            /// TODO: Only call this if the user does not have save data for this
-            codeBlocks.shuffle()
+            /// If the user's answers is empty (first time doing question) then use default values
+            if (userAnswers.isEmpty){
+                codeBlocks = selectedQuestion.originalArr
+                codeBlocks.shuffle()
+            }else{
+                codeBlocks = userAnswers
+            }
             
             /// Pre-populates array with interactive block objects
             activeBlocks = Array(repeating: InteractiveBlock(id: 0, content: ""), count: codeBlocks.count)
@@ -114,8 +120,14 @@ final class ChapterContentViewModel: ObservableObject {
                 activeBlocks[i] = InteractiveBlock(id: i, content: codeBlocks[i])
             }
             
+            
         }else if (selectedQuestion.type == "mcq"){
-            mcqOptions = selectedQuestion.originalArr
+            
+            if (userAnswers.isEmpty == false){
+                mcqOptions = selectedQuestion.originalArr
+            }else{
+                mcqOptions = userAnswers
+            }
         }
         
         /// This will make navigation go

@@ -77,6 +77,9 @@ struct InteractiveQuestionsView: View {
                                         /// Used to enable/disable questions based on their order
                                         Group{
                                             
+                                            /// Chapter index
+                                            let chapIndex = chaptersViewModel.selectedChapterIndex
+                                            
                                             /// Getting index of question and the status of the question
                                             let index = chaptersViewModel.selectedChapter!.playgroundArr.firstIndex(of: question)
                                             
@@ -87,8 +90,9 @@ struct InteractiveQuestionsView: View {
                                                 /// If it's the first question, enable it
                                                 if (index == 0){
                                                     Button {
+                                                        
                                                         chapterContentViewModel.selectedQuestionIndex = index!
-                                                        chapterContentViewModel.setupPlayground(question: question, questionIndex: index!)
+                                                        chapterContentViewModel.setupPlayground(question: question, questionIndex: index!, userAnswers: chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index!].answers)
                                                     }label: {
                                                         InteractiveStartButton(text: "Start Playground", textColor: Color.white, backgroundColor: Color.darkGrayCustom)
                                                     }
@@ -102,7 +106,7 @@ struct InteractiveQuestionsView: View {
                                                     if (statusBefore == "complete"){
                                                         Button {
                                                             chapterContentViewModel.selectedQuestionIndex = index!
-                                                            chapterContentViewModel.setupPlayground(question: question, questionIndex: index!)
+                                                            chapterContentViewModel.setupPlayground(question: question, questionIndex: index!, userAnswers: chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index!].answers)
                                                         }label: {
                                                             InteractiveStartButton(text: "Start Playground", textColor: Color.white, backgroundColor: Color.darkGrayCustom)
                                                         }
@@ -124,8 +128,9 @@ struct InteractiveQuestionsView: View {
                                             }
                                             else{
                                                 Button {
+                                                    
                                                     chapterContentViewModel.selectedQuestionIndex = index!
-                                                    chapterContentViewModel.setupPlayground(question: question, questionIndex: index!)
+                                                    chapterContentViewModel.setupPlayground(question: question, questionIndex: index!, userAnswers: chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index!].answers)
                                                 }label: {
                                                     InteractiveStartButton(text: "Start Playground", textColor: Color.white, backgroundColor: Color.darkGrayCustom)
                                                 }
@@ -171,7 +176,7 @@ struct InteractiveQuestionsView: View {
                                     }else{
                                         Button{
                                             
-                                            /// If it's not the last chapter
+                                        
                                             chaptersViewModel.willStartNextChapter = true
                                             chapterContentViewModel.willStartInteractiveSection.toggle()
                                             chaptersViewModel.didStartChapter.toggle()
@@ -191,8 +196,6 @@ struct InteractiveQuestionsView: View {
                             }
                             
                         }
-                        
-                        
                         
                     }
                     
@@ -228,6 +231,11 @@ struct InteractiveQuestionsView: View {
                 chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].playgroundStatus = "inprogress"
                 chaptersViewModel.loggedInUser.classroom[0].classroomPlaygroundStatus = "inprogress"
             }
+            
+            
+            chaptersViewModel.saveUserProgress()
+            
+            
             
             /// If all the questions in this playground are complete, set the chapter to be complete
 //            if (chapterContentViewModel.playgroundQuestionStatus.contains("incomplete")){

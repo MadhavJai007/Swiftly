@@ -127,21 +127,40 @@ struct InteractiveView: View {
                                 /// Next question button
                                 Button{
                                     
-                                    /// Getting the user score
-                                    let score = chapterContentViewModel.getQuestionScore()
+                                    /// Chapter index
+                                    let chapIndex = chaptersViewModel.selectedChapterIndex
                                     
                                     /// Getting the question index
                                     let index = chapterContentViewModel.selectedQuestionIndex
+                                    
+                                    /// If question type is code blocks, loop through the code blocks and
+                                    /// save each of their contents to the users
+                                    if (chapterContentViewModel.selectedQuestion.type == "code_blocks"){
+                                        
+                                        
+                                        for i in 0..<chapterContentViewModel.activeBlocks.count {
+                                            
+                                            chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index].answers.append(chapterContentViewModel.activeBlocks[i].content)
+                                        }
+                                        
+                                    }else{
+                                        chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index].answers = chapterContentViewModel.mcqUserAnswers
+                                    }
+                                    
+                                    /// Getting the user score
+                                    let score = chapterContentViewModel.getQuestionScore()
+                                    
+                                   
                                     
                                     /// Saving the score, and setting status to complete
                                     chapterContentViewModel.playgroundQuestionScores[index] = score
                                     chapterContentViewModel.playgroundQuestionStatus[index] = "complete"
                                     
+                                    chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chaptersViewModel.selectedChapterIndex].questionScores[index] = score
+                                    
                                     /// If it's the last question
                                     if (index == chapterContentViewModel.playgroundQuestionScores.count-1){
-                                        
-                                        let chapIndex = chaptersViewModel.selectedChapterIndex
-                                        
+
                                         /// Setting playground progress to complete
                                         chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].playgroundStatus = "complete"
                                         
@@ -159,6 +178,8 @@ struct InteractiveView: View {
                                             chaptersViewModel.loggedInUser.classroom[0].classroomStatus = "complete"
                                         }
                                     }
+                                    
+                                    chaptersViewModel.saveUserProgress()
                                     
                                     
                                 }label: {
@@ -183,9 +204,11 @@ struct InteractiveView: View {
                             
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                 
+                                let index = chapterContentViewModel.selectedQuestionIndex
+                                
                                 /// Used to either proceed to next question, or finish interactive section
                                 if (chapterContentViewModel.isFinalChapter == false){
-                                    chapterContentViewModel.startNextPlaygroundQuestion()
+                                    chapterContentViewModel.startNextPlaygroundQuestion(userAnswers: chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chaptersViewModel.selectedChapterIndex].questionAnswers[index].answers)
                                     willUpdateView.toggle()
                                 }else{
                                     chapterContentViewModel.completeInteractiveSection()
@@ -198,12 +221,16 @@ struct InteractiveView: View {
         }
         .navigationBarHidden(true)
         .onDisappear {
+            
+            chapterContentViewModel.mcqUserAnswers.removeAll()
+            chapterContentViewModel.activeBlocks.removeAll()
+            
             chapterContentViewModel.willStartNextQuestion = false
             chapterContentViewModel.isShowingScore = false
         }
         
         .onAppear(){
-    
+            
         }
         
         /// For clearing user input when they exit

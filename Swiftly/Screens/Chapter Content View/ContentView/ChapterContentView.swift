@@ -185,6 +185,14 @@ struct ChapterContentView: View {
         
         .onAppear(){
             
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            
+                if (chaptersViewModel.jumpToPlayground == true){
+                    chapterContentViewModel.startInteractiveSection()
+                    chaptersViewModel.jumpToPlayground = false
+                }
+            
+            }
             /// Getting chapter index
             let chapIndex = chaptersViewModel.selectedChapterIndex
             
@@ -207,14 +215,14 @@ struct ChapterContentView: View {
                 if (classroomTheoryProgress == "incomplete"){
                     chaptersViewModel.loggedInUser.classroom[0].clasroomTheoryStatus = "inprogress"
                     chaptersViewModel.loggedInUser.classroom[0].classroomStatus = "inprogress"
-                }     
+                }
+                
+                chaptersViewModel.saveUserProgress()
             }
             
+            chaptersViewModel.saveUserProgress()
             
-            if (chaptersViewModel.jumpToPlayground == true){
-                chapterContentViewModel.startInteractiveSection()
-                chaptersViewModel.jumpToPlayground = false
-            }
+            
         }
     }
 }

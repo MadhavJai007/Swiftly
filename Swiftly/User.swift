@@ -37,6 +37,12 @@ struct UserChapterProgress: Hashable, Identifiable, Codable {
     var chapterNum: Int
     var playgroundStatus: String
     var questionScores: [Int]
+    var questionAnswers: [UserQuestionAnswer]
+    var questionProgress: [String]
     var theoryStatus: String
 }
 
+struct UserQuestionAnswer: Hashable, Identifiable, Codable {
+    var id = UUID()
+    var answers: [String]
+}
