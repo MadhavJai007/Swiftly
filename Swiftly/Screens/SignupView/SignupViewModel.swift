@@ -204,13 +204,19 @@ final class SignupViewModel: ObservableObject {
                 newStudentRef.collection("Chapters").document("chapter_\(chaptersArr[i].chapterNum)").setData(["chapters_num" : chaptersArr[i].chapterNum,"chapters_name" : chaptersArr[i].name, "playground_status" : "incomplete", "chapter_status" : "incomplete", "theory_status" : "incomplete"])
                 
                 var questionsArray : [Int] = []
+                var playgroundAnswers : [String] = []
+                var playgroundProgress : [String] = []
                 
                 for j in 0...playgroundArray.count-1{
                     questionsArray.append(0)
                     
+                    playgroundProgress.append("incomplete")
+                    
                 }
+                playgroundAnswers.append("")
                 var document = newStudentRef.collection("Chapters").document("chapter_\(chaptersArr[i].chapterNum)")
-                document.updateData(["question_scores" : questionsArray])
+                document.updateData(["question_scores" : questionsArray, "question_answers" : playgroundAnswers, "question_progress" : playgroundProgress])
+                
             }
             
             
