@@ -101,26 +101,69 @@ struct ChapterDetailView: View {
                             
                             ChapterContentText(text: "Jump To")
                             
+                            
+                            
                             HStack(spacing: geometry.size.width/32){
-                                Button{
-                                    print("tapped")
-                                }label: {
-                                    ChapterDetailsButtonText(text:"Notes")
+                                
+                                
+                                Group{
                                     
+                                    /// Getting chapter index
+                                    let chapIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)
+                                 
+                                    /// Grabbing playground status
+                                    let playgroundStat = chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex!].playgroundStatus
+                                    
+                                    /// Checking playground stat for the "Jump To" button
+                                    if (playgroundStat == "incomplete"){
+                                        
+                                        Button{
+                                            print("tapped")
+                                        }label: {
+                                            ChapterDetailsButtonText(text:"Interactive Section")
+                                        }
+                                        .frame(width: 260, height: 50)
+                                        .background(Color.lightGrayCustom)
+                                        .cornerRadius(10)
+                                        .disabled(true)
+                                    }
+                                    
+                                    else if (playgroundStat == "inprogress"){
+                                        
+                                        Button{
+                                            chaptersViewModel.selectedChapterIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)!
+                                            
+                                            isShowingDetailView = false
+                                            chaptersViewModel.startChapterIntent = true
+                                            chaptersViewModel.jumpToPlayground = true
+                                            
+                                        }label: {
+                                            ChapterDetailsButtonText(text:"Interactive Section")
+                                        }
+                                        .frame(width: 260, height: 50)
+                                        .background(Color.yellow)
+                                        .cornerRadius(10)
+                                        .disabled(false)
+                                    }
+                                    
+                                    else if (playgroundStat == "complete"){
+                                      
+                                        Button{
+                                            chaptersViewModel.selectedChapterIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)!
+                                            
+                                            
+                                            isShowingDetailView = false
+                                            chaptersViewModel.startChapterIntent = true
+                                            chaptersViewModel.jumpToPlayground = true
+                                        }label: {
+                                            ChapterDetailsButtonText(text:"Interactive Section")
+                                        }
+                                        .frame(width: 260, height: 50)
+                                        .background(Color.green)
+                                        .cornerRadius(10)
+                                        .disabled(false)
+                                    }
                                 }
-                                .frame(width: 100, height: 50)
-                                .background(Color.lightGrayCustom)
-                                .cornerRadius(10)
-                                
-                                Button{
-                                    print("tapped")
-                                }label: {
-                                    ChapterDetailsButtonText(text:"Interactive Section")
-                                }
-                                .frame(width: 260, height: 50)
-                                .background(Color.lightGrayCustom)
-                                .cornerRadius(10)
-                                
                             }
                             .frame(width: geometry.size.width, alignment: .leading)
                         }

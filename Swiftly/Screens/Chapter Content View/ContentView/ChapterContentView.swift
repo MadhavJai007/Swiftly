@@ -185,16 +185,35 @@ struct ChapterContentView: View {
         
         .onAppear(){
             
+            /// Getting chapter index
             let chapIndex = chaptersViewModel.selectedChapterIndex
+            
+            /// Getting user theory progress for chapter
             let userTheoryProgress = chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].theoryStatus
             
-            print(" CHANGING STATUS FOR INDEX: \(chapIndex)")
-            
+            /// If it's incomplete, set it to inprogress
             if (userTheoryProgress == "incomplete"){
+                
+                /// Setting chapter theory and chapter status to inprogress
                 chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].theoryStatus = "inprogress"
-                chaptersViewModel.loggedInUser.classroom[0].clasroomTheoryStatus = "inprogress"
                 chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].chapterStatus = "inprogress"
+                
+                /// Used to update UI
                 chaptersViewModel.chaptersStatus[chapIndex] = "inprogress"
+                
+                /// Grabbing the classroom theory, and setting it to progress if it's incomplete (not started)
+                let classroomTheoryProgress = chaptersViewModel.loggedInUser.classroom[0].clasroomTheoryStatus
+                
+                if (classroomTheoryProgress == "incomplete"){
+                    chaptersViewModel.loggedInUser.classroom[0].clasroomTheoryStatus = "inprogress"
+                    chaptersViewModel.loggedInUser.classroom[0].classroomStatus = "inprogress"
+                }     
+            }
+            
+            
+            if (chaptersViewModel.jumpToPlayground == true){
+                chapterContentViewModel.startInteractiveSection()
+                chaptersViewModel.jumpToPlayground = false
             }
         }
     }

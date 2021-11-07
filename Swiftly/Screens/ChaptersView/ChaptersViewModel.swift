@@ -17,7 +17,9 @@ final class ChaptersViewModel: ObservableObject {
     @Published var chaptersArr = [Chapter]()
     @Published var isUserLoggedIn = false
     @Published var classroomCode: String = ""
+    @Published var jumpToPlayground = false
     
+    /// Take from firebase --> used to update UI components and store user entire chapter progress
     @Published var chaptersStatus = [String]()
     
     var loggedInAccountType : String = ""
@@ -35,6 +37,8 @@ final class ChaptersViewModel: ObservableObject {
     
     var startChapterIntent = false
     
+    
+    var classroomIndex = 0
     var selectedChapterIndex = 0
     var selectedChapter: Chapter? {
         didSet {
@@ -399,7 +403,7 @@ final class ChaptersViewModel: ObservableObject {
         }
         
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
             self.downloadPlaygrounds()
         }
         

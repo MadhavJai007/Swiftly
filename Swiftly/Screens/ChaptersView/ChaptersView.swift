@@ -124,12 +124,14 @@ struct ChaptersView: View {
         
         .onAppear {
             
+            
             print(chaptersViewModel.loggedInUser.classroom[0].chapterProgress)
             
             /// Resetting  variables
             chaptersViewModel.isShowingAccountView = false
             chaptersViewModel.didStartChapter = false
             loginViewModel.attemptingLogin = false /// re-enables login button
+            chaptersViewModel.jumpToPlayground = false
         
             
             if (chapterContentViewModel.willStartInteractiveSection == true){

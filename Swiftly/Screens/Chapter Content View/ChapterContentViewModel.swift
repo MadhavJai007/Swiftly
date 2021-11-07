@@ -14,12 +14,15 @@ final class ChapterContentViewModel: ObservableObject {
     var chapter: Chapter
     var chapterPlaygroundQuestions: [Playground]
     var selectedQuestion: Playground
-    var selectedQuestionIndex: Int
     
     var isFirstLesson = true
     
     var userScore = 0
     var totalScore = 0
+    
+    var playgroundQuestionScores = [Int]()
+    var playgroundQuestionStatus = [String]()
+    var selectedQuestionIndex = 0
     
     let columns = [GridItem(.flexible())]
     
@@ -64,6 +67,15 @@ final class ChapterContentViewModel: ObservableObject {
         /// Grabs chapter and chapter playground questions
         chapter = selectedChapter
         chapterPlaygroundQuestions = chapter.playgroundArr
+        
+        playgroundQuestionStatus.removeAll()
+        playgroundQuestionScores.removeAll()
+
+        /// Setting up playground question status arr --> used to keep track of individual question progress
+        for i in 0..<chapterPlaygroundQuestions.count{
+            playgroundQuestionStatus.append("incomplete")
+            playgroundQuestionScores.append(0)
+        }
     }
     
     /// Called to start the next playground question
@@ -125,7 +137,7 @@ final class ChapterContentViewModel: ObservableObject {
     }
     
     /// Used to retrieve the score of the user
-    func getQuestionScore(){
+    func getQuestionScore() -> Int{
         
         userScore = 0
         
@@ -151,6 +163,8 @@ final class ChapterContentViewModel: ObservableObject {
         }
         
         self.isShowingScore = true
+        
+        return userScore
     }
     
     /// Finishes the playground section and returns to the playground questions view

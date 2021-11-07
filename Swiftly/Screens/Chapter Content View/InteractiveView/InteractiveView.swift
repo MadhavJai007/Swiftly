@@ -124,9 +124,43 @@ struct InteractiveView: View {
                             
                             VStack(alignment: .leading){
                                 
+                                /// Next question button
                                 Button{
+                                    
                                     /// Getting the user score
-                                    chapterContentViewModel.getQuestionScore()
+                                    let score = chapterContentViewModel.getQuestionScore()
+                                    
+                                    /// Getting the question index
+                                    let index = chapterContentViewModel.selectedQuestionIndex
+                                    
+                                    /// Saving the score, and setting status to complete
+                                    chapterContentViewModel.playgroundQuestionScores[index] = score
+                                    chapterContentViewModel.playgroundQuestionStatus[index] = "complete"
+                                    
+                                    /// If it's the last question
+                                    if (index == chapterContentViewModel.playgroundQuestionScores.count-1){
+                                        
+                                        let chapIndex = chaptersViewModel.selectedChapterIndex
+                                        
+                                        /// Setting playground progress to complete
+                                        chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].playgroundStatus = "complete"
+                                        
+                                        chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].theoryStatus = "complete"
+                                        
+                                        chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].chapterStatus = "complete"
+                                        
+                                        chaptersViewModel.chaptersStatus[chapIndex] = "complete"
+                                        
+                                        
+                                        /// If it's the last chapter in the classroom
+                                        if (chapIndex == chaptersViewModel.loggedInUser.classroom[0].classroomPlaygroundStatus.count-1){
+                                            
+                                            chaptersViewModel.loggedInUser.classroom[0].classroomPlaygroundStatus = "complete"
+                                            chaptersViewModel.loggedInUser.classroom[0].classroomStatus = "complete"
+                                        }
+                                    }
+                                    
+                                    
                                 }label: {
                                     InteractiveSubTitle(text: chapterContentViewModel.chapterButtonText)
                                 }
@@ -144,9 +178,11 @@ struct InteractiveView: View {
                     Alert(
                         title: Text("Your Score"),
                         message: Text("You scored: \(chapterContentViewModel.userScore)/\(chapterContentViewModel.totalScore)"),
+                        
                         dismissButton: .default(Text("OK"), action: {
                             
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                
                                 /// Used to either proceed to next question, or finish interactive section
                                 if (chapterContentViewModel.isFinalChapter == false){
                                     chapterContentViewModel.startNextPlaygroundQuestion()
@@ -165,6 +201,11 @@ struct InteractiveView: View {
             chapterContentViewModel.willStartNextQuestion = false
             chapterContentViewModel.isShowingScore = false
         }
+        
+        .onAppear(){
+    
+        }
+        
         /// For clearing user input when they exit
 //        .onAppear(){
 //            chapterContentViewModel.mcqUserAnswers.removeAll()

@@ -32,11 +32,28 @@ struct ChapterTitleView: View {
                     
                     Spacer()
                     
-                    Image(systemName: "checkmark.circle")
-                        .resizable()
-                        .frame(width: 35, height: 35)
-                        .padding(10)
-                        .foregroundColor(Color.lightGrayCustom)
+                    Group{
+                        
+                        let chapIndex = chaptersViewModel.chaptersArr.firstIndex(of: chapter)
+                        let chapterStat = chaptersViewModel.chaptersStatus[chapIndex!]
+                        
+                        if (chapterStat == "complete"){
+                            Image(systemName: "checkmark.circle")
+                                .resizable()
+                                .frame(width: 35, height: 35)
+                                .padding(10)
+                                .foregroundColor(Color.green)
+                        }else{
+                            Image(systemName: "checkmark.circle")
+                                .resizable()
+                                .frame(width: 35, height: 35)
+                                .padding(10)
+                                .foregroundColor(Color.lightGrayCustom)
+                        }
+                        
+                    }
+                    
+                   
                     
                 }.frame(width: width)
                 
