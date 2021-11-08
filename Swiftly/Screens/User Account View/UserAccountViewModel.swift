@@ -27,10 +27,11 @@ final class UserAccountViewModel: ObservableObject {
                        country: "",
                        classroom: [UserClassroom()])
     
+    @Published var classroomName = ""
+    
     @Published var isUserInfoRetrieved = false
     
     @Published var userChapterCompletionCount = 0
-    
     
     @Published var userScoreAverage = 0.0
     
@@ -230,6 +231,8 @@ final class UserAccountViewModel: ObservableObject {
 
                                 var userClassroom = UserClassroom()
                                 userClassroom.classroomName = snapshot!.documents[i].documentID
+                                self.classroomName = snapshot!.documents[i].documentID
+                                print("From self.classroomNames : \(self.classroomName)")
                                 
                                 
                                 
@@ -273,10 +276,11 @@ final class UserAccountViewModel: ObservableObject {
                                             }
                                             
                                             ///calculating user score average
-                                            
+                                            var questionCount = 0
                                             for i in 0...questionScores.count-1{
-                                                self.userScoreAverage += Double(questionScores[i])
+                                                questionCount += 1
                                             }
+                                            self.userScoreAverage = self.userScoreAverage/Double(questionCount)
                                             
                                             /// Note: questionAnswers and 
                                             /// Creating chapter object
