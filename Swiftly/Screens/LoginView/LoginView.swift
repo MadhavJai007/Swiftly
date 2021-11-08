@@ -168,26 +168,31 @@ struct LoginView: View {
                 }
             }
             .animation(.spring())
+            
+            .onAppear{
+               print("onAppear 1")
+                chaptersViewModel.isUserLoggedIn = false
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    chaptersViewModel.chaptersArr.removeAll()
+                    chaptersViewModel.clearAllData()
+                    chaptersViewModel.downloadLessons()
+                }
+            }
+            
+            /// Resetting user input
+            .onDisappear {
+                self.email = ""
+                self.password = ""
+            }
+            
+            
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .navigationBarHidden(true)
         .accentColor(.white)
         
-        .onAppear{
-            chaptersViewModel.isUserLoggedIn = false
-            
-            chaptersViewModel.chaptersArr.removeAll()
-            
-            if (chaptersViewModel.chaptersArr.isEmpty){
-                chaptersViewModel.downloadLessons()
-            }
-        }
         
-        /// Resetting user input
-        .onDisappear {
-            self.email = ""
-            self.password = ""
-        }
     }
 }
 

@@ -90,22 +90,14 @@ struct UserAccountView: View {
                             
                             Button{
                                 
-                                /// Actually logs user out
-                                print("logging out of \(loginViewModel.loggedInEmail)")
+                                /// Logging user out
                                 userAccountViewModel.logoutUser()
                                 
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                     
                                     if (userAccountViewModel.logoutSuccessful){
-                                        
-                                        // reseting logged in email to empty string (none)
-                                        loginViewModel.loggedInEmail = ""
-                                        // resetting account mode to Undefined (none)
-                                        loginViewModel.accountMode = "Undefined"
-                                        print("login view model's loggedInEmail reset to empty string")
-                                        loginViewModel.isSuccessful = false
-                                        loginViewModel.isLoading = false
-                                        chaptersViewModel.isUserLoggedIn.toggle()
+                                        chaptersViewModel.isShowingAccountView = false
+                                        chaptersViewModel.logoutIntent = true
                                     }
                                     else{
                                         print("login view model's loggedInEmail has not been reset")

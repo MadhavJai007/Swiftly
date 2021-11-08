@@ -126,10 +126,14 @@ final class ChapterContentViewModel: ObservableObject {
             
         }else if (selectedQuestion.type == "mcq"){
             
-            if (userAnswers.isEmpty == true){
-                mcqOptions = selectedQuestion.originalArr
+            mcqOptions = selectedQuestion.originalArr
+            
+            
+            
+            if (userAnswers.isEmpty == false){
+                mcqUserAnswers = userAnswers
             }else{
-                mcqOptions = userAnswers
+                mcqUserAnswers = []
             }
         }
         

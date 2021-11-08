@@ -175,6 +175,7 @@ final class UserAccountViewModel: ObservableObject {
         }
     }
     
+    /// TODO: Remove this, and on chaptersView if going to account page, set userAccountViewModel.loggedInUser = chaptersViewModel.loggedInUser
     /// Method which downloads user data
     func loadUserData(loggedInEmail: String, accountType: String){
         

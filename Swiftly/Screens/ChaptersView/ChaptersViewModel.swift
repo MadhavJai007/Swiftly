@@ -19,6 +19,8 @@ final class ChaptersViewModel: ObservableObject {
     @Published var classroomCode: String = ""
     @Published var jumpToPlayground = false
     
+    var logoutIntent = false
+    
     /// Taken from firebase --> used to update UI components and store user entire chapter progress
     @Published var chaptersStatus = [String]()
     
@@ -271,7 +273,33 @@ final class ChaptersViewModel: ObservableObject {
                 }
             }
         }
+    }
+    
+    
+    func clearAllData(){
+        didStartChapter = false
+        didSelectLeaderboard  = false
+        isShowingChapterDetailView = false
+        isShowingAccountView = false
+        chaptersArr = [Chapter]()
+        isUserLoggedIn = false
+        classroomCode = ""
+        jumpToPlayground = false
+        chaptersStatus = [String]()
+        loggedInAccountType = ""
+        loggedInUser = User(firstName: "",
+                                lastName: "",
+                                username: "",
+                                email: "",
+                                password: "",
+                                dob : "",
+                                country: "",
+                                classroom: [])
         
+        willStartNextChapter = false
+        startChapterIntent = false
+        classroomIndex = 0
+        selectedChapterIndex = 0
         
     }
     

@@ -55,9 +55,9 @@ struct ChaptersView: View {
                         TitleLabel(text:"All Chapters")
                         
                         HStack{
-                        
+                            
                             InfoLabelMedium(text:"Classroom: Global")
-                        
+                            
                             Menu{
                                 ForEach(chaptersViewModel.loggedInUser.classroom){ classroom in
                                     Button("Classroom: sdf", action: chaptersViewModel.changeClassroom)
@@ -78,12 +78,12 @@ struct ChaptersView: View {
                         LazyVGrid(columns: chaptersViewModel.columns, spacing: 50) {
                             
                             ForEach(0..<chaptersViewModel.chaptersArr.count) { index in
-                            
+                                
                                 ChapterTitleView(chapter: chaptersViewModel.chaptersArr[index], width: geometry.size.width/2.35)
                                     .environmentObject(chaptersViewModel)
                                     .environmentObject(chapterContentViewModel)
                                     .environmentObject(leaderboardViewModel)
-                            
+                                
                             }
                         }
                         .sheet(isPresented: $chaptersViewModel.isShowingChapterDetailView) {
@@ -123,10 +123,15 @@ struct ChaptersView: View {
         .navigationBarHidden(true)
         
         .onAppear {
+            print("onAppear 2")
             
-    
-            
-            chaptersViewModel.saveUserProgress()
+            if (chaptersViewModel.logoutIntent == true){
+                
+                chaptersViewModel.logoutIntent = false
+                chaptersViewModel.isUserLoggedIn = false
+            }else{
+                chaptersViewModel.saveUserProgress()
+            }
             
             print(chaptersViewModel.loggedInUser.classroom[0].chapterProgress)
             
@@ -135,7 +140,7 @@ struct ChaptersView: View {
             chaptersViewModel.didStartChapter = false
             loginViewModel.attemptingLogin = false /// re-enables login button
             chaptersViewModel.jumpToPlayground = false
-        
+            
             
             if (chapterContentViewModel.willStartInteractiveSection == true){
                 chapterContentViewModel.willStartInteractiveSection = false
@@ -150,24 +155,29 @@ struct ChaptersView: View {
                 let chapIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)
                 chaptersViewModel.selectedChapter = chaptersViewModel.chaptersArr[chapIndex!+1]
             }
+            
         }
         
         .onDisappear {
             
-            if (chaptersViewModel.selectedChapter != nil){
-            
-                chaptersViewModel.selectedChapterIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)!
-                
-                print(chaptersViewModel.selectedChapterIndex)
-                print(chaptersViewModel.selectedChapter!.chapterNum)
-            }
+//            if (chaptersViewModel.selectedChapter != nil && chaptersViewModel.didStartChapter == true){
+//
+//                chaptersViewModel.selectedChapterIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)!
+//
+//                print(chaptersViewModel.selectedChapterIndex)
+//                print(chaptersViewModel.selectedChapter!.chapterNum)
+//            }
             
             if (chaptersViewModel.isUserLoggedIn == false){
-                chaptersViewModel.chaptersArr.removeAll()
-            }
-            
-            
-            
+                
+                
+                loginViewModel.loggedInEmail = ""
+                loginViewModel.accountMode = "Undefined"
+                loginViewModel.isSuccessful = false
+                loginViewModel.isLoading = false
+                
+                
+            }    
         }
     }
 }
@@ -178,3 +188,6 @@ struct ChaptersView_Preview: PreviewProvider {
         ChaptersView()
     }
 }
+
+//
+
