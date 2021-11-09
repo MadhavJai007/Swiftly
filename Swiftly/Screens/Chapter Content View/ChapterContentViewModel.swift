@@ -161,10 +161,13 @@ final class ChapterContentViewModel: ObservableObject {
         
         userScore = 0
         
-        totalScore = selectedQuestion.originalArr.count
+        
         
         /// Checking code block answer
         if (selectedQuestion.type == "code_blocks"){
+            
+            totalScore = selectedQuestion.originalArr.count
+            
             for i in 0..<selectedQuestion.originalArr.count {
                 if (activeBlocks[i].content == selectedQuestion.originalArr[i]){
                     userScore += 1
@@ -173,6 +176,9 @@ final class ChapterContentViewModel: ObservableObject {
             
         }else{
             if (mcqUserAnswers.isEmpty == false){
+                
+                totalScore = selectedQuestion.mcqAnswers.count
+                
                 for i in 0..<mcqUserAnswers.count {
                     if (selectedQuestion.mcqAnswers.contains(mcqUserAnswers[i])){
                         userScore += 1
