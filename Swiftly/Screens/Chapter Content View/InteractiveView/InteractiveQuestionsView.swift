@@ -55,12 +55,52 @@ struct InteractiveQuestionsView: View {
                                             InteractiveContentTextPreview(text: "Type: Code Tiles")
                                                 .padding(.leading, 5)
                                                 .padding(.trailing, 5)
-                                                .padding(.bottom, 5)
+                                            
+                                            let questionLength = question.originalArr.count
+                                            
+                                            if (questionLength <= 2){
+                                                InteractiveContentTextPreview(text: "Difficulty: Easy")
+                                                    .padding(.leading, 5)
+                                                    .padding(.trailing, 5)
+                                                    .padding(.bottom, 5)
+                                            }
+                                            else if (questionLength <= 4){
+                                                InteractiveContentTextPreview(text: "Difficulty: Medium")
+                                                    .padding(.leading, 5)
+                                                    .padding(.trailing, 5)
+                                                    .padding(.bottom, 5)
+                                            }else if (questionLength >= 5){
+                                                InteractiveContentTextPreview(text: "Difficulty: Hard")
+                                                    .padding(.leading, 5)
+                                                    .padding(.trailing, 5)
+                                                    .padding(.bottom, 5)
+                                            }
+                                            
+                                            
                                         }else{
                                             InteractiveContentTextPreview(text: "Type: Multiple Choice Question")
                                                 .padding(.leading, 5)
                                                 .padding(.trailing, 5)
-                                                .padding(.bottom, 5)
+                                            
+                                            let questionLength = question.originalArr.count
+                                            
+                                            if (questionLength <= 3){
+                                                InteractiveContentTextPreview(text: "Difficulty: Easy")
+                                                    .padding(.leading, 5)
+                                                    .padding(.trailing, 5)
+                                                    .padding(.bottom, 5)
+                                            }
+                                            else if (questionLength <= 4){
+                                                InteractiveContentTextPreview(text: "Difficulty: Medium")
+                                                    .padding(.leading, 5)
+                                                    .padding(.trailing, 5)
+                                                    .padding(.bottom, 5)
+                                            }else if (questionLength >= 5){
+                                                InteractiveContentTextPreview(text: "Difficulty: Hard")
+                                                    .padding(.leading, 5)
+                                                    .padding(.trailing, 5)
+                                                    .padding(.bottom, 5)
+                                            }
                                         }
                                     }
                                     Spacer()
