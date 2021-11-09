@@ -157,13 +157,13 @@ struct LoginView: View {
                         
                         VStack{
                             ProgressView {
-                                SpinnerInfoLabel(text:"Loading...")
+                                SpinnerInfoLabel(text:chaptersViewModel.loadingInfo)
                             }
                             .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
                         }
                     }
-                    .frame(width: 150, height: 115)
-                    .cornerRadius(20)
+                    .frame(width: 175, height: 125)
+                    .cornerRadius(15)
                     .animation(.spring())
                 }
             }

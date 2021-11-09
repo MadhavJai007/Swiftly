@@ -17,14 +17,14 @@ final class SignupViewModel: ObservableObject {
     
     
     @Published var newUser = User(firstName: "",
-                       lastName: "",
-                       username: "",
-                       email: "",
-                       password: "",
-                       dob : "",
-                       country: "Canada",
-                       classroom: [UserClassroom()])
-                    
+                                  lastName: "",
+                                  username: "",
+                                  email: "",
+                                  password: "",
+                                  dob : "",
+                                  country: "Canada",
+                                  classroom: [UserClassroom()])
+    
     //boolean to check if email exists in database
     @Published var isBadSignup: Bool = false
     
@@ -43,7 +43,7 @@ final class SignupViewModel: ObservableObject {
     @Published var chaptersArr = [Chapter]()
     
     
-
+    
     //Validation functions
     
     func isEmailValid() -> Bool{
@@ -122,42 +122,42 @@ final class SignupViewModel: ObservableObject {
         
         let emailCompared = user.email
         
-//        print("After lowercased its : \(emailCompared)")
-//
-//        switch accountType {
-//        case "Student":
-//            print("search student collection")
-//            let collectionRef = db.collection("Students")
-//
-//        case "Teacher":
-//            print("search teacher collection")
-//            let collectionRef = db.collection("Teachers")
-//        default:
-//            print("there is no default case")
-//
-//        }
+        //        print("After lowercased its : \(emailCompared)")
+        //
+        //        switch accountType {
+        //        case "Student":
+        //            print("search student collection")
+        //            let collectionRef = db.collection("Students")
+        //
+        //        case "Teacher":
+        //            print("search teacher collection")
+        //            let collectionRef = db.collection("Teachers")
+        //        default:
+        //            print("there is no default case")
+        //
+        //        }
         /// retrieving  Firebase collection
-           let collectionRef = db.collection("Users")
-
+        let collectionRef = db.collection("Users")
+        
         /// getting all the documents where the field username is equal to the String you pass, loop over all the documents.
-
+        
         collectionRef.whereField("user_email", isEqualTo: emailCompared).getDocuments { (snapshot, err) in
-               if let err = err {
-                   print("Error getting document: \(err)")
-               } else if (snapshot?.isEmpty)! {
-                   print("Email is not taken. It is valid.")
-                   self.emailNotTaken = true
-               } else {
-                   for document in (snapshot?.documents)! {
-                       if document.data()["username"] != nil {
-                           print("Email is Taken. It is NOT valid.")
-                           self.emailNotTaken = false
-                           
-                       }
-                   }
-               }
-           }
-       
+            if let err = err {
+                print("Error getting document: \(err)")
+            } else if (snapshot?.isEmpty)! {
+                print("Email is not taken. It is valid.")
+                self.emailNotTaken = true
+            } else {
+                for document in (snapshot?.documents)! {
+                    if document.data()["username"] != nil {
+                        print("Email is Taken. It is NOT valid.")
+                        self.emailNotTaken = false
+                        
+                    }
+                }
+            }
+        }
+        
     }
     
     func checkIfEmailExistsCompletion(user: User, completion: () -> Void){
@@ -178,7 +178,7 @@ final class SignupViewModel: ObservableObject {
         
         ///switch case for creating a new "Student' or "Teacher' account
         switch accountType {
-        ///Student case
+            ///Student case
         case "Student":
             
             var newStudentRef = db.collection("Students").document(user.username)
@@ -205,10 +205,16 @@ final class SignupViewModel: ObservableObject {
             newStudentRef.setData(["instructor_id" : "placeholder"])
             
             ///creating collection for user classrooms, which will contain users progress, answers and scores for each chapter
-            for i in  0...chaptersArr.count-1{
-                var playgroundArray = chaptersArr[i].playgroundArr
+            for i in 0..<chaptersArr.count{
                 
-                newStudentRef.collection("Chapters").document("chapter_\(chaptersArr[i].chapterNum)").setData(["chapters_num" : chaptersArr[i].chapterNum,"chapters_name" : chaptersArr[i].name, "playground_status" : "incomplete", "chapter_status" : "incomplete", "theory_status" : "incomplete"])
+                let playgroundArray = chaptersArr[i].playgroundArr
+                
+                newStudentRef.collection("Chapters").document("chapter_\(chaptersArr[i].chapterNum)").setData([
+                    "chapters_num" : chaptersArr[i].chapterNum,
+                    "chapters_name" : chaptersArr[i].name,
+                    "playground_status" : "incomplete",
+                    "chapter_status" : "incomplete",
+                    "theory_status" : "incomplete"])
                 
                 var questionsArray : [Int] = []
                 var playgroundAnswers : [String] = []
@@ -217,20 +223,19 @@ final class SignupViewModel: ObservableObject {
                 
                 var document = newStudentRef.collection("Chapters").document("chapter_\(chaptersArr[i].chapterNum)")
                 
-                for j in 0...playgroundArray.count-1{
+                for j in 0..<playgroundArray.count{
                     questionsArray.append(0)
                     playgroundProgress.append("incomplete")
                     document.updateData(["question_\(j+1)_answer" : playgroundAnswers])
                 }
                 
-
+                
                 document.updateData(["question_scores" : questionsArray, "question_progress" : playgroundProgress])
-
-              
+                
                 
             }
             
-        ///teacher case
+            ///teacher case
         case "Teacher":
             
             var newTeacherRef = db.collection("Teachers").document(user.username)
@@ -287,8 +292,8 @@ final class SignupViewModel: ObservableObject {
                 print("User successfully added!")
             }
         }
-            
-
+        
+        
     }
     
     ///function for downloading all chapter data, used to created user progress collections
@@ -378,7 +383,7 @@ final class SignupViewModel: ObservableObject {
                             
                             
                             self.chaptersArr.append(Chapter(chapterNum: chapterNum, name: chapterName, difficulty: chapterDifficulty, summary: chapterSummary, lessons: chapterLessons, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions))
-    
+                            
                         }
                     }
                 }
@@ -399,24 +404,24 @@ final class SignupViewModel: ObservableObject {
             print("now check for teachers")
         })
         
-    
+        
         emailNotTaken = false
-
+        
         print("First we will check if the email already exists in our database using checkIfEmailExists().")
         checkIfEmailExists(user: newUser)
-
-
+        
+        
         let timer = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [self] (timer) in
-
+            
             print("The email is not taken is : \(emailNotTaken)")
             if(emailNotTaken == false){
                 self.isBadSignup = true
             }
             
         }
-
+        
         let timer2 = Timer.scheduledTimer(withTimeInterval: 8.0, repeats: false) { [self] (timer) in
-
+            
             print("The email is not taken is : \(emailNotTaken)")
             if(emailNotTaken == true){
                 self.downloadChapterData()
@@ -424,13 +429,13 @@ final class SignupViewModel: ObservableObject {
                 self.authenticateUser(user: newUser)
             }
         }
-
+        
         let timer3 = Timer.scheduledTimer(withTimeInterval: 10.0, repeats: false) { [self] (timer) in
             if(emailNotTaken == true){
                 print("Finally, since the email was valid, now execute addUser() to add user to collections")
                 self.addUser(user: newUser, accountType: accountType)
             }
-
+            
         }
         
     }

@@ -19,6 +19,8 @@ final class ChaptersViewModel: ObservableObject {
     @Published var classroomCode: String = ""
     @Published var jumpToPlayground = false
     
+    @Published var loadingInfo = "Processing..."
+    
     var logoutIntent = false
     
     /// Taken from firebase --> used to update UI components and store user entire chapter progress
@@ -89,14 +91,14 @@ final class ChaptersViewModel: ObservableObject {
         
         /// Updating user progress
         for j in 0..<loggedInUser.classroom[0].chapterProgress.count{
-
+            
             let updatingRef = db.collection(loggedInAccountType).document(loggedInUser.username).collection("Classrooms").document("classroom_1").collection("Chapters").document("chapter_\(j+1)")
-
+            
             for i in 0..<loggedInUser.classroom[0].chapterProgress[j].questionAnswers.count
             {
-
+                
                 let data = loggedInUser.classroom[0].chapterProgress[j].questionAnswers[i].answers
-
+                
                 updatingRef.updateData([
                     "question_\(i+1)_answer": data
                 ]){ err in
@@ -107,7 +109,7 @@ final class ChaptersViewModel: ObservableObject {
                     }
                 }
             }
-
+            
             updatingRef.updateData([
                 "chapter_status": loggedInUser.classroom[0].chapterProgress[j].chapterStatus,
                 "playground_status": loggedInUser.classroom[0].chapterProgress[j].playgroundStatus,
@@ -201,6 +203,8 @@ final class ChaptersViewModel: ObservableObject {
     /// Function that downloads the users playgrounds
     func downloadPlaygrounds(){
         
+//        self.loadingInfo = "Downloading content..."
+        
         let db = Firestore.firestore()
         
         
@@ -268,8 +272,6 @@ final class ChaptersViewModel: ObservableObject {
                             print("Playgrounds: \(self.chaptersArr[chapterNum-1].playgroundArr.count)")
                             
                             
-                            self.isUserLoggedIn = true
-                            
                         }
                     }
                 }
@@ -290,13 +292,13 @@ final class ChaptersViewModel: ObservableObject {
         chaptersStatus = [String]()
         loggedInAccountType = ""
         loggedInUser = User(firstName: "",
-                                lastName: "",
-                                username: "",
-                                email: "",
-                                password: "",
-                                dob : "",
-                                country: "",
-                                classroom: [])
+                            lastName: "",
+                            username: "",
+                            email: "",
+                            password: "",
+                            dob : "",
+                            country: "",
+                            classroom: [])
         
         willStartNextChapter = false
         startChapterIntent = false
@@ -307,6 +309,8 @@ final class ChaptersViewModel: ObservableObject {
     
     /// Downloading all user data
     func loadUserData(loggedInEmail: String, accountType: String){
+        
+        self.loadingInfo = "Downloading user data..."
         
         let db = Firestore.firestore()
         
@@ -411,7 +415,7 @@ final class ChaptersViewModel: ObservableObject {
                                             
                                             /// Creating chapter object
                                             let chapter = UserChapterProgress(chapterStatus: chapterStatus, chapterName: chapterName, chapterNum: chapterNum, playgroundStatus: playgroundStatus, questionScores: questionScores, questionAnswers: userQuestionAnswers, questionProgress: questionProgress, theoryStatus: theoryStatus)
-                 
+                                            
                                             
                                             /// Appending chapter
                                             chaptersProgress.append(chapter)
@@ -432,26 +436,7 @@ final class ChaptersViewModel: ObservableObject {
                             }
                         }
                     }
-                    //                    DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-                    //
-                    //                        print("CLASSROOMCOUNT:\(self.loggedInUser.classroom.count)")
-                    //
-                    //                        for k in 0..<self.loggedInUser.classroom.count{
-                    //
-                    //                            for i in 0..<self.loggedInUser.classroom[k].chapterProgress.count {
-                    //
-                    //                                for j in 1..<self.loggedInUser.classroom[k].chapterProgress.count {
-                    //
-                    //                                    if self.loggedInUser.classroom[k].chapterProgress[j].chapterNum < self.loggedInUser.classroom[k].chapterProgress[j-1].chapterNum {
-                    //                                        let tmp = self.loggedInUser.classroom[k].chapterProgress[j-1].chapterNum
-                    //                                        self.loggedInUser.classroom[k].chapterProgress[j-1].chapterNum = self.loggedInUser.classroom[k].chapterProgress[j].chapterNum
-                    //                                        self.loggedInUser.classroom[k].chapterProgress[j].chapterNum = tmp
-                    //                                    }
-                    //                                }
-                    //                            }
-                    //                        }
-                    //                    }
-                    
+                 
                     DispatchQueue.main.async{
                         /// After user account information has been downloaded, download the chapter data
                         //                        self.getChapterDocs()
@@ -488,11 +473,138 @@ final class ChaptersViewModel: ObservableObject {
         }
         
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             self.downloadPlaygrounds()
         }
         
         
+        /// Need to update user content with latest chapter content
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            
+            self.loadingInfo = "Checking for new content..."
+            
+            /// User is missing some chapters
+            if (self.loggedInUser.classroom[0].chapterProgress.count < self.chaptersArr.count){
+                
+                print("User is missing chapters")
+                
+                let countOne = self.loggedInUser.classroom[0].chapterProgress.count
+                let countTwo = self.chaptersArr.count
+                
+                let chaptDiff = countTwo - countOne
+                
+                /// Looping through the chapters that the user doesn't have
+                for i in 0..<chaptDiff {
+                    
+                    print("Count 1: \(self.loggedInUser.classroom[0].chapterProgress.count)")
+                    
+                    let chapter = self.chaptersArr[countOne+i]
+                    
+                    let chapterName = chapter.name
+                    let chapterNumber = chapter.chapterNum
+                    
+                    let questionsCount = self.chaptersArr[countOne+i].playgroundArr.count
+                    
+                    let questionsProgess = Array(repeating: "incomplete", count: questionsCount)
+                    let questionsScore = Array(repeating: 0, count: questionsCount)
+                    
+                    let userQuestionAnswers = Array(repeating: UserQuestionAnswer(answers: []), count: questionsCount)
+                    
+                    /// Creating new user progess object
+                    let newUserProgress = UserChapterProgress(chapterStatus: "incomplete", chapterName: chapterName, chapterNum: chapterNumber, playgroundStatus: "incomplete", questionScores: questionsScore, questionAnswers: userQuestionAnswers, questionProgress: questionsProgess, theoryStatus: "incomplete")
+                    
+                    /// Appening new object to user progress
+                    self.loggedInUser.classroom[0].chapterProgress.append(newUserProgress)
+                }
+                
+                self.uploadNewData(newChapterCount: chaptDiff)
+//
+//                /// Call function which will upload new data
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+//
+//                }
+            }
+            
+            /// Todo: Not implemented yet
+            /// If user has info for deleted chapter, delete that info
+            else if (self.loggedInUser.classroom[0].chapterProgress.count > self.chaptersArr.count){
+                
+                print("User has too many chapters")
+                
+                let countOne = self.loggedInUser.classroom[0].chapterProgress.count
+                let countTwo = self.chaptersArr.count
+                
+                let chaptDiff = countOne - countTwo
+                
+                for i in 1...chaptDiff {
+                    self.loggedInUser.classroom[0].chapterProgress.remove(at: i)
+                }
+            }
+            
+            /// Todo: Not implemented yet
+            /// Playground blocks change
+            else{
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                
+                self.loadingInfo = "Logging in..."
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    self.isUserLoggedIn = true
+                }
+            }
+        }
+    }
+    
+    /// Function which uploads new user progress data (for when a new object is created for a chapter that the user does not have progress for yet)
+    func uploadNewData(newChapterCount: Int){
         
+        self.loadingInfo = "Setting up new content..."
+
+        let db = Firestore.firestore()
+        
+        let user = Auth.auth().currentUser
+        let credential: AuthCredential = EmailAuthProvider.credential(withEmail: loggedInUser.email, password: loggedInUser.password)
+        
+        user?.reauthenticate(with: credential, completion: {(authResult, error) in
+            if error != nil {
+                print("Error: \(error)")
+            }else{
+                print("Successfully Reauthenticated! ")
+            }
+        })
+        
+        let startIndex = loggedInUser.classroom[0].chapterProgress.count - newChapterCount
+        let endIndex = loggedInUser.classroom[0].chapterProgress.count - 1
+        
+        print("Start Index: \(startIndex)")
+        print("End Index: \(endIndex)")
+        
+        /// Looping through chapters (indexes) user does not have yet
+        for j in startIndex...endIndex{
+            
+            let updatingRef = db.collection(loggedInAccountType).document(loggedInUser.username).collection("Classrooms").document("classroom_1").collection("Chapters").document("chapter_\(j+1)")
+            
+            updatingRef.setData([
+                "chapter_status": loggedInUser.classroom[0].chapterProgress[j].chapterStatus,
+                "playground_status": loggedInUser.classroom[0].chapterProgress[j].playgroundStatus,
+                "theory_status": loggedInUser.classroom[0].chapterProgress[j].theoryStatus,
+                "question_scores": loggedInUser.classroom[0].chapterProgress[j].questionScores,
+                "question_progress": loggedInUser.classroom[0].chapterProgress[j].questionProgress,
+                "chapters_name": loggedInUser.classroom[0].chapterProgress[j].chapterName,
+                "chapters_num": loggedInUser.classroom[0].chapterProgress[j].chapterNum
+            ])
+            
+            
+            let answersCount = self.loggedInUser.classroom[0].chapterProgress[j].questionAnswers.count
+            
+            for k in 0..<answersCount {
+                
+                updatingRef.updateData([
+                    "question_\(k+1)_answer": self.loggedInUser.classroom[0].chapterProgress[j].questionAnswers[k].answers
+                ])
+            }
+        }
     }
 }
