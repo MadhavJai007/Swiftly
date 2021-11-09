@@ -359,11 +359,11 @@ final class SignupViewModel: ObservableObject {
                                 /// Only download mcq answers if the question type is MCQ
                                 if (type == "mcq"){
                                     
-                                    let mcqAnswers = playgroundDocument.data()["mcq_answers"]! as! [String]
+                                    let mcqOptions = playgroundDocument.data()["mcq_answers"]! as! [String]
                                     
                                     var playgroundQuestion = Playground(title: title, description: description, type: type, originalArr: blocks)
                                     
-                                    playgroundQuestion.mcqAnswers = mcqAnswers
+                                    playgroundQuestion.mcqOptions = mcqOptions
                                     
                                     playgroundQuestions.append(playgroundQuestion)
                                 }else{

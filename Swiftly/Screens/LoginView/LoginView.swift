@@ -35,10 +35,10 @@ struct LoginView: View {
                     .frame(alignment: .topLeading)
                     .padding(.top, 250)
                 
-                    VStack{
-                        DropdownView(optionArray: accountTypeOptions)
-                    }
-                    .padding()
+//                    VStack{
+//                        DropdownView(optionArray: accountTypeOptions)
+//                    }
+//                    .padding()
                     
                     
                     VStack(spacing: 25){

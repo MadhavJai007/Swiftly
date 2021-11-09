@@ -39,6 +39,9 @@ final class ChapterContentViewModel: ObservableObject {
     @Published var isShowingScore = false
     @Published var isShowingChabot = false
     
+    var customOpacity = 1.0
+    var buttonEnable = false
+    
     /// Init variables with basic data
     init(){
         chapter = MockData.sampleChapter
@@ -129,7 +132,6 @@ final class ChapterContentViewModel: ObservableObject {
             mcqOptions = selectedQuestion.originalArr
             
             
-            
             if (userAnswers.isEmpty == false){
                 mcqUserAnswers = userAnswers
             }else{
@@ -187,5 +189,10 @@ final class ChapterContentViewModel: ObservableObject {
     /// Finishes the playground section and returns to the playground questions view
     func completeInteractiveSection(){
         willStartPlaygroundQuestion = false
+    }
+    
+    
+    func setQuestionAvailability(question: Playground, chaptersViewModel: ChaptersViewModel){
+        
     }
 }

@@ -11,6 +11,9 @@ struct InteractiveQuestionsView: View {
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     
+    var customOpacity = 1.0
+    var buttonEnable = false
+    
     /// View
     var body: some View {
         GeometryReader { geometry in
@@ -31,130 +34,137 @@ struct InteractiveQuestionsView: View {
                     .padding(.top, geometry.size.width/16)
                     
                     TitleLabel(text: "Playgrounds")
-                        .padding(.bottom, 75)
+                        .padding(.bottom, 50)
                     
-                    TabView {
+                    ScrollView{
                         
-                        /// ScrollView for playground questions
                         ForEach(chaptersViewModel.selectedChapter!.playgroundArr) { question in
                             
-                            VStack{
+                            HStack{
+                                
+                                /// Question title
                                 VStack(alignment: .leading){
-                                    
                                     InteractiveSubTitlePreview(text: question.title)
-                                        .padding(.leading, 20)
-                                        .padding(.top, 20)
                                         .minimumScaleFactor(0.5)
+                                        .padding(.leading, 5)
+                                        .padding(.trailing, 5)
                                     
-                                    InteractiveContentTextPreview(text:question.description)
-                                        .padding(.leading, 20)
-                                        .padding(.trailing, 20)
-                                        .minimumScaleFactor(0.5)
-                                    
-                                    Spacer()
-                                    
-                                    /// This is for the preview of interactive blocks
-                                    HStack{
-                                        Spacer()
-                                        VStack{
-                                            ForEach(0..<question.originalArr.count) { i in
-                                                VStack {
-                                                    InteractiveBlockTextPreview(text: String(question.originalArr[i]))
-                                                }
-                                                .frame(width: UIScreen.screenWidth/2, height: 50, alignment: .leading)
-                                                .background(Color.darkGrayCustom)
-                                                .cornerRadius(7)
-                                            }
+                                    /// Grabbing question type
+                                    Group{
+                                        if question.type == "code_blocks"{
+                                            InteractiveContentTextPreview(text: "Type: Code Tiles")
+                                                .padding(.leading, 5)
+                                                .padding(.trailing, 5)
+                                                .padding(.bottom, 5)
+                                        }else{
+                                            InteractiveContentTextPreview(text: "Type: Multiple Choice Question")
+                                                .padding(.leading, 5)
+                                                .padding(.trailing, 5)
+                                                .padding(.bottom, 5)
                                         }
-                                        Spacer()
                                     }
-                                    
                                     Spacer()
+                                }
+                                
+                                Spacer()
+                                
+                                Group{
                                     
-                                    /// This is for the start playground button
-                                    VStack{
+                                    /// Chapter index
+                                    let chapIndex = chaptersViewModel.selectedChapterIndex
+                                    
+                                    /// Getting index of question and the status of the question
+                                    let index = chaptersViewModel.selectedChapter!.playgroundArr.firstIndex(of: question)
+                                    
+                                    /// Getting question status
+                                    let questionStatus = chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionProgress[index!]
+                                    
+                                    
+                                    if (questionStatus == "incomplete"){
                                         
-                                        /// Used to enable/disable questions based on their order
-                                        Group{
-                                            
-                                            /// Chapter index
-                                            let chapIndex = chaptersViewModel.selectedChapterIndex
-                                            
-                                            /// Getting index of question and the status of the question
-                                            let index = chaptersViewModel.selectedChapter!.playgroundArr.firstIndex(of: question)
-                                            
-                                            let questionStatus = chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionProgress[index!]
-                                            
-//                                            let questionStatus = chapterContentViewModel.playgroundQuestionStatus[index!]
-                                            
-                                            /// If the status is incomplete
-                                            if (questionStatus == "incomplete") {
-                                                /// If it's the first question, enable it
-                                                if (index == 0){
-                                                    Button {
-                                                        
-                                                        chapterContentViewModel.selectedQuestionIndex = index!
-                                                        
-                                                        chapterContentViewModel.setupPlayground(question: question, questionIndex: index!, userAnswers: chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index!].answers)
-                                                    }label: {
-                                                        InteractiveStartButton(text: "Start Playground", textColor: Color.white, backgroundColor: Color.darkGrayCustom)
-                                                    }
-                                                    .frame(width: geometry.size.width/1.50, height: 120)
-                                                }else {
-                                                    
-                                                    /// Getting previous question status
-                                                    let statusBefore = chapterContentViewModel.playgroundQuestionStatus[index!-1]
-                                                    
-                                                    /// If the previous question status is complete, enable current question
-                                                    if (statusBefore == "complete"){
-                                                        Button {
-                                                            chapterContentViewModel.selectedQuestionIndex = index!
-                                                            chapterContentViewModel.setupPlayground(question: question, questionIndex: index!, userAnswers: chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index!].answers)
-                                                        }label: {
-                                                            InteractiveStartButton(text: "Start Playground", textColor: Color.white, backgroundColor: Color.darkGrayCustom)
-                                                        }
-                                                        .frame(width: geometry.size.width/1.50, height: 120)
-                                                    }
-                                                    /// Otherwise, user doesn't have access to question so disable it
-                                                    else{
-                                                        
-                                                        Button {
-                                                            print("Tapped")
-                                                        }label: {
-                                                            InteractiveStartButton(text: "Start Playground", textColor: Color.white, backgroundColor: Color.darkGrayCustom)
-                                                                .opacity(0.5)
-                                                        }
-                                                        .frame(width: geometry.size.width/1.50, height: 120)
-                                                        .disabled(true)
-                                                    }
-                                                }
+                                        if (index == 0){
+                                            Button{
+                                                chapterContentViewModel.selectedQuestionIndex = index!
+                                                chapterContentViewModel.setupPlayground(question: question, questionIndex: index!, userAnswers: chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index!].answers)
+                                            }label: {
+                                                
+                                                VStack{
+                                                    Image(systemName: "chevron.right")
+                                                        .resizable()
+                                                        .scaledToFit()
+                                                        .frame(width: 30, height: 30)
+                                                }.frame(width: 115, height: 115)
+                                                
                                             }
-                                            else{
-                                                Button {
-                                                    
+                                            .frame(width: 115, height: 115)
+                                            .background(Color.yellow)
+                                        }else{
+                                            
+                                            /// Getting previous question status
+                                            let statusBefore = chapterContentViewModel.playgroundQuestionStatus[index!-1]
+                                            
+                                            if (statusBefore == "complete"){
+                                                Button{
                                                     chapterContentViewModel.selectedQuestionIndex = index!
                                                     chapterContentViewModel.setupPlayground(question: question, questionIndex: index!, userAnswers: chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index!].answers)
                                                 }label: {
-                                                    InteractiveStartButton(text: "Start Playground", textColor: Color.white, backgroundColor: Color.darkGrayCustom)
+                                                    
+                                                    VStack{
+                                                        Image(systemName: "chevron.right")
+                                                            .resizable()
+                                                            .scaledToFit()
+                                                            .frame(width: 30, height: 30)
+                                                    }.frame(width: 115, height: 115)
+                                                    
                                                 }
-                                                .frame(width: geometry.size.width/1.50, height: 120)
+                                                .frame(width: 115, height: 115)
+                                                .background(Color.yellow)
+                                            }else{
+                                                Button{
+                                                    print("tapped")
+                                                }label: {
+                                                    
+                                                    VStack{
+                                                        Image(systemName: "chevron.right")
+                                                            .resizable()
+                                                            .scaledToFit()
+                                                            .frame(width: 30, height: 30)
+                                                    }.frame(width: 115, height: 115)
+                                                    
+                                                }
+                                                .frame(width: 115, height: 115)
+                                                .background(Color.lightGrayCustom)
+                                                .disabled(true)
                                             }
+                                        }
+                                    }else{
+                                        Button{
+                                            chapterContentViewModel.selectedQuestionIndex = index!
+                                            chapterContentViewModel.setupPlayground(question: question, questionIndex: index!, userAnswers: chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index!].answers)
+                                        }label: {
+                                            
+                                            VStack{
+                                                Image(systemName: "chevron.right")
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 30, height: 30)
+                                            }.frame(width: 115, height: 115)
                                             
                                         }
+                                        .frame(width: 115, height: 115)
+                                        .background(Color.green)
                                     }
                                 }
-                                .frame(width: geometry.size.width/1.50, height: geometry.size.height/1.5)
-                                .background(Color.whiteCustom)
-                                .cornerRadius(40)
                             }
-                            .frame(width: geometry.size.width/1.20, height: geometry.size.height/1.75)
+                            .frame(width: geometry.size.width/1.5, height: 115)
+                            .background(Color.whiteCustom)
+                            .cornerRadius(15)
+                            .padding(5)
                         }
                         
-                    }
-                    .frame(width: geometry.size.width/1.20, height: geometry.size.height/1.5)
-                    .padding(.top, -60)
-                    .tabViewStyle(.page(indexDisplayMode: .never))
+                    }.frame(width: geometry.size.width/1.15)
                     
+                
                     /// HStack for next chapter button
                     HStack{
                         
@@ -168,7 +178,7 @@ struct InteractiveQuestionsView: View {
                                     
                                     /// Chapter index
                                     let chapIndex = chaptersViewModel.selectedChapterIndex
-                               
+                                    
                                     if chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionProgress.contains("incomplete")
                                     {
                                         Button{
@@ -183,7 +193,7 @@ struct InteractiveQuestionsView: View {
                                     }else{
                                         Button{
                                             
-                                        
+                                            
                                             chaptersViewModel.willStartNextChapter = true
                                             chapterContentViewModel.willStartInteractiveSection.toggle()
                                             chaptersViewModel.didStartChapter.toggle()
@@ -218,9 +228,6 @@ struct InteractiveQuestionsView: View {
             let userTheoryProgress = chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].theoryStatus
             let userPlaygroundProgress = chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].playgroundStatus
             
-            print("ODJF: \(chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers.count)")
-            
-            
             /// If user theory progress is inprogress
             if (userTheoryProgress == "inprogress"){
                 
@@ -242,15 +249,15 @@ struct InteractiveQuestionsView: View {
             
             
             /// If all the questions in this playground are complete, set the chapter to be complete
-//            if (chapterContentViewModel.playgroundQuestionStatus.contains("incomplete")){
-//                print("Chapter incomplete")
-//            }else{
-//                chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].playgroundStatus = "complete"
-//                chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].chapterStatus = "complete"
-//                chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].theoryStatus = "complete"
-//                
-//                chaptersViewModel.chaptersStatus[chapIndex] = "complete"
-//            }
+                        if (chapterContentViewModel.playgroundQuestionStatus.contains("incomplete")){
+                            print("Chapter incomplete")
+                        }else{
+                            chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].playgroundStatus = "complete"
+                            chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].chapterStatus = "complete"
+                            chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].theoryStatus = "complete"
+            
+                            chaptersViewModel.chaptersStatus[chapIndex] = "complete"
+                        }
         }
     }
 }
@@ -261,3 +268,4 @@ struct InteractiveQuestionsView_Previews: PreviewProvider {
         InteractiveQuestionsView()
     }
 }
+

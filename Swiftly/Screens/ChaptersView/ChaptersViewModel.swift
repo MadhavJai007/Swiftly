@@ -242,10 +242,12 @@ final class ChaptersViewModel: ObservableObject {
                                 /// Only download mcq answers if the question type is MCQ
                                 if (type == "mcq"){
                                     
+                                    let mcqOptions = playgroundDocument.data()["code_blocks"]! as! [String]
                                     let mcqAnswers = playgroundDocument.data()["mcq_answers"]! as! [String]
                                     
                                     var playgroundQuestion = Playground(title: title, description: description, type: type, originalArr: blocks)
                                     
+                                    playgroundQuestion.mcqOptions = mcqOptions
                                     playgroundQuestion.mcqAnswers = mcqAnswers
                                     
                                     playgroundQuestions.append(playgroundQuestion)
