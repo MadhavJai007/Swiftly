@@ -83,10 +83,12 @@ struct UserAccountView: View {
                                 InfoLabel(text: userAccountViewModel.loggedInUser.email)
                             }
                             
+                            /*
                             VStack(alignment: .leading){
                                 InfoHeader(text:"Password")
                                 InfoLabel(text: userAccountViewModel.loggedInUser.password)
                             }
+                             */
                             
                             Button{
                                 
@@ -156,7 +158,6 @@ struct UserAccountView: View {
                                  
                                 
                                 
-                                Text("Classroom Name: \(String(userAccountViewModel.loggedInUser.classroom[0].classroomName))")
                                 Text("Chapter's Completed: \(String(userAccountViewModel.userChapterCompletionCount))")
                                 Text("Interactive Score Average: \(String(userAccountViewModel.userScoreAverage))")
                                  

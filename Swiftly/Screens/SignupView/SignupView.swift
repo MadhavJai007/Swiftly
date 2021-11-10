@@ -180,6 +180,7 @@ struct SignupView: View {
                     }
                     .padding(geometry.size.width/42)
                     
+                    /*
                     HStack{
                         
                         InputFieldLabel(text:"User Type: ")
@@ -197,6 +198,7 @@ struct SignupView: View {
                         .cornerRadius(15)
                         
                     }
+                     */
                     
                     // Create account button
                     Button{

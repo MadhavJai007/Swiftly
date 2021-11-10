@@ -33,6 +33,10 @@ final class LoginViewModel: ObservableObject {
         print(email)
         print(password)
         
+        
+        ///TEMPORARY workaround to force login to always be accountMode student, since this resets after every logout in the user account view.
+        self.accountMode = "Student"
+        
         if self.accountMode == "Undefined" {
             print("Please select account type")
             alertInfo = AlertModel(id: .noAccountType, title: "Couldn't login", message: "Please select your account type")
