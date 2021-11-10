@@ -41,14 +41,14 @@ struct ChaptersView: View {
                         
                         Spacer()
                         
-                        Button {
-                            showPopup.toggle()
-                            print(chaptersViewModel.chaptersArr)
-                            print("Logging into \(loginViewModel.accountMode) mode...")
-                        }label: {
-                            ButtonLabelSmall(text: "Join a class")
-                                .padding(.trailing, 30)
-                        }
+//                        Button {
+//                            showPopup.toggle()
+//                            print(chaptersViewModel.chaptersArr)
+//                            print("Logging into \(loginViewModel.accountMode) mode...")
+//                        }label: {
+//                            ButtonLabelSmall(text: "Join a class")
+//                                .padding(.trailing, 30)
+//                        }
                     }.padding(.top, geometry.size.width/18)
                     
                     VStack(alignment: .leading){
@@ -56,15 +56,15 @@ struct ChaptersView: View {
                         
                         HStack{
                             
-                            InfoLabelMedium(text:"Classroom: Global")
+                            InfoLabelMedium(text:"Showing all available chapters")
                             
-                            Menu{
-                                ForEach(chaptersViewModel.loggedInUser.classroom){ classroom in
-                                    Button("Classroom: sdf", action: chaptersViewModel.changeClassroom)
-                                }
-                            }label: {
-                                Image(systemName: "chevron.down")
-                            }
+//                            Menu{
+//                                ForEach(chaptersViewModel.loggedInUser.classroom){ classroom in
+//                                    Button("Classroom: sdf", action: chaptersViewModel.changeClassroom)
+//                                }
+//                            }label: {
+//                                Image(systemName: "chevron.down")
+//                            }
                         }
                         .padding(.top, -35)
                     }

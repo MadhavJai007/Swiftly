@@ -79,12 +79,12 @@ struct ChapterTitleView: View {
                     
                     Spacer()
                     
-                    Button{
-                        chaptersViewModel.viewLeaderboard()
-                        leaderboardViewModel.selectedChapter = chapter
-                    }label: {
-                        ViewLeaderboardButtonLabel(text: "View Leaderboard")
-                    }.padding(.top, 20)
+//                    Button{
+//                        chaptersViewModel.viewLeaderboard()
+//                        leaderboardViewModel.selectedChapter = chapter
+//                    }label: {
+//                        ViewLeaderboardButtonLabel(text: "View Leaderboard")
+//                    }.padding(.top, 20)
                     
                 }
                 .frame(width: width, height: 30, alignment: .center)
