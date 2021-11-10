@@ -18,16 +18,15 @@ final class ChaptersViewModel: ObservableObject {
     @Published var isUserLoggedIn = false
     @Published var classroomCode: String = ""
     @Published var jumpToPlayground = false
-    
     @Published var loadingInfo = "Processing..."
-    
-    var logoutIntent = false
-    
+
     /// Taken from firebase --> used to update UI components and store user entire chapter progress
     @Published var chaptersStatus = [String]()
     
-    var loggedInAccountType : String = ""
+    @Published var userCompletionCount = [Int]()
     
+    var loggedInAccountType : String = ""
+    var logoutIntent = false
     var loggedInUser = User(firstName: "",
                             lastName: "",
                             username: "",
@@ -73,6 +72,7 @@ final class ChaptersViewModel: ObservableObject {
         print("changeClassroom")
     }
     
+    /// Function that uploads user progress to firestore
     func saveUserProgress(){
         
         let db = Firestore.firestore()
@@ -195,6 +195,57 @@ final class ChaptersViewModel: ObservableObject {
                     }
                 }
                 
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    self.userCompletionCount = Array(repeating: 0, count: self.chaptersArr.count)
+                }
+            }
+        }
+    }
+    
+    func retrieveUserbaseCompletion(){
+        
+        /// Resetting completion count array
+        self.userCompletionCount = Array(repeating: 0, count: self.chaptersArr.count)
+        
+        let db = Firestore.firestore()
+        
+        db.collection("Students").getDocuments() { (querySnapshot, err) in
+            if let err = err {
+                print("Error getting student documents: \(err)")
+                self.isUserLoggedIn = false
+            } else {
+                
+                /// Looping through each student
+                for document in querySnapshot!.documents {
+                    
+                    /// Accessing chapters collection for the student
+                    db.collection("Students").document(document.documentID).collection("Classrooms").document("classroom_1").collection("Chapters").getDocuments() { (querySnapshot, err) in
+                        if let err = err {
+                            print("Error getting student chapter documents: \(err)")
+                            self.isUserLoggedIn = false
+                        } else {
+                            
+                            
+                            
+                            /// Going through each chapter and finding the status
+                            var counter = 0
+                            for chapterDoc in querySnapshot!.documents {
+                                
+                                let chapterStatus = chapterDoc["chapter_status"] as! String
+                                
+                                if (chapterStatus == "complete"){
+                                    self.userCompletionCount[counter] += 1
+                                }
+                                
+                                counter += 1
+                            }
+                            
+//                            for i in 0..<self.userCompletionCount.count {
+//                                print("Chapter \(i) completion:\(self.userCompletionCount[i])")
+//                            }    
+                        }
+                    }
+                }
             }
         }
     }
@@ -203,10 +254,8 @@ final class ChaptersViewModel: ObservableObject {
     /// Function that downloads the users playgrounds
     func downloadPlaygrounds(){
         
-//        self.loadingInfo = "Downloading content..."
         
         let db = Firestore.firestore()
-        
         
         db.collection("Chapters").getDocuments() { (querySnapshot, err) in
             if let err = err {
@@ -279,7 +328,7 @@ final class ChaptersViewModel: ObservableObject {
         }
     }
     
-    
+    /// Function which resets all variable data
     func clearAllData(){
         didStartChapter = false
         didSelectLeaderboard  = false
@@ -307,7 +356,8 @@ final class ChaptersViewModel: ObservableObject {
         
     }
     
-    /// Downloading all user data
+    /// Function which downloads all the user data
+    /// Called first on successful login
     func loadUserData(loggedInEmail: String, accountType: String){
         
         self.loadingInfo = "Downloading user data..."
@@ -327,8 +377,6 @@ final class ChaptersViewModel: ObservableObject {
             collectionRef.whereField("email", isEqualTo: loggedInEmail).getDocuments { (snapshot, err) in
                 if let err = err {
                     print("Error getting document: \(err)")
-                } else if (snapshot?.isEmpty)! {
-                    print("Account not found. Shouldn't occur in this situation since user is already logged in.")
                 } else {
                     
                     /// Grabbing entity for user
@@ -351,9 +399,6 @@ final class ChaptersViewModel: ObservableObject {
                         
                         if err != nil {
                             print("Error: Couldn't grab user classrooms")
-                        }
-                        else if (snapshot?.isEmpty)!{
-                            print("Error: User classrooms not found")
                         }
                         else{
                             print("Found classrooms...")
@@ -416,141 +461,101 @@ final class ChaptersViewModel: ObservableObject {
                                             /// Creating chapter object
                                             let chapter = UserChapterProgress(chapterStatus: chapterStatus, chapterName: chapterName, chapterNum: chapterNum, playgroundStatus: playgroundStatus, questionScores: questionScores, questionAnswers: userQuestionAnswers, questionProgress: questionProgress, theoryStatus: theoryStatus)
                                             
-                                            
                                             /// Appending chapter
                                             chaptersProgress.append(chapter)
                                             
                                         }
-                                        
-                                        
-                                        
                                         /// Updating classroom chapter progress with the chapter progress
                                         /// Array of UserChapterProgress objects
                                         userClassroom.chapterProgress = chaptersProgress
                                         
                                         /// Appending classroom to user classrooms
                                         self.loggedInUser.classroom.append(userClassroom)
-                                        
                                     }
                                 }
                             }
                         }
                     }
-                 
-                    DispatchQueue.main.async{
-                        /// After user account information has been downloaded, download the chapter data
-                        //                        self.getChapterDocs()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+//                        print("TEST 1: \(self.loggedInUser.classroom[0].chapterProgress.count)")
+//                        print("TEST 2: \(self.chaptersStatus.count)")
+//                        print("TEST 3: \(self.chaptersArr.count)")
+                        self.downloadPlaygrounds()
                     }
                 }
             }
-            
-        case "Teacher":
-            print("Teacher")
-            //            let collectionRef = db.collection("Teachers")
-            //            collectionRef.whereField("email", isEqualTo: loggedInEmail).getDocuments { (snapshot, err) in
-            //                if let err = err {
-            //                    print("Error getting document: \(err)")
-            //                } else if (snapshot?.isEmpty)! {
-            //                    print("Account not found. Shouldn't occur in this situation since user is already logged in.")
-            //                } else {
-            //                    let userObj = snapshot!.documents[0].data()
-            //                    self.loggedInAccountType =  "Teachers"
-            //                    self.loggedInUser.firstName = userObj["firstname"] as! String
-            //                    self.loggedInUser.lastName = userObj["lastName"] as! String
-            //                    self.loggedInUser.email = userObj["email"] as! String
-            //                    self.loggedInUser.password = userObj["password"] as! String
-            //                    self.loggedInUser.username = userObj["username"] as! String
-            //                    self.loggedInUser.country = userObj["country"] as! String
-            //                    self.loggedInUser.dob = userObj["date_of_birth"] as! String
-            //
-            //
-            //                    var userProgress = db.collection("Students").document(self.loggedInUser.username).collection("Chapters").document("chapter_1")
-            //                }
-            //            }
-            
         default:
             print("This default clause is not needed")
         }
         
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.downloadPlaygrounds()
-        }
-        
-        
         /// Need to update user content with latest chapter content
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            
+        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+
+//            print("TEST 4: dw")
             self.loadingInfo = "Checking for new content..."
-            
+
             /// User is missing some chapters
             if (self.loggedInUser.classroom[0].chapterProgress.count < self.chaptersArr.count){
-                
+
                 print("User is missing chapters")
-                
+
                 let countOne = self.loggedInUser.classroom[0].chapterProgress.count
                 let countTwo = self.chaptersArr.count
-                
+
                 let chaptDiff = countTwo - countOne
-                
+
                 /// Looping through the chapters that the user doesn't have
                 for i in 0..<chaptDiff {
-                    
+
                     print("Count 1: \(self.loggedInUser.classroom[0].chapterProgress.count)")
-                    
+
                     let chapter = self.chaptersArr[countOne+i]
-                    
+
                     let chapterName = chapter.name
                     let chapterNumber = chapter.chapterNum
-                    
+
                     let questionsCount = self.chaptersArr[countOne+i].playgroundArr.count
-                    
+
                     let questionsProgess = Array(repeating: "incomplete", count: questionsCount)
                     let questionsScore = Array(repeating: 0, count: questionsCount)
-                    
+
                     let userQuestionAnswers = Array(repeating: UserQuestionAnswer(answers: []), count: questionsCount)
-                    
+
                     /// Creating new user progess object
                     let newUserProgress = UserChapterProgress(chapterStatus: "incomplete", chapterName: chapterName, chapterNum: chapterNumber, playgroundStatus: "incomplete", questionScores: questionsScore, questionAnswers: userQuestionAnswers, questionProgress: questionsProgess, theoryStatus: "incomplete")
-                    
+
                     /// Appening new object to user progress
                     self.loggedInUser.classroom[0].chapterProgress.append(newUserProgress)
+                    
+                    self.chaptersStatus.append(newUserProgress.chapterStatus)
                 }
-                
-                self.uploadNewData(newChapterCount: chaptDiff)
-//
-//                /// Call function which will upload new data
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
-//
-//                }
+
+//                print("TEST 5: \(self.chaptersStatus.count)")
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    
+//                    print("TEST 6: dw")
+                    self.uploadNewData(newChapterCount: chaptDiff)
+                    
+                    self.loadingInfo = "Logging in..."
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        self.isUserLoggedIn = true
+                    }
+                }
             }
-            
+
             /// Todo: Not implemented yet
             /// If user has info for deleted chapter, delete that info
             else if (self.loggedInUser.classroom[0].chapterProgress.count > self.chaptersArr.count){
-                
-                print("User has too many chapters")
-                
-                let countOne = self.loggedInUser.classroom[0].chapterProgress.count
-                let countTwo = self.chaptersArr.count
-                
-                let chaptDiff = countOne - countTwo
-                
-                for i in 1...chaptDiff {
-                    self.loggedInUser.classroom[0].chapterProgress.remove(at: i)
-                }
+
             }
-            
-            /// Todo: Not implemented yet
-            /// Playground blocks change
+
+            /// Nothing has changed
             else{
-            }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                
                 self.loadingInfo = "Logging in..."
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     self.isUserLoggedIn = true
                 }
             }

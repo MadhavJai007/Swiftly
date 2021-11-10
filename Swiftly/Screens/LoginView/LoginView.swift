@@ -72,7 +72,7 @@ struct LoginView: View {
                             loginViewModel.login(email: email, password: password)
 
                             /// If the login is successful, download chapter content
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.25) {
                                 
                                 if (loginViewModel.isSuccessful) {
                                     

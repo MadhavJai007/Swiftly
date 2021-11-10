@@ -123,14 +123,15 @@ struct ChaptersView: View {
         .navigationBarHidden(true)
         
         .onAppear {
-            print("onAppear 2")
             
+            
+            /// If the user is going to logout
             if (chaptersViewModel.logoutIntent == true){
-                
                 chaptersViewModel.logoutIntent = false
                 chaptersViewModel.isUserLoggedIn = false
             }else{
                 chaptersViewModel.saveUserProgress()
+                chaptersViewModel.retrieveUserbaseCompletion()
             }
             
             print(chaptersViewModel.loggedInUser.classroom[0].chapterProgress)

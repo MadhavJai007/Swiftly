@@ -207,31 +207,33 @@ final class SignupViewModel: ObservableObject {
             ///creating collection for user classrooms, which will contain users progress, answers and scores for each chapter
             for i in 0..<chaptersArr.count{
                 
-                let playgroundArray = chaptersArr[i].playgroundArr
-                
-                newStudentRef.collection("Chapters").document("chapter_\(chaptersArr[i].chapterNum)").setData([
-                    "chapters_num" : chaptersArr[i].chapterNum,
-                    "chapters_name" : chaptersArr[i].name,
-                    "playground_status" : "incomplete",
-                    "chapter_status" : "incomplete",
-                    "theory_status" : "incomplete"])
-                
-                var questionsArray : [Int] = []
-                var playgroundAnswers : [String] = []
-                var playgroundProgress : [String] = []
-                
-                
-                var document = newStudentRef.collection("Chapters").document("chapter_\(chaptersArr[i].chapterNum)")
-                
-                for j in 0..<playgroundArray.count{
-                    questionsArray.append(0)
-                    playgroundProgress.append("incomplete")
-                    document.updateData(["question_\(j+1)_answer" : playgroundAnswers])
+                if (chaptersArr[i].chapterNum <= 3){
+                    
+                    let playgroundArray = chaptersArr[i].playgroundArr
+                    
+                    newStudentRef.collection("Chapters").document("chapter_\(chaptersArr[i].chapterNum)").setData([
+                        "chapters_num" : chaptersArr[i].chapterNum,
+                        "chapters_name" : chaptersArr[i].name,
+                        "playground_status" : "incomplete",
+                        "chapter_status" : "incomplete",
+                        "theory_status" : "incomplete"])
+                    
+                    var questionsArray : [Int] = []
+                    var playgroundAnswers : [String] = []
+                    var playgroundProgress : [String] = []
+                    
+                    
+                    var document = newStudentRef.collection("Chapters").document("chapter_\(chaptersArr[i].chapterNum)")
+                    
+                    for j in 0..<playgroundArray.count{
+                        questionsArray.append(0)
+                        playgroundProgress.append("incomplete")
+                        document.updateData(["question_\(j+1)_answer" : playgroundAnswers])
+                    }
+                    
+                    
+                    document.updateData(["question_scores" : questionsArray, "question_progress" : playgroundProgress])
                 }
-                
-                
-                document.updateData(["question_scores" : questionsArray, "question_progress" : playgroundProgress])
-                
                 
             }
             

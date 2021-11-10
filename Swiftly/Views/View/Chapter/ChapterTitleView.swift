@@ -75,19 +75,9 @@ struct ChapterTitleView: View {
                     .minimumScaleFactor(0.5)
                 }
                 
-                HStack{
-                    
-                    Spacer()
-                    
-//                    Button{
-//                        chaptersViewModel.viewLeaderboard()
-//                        leaderboardViewModel.selectedChapter = chapter
-//                    }label: {
-//                        ViewLeaderboardButtonLabel(text: "View Leaderboard")
-//                    }.padding(.top, 20)
-                    
-                }
-                .frame(width: width, height: 30, alignment: .center)
+                
+                
+                
                 
                 Spacer()
                 
@@ -95,6 +85,10 @@ struct ChapterTitleView: View {
                     
                     let chapIndex = chaptersViewModel.chaptersArr.firstIndex(of: chapter)
                     let chapterStat = chaptersViewModel.chaptersStatus[chapIndex!]
+                    
+                    let completionCount = chaptersViewModel.userCompletionCount[chapIndex!]
+                    
+                    ChapterInfoLabel(text: "Completion Count: \(completionCount)")
                     
                     if (chapterStat == "incomplete"){
                         HStack{

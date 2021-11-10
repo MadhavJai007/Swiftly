@@ -285,7 +285,7 @@ struct InteractiveQuestionsView: View {
             
             
             chaptersViewModel.saveUserProgress()
-            
+            chaptersViewModel.retrieveUserbaseCompletion()
             
             
             /// If all the questions in this playground are complete, set the chapter to be complete

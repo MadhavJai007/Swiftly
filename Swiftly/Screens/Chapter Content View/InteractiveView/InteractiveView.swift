@@ -176,6 +176,7 @@ struct InteractiveView: View {
                                     }
                                     
                                     chaptersViewModel.saveUserProgress()
+                                    chaptersViewModel.retrieveUserbaseCompletion()
                                     
                                     
                                 }label: {
