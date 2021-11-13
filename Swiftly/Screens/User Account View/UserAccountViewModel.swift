@@ -32,8 +32,11 @@ final class UserAccountViewModel: ObservableObject {
     @Published var isUserInfoRetrieved = false
     
     @Published var userChapterCompletionCount = 0
+    @Published var userChapterInProgressCount = 0
     
     @Published var userScoreAverage = 0.0
+    @Published var userTotalPossibleScore = 0
+    @Published var userQuestionCompleteCount = 0
     
     var loggedInAccountType : String = ""
     
@@ -266,6 +269,7 @@ final class UserAccountViewModel: ObservableObject {
                                             let chapterName = data["chapters_name"] as! String
                                             let chapterNum = data["chapters_num"] as! Int
                                             let playgroundStatus = data["playground_status"] as! String
+                                            let questionProgress = data["question_progress"] as! [String]
                                             let questionScores = data["question_scores"] as! [Int]
                                             let theoryStatus = data["theory_status"] as! String
                                             
@@ -275,13 +279,32 @@ final class UserAccountViewModel: ObservableObject {
                                             if chapterStatus == "complete"{
                                                 self.userChapterCompletionCount += 1
                                             }
-                                            
-                                            ///calculating user score average
-                                            var questionCount = 0
-                                            for i in 0...questionScores.count-1{
-                                                questionCount += 1
+                                            else if chapterStatus == "inprogress"{
+                                                self.userChapterInProgressCount += 1
                                             }
-                                            self.userScoreAverage = self.userScoreAverage/Double(questionCount)
+                                            
+                                            ///getting total user score
+                                            for k in 0...questionProgress.count-1{
+                                                if questionProgress[k] == "complete"{
+                                                    self.userScoreAverage += Double(questionScores[i])
+                                                    self.userQuestionCompleteCount += 1
+                                                    
+                                                    //getting total possible score
+                                                    
+                                                    //for chapter i playground question 1 to questionProgress.count
+                                                    //if question_type = code_blocks
+                                                    //  total possible score += code_blocks.count
+                                                    //else if question_type = mcq
+                                                    //  total possible score += mcq_answers.count
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                }
+                                            }
+                                            
+                                            
                                             
                                             /// Note: questionAnswers and 
                                             /// Creating chapter object

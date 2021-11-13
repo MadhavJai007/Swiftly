@@ -159,7 +159,9 @@ struct UserAccountView: View {
                                 
                                 
                                 Text("Chapter's Completed: \(String(userAccountViewModel.userChapterCompletionCount))")
-                                Text("Interactive Score Average: \(String(userAccountViewModel.userScoreAverage))")
+                                Text("Chapter's In Progress: \(String(userAccountViewModel.userChapterInProgressCount))")
+                                Text("User Interactive Total Score: \(String(userAccountViewModel.userScoreAverage)) ")
+                                Text("Total Interactive Questions completed: \(String(userAccountViewModel.userQuestionCompleteCount)) ")
                                  
                                 
                             }
