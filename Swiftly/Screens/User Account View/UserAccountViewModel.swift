@@ -286,7 +286,7 @@ final class UserAccountViewModel: ObservableObject {
                                             ///getting total user score
                                             for k in 0...questionProgress.count-1{
                                                 if questionProgress[k] == "complete"{
-                                                    self.userScoreAverage += Double(questionScores[i])
+                                                    self.userScoreAverage += Double(questionScores[k])
                                                     self.userQuestionCompleteCount += 1
                                                     
                                                     //getting total possible score
