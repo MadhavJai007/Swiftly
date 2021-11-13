@@ -476,7 +476,7 @@ final class ChaptersViewModel: ObservableObject {
                             }
                         }
                     }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
 //                        print("TEST 1: \(self.loggedInUser.classroom[0].chapterProgress.count)")
 //                        print("TEST 2: \(self.chaptersStatus.count)")
 //                        print("TEST 3: \(self.chaptersArr.count)")
@@ -489,7 +489,7 @@ final class ChaptersViewModel: ObservableObject {
         }
         
         /// Need to update user content with latest chapter content
-        DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
 
 //            print("TEST 4: dw")
             self.loadingInfo = "Checking for new content..."

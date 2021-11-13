@@ -130,7 +130,7 @@ struct ChapterDetailView: View {
                                         Button{
                                             print("tapped")
                                         }label: {
-                                            ChapterDetailsButtonText(text:"Interactive Section")
+                                            ChapterDetailsButtonText(text:"Chapter Questions")
                                         }
                                         .frame(width: 260, height: 50)
                                         .background(Color.lightGrayCustom)
@@ -148,7 +148,7 @@ struct ChapterDetailView: View {
                                             chaptersViewModel.jumpToPlayground = true
                                             
                                         }label: {
-                                            ChapterDetailsButtonText(text:"Interactive Section")
+                                            ChapterDetailsButtonText(text:"Chapter Questions")
                                         }
                                         .frame(width: 260, height: 50)
                                         .background(Color.yellow)
@@ -166,7 +166,7 @@ struct ChapterDetailView: View {
                                             chaptersViewModel.startChapterIntent = true
                                             chaptersViewModel.jumpToPlayground = true
                                         }label: {
-                                            ChapterDetailsButtonText(text:"Interactive Section")
+                                            ChapterDetailsButtonText(text:"Chapter Questions")
                                         }
                                         .frame(width: 260, height: 50)
                                         .background(Color.green)

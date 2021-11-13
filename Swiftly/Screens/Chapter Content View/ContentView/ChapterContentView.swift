@@ -63,10 +63,11 @@ struct ChapterContentView: View {
                             
                             let lesson = chaptersViewModel.selectedChapter!.lessons[i]
                             
+                            /// If it's not the last chapter
                             if (i != chaptersViewModel.selectedChapter!.lessons.count-1){
                                 
                                 /// Vertical scroll view for each lesson
-                                ScrollView(.vertical, showsIndicators: false) {
+                                ScrollView(.vertical, showsIndicators: true) {
                                     
                                     VStack(alignment: .leading){
                                         
@@ -85,9 +86,9 @@ struct ChapterContentView: View {
                                                     HStack{
                                                         Spacer()
                                                         Image(base64String: String(imgBase64))!
-                                                            .resizable()
-                                                            .aspectRatio(contentMode: .fit)
-                                                            .frame(width: geometry.size.width/1.50)
+//                                                            .resizable()
+//                                                            .aspectRatio(contentMode: .fit)
+//                                                            .frame(width: geometry.size.width/1.50)
                                                         Spacer()
                                                     }
                                                     .padding(.bottom, geometry.size.width/48)
@@ -108,7 +109,7 @@ struct ChapterContentView: View {
                                 
                                 VStack{
                                     
-                                    ScrollView(.vertical, showsIndicators: false) {
+                                    ScrollView(.vertical, showsIndicators: true) {
                                         
                                         VStack(alignment: .leading){
                                             
@@ -144,27 +145,27 @@ struct ChapterContentView: View {
                                             }
                                             Spacer()
                                         }
-                                    }
-                                    
-                                    HStack{
-                                        Spacer()
                                         
-                                        Button{
-                                            chapterContentViewModel.startInteractiveSection()
-                                        }label: {
-                                            Text("Start Interactive Section")
-                                                .font(.system(size: 30, weight: .semibold))
-                                                .foregroundColor(Color.white)
+                                        HStack{
+                                            Spacer()
+                                            
+                                            Button{
+                                                chapterContentViewModel.startInteractiveSection()
+                                            }label: {
+                                                Text("Start Interactive Section")
+                                                    .font(.system(size: 30, weight: .semibold))
+                                                    .foregroundColor(Color.white)
+                                            }
+                                            .frame(width: geometry.size.width/2, height: geometry.size.height/12)
+                                            .background(Color.blackCustom)
+                                            .cornerRadius(15)
+                                            
+                                            Spacer()
                                         }
-                                        .frame(width: geometry.size.width/2, height: geometry.size.height/12)
-                                        .background(Color.blackCustom)
-                                        .cornerRadius(15)
                                         
-                                        Spacer()
+                                        .padding(.top, geometry.size.width/24)
+                                        .padding(.bottom, geometry.size.width/12)
                                     }
-                                    
-                                    .padding(.top, geometry.size.width/24)
-                                    .padding(.bottom, geometry.size.width/12)
                                 }
                                 .frame(width: geometry.size.width, alignment: .leading)
                             }
@@ -199,30 +200,32 @@ struct ChapterContentView: View {
             /// Getting user theory progress for chapter
             let userTheoryProgress = chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].theoryStatus
             
-            /// If it's incomplete, set it to inprogress
-            if (userTheoryProgress == "incomplete"){
-                
-                /// Setting chapter theory and chapter status to inprogress
-                chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].theoryStatus = "inprogress"
-                chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].chapterStatus = "inprogress"
-                
-                /// Used to update UI
-                chaptersViewModel.chaptersStatus[chapIndex] = "inprogress"
-                
-                /// Grabbing the classroom theory, and setting it to progress if it's incomplete (not started)
-                let classroomTheoryProgress = chaptersViewModel.loggedInUser.classroom[0].clasroomTheoryStatus
-                
-                if (classroomTheoryProgress == "incomplete"){
-                    chaptersViewModel.loggedInUser.classroom[0].clasroomTheoryStatus = "inprogress"
-                    chaptersViewModel.loggedInUser.classroom[0].classroomStatus = "inprogress"
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            
+                /// If it's incomplete, set it to inprogress
+                if (userTheoryProgress == "incomplete"){
+                    
+                    /// Setting chapter theory and chapter status to inprogress
+                    chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].theoryStatus = "inprogress"
+                    chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].chapterStatus = "inprogress"
+                    
+                    /// Used to update UI
+                    chaptersViewModel.chaptersStatus[chapIndex] = "inprogress"
+                    
+                    /// Grabbing the classroom theory, and setting it to progress if it's incomplete (not started)
+                    let classroomTheoryProgress = chaptersViewModel.loggedInUser.classroom[0].clasroomTheoryStatus
+                    
+                    if (classroomTheoryProgress == "incomplete"){
+                        chaptersViewModel.loggedInUser.classroom[0].clasroomTheoryStatus = "inprogress"
+                        chaptersViewModel.loggedInUser.classroom[0].classroomStatus = "inprogress"
+                    }
+                    
+    //                chaptersViewModel.saveUserProgress()
                 }
-                
-                chaptersViewModel.saveUserProgress()
-            }
             
             chaptersViewModel.saveUserProgress()
             
-            
+            }
         }
     }
 }
