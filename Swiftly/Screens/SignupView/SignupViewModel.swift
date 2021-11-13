@@ -137,11 +137,11 @@ final class SignupViewModel: ObservableObject {
         //
         //        }
         /// retrieving  Firebase collection
-        let collectionRef = db.collection("Users")
+        let collectionRef = db.collection("Students")
         
         /// getting all the documents where the field username is equal to the String you pass, loop over all the documents.
         
-        collectionRef.whereField("user_email", isEqualTo: emailCompared).getDocuments { (snapshot, err) in
+        collectionRef.whereField("email", isEqualTo: emailCompared).getDocuments { (snapshot, err) in
             if let err = err {
                 print("Error getting document: \(err)")
             } else if (snapshot?.isEmpty)! {
@@ -283,7 +283,7 @@ final class SignupViewModel: ObservableObject {
         }
         
         // adding user to the "Users" collection in database
-        
+        /*
         db.collection("Users").document(user.username).setData([
             "user_email": user.email,
             "user_type": accountType
@@ -294,6 +294,7 @@ final class SignupViewModel: ObservableObject {
                 print("User successfully added!")
             }
         }
+         */
         
         
     }
