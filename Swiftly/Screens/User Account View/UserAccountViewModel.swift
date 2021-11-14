@@ -291,11 +291,31 @@ final class UserAccountViewModel: ObservableObject {
                                                     
                                                     //getting total possible score
                                                     
+                                                    ///process for retrieving total possible score
                                                     //for chapter i playground question 1 to questionProgress.count
+                                                    //check each question user has "completed" from user progress collection
                                                     //if question_type = code_blocks
                                                     //  total possible score += code_blocks.count
                                                     //else if question_type = mcq
                                                     //  total possible score += mcq_answers.count
+                                                    
+                                                    /*
+                                                    let chaptersRef = self.db.collection("Chapters")
+                                                    
+                                                    
+                                                    chaptersRef.getDocuments { (snapshot, err) in
+                                                        if err != nil {
+                                                            print("Error: Something went wrong...")
+                                                        }
+                                                        else if (snapshot?.isEmpty)!{
+                                                            print("Error: Chapters not found")
+                                                        }
+                                                        else{
+                                                            //for i in 0...ch
+                                                        }
+                                                    }
+                                                     */
+                                                    
                                                     
                                                     
                                                     
@@ -394,6 +414,12 @@ final class UserAccountViewModel: ObservableObject {
                                 country: "",
                                 classroom: [UserClassroom()]
                              )
+            self.userScoreAverage = 0
+            self.userQuestionCompleteCount = 0
+            self.userTotalPossibleScore = 0
+            self.userChapterInProgressCount = 0
+            self.userChapterCompletionCount = 0
+            
         }
         catch {
             print("already logged out")
