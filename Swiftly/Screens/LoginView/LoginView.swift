@@ -168,7 +168,8 @@ struct LoginView: View {
             .animation(.spring())
             
             .onAppear{
-               print("onAppear 1")
+                email = ""
+                password = ""
                 chaptersViewModel.isUserLoggedIn = false
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {

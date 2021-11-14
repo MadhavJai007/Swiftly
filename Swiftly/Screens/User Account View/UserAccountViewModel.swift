@@ -34,7 +34,7 @@ final class UserAccountViewModel: ObservableObject {
     @Published var userChapterCompletionCount = 0
     @Published var userChapterInProgressCount = 0
     
-    @Published var userScoreAverage = 0.0
+    @Published var userTotalScore = 0
     @Published var userTotalPossibleScore = 0
     @Published var userQuestionCompleteCount = 0
     
@@ -127,32 +127,67 @@ final class UserAccountViewModel: ObservableObject {
         updatedUser.country = loggedInUser.country
     }
     
+    func clearStats(){
+        userChapterCompletionCount = 0
+        userChapterInProgressCount = 0
+        userTotalScore = 0
+        userQuestionCompleteCount = 0
+    }
     
+    func getUserStats(){
+        
+        for i in 0..<loggedInUser.classroom[0].chapterProgress.count{
+            
+            if (loggedInUser.classroom[0].chapterProgress[i].chapterStatus == "complete"){
+                userChapterCompletionCount += 1
+            }
+            
+            else if (loggedInUser.classroom[0].chapterProgress[i].chapterStatus == "inprogress"){
+                userChapterInProgressCount += 1
+            }
+            
+            
+            for k in 0..<loggedInUser.classroom[0].chapterProgress[i].questionScores.count{
+                userTotalScore += loggedInUser.classroom[0].chapterProgress[i].questionScores[k]
+                
+                if (loggedInUser.classroom[0].chapterProgress[i].questionProgress[k] == "complete"){
+                    userQuestionCompleteCount += 1
+                }
+            }
+            
+            
+            
+        }
+        
+        
+    }
     
     func updateAccount(){
+        
+        print("Logged In: \(loggedInUser)")
+        print("Updated: \(updatedUser)")
         
         //first update the firebase authentication with new information (password specifically)
         
         let user = Auth.auth().currentUser
-        var credential: AuthCredential = EmailAuthProvider.credential(withEmail: loggedInUser.email, password: loggedInUser.password)
+        let credential: AuthCredential = EmailAuthProvider.credential(withEmail: loggedInUser.email, password: loggedInUser.password)
 
         
         
         user?.reauthenticate(with: credential, completion: {(authResult, error) in
-                    if let error = error {
-                        print("error occured while reauthenticating")
+                    if error != nil {
+                        print("Error: \(String(describing: error))")
                     }else{
                         print("Successfully Reauthenticated! ")
                     }
                 })
         
         Auth.auth().currentUser?.updatePassword(to: updatedUser.password) { (error) in
-          print("successfully updated password!")
+          print("Successfully updated password!")
         }
         
-        //now update the Students/Teachers collections document with new information
         
-        let updatingRef = db.collection(loggedInAccountType).document(loggedInUser.username)
+        let updatingRef = db.collection("Students").document(loggedInUser.username)
 
         updatingRef.updateData([
             "country": updatedUser.country,
@@ -173,230 +208,11 @@ final class UserAccountViewModel: ObservableObject {
                 self.loggedInUser.password = self.updatedUser.password
                 self.loggedInUser.dob = self.updatedUser.dob
                 self.loggedInUser.country = self.updatedUser.country
-                
+        
             }
         }
     }
     
-    /// TODO: Remove this, and on chaptersView if going to account page, set userAccountViewModel.loggedInUser = chaptersViewModel.loggedInUser
-    /// Method which downloads user data
-    func loadUserData(loggedInEmail: String, accountType: String){
-        
-        print("searching with \(loggedInEmail)")
-        
-        /// Checking user account type
-        switch accountType {
-            
-            /// Student
-        case "Student":
-            
-            /// Grabbing students db
-            let collectionRef = db.collection("Students")
-            
-            /// Finding matching emails
-            collectionRef.whereField("email", isEqualTo: loggedInEmail).getDocuments { (snapshot, err) in
-                if let err = err {
-                    print("Error getting document: \(err)")
-                } else if (snapshot?.isEmpty)! {
-                    print("Account not found. Shouldn't occur in this situation since user is already logged in.")
-                } else {
-                    
-                    /// Grabbing entity for user
-                    let userObj = snapshot!.documents[0].data()
-                    
-                    /// Grabbing basic user data
-                    self.loggedInAccountType = "Students"
-                    self.loggedInUser.firstName = userObj["firstname"] as! String
-                    self.loggedInUser.lastName = userObj["lastName"] as! String
-                    self.loggedInUser.email = userObj["email"] as! String
-                    self.loggedInUser.password = userObj["password"] as! String
-                    self.loggedInUser.username = userObj["username"] as! String
-                    self.loggedInUser.country = userObj["country"] as! String
-                    self.loggedInUser.dob = userObj["date_of_birth"] as! String
-                    
-                    /// Grabbing the classrooms
-                    let enrolledClasrooms = self.db.collection("Students").document(self.loggedInUser.username).collection("Classrooms")
-                    
-                    enrolledClasrooms.getDocuments { (snapshot, err) in
-                            
-                        if err != nil {
-                            print("Error: Something went wrong...")
-                        }
-                        else if (snapshot?.isEmpty)!{
-                            print("Error: User progress not found")
-                        }
-                        else{
-                            
-                            /// Looping through each classroom
-                            for i in 0..<snapshot!.documents.count {
-                                
-                                
-                                ///retrieving classroom document name from firebase
-
-                                var userClassroom = UserClassroom()
-                                userClassroom.classroomName = snapshot!.documents[i].documentID
-                                self.classroomName = snapshot!.documents[i].documentID
-                                print("From self.classroomNames : \(self.classroomName)")
-                                
-                                
-                                
-                                
-                                /// Grabbing the current collection of chapters for chapter i
-                                let classroomChapters = enrolledClasrooms.document("classroom_\(i+1)").collection("Chapters")
-                                
-                                /// Grabbing documents for chapter i
-                                classroomChapters.getDocuments { (snapshot, err) in
-                                    
-                                    if err != nil {
-                                        print("Error: Something went wrong...")
-                                    }
-                                    else if (snapshot?.isEmpty)!{
-                                        print("Error: User progress not found")
-                                    }
-                                    else{
-                                        
-                                        /// Creating empty user chapter array
-                                        var chaptersProgress = [UserChapterProgress]()
-                                        
-                                        /// Looping through the chapters
-                                        for i in 0...snapshot!.documents.count-1{
-                                            
-                                            /// Data from firestore for chapter i
-                                            let data = snapshot!.documents[i].data()
-                                            
-                                            /// Grabbing chapter info
-                                            let chapterStatus = data["chapter_status"] as! String
-                                            let chapterName = data["chapters_name"] as! String
-                                            let chapterNum = data["chapters_num"] as! Int
-                                            let playgroundStatus = data["playground_status"] as! String
-                                            let questionProgress = data["question_progress"] as! [String]
-                                            let questionScores = data["question_scores"] as! [Int]
-                                            let theoryStatus = data["theory_status"] as! String
-                                            
-                                            /// calculating chapter completion count
-                                            
-                                            //print("Chaptur Status : \(chapterStatus)")
-                                            if chapterStatus == "complete"{
-                                                self.userChapterCompletionCount += 1
-                                            }
-                                            else if chapterStatus == "inprogress"{
-                                                self.userChapterInProgressCount += 1
-                                            }
-                                            
-                                            ///getting total user score
-                                            for k in 0...questionProgress.count-1{
-                                                if questionProgress[k] == "complete"{
-                                                    self.userScoreAverage += Double(questionScores[k])
-                                                    self.userQuestionCompleteCount += 1
-                                                    
-                                                    //getting total possible score
-                                                    
-                                                    ///process for retrieving total possible score
-                                                    //for chapter i playground question 1 to questionProgress.count
-                                                    //check each question user has "completed" from user progress collection
-                                                    //if question_type = code_blocks
-                                                    //  total possible score += code_blocks.count
-                                                    //else if question_type = mcq
-                                                    //  total possible score += mcq_answers.count
-                                                    
-                                                    /*
-                                                    let chaptersRef = self.db.collection("Chapters")
-                                                    
-                                                    
-                                                    chaptersRef.getDocuments { (snapshot, err) in
-                                                        if err != nil {
-                                                            print("Error: Something went wrong...")
-                                                        }
-                                                        else if (snapshot?.isEmpty)!{
-                                                            print("Error: Chapters not found")
-                                                        }
-                                                        else{
-                                                            //for i in 0...ch
-                                                        }
-                                                    }
-                                                     */
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    
-                                                    
-                                                }
-                                            }
-                                            
-                                            
-                                            
-                                            /// Note: questionAnswers and 
-                                            /// Creating chapter object
-                                            let chapter  =  UserChapterProgress(chapterStatus: chapterStatus, chapterName: chapterName, chapterNum: chapterNum, playgroundStatus: playgroundStatus, questionScores: questionScores, questionAnswers: [UserQuestionAnswer(answers: [""])], questionProgress: [""], theoryStatus: theoryStatus)
-                                            
-                                            /// Appending chapter
-                                            chaptersProgress.append(chapter)
-                                        }
-                                        
-                                        /// Updating classroom chapter progress with the chapter progress
-                                        
-                                        userClassroom.chapterProgress = chaptersProgress
-                                        
-                                    }
-                                    
-                                }
-                                
-                                /// Appending clasroom to user classrooms
-                                self.loggedInUser.classroom.append(userClassroom)
-                                print("Classroom name : \(userClassroom.classroomName)")
-                            }
-                        }
-                    }
-                    
-                    self.isUserInfoRetrieved = true
-                }
-            }
-
-        case "Teacher":
-            print("Searching teachers....")
-            let collectionRef = db.collection("Teachers")
-            collectionRef.whereField("email", isEqualTo: loggedInEmail).getDocuments { (snapshot, err) in
-                if let err = err {
-                    print("Error getting document: \(err)")
-                } else if (snapshot?.isEmpty)! {
-                    print("Account not found. Shouldn't occur in this situation since user is already logged in.")
-                } else {
-                    let userObj = snapshot!.documents[0].data()
-                    self.loggedInAccountType =  "Teachers"
-                    self.loggedInUser.firstName = userObj["firstname"] as! String
-                    self.loggedInUser.lastName = userObj["lastName"] as! String
-                    self.loggedInUser.email = userObj["email"] as! String
-                    self.loggedInUser.password = userObj["password"] as! String
-                    self.loggedInUser.username = userObj["username"] as! String
-                    self.loggedInUser.country = userObj["country"] as! String
-                    self.loggedInUser.dob = userObj["date_of_birth"] as! String
-                    
-                    
-                    var userProgress = self.db.collection("Students").document(self.loggedInUser.username).collection("Chapters").document("chapter_1")
-                    print(userProgress)
-                    
-                    self.isUserInfoRetrieved = true
-                    
-//                    for document in (snapshot?.documents)! {
-//
-//                        if document.data()["username"] != nil {
-//                            print("Account found!")
-//                            print(document.data())
-//                        }
-//                    }
-                }
-            }
-
-        default:
-            print("This default clause is not needed")
-        }
-  
-
-     // Get all the documents where the field username is equal to the String you pass, loop over all the documents.
- 
-
-    }
 
     /// Function to logout the user
     func logoutUser(){
@@ -414,7 +230,7 @@ final class UserAccountViewModel: ObservableObject {
                                 country: "",
                                 classroom: [UserClassroom()]
                              )
-            self.userScoreAverage = 0
+            self.userTotalScore = 0
             self.userQuestionCompleteCount = 0
             self.userTotalPossibleScore = 0
             self.userChapterInProgressCount = 0

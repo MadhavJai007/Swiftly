@@ -107,17 +107,6 @@ struct UserAccountView: View {
                                     }
                                 }
                                 
-//                                if (userAccountViewModel.logoutSuccessful){
-//                                    /// Called to pop to login view
-//                                    loginViewModel.isSuccessful = false
-//                                    loginViewModel.isLoading = false
-//                                    chaptersViewModel.chaptersArr.removeAll()
-//                                    chaptersViewModel.isUserLoggedIn.toggle()
-//                                }else{
-//                                    /// Todo: Show some alert
-//                                }
-                                
-                                
                             }label: {
                                 LogoutLabel(text: "Logout")
                                     .frame(width: 200, height: 75)
@@ -134,36 +123,59 @@ struct UserAccountView: View {
                         ZStack(alignment: .leading){
                             
                             Color.whiteCustom
-                            
-                            VStack(alignment: .leading){
+                           
+                            VStack(alignment: .leading, spacing: geometry.size.width/20){
                                 
                                 UserAccountTitleLabel(text: "Progress", color: Color.darkGrayCustom)
                                     .padding(.top, -geometry.size.width/108)
+                                    .padding(.leading, geometry.size.width/24)
+                                 
+                                /// Chapters completed stat
+                                VStack(alignment: .leading){
+                                    StatHeader(text: "Chapters Completed")
+                                        
+                                    Text("\(String(userAccountViewModel.userChapterCompletionCount))")
+                                        .font(.system(size:75, weight: .semibold))
+                                        .foregroundColor(.green)
+                                }
+                                .padding(.leading, geometry.size.width/24)
+                                .frame(width: geometry.size.width/2, alignment: .leading)
+                                
+                                /// Chapters in-progress stat
+                                VStack(alignment: .leading){
+                                    StatHeader(text: "Chapters In-Progress")
+                                        
+                                    Text("\(String(userAccountViewModel.userChapterInProgressCount))")
+                                        .font(.system(size:75, weight: .semibold))
+                                        .foregroundColor(.yellow)
+                                }
+                                .padding(.leading, geometry.size.width/24)
+                                .frame(width: geometry.size.width/2, alignment: .leading)
+                                
+                                /// Total question score stat
+                                VStack(alignment: .leading){
+                                    StatHeader(text: "Total Question Score ")
+                                    
+                                    Text("\(String(userAccountViewModel.userTotalScore))")
+                                        .font(.system(size:75, weight: .semibold))
+                                        .foregroundColor(.blue)
+                                }
+                                .padding(.leading, geometry.size.width/24)
+                                .frame(width: geometry.size.width/2, alignment: .leading)
+                                
+                                
+                                /// Total questions completed stat
+                                VStack(alignment: .leading){
+                                    StatHeader(text: "Questions Completed ")
+                                        
+                                    Text("\(String(userAccountViewModel.userQuestionCompleteCount))")
+                                        .font(.system(size:75, weight: .semibold))
+                                        .foregroundColor(.blue)
+                                }
+                                .padding(.leading, geometry.size.width/24)
+                                .frame(width: geometry.size.width/2, alignment: .leading)
                                 
                                 Spacer()
-                                
-                            }.padding(.leading, geometry.size.width/24)
-                            
-                            
-                            VStack(alignment: .leading, spacing: geometry.size.width/20){
-                                
-                                /// foreach loop to display classroom name, chapters completed and interactive score average for each classroom
-                                /*
-                                ForEach(0..<userAccountViewModel.loggedInUser.classroom.count){ i in
-                                    Text("Classroom Name: \(String(userAccountViewModel.classroomNames[i]))")
-                                    Text("Chapter's Completed: \(String(userAccountViewModel.userChapterCompletionCount))")
-                                    Text("Interactive Score Average: \(String(userAccountViewModel.userScoreAverage))")
-                                }
-                                 */
-                                 
-                                
-                                
-                                Text("Chapter's Completed: \(String(userAccountViewModel.userChapterCompletionCount))")
-                                Text("Chapter's In Progress: \(String(userAccountViewModel.userChapterInProgressCount))")
-                                Text("User Interactive Total Score: \(String(userAccountViewModel.userScoreAverage)) ")
-                                Text("Total Interactive Questions completed: \(String(userAccountViewModel.userQuestionCompleteCount)) ")
-                                 
-                                
                             }
                             
                         }.frame(width: geometry.size.width/2, height: geometry.size.height/1.25, alignment: .leading)
@@ -219,6 +231,19 @@ struct InfoHeader: View {
         Text(text)
             .font(.system(size: 28))
             .foregroundColor(Color.whiteCustom)
+    }
+}
+
+// Struct for the info header
+struct StatHeader: View {
+    
+    var text: String
+    
+    var body: some View {
+        
+        Text(text)
+            .font(.system(size: 28))
+            .foregroundColor(Color.blackCustom)
     }
 }
 

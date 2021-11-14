@@ -26,14 +26,8 @@ struct ChaptersView: View {
                 VStack{
                     HStack {
                         Button {
-                            /// Downloading user account data moved to .onAppear()
-                            
-                            /// Downloading user account information
-                            if(!userAccountViewModel.isUserInfoRetrieved){
-                                print("First time downloading user info")
-                                userAccountViewModel.loadUserData(loggedInEmail: loginViewModel.loggedInEmail, accountType: loginViewModel.accountMode)
-                            }
-                            
+                            userAccountViewModel.clearStats()
+                            userAccountViewModel.getUserStats()
                             chaptersViewModel.isShowingAccountView.toggle()
                         }label: {
                             SpecialNavBarIcon(text: "person.crop.circle")
@@ -124,6 +118,8 @@ struct ChaptersView: View {
         
         .onAppear {
             
+            
+            userAccountViewModel.loggedInUser = chaptersViewModel.loggedInUser
             
             /// If the user is going to logout
             if (chaptersViewModel.logoutIntent == true){
