@@ -24,6 +24,7 @@ final class ChaptersViewModel: ObservableObject {
     @Published var chaptersStatus = [String]()
     
     @Published var userCompletionCount = [Int]()
+    @Published var totalUserCount = 0
     
     var loggedInAccountType : String = ""
     var logoutIntent = false
@@ -197,6 +198,7 @@ final class ChaptersViewModel: ObservableObject {
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     self.userCompletionCount = Array(repeating: 0, count: self.chaptersArr.count)
+         
                 }
             }
         }
@@ -204,10 +206,12 @@ final class ChaptersViewModel: ObservableObject {
     
     func retrieveUserbaseCompletion(){
         
-        /// Resetting completion count array
+        /// Resetting completion count and total user arrays
         self.userCompletionCount = Array(repeating: 0, count: self.chaptersArr.count)
+        self.totalUserCount = 0
         
         let db = Firestore.firestore()
+        
         
         db.collection("Students").getDocuments() { (querySnapshot, err) in
             if let err = err {
@@ -217,6 +221,8 @@ final class ChaptersViewModel: ObservableObject {
                 
                 /// Looping through each student
                 for document in querySnapshot!.documents {
+                    
+                    self.totalUserCount += 1
                     
                     /// Accessing chapters collection for the student
                     db.collection("Students").document(document.documentID).collection("Classrooms").document("classroom_1").collection("Chapters").getDocuments() { (querySnapshot, err) in

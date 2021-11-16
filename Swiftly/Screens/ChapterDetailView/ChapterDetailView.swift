@@ -103,8 +103,19 @@ struct ChapterDetailView: View {
                             StartChapterButton(text: "Start Chapter", textColor: .white, backgroundColor: Color(UIColor.darkGray))
                         }
                         .padding(.leading, geometry.size.width/12)
-                        .padding(.bottom, geometry.size.width/12)
                         
+                        
+                       
+                    
+                        Text("\(chaptersViewModel.userCompletionCount[chaptersViewModel.selectedChapterIndex]) students out of \(chaptersViewModel.totalUserCount) have completed this chapter")
+                        .font(.system(size: 20,weight: .bold,design: .default))
+                        .foregroundColor(Color(UIColor.systemOrange))
+                        .padding(.leading, geometry.size.width/8.5)
+                            
+                            
+                        
+                      
+                            
                         VStack(alignment: .leading){
                             
                             ChapterContentText(text: "Jump To")
