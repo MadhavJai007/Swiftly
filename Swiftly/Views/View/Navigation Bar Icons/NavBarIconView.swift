@@ -14,9 +14,9 @@ struct NavBarIcon: View {
     var body: some View {
         Image(systemName: iconName)
             .resizable()
-            .foregroundColor(.white)
             .aspectRatio(contentMode: .fit)
             .frame(width: 25, height: 25)
+            .foregroundColor(Color(UIColor.systemGray2))
     }
 }
 
@@ -30,7 +30,7 @@ struct SpecialNavBarIcon: View {
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: 44, height: 44)
-            .foregroundColor(Color.white)
+            .foregroundColor(Color(UIColor.systemGray))
             .padding(.leading, 30)
     }
 }

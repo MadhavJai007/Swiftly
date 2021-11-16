@@ -22,7 +22,7 @@ struct ChatbotView: View {
             
             ZStack{
                 
-                Color.blackCustom
+                Color(UIColor.systemGray6)
                     .ignoresSafeArea()
                 
                 VStack{
@@ -47,7 +47,7 @@ struct ChatbotView: View {
                         
                         HStack{
                             
-                            ChatbotTitleLabel(text: "Swiftly Help")
+                            TitleLabel(text: "Swiftly Help")
                                 .padding(.leading, 30)
                             
                             Spacer()
@@ -121,7 +121,7 @@ struct ChatbotView: View {
                             TextField("Say something...", text: $userMessage)
                                 .font(.system(size: 20, weight: .medium))
                                 .frame(width: geometry.size.width/1.2, height: 50)
-                                .background(Color.white)
+                                .background(Color(UIColor.systemGray5))
                                 .foregroundColor(Color.black)
                                 .cornerRadius(10)
                             
@@ -133,7 +133,7 @@ struct ChatbotView: View {
                             }label:{
                                 Image(systemName: "arrow.up.circle.fill")
                                     .resizable()
-                                    .foregroundColor(Color.whiteCustom)
+//                                    .foregroundColor(Color(UIColor.systemGray5))
                             }
                             .frame(width: 44, height: 44)
                         }
@@ -180,8 +180,8 @@ struct ChatbotNavBarIcon: View {
     var body: some View {
         Image(systemName: iconName)
             .resizable()
-            .foregroundColor(Color.whiteCustom)
             .aspectRatio(contentMode: .fit)
             .frame(width: 25, height: 25)
+            .foregroundColor(Color(UIColor.systemGray2))
     }
 }

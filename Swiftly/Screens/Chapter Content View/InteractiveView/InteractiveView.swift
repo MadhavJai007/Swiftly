@@ -27,7 +27,8 @@ struct InteractiveView: View {
         
         GeometryReader { geometry in
             ZStack{
-                Color.blackCustom
+                
+                Color(UIColor.systemGray6)
                     .ignoresSafeArea()
                 
                 VStack{
@@ -65,7 +66,7 @@ struct InteractiveView: View {
                                             
                                             /// Creating the tile view and passing the code block struct to it
                                             InteractiveTileView(codeBlock: block)
-                                                .overlay(dragging?.id == block.id ? Color.white.opacity(0.8) : Color.clear)
+                                                .overlay(dragging?.id == block.id ? Color.clear : Color.clear)
                                                 .cornerRadius(20)
                                                 .onDrag {
                                                     self.dragging = block
@@ -106,7 +107,7 @@ struct InteractiveView: View {
                     }.frame(width: geometry.size.width/1.0, height: geometry.size.height/1.50, alignment: .center)
                     
                     ZStack{
-                        Color.darkGrayCustom
+                        Color(UIColor.systemGray4)
                             .ignoresSafeArea()
                         HStack{
                             InteractiveContentText(text: chapterContentViewModel.selectedQuestion.description)

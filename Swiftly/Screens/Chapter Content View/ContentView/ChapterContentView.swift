@@ -23,7 +23,7 @@ struct ChapterContentView: View {
             
             ZStack{
                 
-                Color.darkGrayCustom
+                Color(UIColor.systemGray6)
                     .ignoresSafeArea()
                 
                 VStack{
@@ -154,10 +154,10 @@ struct ChapterContentView: View {
                                             }label: {
                                                 Text("Start Interactive Section")
                                                     .font(.system(size: 30, weight: .semibold))
-                                                    .foregroundColor(Color.white)
+                                                    
                                             }
                                             .frame(width: geometry.size.width/2, height: geometry.size.height/12)
-                                            .background(Color.blackCustom)
+                                            .background(Color(UIColor.darkGray))
                                             .cornerRadius(15)
                                             
                                             Spacer()
@@ -247,7 +247,7 @@ struct ChapterTopic: View {
             .font(.system(size: 40,
                           weight: .bold,
                           design: .default))
-            .foregroundColor(Color.white)
+            
     }
 }
 
@@ -262,7 +262,7 @@ struct ChapterTopicIcon: View {
         Image(systemName: iconName)
             .resizable()
             .frame(width: 40, height: 40)
-            .foregroundColor(.white)
+            
         
     }
 }
@@ -276,7 +276,7 @@ struct ChapterSubTitle: View {
             .font(.system(size: 40,
                           weight: .bold,
                           design: .default))
-            .foregroundColor(Color.white)
+            
     }
 }
 

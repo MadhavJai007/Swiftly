@@ -25,7 +25,7 @@ struct LoginView: View {
         NavigationView {
             ZStack {
                 
-                Color.darkGrayCustom
+                Color(UIColor.systemGray6)
                     .ignoresSafeArea()
                  
                 VStack {
@@ -34,29 +34,21 @@ struct LoginView: View {
                     }
                     .frame(alignment: .topLeading)
                     .padding(.top, 250)
-                
-//                    VStack{
-//                        DropdownView(optionArray: accountTypeOptions)
-//                    }
-//                    .padding()
-                    
                     
                     VStack(spacing: 25){
                         TextField("Email Address", text: $email)
                             .font(.system(size: 30))
                             .padding()
                             .frame(width: 400, height: 75)
-                            .background(Color.white)
+                            .background(Color(UIColor.systemGray3))
                             .autocapitalization(.none)
-                            .foregroundColor(Color.blackCustom)
                             .cornerRadius(15)
                         
                         SecureInputView("Password", text: $password)
                             .font(.system(size: 30))
                             .padding()
                             .frame(width: 400, height: 75)
-                            .background(Color.white)
-                            .foregroundColor(Color.blackCustom)
+                            .background(Color(UIColor.systemGray3))
                             .cornerRadius(15)
                     }
                     
@@ -97,7 +89,7 @@ struct LoginView: View {
                             }
                         }
                     }label: {
-                        ButtonLabelLarge(text: "Login", textColor: .white, backgroundColor: Color.blackCustom)
+                        ButtonLabelLarge(text: "Login", textColor: .white, backgroundColor: Color(UIColor.systemGray2))
                     }
                     .padding(.top,50)
                     .padding(.bottom,50)
@@ -132,7 +124,7 @@ struct LoginView: View {
                                 loginViewModel.isShowingSignupView.toggle()
                             }
                         }label: {
-                            ButtonLabelLarge(text: "Tap to sign up", textColor: .white, backgroundColor: Color.blackCustom)
+                            ButtonLabelLarge(text: "Tap to sign up", textColor: .white, backgroundColor: Color(UIColor.systemGray2))
                         }
                         .padding(.bottom, 50)
                         

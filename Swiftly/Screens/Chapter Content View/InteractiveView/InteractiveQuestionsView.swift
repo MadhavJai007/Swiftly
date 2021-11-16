@@ -18,7 +18,8 @@ struct InteractiveQuestionsView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack{
-                Color.blackCustom
+                
+                Color(UIColor.systemGray6)
                     .ignoresSafeArea()
                 
                 VStack{
@@ -197,14 +198,13 @@ struct InteractiveQuestionsView: View {
                                 }
                             }
                             .frame(width: geometry.size.width/1.5, height: 115)
-                            .background(Color.whiteCustom)
+                            .background(Color(UIColor.systemGray5))
                             .cornerRadius(15)
                             .padding(5)
                         }
                         
                     }.frame(width: geometry.size.width/1.15)
                     
-                
                     /// HStack for next chapter button
                     HStack{
                         
@@ -224,7 +224,7 @@ struct InteractiveQuestionsView: View {
                                         Button{
                                             
                                         }label:{
-                                            ButtonLabelLarge(text: "Next Chapter", textColor: .white, backgroundColor: .gray)
+                                            ButtonLabelLarge(text: "Next Chapter", textColor: .white, backgroundColor: Color(UIColor.systemGray))
                                                 .opacity(0.5)
                                         }
                                         .frame(width: geometry.size.width, alignment: .center)
@@ -240,7 +240,7 @@ struct InteractiveQuestionsView: View {
                                             
                                             
                                         }label:{
-                                            ButtonLabelLarge(text: "Next Chapter", textColor: .white, backgroundColor: .green)
+                                            NextChaptButton(text: "Next Chapter", textColor: .white, backgroundColor: Color(UIColor.systemGreen))
                                         }
                                         .frame(width: geometry.size.width, alignment: .center)
                                         .padding(20)

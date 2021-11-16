@@ -12,11 +12,10 @@ struct InteractiveTileView: View {
         VStack {
             Text(String(codeBlock.content))
                 .font(.system(size: 25))
-                .foregroundColor(.black)
                 .padding(10)
         }
         .frame(width: UIScreen.screenWidth/1.10, height: 100, alignment: .leading)
-        .background(Color.whiteCustom).opacity(1)
+        .background(Color(UIColor.systemGray4))
         .cornerRadius(20)
         
     }

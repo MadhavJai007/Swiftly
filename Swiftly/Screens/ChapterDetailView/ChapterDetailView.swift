@@ -23,7 +23,7 @@ struct ChapterDetailView: View {
             
             ZStack{
                 
-                Color.darkGrayCustom
+                Color(UIColor.systemGray6)
                     .ignoresSafeArea()
                 
                 VStack(alignment: .leading){
@@ -41,8 +41,8 @@ struct ChapterDetailView: View {
                         } label: {
                             Image(systemName: "xmark")
                                 .resizable()
-                                .foregroundColor(.white)
                                 .imageScale(.large)
+                                .foregroundColor(Color(UIColor.systemGray3))
                                 .frame(width: 25, height: 25)
                         }
                         .padding(.trailing, geometry.size.width/12)
@@ -55,12 +55,10 @@ struct ChapterDetailView: View {
                             .font(.system(size: 35,
                                           weight: .bold,
                                           design: .default))
-                            .foregroundColor(Color.white)
                         
                         Image(systemName: "\(chaptersViewModel.selectedChapter!.iconName)")
                             .resizable()
                             .frame(width: 40, height: 40)
-                            .foregroundColor(.white)
                         
                     }
                     .padding(.trailing, -geometry.size.width/12)
@@ -102,7 +100,7 @@ struct ChapterDetailView: View {
                             chaptersViewModel.startChapterIntent = true
                             
                         }label: {
-                            StartChapterButton(text: "Start Chapter", textColor: .white, backgroundColor: Color.blackCustom)
+                            StartChapterButton(text: "Start Chapter", textColor: .white, backgroundColor: Color(UIColor.darkGray))
                         }
                         .padding(.leading, geometry.size.width/12)
                         .padding(.bottom, geometry.size.width/12)
@@ -151,7 +149,7 @@ struct ChapterDetailView: View {
                                             ChapterDetailsButtonText(text:"Chapter Questions")
                                         }
                                         .frame(width: 260, height: 50)
-                                        .background(Color.yellow)
+                                        .background(Color(UIColor.systemYellow))
                                         .cornerRadius(10)
                                         .disabled(false)
                                     }
@@ -169,7 +167,7 @@ struct ChapterDetailView: View {
                                             ChapterDetailsButtonText(text:"Chapter Questions")
                                         }
                                         .frame(width: 260, height: 50)
-                                        .background(Color.green)
+                                        .background(Color(UIColor.systemGreen))
                                         .cornerRadius(10)
                                         .disabled(false)
                                     }
@@ -238,7 +236,6 @@ struct ChapterContentText: View {
     var body: some View {
         Text(text)
             .font(.system(size: 30))
-            .foregroundColor(Color.white)
             .padding(.top, 25)
     }
     
@@ -254,7 +251,8 @@ struct ChapterDetailsButtonText: View {
         
         Text(text)
             .font(.system(size: 30))
-            .foregroundColor(Color.white)
+            .foregroundColor(Color(UIColor.systemGray6))
+            .background(Color(UIColor.clear))
         
     }
 }

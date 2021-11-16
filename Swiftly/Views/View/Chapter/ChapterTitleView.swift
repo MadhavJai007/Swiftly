@@ -42,7 +42,7 @@ struct ChapterTitleView: View {
                                 .resizable()
                                 .frame(width: 35, height: 35)
                                 .padding(10)
-                                .foregroundColor(Color.green)
+                                .foregroundColor(Color(UIColor.systemGreen))
                         }else{
                             Image(systemName: "checkmark.circle")
                                 .resizable()
@@ -70,7 +70,6 @@ struct ChapterTitleView: View {
                         Image(systemName: "star.fill")
                             .resizable()
                             .frame(width: 30, height: 30)
-                            .foregroundColor(Color.black)
                     }
                     .minimumScaleFactor(0.5)
                 }
@@ -100,7 +99,7 @@ struct ChapterTitleView: View {
                             } label: {
                                 Text("Select Chapter")
                                     .font(.system(size: 20, weight: .semibold, design: .default))
-                                    .foregroundColor(Color.white)
+                                    .foregroundColor(Color(UIColor.systemGray6))
                                     .frame(width: width, height: 60)
                             }
                         }
@@ -115,13 +114,13 @@ struct ChapterTitleView: View {
                             } label: {
                                 Text("Select Chapter")
                                     .font(.system(size: 20, weight: .semibold, design: .default))
-                                    .foregroundColor(Color.white)
+                                    .foregroundColor(Color(UIColor.systemGray6))
                                     .frame(width: width, height: 60)
                             }
                         }
                         .frame(width: width, height: 60)
                         .cornerRadius(30)
-                        .background(Color.yellow)
+                        .background(Color(UIColor.systemYellow))
                     }
                     else if (chapterStat == "complete"){
                         HStack{
@@ -130,13 +129,13 @@ struct ChapterTitleView: View {
                             } label: {
                                 Text("Select Chapter")
                                     .font(.system(size: 20, weight: .semibold, design: .default))
-                                    .foregroundColor(Color.white)
+                                    .foregroundColor(Color(UIColor.systemGray6))
                                     .frame(width: width, height: 60)
                             }
                         }
                         .frame(width: width, height: 60)
                         .cornerRadius(30)
-                        .background(Color.green)
+                        .background(Color(UIColor.systemGreen))
                     }
                 
                     
@@ -144,36 +143,14 @@ struct ChapterTitleView: View {
                 }
                 
             }.frame(width: width, height:275, alignment: .leading)
-                .background(Color.whiteCustom)
+                .background(Color(UIColor.systemGray5))
                 .cornerRadius(15)
         }
     }
 }
 
 
-//struct ChapterTitleView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ChapterTitleView(chapter: MockData.sampleChapter, width: 325)
-//    }
-//}
 
-struct ViewLeaderboardButtonLabel: View {
-    
-    var text: String
-    
-    var body: some View {
-        Text(text)
-            .font(.system(size: 20, weight: .semibold, design: .default))
-            .foregroundColor(Color.white)
-            .padding(7)
-            .padding(.leading, 10)
-            .padding(.trailing, 10)
-            .background(Color.leaderboardBtnBackground)
-            .cornerRadius(10)
-            .padding(.trailing, -7.5)
-            .padding(.leading, 5)
-    }
-}
 
 
 struct ChapterInfoLabel: View{

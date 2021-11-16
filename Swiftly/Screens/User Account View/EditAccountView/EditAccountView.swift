@@ -24,8 +24,7 @@ struct EditAccountView: View {
             
             ZStack {
                 
-                // Background
-                Color.darkGrayCustom
+                Color(UIColor.systemGray6)
                     .ignoresSafeArea()
                 
                 VStack {
@@ -44,9 +43,7 @@ struct EditAccountView: View {
                     .padding(.bottom, geometry.size.width/24)
                     
                     // Title
-                    Text("Edit Account")
-                        .font(.system(size: 75))
-                        .foregroundColor(.white)
+                    TitleLabel(text: "Edit Account")
                         .padding(.bottom, geometry.size.width/42)
                     
                     // Username
@@ -59,8 +56,7 @@ struct EditAccountView: View {
                             .font(.system(size: 30))
                             .padding()
                             .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
-                            .background(Color.white)
-                            .foregroundColor(.darkGrayCustom)
+                            .background(Color(UIColor.systemGray3))
                             .cornerRadius(15)
                     }
                     .padding(geometry.size.width/42)
@@ -81,8 +77,7 @@ struct EditAccountView: View {
                                 .font(.system(size: 30))
                                 .padding()
                                 .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
-                                .background(Color.white)
-                                .foregroundColor(.darkGrayCustom)
+                                .background(Color(UIColor.systemGray3))
                                 .cornerRadius(15)
                         }
                         
@@ -95,8 +90,7 @@ struct EditAccountView: View {
                                 .font(.system(size: 30))
                                 .padding()
                                 .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
-                                .background(Color.white)
-                                .foregroundColor(.darkGrayCustom)
+                                .background(Color(UIColor.systemGray3))
                                 .cornerRadius(15)
                         }
                     }.padding(geometry.size.width/42)
@@ -118,8 +112,8 @@ struct EditAccountView: View {
                                             }
                                         }
                             .frame(width: 100, height: 50)
-                            .background(Color.blackCustom)
-                            .cornerRadius(15)
+                            .background(Color(UIColor.systemGray3))
+                            .cornerRadius(10)
                             
                         }
                         
@@ -132,8 +126,7 @@ struct EditAccountView: View {
                                 .font(.system(size: 30))
                                 .padding()
                                 .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
-                                .background(Color.white)
-                                .foregroundColor(.darkGrayCustom)
+                                .background(Color(UIColor.systemGray3))
                                 .cornerRadius(15)
                         }
                     }
@@ -149,9 +142,8 @@ struct EditAccountView: View {
                             .font(.system(size: 30))
                             .padding()
                             .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
-                            .background(Color.white)
                             .opacity(0.75)
-                            .foregroundColor(.darkGrayCustom)
+                            .background(Color(UIColor.systemGray3))
                             .cornerRadius(15)
                             .disabled(true)
                         
@@ -168,8 +160,7 @@ struct EditAccountView: View {
                             .font(.system(size: 30))
                             .padding()
                             .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
-                            .background(Color.white)
-                            .foregroundColor(.darkGrayCustom)
+                            .background(Color(UIColor.systemGray3))
                             .cornerRadius(15)
                         
                     }

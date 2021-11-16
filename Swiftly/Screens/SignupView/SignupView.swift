@@ -23,8 +23,7 @@ struct SignupView: View {
             
             ZStack {
                 
-                // Background
-                Color.darkGrayCustom
+                Color(UIColor.systemGray6)
                     .ignoresSafeArea()
                 
                 VStack {
@@ -43,9 +42,7 @@ struct SignupView: View {
                     .padding(.bottom, geometry.size.width/24)
                     
                     // Title
-                    Text("Account Creation")
-                        .font(.system(size: 35))
-                        .foregroundColor(.white)
+                    TitleLabel(text:"Account Creation")
                         .padding(.bottom, geometry.size.width/42)
                     
                     // Username
@@ -59,8 +56,7 @@ struct SignupView: View {
                             .padding()
                             .autocapitalization(.none)
                             .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
-                            .background(Color.white)
-                            .foregroundColor(.darkGrayCustom)
+                            .background(Color(UIColor.systemGray3))
                             .cornerRadius(15)
                         
                     }
@@ -81,8 +77,7 @@ struct SignupView: View {
                                 .padding()
                                 .autocapitalization(.none)
                                 .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
-                                .background(Color.white)
-                                .foregroundColor(.darkGrayCustom)
+                                .background(Color(UIColor.systemGray3))
                                 .cornerRadius(15)
                         }
                         
@@ -96,8 +91,7 @@ struct SignupView: View {
                                 .padding()
                                 .autocapitalization(.none)
                                 .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
-                                .background(Color.white)
-                                .foregroundColor(.darkGrayCustom)
+                                .background(Color(UIColor.systemGray3))
                                 .cornerRadius(15)
                         }
                     }.padding(geometry.size.width/42)
@@ -118,8 +112,8 @@ struct SignupView: View {
                                             }
                                         }
                             .frame(width: 100, height: 50)
-                            .background(Color.blackCustom)
-                            .cornerRadius(15)
+                            .background(Color(UIColor.systemGray3))
+                            .cornerRadius(10)
                             
                         }
                         
@@ -134,8 +128,7 @@ struct SignupView: View {
                                 .font(.system(size: 30))
                                 .padding()
                                 .frame(width: geometry.size.width/2 - 100, height: geometry.size.width/12)
-                                .background(Color.white)
-                                .foregroundColor(.darkGrayCustom)
+                                .background(Color(UIColor.systemGray3))
                                 .cornerRadius(15)
                         }
                     }
@@ -152,8 +145,7 @@ struct SignupView: View {
                             .padding()
                             .autocapitalization(.none)
                             .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
-                            .background(Color.white)
-                            .foregroundColor(.darkGrayCustom)
+                            .background(Color(UIColor.systemGray3))
                             .cornerRadius(15)
 
                         
@@ -170,12 +162,10 @@ struct SignupView: View {
                             .font(.system(size: 30))
                             .padding()
                             .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
-                            .background(Color.white)
-                            .foregroundColor(.darkGrayCustom)
+                            .background(Color(UIColor.systemGray3))
                             .cornerRadius(15)
                         Text("Must be 8-15 characters in length, start with a letter, and contain atleast 1 number")
                             .font(.system(size: 15))
-                            .foregroundColor(.white)
                         
                     }
                     .padding(geometry.size.width/42)
@@ -246,7 +236,6 @@ struct InputFieldLabel: View {
     var body: some View {
         
         Text(text)
-            .foregroundColor(.white)
             .font(.system(size: 25))
         
     }
@@ -266,8 +255,7 @@ struct CreateAccountButton: View {
             .fontWeight(.semibold)
             .padding()
             .frame(width: 400, height: 75)
-            .background(backgroundColor)
-            .foregroundColor(textColor)
+            .background(Color(UIColor.systemGray2))
             .cornerRadius(15)
     }
 }
@@ -295,7 +283,6 @@ struct SecureInputView: View {
                 isSecured.toggle()
             }) {
                 Image(systemName: self.isSecured ? "eye.slash" : "eye")
-                    .accentColor(.gray)
             }
         }
     }

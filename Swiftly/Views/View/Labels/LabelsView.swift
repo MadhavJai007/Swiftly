@@ -12,7 +12,6 @@ struct TitleLabel: View {
     var body: some View {
         Text(text)
             .font(.system(size: 75, weight: .light))
-            .foregroundColor(.white)
     }
 }
 
@@ -27,8 +26,7 @@ struct ButtonLabelLarge: View {
             .font(.system(size: 35, weight: .semibold))
             .padding()
             .frame(width: 400, height: 75)
-            .background(backgroundColor)
-            .foregroundColor(textColor)
+            .background(Color(UIColor.systemGray))
             .cornerRadius(15)
     }
 }
@@ -40,7 +38,6 @@ struct InfoLabelMedium: View {
     var body: some View {
         Text(text)
             .font(.system(size: 25, weight: .light))
-            .foregroundColor(.white)
     }
 }
 
@@ -85,7 +82,7 @@ struct MultipleSelectionRow: View {
         GeometryReader { geometry in
             ZStack{
                 
-                Color.clear
+                Color(UIColor.systemGray6)
                 
                 VStack{
                     HStack{
@@ -94,29 +91,30 @@ struct MultipleSelectionRow: View {
                             Image(systemName: "largecircle.fill.circle")
                                 .frame(width: 44, height: 44)
                                 .padding(.leading, 10)
-                                .foregroundColor(Color.white)
                         }else{
                             Image(systemName: "circle")
                                 .frame(width: 44, height: 44)
                                 .padding(.leading, 10)
-                                .foregroundColor(Color.white)
                         }
+                        
+                        
                         
                         
                         Button(action: self.action) {
                             Text(self.title)
                                 .font(.system(size: 25))
-                                .foregroundColor(.white)
                                 .padding(.leading, 10)
                                 .frame(width: UIScreen.screenWidth/1.25, height: 75, alignment: .leading)
                                 .cornerRadius(15)
+                                .foregroundColor(Color(UIColor.gray))
                         }
+                        
                     }
                 }
             }.frame(width: UIScreen.screenWidth/1.25, height: 75, alignment: .leading)
                 .cornerRadius(15)
                 .overlay(RoundedRectangle(cornerRadius: 15)
-                            .stroke(Color.white, lineWidth: 2))
+                            .stroke(Color(UIColor.darkGray), lineWidth: 2))
         }
     }
 }
@@ -128,7 +126,7 @@ struct InteractiveSubTitle: View {
     var body: some View {
         Text(text)
             .font(.system(size: 35, weight: .medium))
-            .foregroundColor(Color.white)
+            
     }
 }
 
@@ -140,7 +138,6 @@ struct InteractiveContentText: View {
     var body: some View {
         Text(text)
             .font(.system(size: 25))
-            .foregroundColor(Color.white)
             .minimumScaleFactor(0.5)
     }
 }
@@ -152,7 +149,6 @@ struct InteractiveContentTextPreview: View {
     var body: some View {
         Text(text)
             .font(.system(size: 28))
-            .foregroundColor(Color.blackCustom)
             .minimumScaleFactor(0.5)
     }
 }
@@ -164,42 +160,11 @@ struct InteractiveSubTitlePreview: View {
     var body: some View {
         Text(text)
             .font(.system(size: 35, weight: .medium))
-            .foregroundColor(Color.blackCustom)
     }
 }
 
 
-/// Label 11: InteractiveBlockTextPreview
-/// Description: Used in the playground preview (for the code block text)
-struct InteractiveBlockTextPreview: View {
-    var text: String
-    var body: some View {
-        Text(text)
-            .font(.system(size: 12))
-            .foregroundColor(.white)
-            .padding(10)
-    }
-}
 
-/// Label 12: InteractiveStartButton
-/// Description: Used in playground questions view that lets users start the playground question
-struct InteractiveStartButton: View {
-    
-    var text: String
-    var textColor: Color
-    var backgroundColor: Color
-    
-    var body: some View {
-        Text(text)
-            .font(.system(size: 35))
-            .fontWeight(.semibold)
-            .padding()
-            .frame(width: 400, height: 75)
-            .background(backgroundColor)
-            .foregroundColor(textColor)
-            .cornerRadius(15)
-    }
-}
 
 /// Label 13: LeaderboardTableHeader
 /// Description: Used in the leaderboard view for the table header
@@ -220,5 +185,22 @@ struct LeaderboardSubTitle: View {
         Text(text)
             .font(.system(size: 30))
             .foregroundColor(Color.white)
+    }
+}
+
+
+/// Label 15: ButtonLabelLarge
+/// Description: Largest button label, used for sign up button, login button, etc.
+struct NextChaptButton: View {
+    var text: String
+    var textColor: Color
+    var backgroundColor: Color
+    var body: some View {
+        Text(text)
+            .font(.system(size: 35, weight: .semibold))
+            .padding()
+            .frame(width: 400, height: 75)
+            .background(backgroundColor)
+            .cornerRadius(15)
     }
 }

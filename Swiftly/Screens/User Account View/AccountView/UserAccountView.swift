@@ -19,7 +19,7 @@ struct UserAccountView: View {
             
             ZStack {
                 
-                Color.darkGrayCustom
+                Color(UIColor.systemGray6)
                     .ignoresSafeArea()
                 
                 
@@ -56,7 +56,7 @@ struct UserAccountView: View {
                         
                         VStack(alignment: .leading, spacing: geometry.size.width/20){
                             
-                            UserAccountTitleLabel(text: "About Me", color: Color.whiteCustom)
+                            UserAccountTitleLabel(text: "About Me")
                             
                             VStack(alignment: .leading){
                                 InfoHeader(text:"Username")
@@ -122,11 +122,11 @@ struct UserAccountView: View {
                         
                         ZStack(alignment: .leading){
                             
-                            Color.whiteCustom
+                            Color(UIColor.systemGray6)
                            
                             VStack(alignment: .leading, spacing: geometry.size.width/20){
                                 
-                                UserAccountTitleLabel(text: "Progress", color: Color.darkGrayCustom)
+                                UserAccountTitleLabel(text: "Progress")
                                     .padding(.top, -geometry.size.width/108)
                                     .padding(.leading, geometry.size.width/24)
                                  
@@ -209,14 +209,13 @@ struct UserAccountView_Previews: PreviewProvider {
 struct UserAccountTitleLabel: View {
     
     var text: String
-    var color: Color
+
     
     var body: some View {
         
         Text(text)
             .font(.system(size: 75,
                           weight: .medium, design: .default))
-            .foregroundColor(color)
     }
 }
 
@@ -230,7 +229,6 @@ struct InfoHeader: View {
         
         Text(text)
             .font(.system(size: 28))
-            .foregroundColor(Color.whiteCustom)
     }
 }
 
@@ -243,7 +241,6 @@ struct StatHeader: View {
         
         Text(text)
             .font(.system(size: 28))
-            .foregroundColor(Color.blackCustom)
     }
 }
 
@@ -256,7 +253,6 @@ struct InfoLabel: View {
         
         Text(text)
             .font(.system(size: 35, weight: .semibold))
-            .foregroundColor(Color.whiteCustom)
     }
 }
 
@@ -281,7 +277,7 @@ struct UserAccountNavBarIcon: View {
     var body: some View {
         Image(systemName: iconName)
             .resizable()
-            .foregroundColor(.white)
+            .foregroundColor(Color(UIColor.systemGray2))
             .aspectRatio(contentMode: .fit)
             .frame(width: 25, height: 25)
     }
