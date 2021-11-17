@@ -88,6 +88,7 @@ struct ChapterDetailView: View {
                             ChapterContentText(text: chaptersViewModel.selectedChapter!.summary)
                                 .padding(.trailing, geometry.size.width/6)
                                 .padding(.top, geometry.size.width/24)
+                                .minimumScaleFactor(0.5)
                         }
                         
                         Spacer()

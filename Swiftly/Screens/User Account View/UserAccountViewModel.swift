@@ -13,6 +13,9 @@ final class UserAccountViewModel: ObservableObject {
     
     @Published var isEditingAccount = false
     
+    @Published var chapterCompletionProgress: Float = 0.0
+    @Published var chapterInProgressProgress: Float = 0.0
+    @Published var questionCompletedProgress: Float = 0.0
     
     ///Todo: User object needs to be passed down the view hierarch from the login viewmodel
     
@@ -34,9 +37,9 @@ final class UserAccountViewModel: ObservableObject {
     @Published var userChapterCompletionCount = 0
     @Published var userChapterInProgressCount = 0
     
-    @Published var userTotalScore = 0
-    @Published var userTotalPossibleScore = 0
-    @Published var userQuestionCompleteCount = 0
+//    @Published var userTotalScore = 0
+//    @Published var userTotalPossibleScore = 0
+//    @Published var userQuestionCompleteCount = 0
     
     var loggedInAccountType : String = ""
     
@@ -130,35 +133,53 @@ final class UserAccountViewModel: ObservableObject {
     func clearStats(){
         userChapterCompletionCount = 0
         userChapterInProgressCount = 0
-        userTotalScore = 0
-        userQuestionCompleteCount = 0
+//        userTotalScore = 0
+//        userQuestionCompleteCount = 0
+        chapterCompletionProgress = 0
+        chapterInProgressProgress = 0
+        questionCompletedProgress = 0
     }
     
     func getUserStats(){
         
-        for i in 0..<loggedInUser.classroom[0].chapterProgress.count{
+        print("getUserStats")
+        
+        let totalChapters = loggedInUser.classroom[0].chapterProgress.count
+        var completeChapters = 0
+        var inprogessChapters = 0
+        
+        var totalQuestions = 0
+        var completeQuestions = 0
+        
+        
+        
+        for i in 0..<totalChapters{
+            
+            print("Chaper: \(i+1)")
             
             if (loggedInUser.classroom[0].chapterProgress[i].chapterStatus == "complete"){
-                userChapterCompletionCount += 1
+                completeChapters += 1
             }
             
             else if (loggedInUser.classroom[0].chapterProgress[i].chapterStatus == "inprogress"){
-                userChapterInProgressCount += 1
+                inprogessChapters += 1
             }
             
             
             for k in 0..<loggedInUser.classroom[0].chapterProgress[i].questionScores.count{
-                userTotalScore += loggedInUser.classroom[0].chapterProgress[i].questionScores[k]
+//                userTotalScore += loggedInUser.classroom[0].chapterProgress[i].questionScores[k]
                 
+                totalQuestions += 1
                 if (loggedInUser.classroom[0].chapterProgress[i].questionProgress[k] == "complete"){
-                    userQuestionCompleteCount += 1
+                    completeQuestions += 1
                 }
             }
-            
-            
-            
         }
         
+        chapterCompletionProgress = Float(completeChapters) / Float(totalChapters)
+        chapterInProgressProgress = Float(inprogessChapters) / Float(totalChapters)
+        questionCompletedProgress = Float(completeQuestions) / Float(totalQuestions)
+       
         
     }
     
@@ -230,11 +251,9 @@ final class UserAccountViewModel: ObservableObject {
                                 country: "",
                                 classroom: [UserClassroom()]
                              )
-            self.userTotalScore = 0
-            self.userQuestionCompleteCount = 0
-            self.userTotalPossibleScore = 0
-            self.userChapterInProgressCount = 0
-            self.userChapterCompletionCount = 0
+
+            
+            self.clearStats()
             
         }
         catch {

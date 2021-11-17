@@ -133,46 +133,39 @@ struct UserAccountView: View {
                                 /// Chapters completed stat
                                 VStack(alignment: .leading){
                                     StatHeader(text: "Chapters Completed")
-                                        
-                                    Text("\(String(userAccountViewModel.userChapterCompletionCount))")
-                                        .font(.system(size:75, weight: .semibold))
-                                        .foregroundColor(.green)
+                                        .padding(.bottom, geometry.size.width/48)
+                                    ProgressBar(progress: $userAccountViewModel.chapterCompletionProgress, color: Color(UIColor.systemGreen))
+                                                        .frame(width: 120, height: 120)
+                                                        .padding(.leading, geometry.size.width/12)
+                                    
                                 }
                                 .padding(.leading, geometry.size.width/24)
+                                .padding(.bottom, geometry.size.width/48)
                                 .frame(width: geometry.size.width/2, alignment: .leading)
                                 
                                 /// Chapters in-progress stat
                                 VStack(alignment: .leading){
                                     StatHeader(text: "Chapters In-Progress")
-                                        
-                                    Text("\(String(userAccountViewModel.userChapterInProgressCount))")
-                                        .font(.system(size:75, weight: .semibold))
-                                        .foregroundColor(.yellow)
+                                        .padding(.bottom, geometry.size.width/48)
+                                    ProgressBar(progress: $userAccountViewModel.chapterInProgressProgress, color: Color(UIColor.systemOrange))
+                                                        .frame(width: 120, height: 120)
+                                                        .padding(.leading, geometry.size.width/12)
                                 }
                                 .padding(.leading, geometry.size.width/24)
-                                .frame(width: geometry.size.width/2, alignment: .leading)
-                                
-                                /// Total question score stat
-                                VStack(alignment: .leading){
-                                    StatHeader(text: "Total Question Score ")
-                                    
-                                    Text("\(String(userAccountViewModel.userTotalScore))")
-                                        .font(.system(size:75, weight: .semibold))
-                                        .foregroundColor(.blue)
-                                }
-                                .padding(.leading, geometry.size.width/24)
+                                .padding(.bottom, geometry.size.width/48)
                                 .frame(width: geometry.size.width/2, alignment: .leading)
                                 
                                 
                                 /// Total questions completed stat
                                 VStack(alignment: .leading){
                                     StatHeader(text: "Questions Completed ")
-                                        
-                                    Text("\(String(userAccountViewModel.userQuestionCompleteCount))")
-                                        .font(.system(size:75, weight: .semibold))
-                                        .foregroundColor(.blue)
+                                        .padding(.bottom, geometry.size.width/48)
+                                    ProgressBar(progress: $userAccountViewModel.questionCompletedProgress, color: Color(UIColor.systemBlue))
+                                                        .frame(width: 120, height: 120)
+                                                        .padding(.leading, geometry.size.width/12)
                                 }
                                 .padding(.leading, geometry.size.width/24)
+                                .padding(.bottom, geometry.size.width/48)
                                 .frame(width: geometry.size.width/2, alignment: .leading)
                                 
                                 Spacer()

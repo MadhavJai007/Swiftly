@@ -16,6 +16,7 @@
 		DA1281EA27316EC5002EAC2F /* AssistantV2 in Frameworks */ = {isa = PBXBuildFile; productRef = DA1281E927316EC5002EAC2F /* AssistantV2 */; };
 		DA1281EC2731712F002EAC2F /* WatsonAssistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA1281EB2731712F002EAC2F /* WatsonAssistant.swift */; };
 		DA2122DE26FE07820016587F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA2122DD26FE07820016587F /* LoginView.swift */; };
+		DA34D88B274478F800A6822B /* ProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA34D88A274478F800A6822B /* ProgressView.swift */; };
 		DA5C72712703493400E697CD /* ChapterDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5C72702703493400E697CD /* ChapterDetailView.swift */; };
 		DA5D90EB270614B20085DE6D /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5D90EA270614B20085DE6D /* LoginViewModel.swift */; };
 		DA5D90ED270614BD0085DE6D /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA5D90EC270614BD0085DE6D /* SignupViewModel.swift */; };
@@ -61,6 +62,7 @@
 		DA1281E127316165002EAC2F /* ChatbotViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatbotViewModel.swift; sourceTree = "<group>"; };
 		DA1281EB2731712F002EAC2F /* WatsonAssistant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatsonAssistant.swift; sourceTree = "<group>"; };
 		DA2122DD26FE07820016587F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		DA34D88A274478F800A6822B /* ProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressView.swift; sourceTree = "<group>"; };
 		DA5C72702703493400E697CD /* ChapterDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterDetailView.swift; sourceTree = "<group>"; };
 		DA5D90EA270614B20085DE6D /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		DA5D90EC270614BD0085DE6D /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
@@ -217,6 +219,14 @@
 			path = Chapter;
 			sourceTree = "<group>";
 		};
+		DA34D889274478ED00A6822B /* Progress */ = {
+			isa = PBXGroup;
+			children = (
+				DA34D88A274478F800A6822B /* ProgressView.swift */,
+			);
+			path = Progress;
+			sourceTree = "<group>";
+		};
 		DA5C726D270348F200E697CD /* ChapterDetailView */ = {
 			isa = PBXGroup;
 			children = (
@@ -331,6 +341,7 @@
 		DABF368E27020DF3009BF78A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				DA34D889274478ED00A6822B /* Progress */,
 				DA1281F32731BE07002EAC2F /* Chapter */,
 				DAC639082725E6720094FC92 /* Images */,
 				EBD10B7D271E3316002042D9 /* Dropdown */,
@@ -566,6 +577,7 @@
 				DAD6B31D270A4833002C8A55 /* User.swift in Sources */,
 				DA79656326FE3E4B00CAE327 /* Colors.swift in Sources */,
 				DA884F2126FE04D000F58E4A /* SwiftlyApp.swift in Sources */,
+				DA34D88B274478F800A6822B /* ProgressView.swift in Sources */,
 				DAD6B312270748CA002C8A55 /* ChapterContentView.swift in Sources */,
 				DA840A14270CB25A00751FB7 /* LeaderboardView.swift in Sources */,
 				DA5C72712703493400E697CD /* ChapterDetailView.swift in Sources */,
