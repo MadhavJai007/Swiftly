@@ -9,6 +9,8 @@ import AssistantV2
 
 final class ChatbotViewModel: ObservableObject {
     
+    @Environment(\.colorScheme) var colorScheme
+    
     @Published var allMessages: [Message] = []
     
     private let chatbot = WatsonAssistant.instance

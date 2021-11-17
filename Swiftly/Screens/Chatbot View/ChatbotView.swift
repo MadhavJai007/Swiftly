@@ -121,8 +121,8 @@ struct ChatbotView: View {
                             TextField("Say something...", text: $userMessage)
                                 .font(.system(size: 20, weight: .medium))
                                 .frame(width: geometry.size.width/1.2, height: 50)
-                                .background(Color(UIColor.systemGray5))
-                                .foregroundColor(Color.black)
+                                .background(Color(UIColor.white))
+                                .foregroundColor(Color(UIColor.black))
                                 .cornerRadius(10)
                             
                             Spacer()
@@ -133,7 +133,6 @@ struct ChatbotView: View {
                             }label:{
                                 Image(systemName: "arrow.up.circle.fill")
                                     .resizable()
-//                                    .foregroundColor(Color(UIColor.systemGray5))
                             }
                             .frame(width: 44, height: 44)
                         }

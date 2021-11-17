@@ -78,11 +78,14 @@ struct MultipleSelectionRow: View {
     var isSelected: Bool
     var action: () -> Void
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack{
                 
                 Color(UIColor.systemGray6)
+                    .ignoresSafeArea()
                 
                 VStack{
                     HStack{
@@ -98,15 +101,20 @@ struct MultipleSelectionRow: View {
                         }
                         
                         
-                        
+                    
                         
                         Button(action: self.action) {
+                    
                             Text(self.title)
                                 .font(.system(size: 25))
                                 .padding(.leading, 10)
                                 .frame(width: UIScreen.screenWidth/1.25, height: 75, alignment: .leading)
                                 .cornerRadius(15)
-                                .foregroundColor(Color(UIColor.gray))
+                                .foregroundColor(colorScheme == .dark ? Color.white: Color.black)
+                                    
+                            
+                            
+   
                         }
                         
                     }
@@ -114,7 +122,7 @@ struct MultipleSelectionRow: View {
             }.frame(width: UIScreen.screenWidth/1.25, height: 75, alignment: .leading)
                 .cornerRadius(15)
                 .overlay(RoundedRectangle(cornerRadius: 15)
-                            .stroke(Color(UIColor.darkGray), lineWidth: 2))
+                            .stroke(lineWidth: 2))
         }
     }
 }
