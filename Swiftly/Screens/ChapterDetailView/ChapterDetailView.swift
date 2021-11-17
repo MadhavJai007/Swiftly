@@ -106,12 +106,27 @@ struct ChapterDetailView: View {
                         .padding(.leading, geometry.size.width/12)
                         
                         
-                       
+                        Group{
+                            let chapIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)
+                            let chapterStat = chaptersViewModel.chaptersStatus[chapIndex!]
+                            let completionCount = chaptersViewModel.userCompletionCount[chapIndex!]
+                            
+                            if (completionCount == 1){
+                                Text("\(completionCount) student out of \(chaptersViewModel.totalUserCount) have completed this chapter")
+                                    .font(.system(size: 20,weight: .bold,design: .default))
+                                    .foregroundColor(Color(UIColor.systemOrange))
+                                    .padding(.leading, geometry.size.width/8.5)
+                            }else{
+                                Text("\(completionCount) students out of \(chaptersViewModel.totalUserCount) have completed this chapter")
+                                    .font(.system(size: 20,weight: .bold,design: .default))
+                                    .foregroundColor(Color(UIColor.systemOrange))
+                                    .padding(.leading, geometry.size.width/8.5)
+                            }
+                            
+                            
+                        }
                     
-                        Text("\(chaptersViewModel.userCompletionCount[chaptersViewModel.selectedChapterIndex]) students out of \(chaptersViewModel.totalUserCount) have completed this chapter")
-                        .font(.system(size: 20,weight: .bold,design: .default))
-                        .foregroundColor(Color(UIColor.systemOrange))
-                        .padding(.leading, geometry.size.width/8.5)
+                        
                             
                             
                         

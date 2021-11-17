@@ -123,12 +123,12 @@ struct InteractiveQuestionsView: View {
                                     
                                     if (questionStatus == "incomplete"){
                                         
+                                        /// First question
                                         if (index == 0){
                                             Button{
                                                 chapterContentViewModel.selectedQuestionIndex = index!
                                                 chapterContentViewModel.setupPlayground(question: question, questionIndex: index!, userAnswers: chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index!].answers)
                                             }label: {
-                                                
                                                 VStack{
                                                     Image(systemName: "chevron.right")
                                                         .resizable()
@@ -139,12 +139,18 @@ struct InteractiveQuestionsView: View {
                                             }
                                             .frame(width: 115, height: 115)
                                             .background(Color.yellow)
-                                        }else{
+                                            
+                                        }
+                                        
+                                        /// Not first question
+                                        else{
                                             
                                             /// Getting previous question status
-                                            let statusBefore = chapterContentViewModel.playgroundQuestionStatus[index!-1]
+                                            let statusBefore = chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionProgress[index!-1]
                                             
                                             if (statusBefore == "complete"){
+                                                
+                                                
                                                 Button{
                                                     chapterContentViewModel.selectedQuestionIndex = index!
                                                     chapterContentViewModel.setupPlayground(question: question, questionIndex: index!, userAnswers: chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index!].answers)
@@ -160,7 +166,9 @@ struct InteractiveQuestionsView: View {
                                                 }
                                                 .frame(width: 115, height: 115)
                                                 .background(Color.yellow)
+                                                
                                             }else{
+                                                
                                                 Button{
                                                     print("tapped")
                                                 }label: {
@@ -178,7 +186,10 @@ struct InteractiveQuestionsView: View {
                                                 .disabled(true)
                                             }
                                         }
-                                    }else{
+                                    }
+                                    
+                                    
+                                    else{
                                         Button{
                                             chapterContentViewModel.selectedQuestionIndex = index!
                                             chapterContentViewModel.setupPlayground(question: question, questionIndex: index!, userAnswers: chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index!].answers)

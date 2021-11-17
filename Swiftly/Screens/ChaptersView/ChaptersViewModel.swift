@@ -24,6 +24,7 @@ final class ChaptersViewModel: ObservableObject {
     @Published var chaptersStatus = [String]()
     
     @Published var userCompletionCount = [Int]()
+    
     @Published var totalUserCount = 0
     
     var loggedInAccountType : String = ""
@@ -203,6 +204,7 @@ final class ChaptersViewModel: ObservableObject {
             }
         }
     }
+    
     
     func retrieveUserbaseCompletion(){
         
