@@ -215,6 +215,10 @@ struct SignupView: View {
                     }
                 }
                 Spacer()
+                
+                    .onAppear(){
+                        signupViewModel.chaptersArr = chaptersViewModel.chaptersArr
+                    }
             }
             .navigationBarHidden(true)
         }

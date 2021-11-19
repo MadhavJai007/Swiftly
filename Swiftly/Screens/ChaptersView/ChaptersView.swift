@@ -111,7 +111,7 @@ struct ChaptersView: View {
                 chaptersViewModel.logoutIntent = false
                 chaptersViewModel.isUserLoggedIn = false
             }else{
-                chaptersViewModel.saveUserProgress()
+//                chaptersViewModel.saveUserProgress()
                 chaptersViewModel.retrieveUserbaseCompletion()
             }
             

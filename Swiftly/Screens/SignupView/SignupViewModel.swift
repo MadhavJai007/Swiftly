@@ -178,6 +178,7 @@ final class SignupViewModel: ObservableObject {
         
         ///switch case for creating a new "Student' or "Teacher' account
         switch accountType {
+            
             ///Student case
         case "Student":
             
@@ -221,19 +222,25 @@ final class SignupViewModel: ObservableObject {
                     var questionsArray : [Int] = []
                     var playgroundAnswers : [String] = []
                     var playgroundProgress : [String] = []
-                    
+                    var questionsId: [String] = []
                     
                     var document = newStudentRef.collection("Chapters").document("chapter_\(chaptersArr[i].chapterNum)")
                     
-                    for j in 0..<playgroundArray.count{
+                    for j in 0..<playgroundArray.count {
+                        questionsId.append(playgroundArray[j].fId)
                         questionsArray.append(0)
                         playgroundProgress.append("incomplete")
                         document.updateData(["question_\(j+1)_answer" : playgroundAnswers])
                     }
                     
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                     
-                    document.updateData(["question_scores" : questionsArray, "question_progress" : playgroundProgress])
+                        document.updateData(["question_scores" : questionsArray, "question_progress" : playgroundProgress,
+                                             "question_ids":questionsId])
+                        
+                    }
                 }
+                    
                 
             }
             
@@ -299,104 +306,7 @@ final class SignupViewModel: ObservableObject {
         
     }
     
-    ///function for downloading all chapter data, used to created user progress collections
-    func downloadChapterData(){
-        db.collection("Chapters").getDocuments() { (querySnapshot, err) in
-            if let err = err {
-                print("Error getting chapter documents: \(err)")
-            } else {
-                
-                for document in querySnapshot!.documents {
-                    
-                    let chapterNum = document.data()["chapter_number"]! as! Int
-                    let chapterName = document.data()["chapter_title"]! as! String
-                    let chapterDifficulty = document.data()["chapter_difficulty"]! as! Int
-                    let chapterSummary = document.data()["chapter_desc"]! as! String
-                    let chapterLength = document.data()["chapter_length"]! as! Int
-                    let iconName = document.data()["chapter_icon_name"]! as! String
-                    
-                    var chapterLessons = [ChapterLesson]()
-                    
-                    /// Getting lesson information
-                    self.db.collection("Chapters").document(document.documentID).collection("lessons").getDocuments() {
-                        (querySnapshot, err) in
-                        
-                        if let err = err {
-                            print("Error getting chapter lesson documents: \(err)")
-                        } else {
-                            
-                            
-                            
-                            /// Grabbing the lesson data and appending it to the chapterLessons array
-                            for chapterLessonDocument in querySnapshot!.documents {
-                                let lesson_data = chapterLessonDocument.data()["lesson_content"]! as! [String]
-                                
-                                let newLesson = ChapterLesson(content: lesson_data)
-                                
-                                chapterLessons.append(newLesson)
-                            }
-                        }
-                        
-                    }
-                    
-                    self.db.collection("Chapters").document(document.documentID).collection("playground").getDocuments() {
-                        (querySnapshot, err) in
-                        
-                        if let err = err {
-                            print("Error getting chapter documents: \(err)")
-                        } else {
-                            
-                            var playgroundQuestions = [Playground]()
-                            
-                            
-                            
-                            for playgroundDocument in querySnapshot!.documents {
-                                
-                                let title = playgroundDocument.data()["question_title"]! as! String
-                                let description = playgroundDocument.data()["question_description"]! as! String
-                                let type = playgroundDocument.data()["question_type"]! as! String
-                                var blocks = playgroundDocument.data()["code_blocks"]! as! [String]
-                                
-                                
-                                /// Since Firestore doesn't store line break, we have to save them as $s, then
-                                /// once we download the data, we have to replace them with \n
-                                for i in 0..<blocks.count {
-                                    blocks[i] = blocks[i].replacingOccurrences(of: "$n", with: "\n")
-                                }
-                                
-                                /// Only download mcq answers if the question type is MCQ
-                                if (type == "mcq"){
-                                    
-                                    let mcqOptions = playgroundDocument.data()["mcq_answers"]! as! [String]
-                                    
-                                    var playgroundQuestion = Playground(title: title, description: description, type: type, originalArr: blocks)
-                                    
-                                    playgroundQuestion.mcqOptions = mcqOptions
-                                    
-                                    playgroundQuestions.append(playgroundQuestion)
-                                }else{
-                                    
-                                    let playgroundQuestion = Playground(title: title, description: description, type: type, originalArr: blocks)
-                                    playgroundQuestions.append(playgroundQuestion)
-                                    
-                                }
-                            }
-                            
-                            
-                            
-                            
-                            self.chaptersArr.append(Chapter(chapterNum: chapterNum, name: chapterName, difficulty: chapterDifficulty, summary: chapterSummary, lessons: chapterLessons, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions))
-                            
-                        }
-                    }
-                }
-            }
-        }
-        
-        
-    }
-    
-    
+     
     func save(accountType: String){
         
         print("email: \(newUser.email)");
@@ -427,7 +337,6 @@ final class SignupViewModel: ObservableObject {
             
             print("The email is not taken is : \(emailNotTaken)")
             if(emailNotTaken == true){
-                self.downloadChapterData()
                 print("Since the email was valid, now execute authenticateUser() to add user to authenticator")
                 self.authenticateUser(user: newUser)
             }

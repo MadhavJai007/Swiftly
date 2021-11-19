@@ -44,5 +44,6 @@ struct UserChapterProgress: Hashable, Identifiable, Codable {
 
 struct UserQuestionAnswer: Hashable, Identifiable, Codable {
     var id = UUID()
+    var fId = ""
     var answers: [String]
 }

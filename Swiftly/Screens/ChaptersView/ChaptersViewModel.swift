@@ -19,7 +19,10 @@ final class ChaptersViewModel: ObservableObject {
     @Published var classroomCode: String = ""
     @Published var jumpToPlayground = false
     @Published var loadingInfo = "Processing..."
-
+    
+    var userNeedsUpdate: Bool = false
+    var deletePlayground: Bool = false
+    
     /// Taken from firebase --> used to update UI components and store user entire chapter progress
     @Published var chaptersStatus = [String]()
     
@@ -96,10 +99,17 @@ final class ChaptersViewModel: ObservableObject {
             
             let updatingRef = db.collection(loggedInAccountType).document(loggedInUser.username).collection("Classrooms").document("classroom_1").collection("Chapters").document("chapter_\(j+1)")
             
-            for i in 0..<loggedInUser.classroom[0].chapterProgress[j].questionAnswers.count
-            {
+            var playgroundIds = [String]()
+            
+            let chapterQuestionsProgress = loggedInUser.classroom[0].chapterProgress[j].questionAnswers
+            
+            
+            for i in 0..<chapterQuestionsProgress.count{
                 
-                let data = loggedInUser.classroom[0].chapterProgress[j].questionAnswers[i].answers
+                let data = chapterQuestionsProgress[i].answers
+                
+                playgroundIds.append(chapterQuestionsProgress[i].fId)
+                
                 
                 updatingRef.updateData([
                     "question_\(i+1)_answer": data
@@ -117,7 +127,8 @@ final class ChaptersViewModel: ObservableObject {
                 "playground_status": loggedInUser.classroom[0].chapterProgress[j].playgroundStatus,
                 "theory_status": loggedInUser.classroom[0].chapterProgress[j].theoryStatus,
                 "question_scores": loggedInUser.classroom[0].chapterProgress[j].questionScores,
-                "question_progress": loggedInUser.classroom[0].chapterProgress[j].questionProgress
+                "question_progress": loggedInUser.classroom[0].chapterProgress[j].questionProgress,
+                "question_ids": playgroundIds
             ]){ err in
                 if let err = err {
                     print("Error updating document: \(err)")
@@ -199,13 +210,13 @@ final class ChaptersViewModel: ObservableObject {
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     self.userCompletionCount = Array(repeating: 0, count: self.chaptersArr.count)
-         
+                    
                 }
             }
         }
     }
     
-    
+    /// Getting stats for completion
     func retrieveUserbaseCompletion(){
         
         /// Resetting completion count and total user arrays
@@ -248,9 +259,9 @@ final class ChaptersViewModel: ObservableObject {
                                 counter += 1
                             }
                             
-//                            for i in 0..<self.userCompletionCount.count {
-//                                print("Chapter \(i) completion:\(self.userCompletionCount[i])")
-//                            }    
+                            //                            for i in 0..<self.userCompletionCount.count {
+                            //                                print("Chapter \(i) completion:\(self.userCompletionCount[i])")
+                            //                            }
                         }
                     }
                 }
@@ -258,19 +269,19 @@ final class ChaptersViewModel: ObservableObject {
         }
     }
     
-    
     /// Function that downloads the users playgrounds
     func downloadPlaygrounds(){
         
-        
         let db = Firestore.firestore()
         
+        /// Going through the chapters
         db.collection("Chapters").getDocuments() { (querySnapshot, err) in
             if let err = err {
                 print("Error getting chapter documents: \(err)")
                 self.isUserLoggedIn = false
             } else {
                 
+                /// For each chapter
                 for document in querySnapshot!.documents {
                     
                     let chapterNum = document.data()["chapter_number"]! as! Int
@@ -293,6 +304,7 @@ final class ChaptersViewModel: ObservableObject {
                                 let type = playgroundDocument.data()["question_type"]! as! String
                                 var blocks = playgroundDocument.data()["code_blocks"]! as! [String]
                                 
+                                let id = playgroundDocument.data()["id"]! as! String
                                 
                                 /// Since Firestore doesn't store line break, we have to save them as $s, then
                                 /// once we download the data, we have to replace them with \n
@@ -306,7 +318,7 @@ final class ChaptersViewModel: ObservableObject {
                                     let mcqOptions = playgroundDocument.data()["code_blocks"]! as! [String]
                                     let mcqAnswers = playgroundDocument.data()["mcq_answers"]! as! [String]
                                     
-                                    var playgroundQuestion = Playground(title: title, description: description, type: type, originalArr: blocks)
+                                    var playgroundQuestion = Playground(fId:id, title: title, description: description, type: type, originalArr: blocks)
                                     
                                     playgroundQuestion.mcqOptions = mcqOptions
                                     playgroundQuestion.mcqAnswers = mcqAnswers
@@ -314,21 +326,13 @@ final class ChaptersViewModel: ObservableObject {
                                     playgroundQuestions.append(playgroundQuestion)
                                 }else{
                                     
-                                    let playgroundQuestion = Playground(title: title, description: description, type: type, originalArr: blocks)
+                                    let playgroundQuestion = Playground(fId:id, title: title, description: description, type: type, originalArr: blocks)
                                     playgroundQuestions.append(playgroundQuestion)
                                     
                                 }
                             }
                             
                             self.chaptersArr[chapterNum-1].playgroundArr = playgroundQuestions
-                            
-                            
-                            print("PLAYGROUND CALL")
-                            print("Name: \(self.chaptersArr[chapterNum-1].name)")
-                            print("Lessons: \(self.chaptersArr[chapterNum-1].lessons.count)")
-                            print("Playgrounds: \(self.chaptersArr[chapterNum-1].playgroundArr.count)")
-                            
-                            
                         }
                     }
                 }
@@ -414,12 +418,12 @@ final class ChaptersViewModel: ObservableObject {
                             /// Looping through each classroom
                             for j in 0..<snapshot!.documents.count {
                                 
-                                var userClassroom = UserClassroom() /// TODO: Grab classroom id from firestore
+                                var userClassroom = UserClassroom()
                                 
-                                /// Grabbing the current collection of chapters for chapter i
+                                /// Grabbing the chapters
                                 let classroomChapters = enrolledClasrooms.document("classroom_\(j+1)").collection("Chapters")
                                 
-                                /// Grabbing documents for chapter i
+                                /// Grabbing document for the chapters
                                 classroomChapters.getDocuments { (snapshot, err) in
                                     
                                     if err != nil {
@@ -452,13 +456,16 @@ final class ChaptersViewModel: ObservableObject {
                                             let theoryStatus = data["theory_status"] as! String
                                             let questionProgress = data["question_progress"] as! [String]
                                             
+                                            let questionIds = data["question_ids"] as! [String]
                                             
                                             var counter = 1
+                                            
                                             while (data["question_\(counter)_answer"] != nil){
+                                                
                                                 
                                                 let answer = data["question_\(counter)_answer"] as! [String]
                                                 
-                                                let newAnswer = UserQuestionAnswer(answers: answer)
+                                                let newAnswer = UserQuestionAnswer(fId: questionIds[counter-1],answers: answer)
                                                 userQuestionAnswers.append(newAnswer)
                                                 
                                                 counter += 1
@@ -484,12 +491,6 @@ final class ChaptersViewModel: ObservableObject {
                             }
                         }
                     }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-//                        print("TEST 1: \(self.loggedInUser.classroom[0].chapterProgress.count)")
-//                        print("TEST 2: \(self.chaptersStatus.count)")
-//                        print("TEST 3: \(self.chaptersArr.count)")
-                        self.downloadPlaygrounds()
-                    }
                 }
             }
         default:
@@ -498,83 +499,269 @@ final class ChaptersViewModel: ObservableObject {
         
         /// Need to update user content with latest chapter content
         DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-
-//            print("TEST 4: dw")
+            
             self.loadingInfo = "Checking for new content..."
-
+            
             /// User is missing some chapters
             if (self.loggedInUser.classroom[0].chapterProgress.count < self.chaptersArr.count){
-
+                
                 print("User is missing chapters")
-
+                
                 let countOne = self.loggedInUser.classroom[0].chapterProgress.count
                 let countTwo = self.chaptersArr.count
-
+                
                 let chaptDiff = countTwo - countOne
-
+                
                 /// Looping through the chapters that the user doesn't have
                 for i in 0..<chaptDiff {
-
+                    
                     print("Count 1: \(self.loggedInUser.classroom[0].chapterProgress.count)")
-
+                    
                     let chapter = self.chaptersArr[countOne+i]
-
+                    
+                    
+                    
                     let chapterName = chapter.name
                     let chapterNumber = chapter.chapterNum
-
+                    
                     let questionsCount = self.chaptersArr[countOne+i].playgroundArr.count
-
+                    
+                    var userQuestionAnswers = [UserQuestionAnswer]()
+                    
+                    for j in 0..<questionsCount {
+                        
+                        let qId = self.chaptersArr[countOne+i].playgroundArr[j].fId
+                        
+                        userQuestionAnswers.append(UserQuestionAnswer(fId: qId, answers:[]))
+                        
+                    }
+                    
                     let questionsProgess = Array(repeating: "incomplete", count: questionsCount)
                     let questionsScore = Array(repeating: 0, count: questionsCount)
-
-                    let userQuestionAnswers = Array(repeating: UserQuestionAnswer(answers: []), count: questionsCount)
-
+                    
                     /// Creating new user progess object
                     let newUserProgress = UserChapterProgress(chapterStatus: "incomplete", chapterName: chapterName, chapterNum: chapterNumber, playgroundStatus: "incomplete", questionScores: questionsScore, questionAnswers: userQuestionAnswers, questionProgress: questionsProgess, theoryStatus: "incomplete")
-
+                    
                     /// Appening new object to user progress
                     self.loggedInUser.classroom[0].chapterProgress.append(newUserProgress)
                     
                     self.chaptersStatus.append(newUserProgress.chapterStatus)
                 }
-
-//                print("TEST 5: \(self.chaptersStatus.count)")
-
+                
+                
+                
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    
-//                    print("TEST 6: dw")
                     self.uploadNewData(newChapterCount: chaptDiff)
-                    
-                    self.loadingInfo = "Logging in..."
-
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                        self.isUserLoggedIn = true
-                    }
                 }
             }
-
+            
             /// Todo: Not implemented yet
             /// If user has info for deleted chapter, delete that info
             else if (self.loggedInUser.classroom[0].chapterProgress.count > self.chaptersArr.count){
-
+                
             }
-
-            /// Nothing has changed
-            else{
-                self.loadingInfo = "Logging in..."
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    self.isUserLoggedIn = true
+            
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                
+                
+                
+                
+                /// Looping through each chapter
+                for i in 0..<self.chaptersArr.count {
+                    
+                    let chaptPlaygrounds = self.chaptersArr[i].playgroundArr
+                    
+                    
+                    
+                    
+                    
+                    var userPlayground = self.loggedInUser.classroom[0].chapterProgress[i]
+                    
+                    /// users playground count
+                    let userPlaygroundCount = self.loggedInUser.classroom[0].chapterProgress[i].questionProgress.count
+                    
+                    
+                    
+                    /// Check: does user have this playground
+                    for j in 0..<chaptPlaygrounds.count {
+                        
+                        
+                        
+                        /// User playgrounds contains fID
+                        if (userPlayground.questionAnswers.contains(where: {$0.fId == chaptPlaygrounds[j].fId})) {
+                            
+                            print("Has: \(chaptPlaygrounds[j].fId)")
+                            
+                        }
+                        
+                        /// User playgrounds does not contain fID
+                        else {
+                            
+                            print("Missing: \(chaptPlaygrounds[j].fId)")
+                            
+                            let id = chaptPlaygrounds[j].fId
+                            
+                            /// question progress
+                            self.loggedInUser.classroom[0].chapterProgress[i].questionProgress.append("incomplete")
+                            
+                            /// question score
+                            self.loggedInUser.classroom[0].chapterProgress[i].questionScores.append(0)
+                            
+                            /// question answers
+                            self.loggedInUser.classroom[0].chapterProgress[i].questionAnswers.append(UserQuestionAnswer(fId: id,answers: []))
+                            
+                            
+                            /// only update playground status if its complete
+                            if (self.loggedInUser.classroom[0].chapterProgress[i].playgroundStatus == "complete"){
+                                
+                                self.loggedInUser.classroom[0].chapterProgress[i].playgroundStatus = "inprogress"
+                                
+                            }
+                            
+                            /// only update chapter progress if its incomplete
+                            if ( self.loggedInUser.classroom[0].chapterProgress[i].chapterStatus == "complete"){
+                                
+                                self.loggedInUser.classroom[0].chapterProgress[i].chapterStatus = "inprogress"
+                                
+                            }
+                            
+                            
+                            
+                            self.chaptersStatus[i] = self.loggedInUser.classroom[0].chapterProgress[i].chapterStatus
+                            
+                            
+                            self.userNeedsUpdate = true
+                        }
+                    }
+                    
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1){
+                        
+                        for k in 0..<userPlaygroundCount {
+                            
+                            let playgrounds = userPlayground.questionAnswers[k]
+                            
+                            if (chaptPlaygrounds.contains(where: {$0.fId == playgrounds.fId})){
+                                
+                                print("Chapter has: \(playgrounds.fId)")
+                                
+                            }else{
+                                print("Chapter missing: \(playgrounds.fId)")
+                                
+                                self.deletePlayground = true
+                                
+                                self.loggedInUser.classroom[0].chapterProgress[i].questionAnswers.remove(at: k)
+                                
+                                self.loggedInUser.classroom[0].chapterProgress[i].questionScores.remove(at: k)
+                                
+                                self.loggedInUser.classroom[0].chapterProgress[i].questionProgress.remove(at: k)
+                                
+                                
+                                if (self.loggedInUser.classroom[0].chapterProgress[i].questionProgress.contains(where: {$0 != "incomplete" && $0 != "inprogress"})){
+                                    
+                                    self.loggedInUser.classroom[0].chapterProgress[i].chapterStatus = "complete"
+                                    
+                                    self.loggedInUser.classroom[0].chapterProgress[i].playgroundStatus = "complete"
+                                    
+                                }
+                                
+                            }
+                        }
+                    }
                 }
             }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5){
+                
+                if (self.userNeedsUpdate){
+                    print("USER NEEDS UPDATE")
+                    self.saveUserProgress()
+                    self.userNeedsUpdate = false
+                }
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                
+                    if (self.deletePlayground){
+                        print("DELETE PLAYGROUND")
+                        self.deleteFirestorePlayground()
+                        self.deletePlayground = false
+                    }
+                }
+            
+                
+                self.loadingInfo = "Logging in..."
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    self.isUserLoggedIn = true
+                }
+                
+            }
+            
+            
         }
+    }
+    
+    func deleteFirestorePlayground(){
+        
+        let db = Firestore.firestore()
+        
+        let user = Auth.auth().currentUser
+        let credential: AuthCredential = EmailAuthProvider.credential(withEmail: loggedInUser.email, password: loggedInUser.password)
+        
+        user?.reauthenticate(with: credential, completion: {(authResult, error) in
+            if error != nil {
+                print("Error: \(error)")
+            }else{
+                print("Successfully Reauthenticated! ")
+            }
+        })
+        
+        let userChaptersCount = self.loggedInUser.classroom[0].chapterProgress.count
+        
+        for i in 0..<userChaptersCount{
+            
+            let updatingRef = db.collection(loggedInAccountType).document(loggedInUser.username).collection("Classrooms").document("classroom_1").collection("Chapters").document("chapter_\(i+1)")
+            
+            var questionIds = [String]()
+            
+            for k in 0..<loggedInUser.classroom[0].chapterProgress[i].questionAnswers.count{
+                
+                questionIds.append(loggedInUser.classroom[0].chapterProgress[i].questionAnswers[k].fId)
+                
+            }
+            
+            updatingRef.setData([
+                "chapter_status": loggedInUser.classroom[0].chapterProgress[i].chapterStatus,
+                "playground_status": loggedInUser.classroom[0].chapterProgress[i].playgroundStatus,
+                "theory_status": loggedInUser.classroom[0].chapterProgress[i].theoryStatus,
+                "question_scores": loggedInUser.classroom[0].chapterProgress[i].questionScores,
+                "question_progress": loggedInUser.classroom[0].chapterProgress[i].questionProgress,
+                "chapters_name": loggedInUser.classroom[0].chapterProgress[i].chapterName,
+                "chapters_num": loggedInUser.classroom[0].chapterProgress[i].chapterNum,
+                "question_ids": questionIds
+            ])
+            
+            let answersCount = self.loggedInUser.classroom[0].chapterProgress[i].questionAnswers.count
+            
+            for k in 0..<answersCount {
+                
+                updatingRef.updateData([
+                    "question_\(k+1)_answer": self.loggedInUser.classroom[0].chapterProgress[i].questionAnswers[k].answers
+                ])
+            }
+            
+            
+        }
+        
+        
     }
     
     /// Function which uploads new user progress data (for when a new object is created for a chapter that the user does not have progress for yet)
     func uploadNewData(newChapterCount: Int){
         
         self.loadingInfo = "Setting up new content..."
-
+        
         let db = Firestore.firestore()
         
         let user = Auth.auth().currentUser
@@ -599,6 +786,14 @@ final class ChaptersViewModel: ObservableObject {
             
             let updatingRef = db.collection(loggedInAccountType).document(loggedInUser.username).collection("Classrooms").document("classroom_1").collection("Chapters").document("chapter_\(j+1)")
             
+            var questionIds = [String]()
+            
+            for k in 0..<loggedInUser.classroom[0].chapterProgress[j].questionAnswers.count{
+                
+                questionIds.append(loggedInUser.classroom[0].chapterProgress[j].questionAnswers[k].fId)
+                
+            }
+            
             updatingRef.setData([
                 "chapter_status": loggedInUser.classroom[0].chapterProgress[j].chapterStatus,
                 "playground_status": loggedInUser.classroom[0].chapterProgress[j].playgroundStatus,
@@ -606,7 +801,8 @@ final class ChaptersViewModel: ObservableObject {
                 "question_scores": loggedInUser.classroom[0].chapterProgress[j].questionScores,
                 "question_progress": loggedInUser.classroom[0].chapterProgress[j].questionProgress,
                 "chapters_name": loggedInUser.classroom[0].chapterProgress[j].chapterName,
-                "chapters_num": loggedInUser.classroom[0].chapterProgress[j].chapterNum
+                "chapters_num": loggedInUser.classroom[0].chapterProgress[j].chapterNum,
+                "question_ids": questionIds
             ])
             
             

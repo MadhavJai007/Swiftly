@@ -7,7 +7,8 @@ import Foundation
 
 /// This represents the chapter playground section
 struct Playground: Identifiable, Hashable {
-    let id = UUID()
+    var id = UUID()
+    var fId = ""
     let title: String
     let description: String
     let type: String

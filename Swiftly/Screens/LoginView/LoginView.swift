@@ -168,6 +168,10 @@ struct LoginView: View {
                     chaptersViewModel.chaptersArr.removeAll()
                     chaptersViewModel.clearAllData()
                     chaptersViewModel.downloadLessons()
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                        chaptersViewModel.downloadPlaygrounds()
+                    }
                 }
             }
             

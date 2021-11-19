@@ -8,7 +8,7 @@ import SwiftUI
 
 final class LeaderboardViewModel: ObservableObject {
     
-    var selectedChapter =  MockData.sampleChapter
+
     
 
     
