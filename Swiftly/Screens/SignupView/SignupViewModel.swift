@@ -207,8 +207,9 @@ final class SignupViewModel: ObservableObject {
             
             ///creating collection for user classrooms, which will contain users progress, answers and scores for each chapter
             for i in 0..<chaptersArr.count{
-                
-                if (chaptersArr[i].chapterNum <= 3){
+
+                /// only for testing purposes
+                if (chaptersArr[i].chapterNum > 0){
                     
                     let playgroundArray = chaptersArr[i].playgroundArr
                     

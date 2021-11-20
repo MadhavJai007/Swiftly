@@ -114,6 +114,7 @@ struct InteractiveView: View {
                                 .padding(.leading, 15)
                                 .padding(.bottom, 20)
                                 .padding(.top, -10)
+                                .minimumScaleFactor(0.5)
                             
                             Spacer()
                             

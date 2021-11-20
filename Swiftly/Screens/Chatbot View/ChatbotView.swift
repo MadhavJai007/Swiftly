@@ -153,6 +153,9 @@ struct ChatbotView: View {
             chatbotViewModel.allMessages.removeAll()
             chatbotViewModel.chatlog.removeAll()
             SwiftlyApp.incomingChatbotMessages.removeAll()
+            
+            
+            chatbotViewModel.allMessages.append(Message(text: "Hi! I'm the Swiftly chatbot assistant, here to help you with any difficulties you may have ran into while working on the chapter. How may I help you?", sender: Message.Sender.chatbot))
         }
     }
 }

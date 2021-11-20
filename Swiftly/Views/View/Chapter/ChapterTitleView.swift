@@ -43,6 +43,12 @@ struct ChapterTitleView: View {
                                 .frame(width: 35, height: 35)
                                 .padding(10)
                                 .foregroundColor(Color(UIColor.systemGreen))
+                        }else if (chapterStat == "inprogress"){
+                            Image(systemName: "checkmark.circle")
+                                .resizable()
+                                .frame(width: 35, height: 35)
+                                .padding(10)
+                                .foregroundColor(Color.yellow)
                         }else{
                             Image(systemName: "checkmark.circle")
                                 .resizable()
