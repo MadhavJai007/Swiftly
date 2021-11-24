@@ -9,5 +9,22 @@ import Foundation
 
 struct ChapterLesson:Identifiable,Equatable, Hashable {
     let id = UUID()
-    let content: [String]
+    var content: [String]
+    
+    /// Getting ID
+    func getID() -> UUID{
+        return id
+    }
+    
+    /// Getting content
+    func getContent() -> [String]{
+        return content
+    }
+    
+    /// Setting content
+    mutating func setContent(lessonContent: [String]) {
+        content = lessonContent
+    }
 }
+
+
