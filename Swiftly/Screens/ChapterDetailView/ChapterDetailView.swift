@@ -58,6 +58,7 @@ struct ChapterDetailView: View {
                         
                         Image(systemName: "\(chaptersViewModel.selectedChapter!.iconName)")
                             .resizable()
+                            .scaledToFit()
                             .frame(width: 40, height: 40)
                         
                     }
