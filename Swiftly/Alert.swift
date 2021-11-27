@@ -1,9 +1,7 @@
 //  INFO49635 - CAPSTONE FALL 2021
 //  Alert.swift
 //  Swiftly
-//
-//  Created by Madhav Jaisankar on 2021-10-19.
-//
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import SwiftUI
 

@@ -1,9 +1,7 @@
-//
+//  INFO49635 - CAPSTONE FALL 2021
 //  WatsonAssistant.swift
 //  Swiftly
-//
-//  Created by Toby moktar on 2021-11-02.
-//
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import Foundation
 import SwiftUI

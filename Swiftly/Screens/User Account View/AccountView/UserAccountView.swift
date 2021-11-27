@@ -3,8 +3,6 @@
 //  Swiftly
 //  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
-/// Todo: Add functionality that will allow the user to logout. This will change a variable that will pop this view, and ChaptersView.
-
 import SwiftUI
 
 struct UserAccountView: View {

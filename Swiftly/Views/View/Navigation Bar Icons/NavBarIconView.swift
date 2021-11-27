@@ -1,9 +1,7 @@
-//
-//  BackButtonView.swift
+//  INFO49635 - CAPSTONE FALL 2021
+//  NavBarIconView.swift
 //  Swiftly
-//
-//  Created by Toby Moktar on 2021-10-15.
-//
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import SwiftUI
 

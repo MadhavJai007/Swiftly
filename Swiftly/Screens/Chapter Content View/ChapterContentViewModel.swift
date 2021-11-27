@@ -1,5 +1,5 @@
 //  INFO49635 - CAPSTONE FALL 2021
-//  ChapterContentViewModelw.swift
+//  ChapterContentViewModel.swift
 //  Swiftly
 //  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 

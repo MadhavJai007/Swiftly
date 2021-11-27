@@ -3,7 +3,6 @@
 //  Swiftly
 //  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
-/// TODO: Needs achievements and other field variables from firestore
 
 import Foundation
 import SwiftUI

@@ -17,8 +17,6 @@ final class UserAccountViewModel: ObservableObject {
     @Published var chapterInProgressProgress: Float = 0.0
     @Published var questionCompletedProgress: Float = 0.0
     
-    ///Todo: User object needs to be passed down the view hierarch from the login viewmodel
-    
     private var db = Firestore.firestore()
     
     @Published var loggedInUser = User(firstName: "",

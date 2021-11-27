@@ -1,9 +1,7 @@
-//
-//  ProgressView.swift
+//  INFO49635 - CAPSTONE FALL 2021
+//  Progress.swift
 //  Swiftly
-//
-//  Created by Toby moktar on 2021-11-16.
-//
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import Foundation
 import SwiftUI

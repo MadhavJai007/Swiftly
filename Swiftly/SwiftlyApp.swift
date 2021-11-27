@@ -1,8 +1,7 @@
 //  INFO49635 - CAPSTONE FALL 2021
 //  SwiftlyApp.swift
 //  Swiftly
-//
-//  Created by Toby Moktar on 2021-09-24.
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import SwiftUI
 import UIKit
