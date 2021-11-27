@@ -58,6 +58,8 @@ struct SignupView: View {
                             .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
                             .background(Color(UIColor.systemGray3))
                             .cornerRadius(15)
+                        Text("Must be 5-15 characters in length, start with a letter and only contain a _ or . after a letter.")
+                            .font(.system(size: 15))
                         
                     }
                     .padding(geometry.size.width/42)
