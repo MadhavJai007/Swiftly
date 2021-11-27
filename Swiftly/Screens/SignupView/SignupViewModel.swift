@@ -48,7 +48,7 @@ final class SignupViewModel: ObservableObject {
     
     func isEmailValid() -> Bool{
         
-        ///must be in email@email.com format
+        ///email input must be in email@email.com format
         
         let emailTest = NSPredicate(format: "SELF MATCHES %@", "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$")
         return emailTest.evaluate(with: newUser.email)
@@ -57,7 +57,7 @@ final class SignupViewModel: ObservableObject {
     
     func isDateValid() -> Bool{
         
-        ///must be in dd/mm/yyyy format, only numerics
+        ///date of birth input must be in dd/mm/yyyy format, only numerics
         
         let dateTest = NSPredicate(format: "SELF MATCHES %@", "^\\d{2}\\/\\d{2}\\/\\d{4}$")
         return dateTest.evaluate(with: newUser.dob)
@@ -66,14 +66,18 @@ final class SignupViewModel: ObservableObject {
     
     func isPasswordValid() -> Bool{
         
-        ///Password must be at least 8 characters, no more than 15 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit.
+        ///password input must be at least 8 characters, no more than 15 characters, and must include at least one upper case letter, one lower case letter, and one numeric digit
         
         let passwordTest = NSPredicate(format: "SELF MATCHES %@", "^(?=[^\\d_].*?\\d)\\w(\\w|[!@#$%]){7,20}")
         return passwordTest.evaluate(with: newUser.password)
     }
     
     func isUserNameValid() -> Bool{
-        return newUser.username != ""
+        
+        ///username input must be at least 5 characters, no more than 20 characters, start with a letter, and cannot contain a _ or . without a letter in front of it
+        
+        let userNameTest = NSPredicate(format: "SELF MATCHES %@", "^[a-zA-Z](_(?!(\\.|_))|\\.(?!(_|\\.))|[a-zA-Z0-9]){3,18}[a-zA-Z0-9]$")
+        return userNameTest.evaluate(with: newUser.username)
     }
     
     func isFirstNameValid() -> Bool{
