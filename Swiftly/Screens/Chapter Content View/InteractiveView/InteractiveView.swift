@@ -138,13 +138,28 @@ struct InteractiveView: View {
                                         
                                         chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index].answers.removeAll()
                                         
+                                        let answersArr = chaptersViewModel.chaptersArr[chapIndex].playgroundArr[index].originalArr
+                                        
                                         for i in 0..<chapterContentViewModel.activeBlocks.count {
                                             
-                                            chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index].answers.append(chapterContentViewModel.activeBlocks[i].content)
+                                            let answer = chapterContentViewModel.activeBlocks[i].content
+                                            
+                                            let answerIndex = answersArr.firstIndex(of: answer)
+                                            
+                                            chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index].answers.append(String(answerIndex!))
                                         }
                                          
                                     }else{
-                                        chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index].answers = chapterContentViewModel.mcqUserAnswers
+                                        
+                                        for k in 0..<chapterContentViewModel.mcqUserAnswers.count {
+                                            let answer = chapterContentViewModel.mcqUserAnswers[k]
+                                            let answerIndex = chapterContentViewModel.mcqOptions.firstIndex(of: answer)
+                                            
+                                            chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index].answers.append(String(answerIndex!))
+                                        }
+                                        
+                                        
+//                                        chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index].answers = chapterContentViewModel.mcqUserAnswers
                                     }
                                     
                                     /// Getting the user score
@@ -167,7 +182,6 @@ struct InteractiveView: View {
                                         chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].chapterStatus = "complete"
                                         
                                         chaptersViewModel.chaptersStatus[chapIndex] = "complete"
-                                        
                                         
                                         /// If it's the last chapter in the classroom
                                         if (chapIndex == chaptersViewModel.loggedInUser.classroom[0].classroomPlaygroundStatus.count-1){

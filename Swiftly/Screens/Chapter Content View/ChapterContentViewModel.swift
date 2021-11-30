@@ -98,10 +98,6 @@ final class ChapterContentViewModel: ObservableObject {
     /// Called from InteractiveQuestionsView
     func setupPlayground(question: Playground, questionIndex: Int, userAnswers: [String]){
         
-        print("USER ANSWERS: \(userAnswers)")
-        
-        
-        
         selectedQuestion = question
         selectedQuestionIndex = questionIndex
         
@@ -114,7 +110,12 @@ final class ChapterContentViewModel: ObservableObject {
                 codeBlocks = selectedQuestion.originalArr
                 codeBlocks.shuffle()
             }else{
-                codeBlocks = userAnswers
+                
+                for k in 0..<userAnswers.count{
+                    let answerIndex = userAnswers[k]
+                    let index = Int(answerIndex)
+                    codeBlocks.append(selectedQuestion.originalArr[index!])
+                }
             }
             
             /// Pre-populates array with interactive block objects
@@ -133,7 +134,15 @@ final class ChapterContentViewModel: ObservableObject {
             
             
             if (userAnswers.isEmpty == false){
-                mcqUserAnswers = userAnswers
+                
+                for k in 0..<userAnswers.count{
+                    let answerIndex = userAnswers[k]
+                    let index = Int(answerIndex)
+                    mcqUserAnswers.append(selectedQuestion.originalArr[index!])
+                }
+                
+                
+//                mcqUserAnswers = userAnswers
             }else{
                 mcqUserAnswers = []
             }
@@ -180,7 +189,10 @@ final class ChapterContentViewModel: ObservableObject {
                 totalScore = selectedQuestion.mcqAnswers.count
                 
                 for i in 0..<mcqUserAnswers.count {
-                    if (selectedQuestion.mcqAnswers.contains(mcqUserAnswers[i])){
+                    
+                    let answer = mcqUserAnswers[i]
+                    
+                    if (selectedQuestion.mcqAnswers.contains(answer)){
                         userScore += 1
                     }
                 }
