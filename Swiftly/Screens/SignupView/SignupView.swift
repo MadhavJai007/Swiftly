@@ -208,21 +208,22 @@ struct SignupView: View {
                         }
                     }label:{
                         CreateAccountButton(text: "Create Account", textColor: .white, backgroundColor: Color.blackCustom)
-                            .padding(geometry.size.width/42)
                         
                     }
                     .opacity(signupViewModel.isSignUpComplete ? 1 : 0.6)
-                    .disabled(!signupViewModel.isSignUpComplete)
-                    .disabled(!monitor.isConnected)
+                    .disabled(!monitor.isConnected || !signupViewModel.isSignUpComplete)
                     .alert(isPresented: $signupViewModel.isBadSignup) {
                         Alert(title: Text("Email Already Taken"), message: Text("\(signupViewModel.newUser.email) is already taken."), dismissButton: .default(Text("OK")))
-                        
-                        
-                            
-                            
 
                     }
+                    if (!monitor.isConnected){
+                        Text("Connect to the internet if you want to create a new account")
+                            .font(.system(size: 15))
+                            .foregroundColor(.red)
+                    }
+                    
                 }
+
                 Spacer()
                 
                     .onAppear(){
