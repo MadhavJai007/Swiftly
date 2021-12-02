@@ -314,6 +314,8 @@ final class SignupViewModel: ObservableObject {
      
     func save(accountType: String){
         
+        //checking if connected to internet
+        
         print("email: \(newUser.email)");
         print("password: \(newUser.password)")
         print("account type: \(accountType)")

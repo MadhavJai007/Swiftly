@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2CEB414727598BEC00C8858D /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEB414627598BEC00C8858D /* NetworkMonitor.swift */; };
 		DA0866AB2717702E00B1999E /* InteractiveQuestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866AA2717702E00B1999E /* InteractiveQuestionsView.swift */; };
 		DA0866B82719CC0D00B1999E /* EditAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866B72719CC0C00B1999E /* EditAccountView.swift */; };
 		DA0866BE271A0AF900B1999E /* NavBarIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866BD271A0AF900B1999E /* NavBarIconView.swift */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		11B3422058B48AC46E6C075C /* Pods_Swiftly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swiftly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2CEB414627598BEC00C8858D /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		66F71B613F71F71DCB1B8233 /* Pods-Swiftly.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swiftly.release.xcconfig"; path = "Target Support Files/Pods-Swiftly/Pods-Swiftly.release.xcconfig"; sourceTree = "<group>"; };
 		8FDBE6C6B205D978766E6A18 /* Pods-Swiftly.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swiftly.debug.xcconfig"; path = "Target Support Files/Pods-Swiftly/Pods-Swiftly.debug.xcconfig"; sourceTree = "<group>"; };
 		DA0866AA2717702E00B1999E /* InteractiveQuestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveQuestionsView.swift; sourceTree = "<group>"; };
@@ -240,6 +242,7 @@
 			children = (
 				DA79656226FE3E4B00CAE327 /* Colors.swift */,
 				DAC63906272593B50094FC92 /* Extensions.swift */,
+				2CEB414627598BEC00C8858D /* NetworkMonitor.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -561,6 +564,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DABF368C270202EA009BF78A /* ChaptersViewModel.swift in Sources */,
+				2CEB414727598BEC00C8858D /* NetworkMonitor.swift in Sources */,
 				DA79655F26FE3DD100CAE327 /* SignupView.swift in Sources */,
 				DADCC3AF271362110071D287 /* InteractiveView.swift in Sources */,
 				DAD6B3162708A3CC002C8A55 /* ChapterContentViewModel.swift in Sources */,

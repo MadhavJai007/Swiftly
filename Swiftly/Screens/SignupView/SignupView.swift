@@ -7,6 +7,10 @@ import SwiftUI
 
 struct SignupView: View {
     
+    @ObservedObject var monitor = NetworkMonitor()
+    @State private var showAlertSheet = false
+    
+    
     var userTypes = ["Student", "Teacher"]
     var countries = ["Canada", "United States", "United Kingdom", "Australia"]
     @State private var selectedType = "Student"
@@ -209,8 +213,11 @@ struct SignupView: View {
                     }
                     .opacity(signupViewModel.isSignUpComplete ? 1 : 0.6)
                     .disabled(!signupViewModel.isSignUpComplete)
+                    .disabled(!monitor.isConnected)
                     .alert(isPresented: $signupViewModel.isBadSignup) {
                         Alert(title: Text("Email Already Taken"), message: Text("\(signupViewModel.newUser.email) is already taken."), dismissButton: .default(Text("OK")))
+                        
+                        
                             
                             
 
