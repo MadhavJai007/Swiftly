@@ -8,7 +8,6 @@ import SwiftUI
 struct SignupView: View {
     
     @ObservedObject var monitor = NetworkMonitor()
-    @State private var showAlertSheet = false
     
     
     var userTypes = ["Student", "Teacher"]

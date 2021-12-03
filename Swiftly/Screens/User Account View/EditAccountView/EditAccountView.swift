@@ -10,6 +10,8 @@ struct EditAccountView: View {
     /// Todo: Change to @Published and move it into the viewmodel
     @State var user = MockData.sampleUser
     
+    @ObservedObject var monitor = NetworkMonitor()
+    
     var countries = ["Canada", "United States", "United Kingdom", "Australia"]
     
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel /// view model for this view
@@ -60,7 +62,7 @@ struct EditAccountView: View {
                             .cornerRadius(15)
                     }
                     .padding(geometry.size.width/42)
-                    .opacity(0.75)
+                    .opacity(0.55)
                     .disabled(true)
                          
                     
@@ -142,7 +144,7 @@ struct EditAccountView: View {
                             .font(.system(size: 30))
                             .padding()
                             .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
-                            .opacity(0.75)
+                            .opacity(0.55)
                             .background(Color(UIColor.systemGray3))
                             .cornerRadius(15)
                             .disabled(true)
@@ -169,17 +171,18 @@ struct EditAccountView: View {
                     
                     // Update account button
                     Button{
-                        /// Todo: Add check for valid input fields
-                        /// Todo: Call method in view model that updates user changes
-                        
                         userAccountViewModel.updateAccount()
                         userAccountViewModel.isEditingAccount.toggle()
                     }label:{
                         ButtonLabelLarge(text: "Save Changes", textColor: .white, backgroundColor: Color.blackCustom)
                             .padding(geometry.size.width/42)
                     }.opacity(userAccountViewModel.isEditingComplete ? 1 : 0.6)
-                        .disabled(!userAccountViewModel.isEditingComplete)
-                    
+                        .disabled(!monitor.isConnected || !userAccountViewModel.isEditingComplete)
+                    if (!monitor.isConnected){
+                        Text("Connect to the internet if you want to update account information")
+                            .font(.system(size: 15))
+                            .foregroundColor(.red)
+                    }
                 }
                 Spacer()
             }
