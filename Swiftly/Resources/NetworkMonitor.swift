@@ -1,12 +1,12 @@
-//
+//  INFO49635 - CAPSTONE FALL 2021
 //  NetworkMonitor.swift
 //  Swiftly
-//
-//  Created by Arjun Suthaharan on 2021-12-02.
-//
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import Foundation
 import Network
+
+//class used to check internet connectivity status of the device
 
 final class NetworkMonitor: ObservableObject {
     let monitor = NWPathMonitor()

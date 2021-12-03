@@ -8,6 +8,8 @@ import Firebase
 
 struct LoginView: View {
     
+    @ObservedObject var monitor = NetworkMonitor()
+    
     @State var email: String = ""
     @State var password: String = ""
     
@@ -93,8 +95,8 @@ struct LoginView: View {
                     }
                     .padding(.top,50)
                     .padding(.bottom,50)
-                    .opacity(loginViewModel.isLoading ? 0.24 : 1)
-                    .disabled(loginViewModel.isLoading)
+                    .opacity(loginViewModel.isLoading || !monitor.isConnected ? 0.24 : 1)
+                    .disabled(loginViewModel.isLoading || !monitor.isConnected)
                     
                     /// Alert for bad login
                     .alert(item: $loginViewModel.alertInfo, content: { info in
@@ -126,7 +128,6 @@ struct LoginView: View {
                         }label: {
                             ButtonLabelLarge(text: "Tap to sign up", textColor: .white, backgroundColor: Color(UIColor.systemGray2))
                         }
-                        .padding(.bottom, 50)
                         
                         /// Navigation for signup view
                         NavigationLink(destination: SignupView()
@@ -135,6 +136,11 @@ struct LoginView: View {
                                         .environmentObject(chaptersViewModel)
                                         .environmentObject(chapterContentViewModel),
                                        isActive: $loginViewModel.isShowingSignupView) {EmptyView()}
+                    }
+                    if (!monitor.isConnected){
+                        Text("Connect to the internet before attempting to login")
+                            .font(.system(size: 15))
+                            .foregroundColor(.red)
                     }
                     Spacer()
                 }

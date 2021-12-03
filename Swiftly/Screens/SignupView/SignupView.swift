@@ -209,7 +209,7 @@ struct SignupView: View {
                         CreateAccountButton(text: "Create Account", textColor: .white, backgroundColor: Color.blackCustom)
                         
                     }
-                    .opacity(signupViewModel.isSignUpComplete ? 1 : 0.6)
+                    .opacity(signupViewModel.isSignUpComplete || monitor.isConnected ? 1 : 0.24)
                     .disabled(!monitor.isConnected || !signupViewModel.isSignUpComplete)
                     .alert(isPresented: $signupViewModel.isBadSignup) {
                         Alert(title: Text("Email Already Taken"), message: Text("\(signupViewModel.newUser.email) is already taken."), dismissButton: .default(Text("OK")))
@@ -227,6 +227,13 @@ struct SignupView: View {
                 
                     .onAppear(){
                         signupViewModel.chaptersArr = chaptersViewModel.chaptersArr
+                        signupViewModel.newUser.email = ""
+                        signupViewModel.newUser.username = ""
+                        signupViewModel.newUser.password = ""
+                        signupViewModel.newUser.firstName = ""
+                        signupViewModel.newUser.lastName = ""
+                        signupViewModel.newUser.dob = ""
+                        
                     }
             }
             .navigationBarHidden(true)
