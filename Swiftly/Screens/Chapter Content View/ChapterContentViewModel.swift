@@ -108,7 +108,11 @@ final class ChapterContentViewModel: ObservableObject {
             /// If the user's answers is empty (first time doing question) then use default values
             if (userAnswers.isEmpty){
                 codeBlocks = selectedQuestion.originalArr
-                codeBlocks.shuffle()
+                
+                while (codeBlocks == selectedQuestion.originalArr) {
+                    codeBlocks.shuffle()
+                }
+                
             }else{
                 
                 for k in 0..<userAnswers.count{
@@ -194,7 +198,13 @@ final class ChapterContentViewModel: ObservableObject {
                     
                     if (selectedQuestion.mcqAnswers.contains(answer)){
                         userScore += 1
+                    }else{
+                        userScore -= 1
                     }
+                }
+                
+                if (userScore < 0){
+                    userScore = 0
                 }
             }
         }
@@ -207,6 +217,26 @@ final class ChapterContentViewModel: ObservableObject {
     /// Finishes the playground section and returns to the playground questions view
     func completeInteractiveSection(){
         willStartPlaygroundQuestion = false
+    }
+    
+    /// Retrieves the base64 of a string
+    func getBase64(original: String) -> String{
+        
+        var imgBase64: String = ""
+        let imgString = original
+        
+        /// For PNG
+        if (imgString.starts(with: "data:image/png")){
+            imgBase64 = String(imgString.dropFirst(22))
+        }
+        
+        /// For JPEG
+        else if (imgString.starts(with: "data:image/jpeg")){
+            imgBase64 = String(imgString.dropFirst(23))
+        }
+        
+        return imgBase64
+        
     }
     
     

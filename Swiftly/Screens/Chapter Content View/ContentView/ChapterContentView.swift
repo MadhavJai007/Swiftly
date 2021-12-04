@@ -81,7 +81,10 @@ struct ChapterContentView: View {
                                                 
                                                 if (content.starts(with: "data:image")){
                                                     
-                                                    let imgBase64 = content.dropFirst(22)
+                                                    
+                                                    let imgBase64 = chapterContentViewModel.getBase64(original: content)
+                                                    
+                                                    
                                                     
                                                     HStack{
                                                         Spacer()

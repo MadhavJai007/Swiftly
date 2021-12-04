@@ -186,14 +186,10 @@ struct LoginView: View {
                 self.email = ""
                 self.password = ""
             }
-            
-            
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .navigationBarHidden(true)
         .accentColor(.white)
-        
-        
     }
 }
 
