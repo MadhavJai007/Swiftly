@@ -89,21 +89,10 @@ struct InteractiveView: View {
                                 ForEach(chapterContentViewModel.mcqOptions, id: \.self) { item in
                                     MultipleSelectionRow(title: item, isSelected: chapterContentViewModel.mcqUserAnswers.contains(item)) {
                                         
-//                                        let itemIndex = chapterContentViewModel.mcqOptions.firstIndex(of: item)
-//
-//                                        let index = String(itemIndex!)
-//
-//                                        print("AAA: \(index)")
-//                                        print("USER ANSWERS: \(chapterContentViewModel.mcqUserAnswers)")
-                                        
                                         if chapterContentViewModel.mcqUserAnswers.contains(item) {
-                                            
-                                            print("CONTAINS")
-                                            
                                             chapterContentViewModel.mcqUserAnswers.removeAll(where: { $0 == item })
                                         }
                                         else {
-                                            print("DOES NOT CONTAIN")
                                             chapterContentViewModel.mcqUserAnswers.append(item)
                                         }
                                     }

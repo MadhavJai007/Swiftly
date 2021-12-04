@@ -108,9 +108,10 @@ struct MultipleSelectionRow: View {
                             Text(self.title)
                                 .font(.system(size: 25))
                                 .padding(.leading, 10)
-                                .frame(width: UIScreen.screenWidth/1.25, height: 75, alignment: .leading)
+                                .frame(width: UIScreen.screenWidth/1.5, height: 75, alignment: .leading)
                                 .cornerRadius(15)
                                 .foregroundColor(colorScheme == .dark ? Color.white: Color.black)
+                                .minimumScaleFactor(0.5)
                                     
                             
                             
