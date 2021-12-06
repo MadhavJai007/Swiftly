@@ -332,7 +332,12 @@ final class ChaptersViewModel: ObservableObject {
                                 }
                             }
                             
-                            self.chaptersArr[chapterNum-1].playgroundArr = playgroundQuestions
+                            if (playgroundQuestions.isEmpty){
+                            }else{
+                                self.chaptersArr[chapterNum-1].playgroundArr = playgroundQuestions
+                            }
+                            
+                            
                         }
                     }
                 }
