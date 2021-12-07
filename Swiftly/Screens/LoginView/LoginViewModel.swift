@@ -34,7 +34,7 @@ final class LoginViewModel: ObservableObject {
         print(password)
         
         
-        ///TEMPORARY workaround to force login to always be accountMode student, since this resets after every logout in the user account view.
+        ///Force login to always be accountMode student, since this resets after every logout in the user account view
         self.accountMode = "Student"
         
         if self.accountMode == "Undefined" {
