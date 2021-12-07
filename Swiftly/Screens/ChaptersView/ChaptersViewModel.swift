@@ -404,7 +404,7 @@ final class ChaptersViewModel: ObservableObject {
                     self.loggedInUser.firstName = userObj["firstname"] as! String
                     self.loggedInUser.lastName = userObj["lastName"] as! String
                     self.loggedInUser.email = userObj["email"] as! String
-                    self.loggedInUser.password = userObj["password"] as! String
+                    //self.loggedInUser.password = userObj["password"] as! String
                     self.loggedInUser.username = userObj["username"] as! String
                     self.loggedInUser.country = userObj["country"] as! String
                     self.loggedInUser.dob = userObj["date_of_birth"] as! String

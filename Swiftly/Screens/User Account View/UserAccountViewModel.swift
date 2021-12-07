@@ -123,7 +123,7 @@ final class UserAccountViewModel: ObservableObject {
         updatedUser.lastName = loggedInUser.lastName
         updatedUser.username = loggedInUser.username
         updatedUser.email = loggedInUser.email
-        updatedUser.password = loggedInUser.password
+        //updatedUser.password = loggedInUser.password
         updatedUser.dob = loggedInUser.dob
         updatedUser.country = loggedInUser.country
     }
@@ -213,7 +213,7 @@ final class UserAccountViewModel: ObservableObject {
             "date_of_birth": updatedUser.dob,
             "firstname" : updatedUser.firstName,
             "lastName" : updatedUser.lastName,
-            "password" : updatedUser.password,
+            //"password" : updatedUser.password,
         ]) { err in
             if let err = err {
                 print("Error updating document: \(err)")
@@ -224,7 +224,7 @@ final class UserAccountViewModel: ObservableObject {
                 self.loggedInUser.lastName = self.updatedUser.lastName
                 self.loggedInUser.username = self.updatedUser.username
                 self.loggedInUser.email = self.updatedUser.email
-                self.loggedInUser.password = self.updatedUser.password
+                //self.loggedInUser.password = self.updatedUser.password
                 self.loggedInUser.dob = self.updatedUser.dob
                 self.loggedInUser.country = self.updatedUser.country
         
@@ -250,6 +250,15 @@ final class UserAccountViewModel: ObservableObject {
                                 classroom: [UserClassroom()]
                              )
 
+            updatedUser = User(firstName: "",
+                                lastName: "",
+                                username: "",
+                                email: "",
+                                password: "",
+                                dob : "",
+                                country: "",
+                                classroom: [UserClassroom()]
+                                )
             
             self.clearStats()
             

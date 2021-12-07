@@ -196,7 +196,7 @@ final class SignupViewModel: ObservableObject {
                 "firstname" : user.firstName,
                 "username" : user.username,
                 "lastName" : user.lastName,
-                "password" : user.password
+                //"password" : user.password
             ]) { err in
                 if let err = err {
                     print("Error writing document: \(err)")
@@ -261,7 +261,7 @@ final class SignupViewModel: ObservableObject {
                 "firstname" : user.firstName,
                 "lastName" : user.lastName,
                 "username" : user.username,
-                "password" : user.password
+                //"password" : user.password
             ]) { err in
                 if let err = err {
                     print("Error writing document: \(err)")
