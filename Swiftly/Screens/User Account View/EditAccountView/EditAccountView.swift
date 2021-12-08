@@ -185,6 +185,9 @@ struct EditAccountView: View {
                     }
                 }
                 Spacer()
+                    .onAppear(){
+                        self.userAccountViewModel.updatedUser.password = ""
+                    }
             }
             .navigationBarHidden(true)
         }
