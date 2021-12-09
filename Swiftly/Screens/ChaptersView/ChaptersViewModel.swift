@@ -253,7 +253,10 @@ final class ChaptersViewModel: ObservableObject {
                                 let chapterStatus = chapterDoc["chapter_status"] as! String
                                 
                                 if (chapterStatus == "complete"){
-                                    self.userCompletionCount[counter] += 1
+                                    /// Only getting status for chapters currently being used by the app
+                                    if (counter < self.chaptersArr.count){
+                                        self.userCompletionCount[counter] += 1
+                                    }
                                 }
                                 
                                 counter += 1
