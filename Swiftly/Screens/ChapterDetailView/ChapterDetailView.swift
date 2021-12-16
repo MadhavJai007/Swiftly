@@ -76,13 +76,11 @@ struct ChapterDetailView: View {
                             
                             Group{
                                 
-                                /// Chapter index
-                                let chapIndex = chaptersViewModel.selectedChapterIndex
-                                
-                                /// Getting the question index
-                                let index = chapterContentViewModel.selectedQuestionIndex
-                                
-                                var status = chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].chapterStatus
+                                /// Getting the status for the current chapter
+                                let chapter = chaptersViewModel.selectedChapter
+                                let index = chaptersViewModel.chaptersArr.firstIndex(of: chapter!)
+                                let status = chaptersViewModel.loggedInUser.classroom[0].chapterProgress[index!].chapterStatus
+                             
                                 
                                 ChapterContentText(text:"Status: \(status.capitalizingFirstLetter())")
                             }
