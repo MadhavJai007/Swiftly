@@ -32,7 +32,7 @@ struct LoginView: View {
                  
                 VStack {
                     VStack{
-                        TitleLabel(text:"Swiftly")
+                        TitleLabel(text:"Swiftly Test Branch")
                     }
                     .frame(alignment: .topLeading)
                     .padding(.top, 250)
@@ -145,6 +145,8 @@ struct LoginView: View {
                     Spacer()
                 }
                 .padding(.bottom, 250)
+                
+                ///forget password button -> sends to password recovery view
                 
                 /// Shows progress loader while chapters are being downloaded
                 if (loginViewModel.isSuccessful == true){
