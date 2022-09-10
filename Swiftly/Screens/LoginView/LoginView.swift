@@ -12,6 +12,7 @@ struct LoginView: View {
     
     @State var email: String = ""
     @State var password: String = ""
+    @State var shouldNav: Bool = false
     
     var accountTypeOptions = ["Student", "Teacher"]
     
@@ -22,6 +23,7 @@ struct LoginView: View {
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel
     @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel
+
     
     var body: some View {
         NavigationView {
@@ -143,13 +145,23 @@ struct LoginView: View {
                             .foregroundColor(.red)
                     }
                     Spacer()
+                    
+                    
                     VStack(spacing: 20){
-                    Button{
-                        print("Button pressed")
-                    }label: {
-                        ButtonLabelLarge(text: "Forgot Password?", textColor: .white, backgroundColor: Color(UIColor.systemGray2))
-                    }
-                    NavigationLink(destination: PasswordRecoveryView()) {EmptyView()}
+                        
+                    ///password recovery button
+                        Button{
+                            print("Button pressed")
+                            self.shouldNav.toggle()
+                        }label: {
+                            ButtonLabelLarge(text: "Forgot Password?", textColor: .white, backgroundColor: Color(UIColor.systemGray2))
+                        }
+                            NavigationLink(destination: PasswordRecoveryView()
+                                        .environmentObject(loginViewModel)
+                                        .environmentObject(signupViewModel)
+                                        .environmentObject(chaptersViewModel)
+                                        .environmentObject(chapterContentViewModel),
+                                           isActive: $shouldNav) {EmptyView()}
                     }
                 }
                 .padding(.bottom, 250)

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2CD6875928CCE9B1009E1BA1 /* PasswordRecoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD6875828CCE9B1009E1BA1 /* PasswordRecoveryView.swift */; };
+		2CD6875B28CCF018009E1BA1 /* PasswordRecoveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD6875A28CCF018009E1BA1 /* PasswordRecoveryViewModel.swift */; };
 		2CEB414727598BEC00C8858D /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEB414627598BEC00C8858D /* NetworkMonitor.swift */; };
 		DA0866AB2717702E00B1999E /* InteractiveQuestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866AA2717702E00B1999E /* InteractiveQuestionsView.swift */; };
 		DA0866B82719CC0D00B1999E /* EditAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866B72719CC0C00B1999E /* EditAccountView.swift */; };
@@ -55,6 +56,7 @@
 /* Begin PBXFileReference section */
 		11B3422058B48AC46E6C075C /* Pods_Swiftly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swiftly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CD6875828CCE9B1009E1BA1 /* PasswordRecoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRecoveryView.swift; sourceTree = "<group>"; };
+		2CD6875A28CCF018009E1BA1 /* PasswordRecoveryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRecoveryViewModel.swift; sourceTree = "<group>"; };
 		2CEB414627598BEC00C8858D /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		66F71B613F71F71DCB1B8233 /* Pods-Swiftly.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swiftly.release.xcconfig"; path = "Target Support Files/Pods-Swiftly/Pods-Swiftly.release.xcconfig"; sourceTree = "<group>"; };
 		8FDBE6C6B205D978766E6A18 /* Pods-Swiftly.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swiftly.debug.xcconfig"; path = "Target Support Files/Pods-Swiftly/Pods-Swiftly.debug.xcconfig"; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				2CD6875828CCE9B1009E1BA1 /* PasswordRecoveryView.swift */,
+				2CD6875A28CCF018009E1BA1 /* PasswordRecoveryViewModel.swift */,
 			);
 			path = PasswordRecoveryView;
 			sourceTree = "<group>";
@@ -582,6 +585,7 @@
 				DADCC3B12714C8F60071D287 /* InteractiveBlock.swift in Sources */,
 				EBD10B7F271E3338002042D9 /* DropdownView.swift in Sources */,
 				DAD6B319270A3C71002C8A55 /* UserAccountView.swift in Sources */,
+				2CD6875B28CCF018009E1BA1 /* PasswordRecoveryViewModel.swift in Sources */,
 				DA0866BE271A0AF900B1999E /* NavBarIconView.swift in Sources */,
 				DA1281E227316165002EAC2F /* ChatbotViewModel.swift in Sources */,
 				DA0866B82719CC0D00B1999E /* EditAccountView.swift in Sources */,
