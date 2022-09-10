@@ -143,10 +143,17 @@ struct LoginView: View {
                             .foregroundColor(.red)
                     }
                     Spacer()
+                    VStack(spacing: 20){
+                    Button{
+                        print("Button pressed")
+                    }label: {
+                        ButtonLabelLarge(text: "Forgot Password?", textColor: .white, backgroundColor: Color(UIColor.systemGray2))
+                    }
+                    NavigationLink(destination: PasswordRecoveryView()) {EmptyView()}
+                    }
                 }
                 .padding(.bottom, 250)
                 
-                ///forget password button -> sends to password recovery view
                 
                 /// Shows progress loader while chapters are being downloaded
                 if (loginViewModel.isSuccessful == true){
