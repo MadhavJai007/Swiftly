@@ -7,17 +7,18 @@ import SwiftUI
 
 struct ChaptersView: View {
     
-    /// View responsive variables
+    // View responsive variables
     @State var isActive: Bool = false
     @State private var showPopup: Bool = false
     @EnvironmentObject var loginViewModel: LoginViewModel
-    @EnvironmentObject var chaptersViewModel: ChaptersViewModel /// --> view model for this view
+    @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel
     @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel
     @EnvironmentObject var chatbotViewModel: ChatbotViewModel
     
     var body: some View {
+        
         GeometryReader { geometry in
             ZStack {
                 
@@ -32,6 +33,7 @@ struct ChaptersView: View {
                             chaptersViewModel.isShowingAccountView.toggle()
                         }label: {
                             SpecialNavBarIcon(text: "person.crop.circle")
+                                .accessibilityLabel("View Account Button")
                         }
                         
                         Spacer()
@@ -40,10 +42,11 @@ struct ChaptersView: View {
                     
                     VStack(alignment: .leading){
                         TitleLabel(text:"All Chapters")
+                            .accessibilityLabel("All Chapters")
                         
                         HStack{
-                            
                             InfoLabelMedium(text:"Showing all available chapters")
+                                .accessibilityLabel("Showing all available chapters")
                         }
                         .padding(.top, -35)
                     }
@@ -62,6 +65,7 @@ struct ChaptersView: View {
                                     .environmentObject(chaptersViewModel)
                                     .environmentObject(chapterContentViewModel)
                                     .environmentObject(leaderboardViewModel)
+                                    .accessibilityLabel("Chapter \(chaptersViewModel.chaptersArr[index].chapterNum)")
                                 
                             }
                         }
@@ -69,6 +73,7 @@ struct ChaptersView: View {
                             ChapterDetailView(isShowingDetailView: $chaptersViewModel.isShowingChapterDetailView)
                                 .environmentObject(chaptersViewModel)
                                 .environmentObject(chapterContentViewModel)
+                            
                         }
                     }
                     .padding(.trailing, 30)
@@ -102,7 +107,6 @@ struct ChaptersView: View {
         .navigationBarHidden(true)
         
         .onAppear {
-            
             
             userAccountViewModel.loggedInUser = chaptersViewModel.loggedInUser
             
