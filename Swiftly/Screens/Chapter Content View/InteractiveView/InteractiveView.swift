@@ -179,6 +179,14 @@ struct InteractiveView: View {
                                     
                                     chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chaptersViewModel.selectedChapterIndex].questionScores[index] = score
                                     
+                                    
+                                    // Adding a point
+                                    if chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].chapterScore < chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].totalQuestions &&
+                                        chapterContentViewModel.didUserCompleteQuestion() == true {
+                                        chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].chapterScore += 1
+                                    }
+                                    
+                                    
                                     /// If it's the last question
                                     if (index == chapterContentViewModel.playgroundQuestionScores.count-1){
 

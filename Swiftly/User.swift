@@ -192,6 +192,8 @@ struct UserChapterProgress: Hashable, Identifiable, Codable {
     var questionAnswers: [UserQuestionAnswer]
     var questionProgress: [String]
     var theoryStatus: String
+    var chapterScore: Int
+    var totalQuestions: Int
     
     /// Getting id
     func getId() -> UUID {
@@ -276,6 +278,24 @@ struct UserChapterProgress: Hashable, Identifiable, Codable {
     /// Setting theory status
     mutating func setTheoryStatus(status: String) {
         theoryStatus = status
+    }
+    
+    
+    func getChapterScore() -> Int {
+        return chapterScore
+    }
+    
+    mutating func setChapterScore(score: Int) {
+        chapterScore = score
+    }
+    
+    
+    func getTotalQuestions() -> Int {
+        return totalQuestions
+    }
+    
+    mutating func setTotalQuestions(count: Int) {
+        totalQuestions = count
     }
 
 }
