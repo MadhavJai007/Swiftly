@@ -28,6 +28,7 @@ struct InteractiveQuestionsView: View {
                             chapterContentViewModel.willStartInteractiveSection = false
                         }label:{
                             NavBarIcon(iconName: "chevron.backward")
+                                .accessibilityLabel("Back Button")
                         }
                         .padding(.leading, 30)
                         Spacer()
@@ -36,6 +37,7 @@ struct InteractiveQuestionsView: View {
                     
                     TitleLabel(text: "Chapter Questions")
                         .padding(.bottom, 50)
+                        .accessibilityLabel("Chapter Questions")
                     
                     ScrollView{
                         
@@ -49,6 +51,7 @@ struct InteractiveQuestionsView: View {
                                         .minimumScaleFactor(0.5)
                                         .padding(.leading, 5)
                                         .padding(.trailing, 5)
+                                        .accessibilityLabel(question.title)
                                     
                                     /// Grabbing question type
                                     Group{
@@ -56,6 +59,7 @@ struct InteractiveQuestionsView: View {
                                             InteractiveContentTextPreview(text: "Type: Code Tiles")
                                                 .padding(.leading, 5)
                                                 .padding(.trailing, 5)
+                                                .accessibilityLabel("Type: Code Tiles")
                                             
                                             let questionLength = question.originalArr.count
                                             
@@ -64,24 +68,25 @@ struct InteractiveQuestionsView: View {
                                                     .padding(.leading, 5)
                                                     .padding(.trailing, 5)
                                                     .padding(.bottom, 5)
-                                            }
-                                            else if (questionLength <= 4){
+                                                    .accessibilityLabel("Difficulty: Easy")
+                                            } else if (questionLength <= 4){
                                                 InteractiveContentTextPreview(text: "Difficulty: Medium")
                                                     .padding(.leading, 5)
                                                     .padding(.trailing, 5)
                                                     .padding(.bottom, 5)
-                                            }else if (questionLength >= 5){
+                                                    .accessibilityLabel("Difficulty: Medium")
+                                            } else if (questionLength >= 5){
                                                 InteractiveContentTextPreview(text: "Difficulty: Hard")
                                                     .padding(.leading, 5)
                                                     .padding(.trailing, 5)
                                                     .padding(.bottom, 5)
+                                                    .accessibilityLabel("Difficulty: Hard")
                                             }
-                                            
-                                            
-                                        }else{
+                                        } else{
                                             InteractiveContentTextPreview(text: "Type: Multiple Choice Question")
                                                 .padding(.leading, 5)
                                                 .padding(.trailing, 5)
+                                                .accessibilityLabel("Type: Multiple Choice Question")
                                             
                                             let questionLength = question.originalArr.count
                                             
@@ -90,17 +95,20 @@ struct InteractiveQuestionsView: View {
                                                     .padding(.leading, 5)
                                                     .padding(.trailing, 5)
                                                     .padding(.bottom, 5)
+                                                    .accessibilityLabel("Difficulty: Easy")
                                             }
                                             else if (questionLength <= 4){
                                                 InteractiveContentTextPreview(text: "Difficulty: Medium")
                                                     .padding(.leading, 5)
                                                     .padding(.trailing, 5)
                                                     .padding(.bottom, 5)
+                                                    .accessibilityLabel("Difficulty: Medium")
                                             }else if (questionLength >= 5){
                                                 InteractiveContentTextPreview(text: "Difficulty: Hard")
                                                     .padding(.leading, 5)
                                                     .padding(.trailing, 5)
                                                     .padding(.bottom, 5)
+                                                    .accessibilityLabel("Difficulty: Hard")
                                             }
                                         }
                                     }
@@ -134,6 +142,7 @@ struct InteractiveQuestionsView: View {
                                                         .resizable()
                                                         .scaledToFit()
                                                         .frame(width: 30, height: 30)
+                                                        .accessibilityLabel("Start Question Button")
                                                 }.frame(width: 115, height: 115)
                                                 
                                             }
@@ -150,7 +159,6 @@ struct InteractiveQuestionsView: View {
                                             
                                             if (statusBefore == "complete"){
                                                 
-                                                
                                                 Button{
                                                     chapterContentViewModel.selectedQuestionIndex = index!
                                                     chapterContentViewModel.setupPlayground(question: question, questionIndex: index!, userAnswers: chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index!].answers)
@@ -161,6 +169,7 @@ struct InteractiveQuestionsView: View {
                                                             .resizable()
                                                             .scaledToFit()
                                                             .frame(width: 30, height: 30)
+                                                            .accessibilityLabel("Start Question Button")
                                                     }.frame(width: 115, height: 115)
                                                     
                                                 }
@@ -178,6 +187,7 @@ struct InteractiveQuestionsView: View {
                                                             .resizable()
                                                             .scaledToFit()
                                                             .frame(width: 30, height: 30)
+                                                            .accessibilityLabel("Start Question Button")
                                                     }.frame(width: 115, height: 115)
                                                     
                                                 }
@@ -200,6 +210,7 @@ struct InteractiveQuestionsView: View {
                                                     .resizable()
                                                     .scaledToFit()
                                                     .frame(width: 30, height: 30)
+                                                    .accessibilityLabel("Start Question Button")
                                             }.frame(width: 115, height: 115)
                                             
                                         }
@@ -241,20 +252,18 @@ struct InteractiveQuestionsView: View {
                                         .frame(width: geometry.size.width, alignment: .center)
                                         .padding(20)
                                         .disabled(true)
+                                        .accessibilityLabel("Start Next Chapter Button")
                                     }else{
                                         Button{
-                                            
-                                            
                                             chaptersViewModel.willStartNextChapter = true
                                             chapterContentViewModel.willStartInteractiveSection.toggle()
                                             chaptersViewModel.didStartChapter.toggle()
-                                            
-                                            
                                         }label:{
                                             NextChaptButton(text: "Next Chapter", textColor: .white, backgroundColor: Color(UIColor.systemGreen))
                                         }
                                         .frame(width: geometry.size.width, alignment: .center)
                                         .padding(20)
+                                        .accessibilityLabel("Start Question Button")
                                     }
                                 }
                             }
@@ -294,21 +303,19 @@ struct InteractiveQuestionsView: View {
                 chaptersViewModel.loggedInUser.classroom[0].classroomPlaygroundStatus = "inprogress"
             }
             
-            
             chaptersViewModel.saveUserProgress()
             chaptersViewModel.retrieveUserbaseCompletion()
             
-            
             /// If all the questions in this playground are complete, set the chapter to be complete
-                        if (chapterContentViewModel.playgroundQuestionStatus.contains("incomplete")){
-                            print("Chapter incomplete")
-                        }else{
-                            chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].playgroundStatus = "complete"
-                            chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].chapterStatus = "complete"
-                            chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].theoryStatus = "complete"
-            
-                            chaptersViewModel.chaptersStatus[chapIndex] = "complete"
-                        }
+            if (chapterContentViewModel.playgroundQuestionStatus.contains("incomplete")){
+                print("Chapter incomplete")
+            } else{
+                chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].playgroundStatus = "complete"
+                chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].chapterStatus = "complete"
+                chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].theoryStatus = "complete"
+
+                chaptersViewModel.chaptersStatus[chapIndex] = "complete"
+            }
         }
     }
 }
@@ -319,4 +326,3 @@ struct InteractiveQuestionsView_Previews: PreviewProvider {
         InteractiveQuestionsView()
     }
 }
-
