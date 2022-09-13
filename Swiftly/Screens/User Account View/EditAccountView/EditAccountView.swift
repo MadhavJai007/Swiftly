@@ -36,6 +36,7 @@ struct EditAccountView: View {
                             userAccountViewModel.isEditingAccount.toggle()
                         }label:{
                             NavBarIcon(iconName: "xmark")
+                                .accessibilityLabel("Close Page Button")
                         }
                         .padding(.leading, 30)
 
@@ -47,12 +48,14 @@ struct EditAccountView: View {
                     // Title
                     TitleLabel(text: "Edit Account")
                         .padding(.bottom, geometry.size.width/42)
+                        .accessibilityLabel("Edit Account")
                     
                     // Username
                     VStack(alignment: .leading){
                         
-                        InputFieldLabel(text:"Username")
+                        InputFieldLabel(text: "Username")
                             .padding(.bottom, -geometry.size.width/120)
+                            .accessibilityLabel("Username")
                     
                         TextField("Username",text: $userAccountViewModel.updatedUser.username)
                             .font(.system(size: 30))
@@ -71,9 +74,9 @@ struct EditAccountView: View {
                         
                         VStack(alignment: .leading){
                            
-                            InputFieldLabel(text:"First Name")
+                            InputFieldLabel(text: "First Name")
                                 .padding(.bottom, -geometry.size.width/120)
-                            
+                                .accessibilityLabel("First Name")
                             
                             TextField("First Name", text : $userAccountViewModel.updatedUser.firstName)
                                 .font(.system(size: 30))
@@ -85,8 +88,9 @@ struct EditAccountView: View {
                         
                         VStack(alignment: .leading) {
                            
-                            InputFieldLabel(text:"Last Name")
+                            InputFieldLabel(text: "Last Name")
                                 .padding(.bottom, -geometry.size.width/120)
+                                .accessibilityLabel("Last Name")
 
                             TextField("Last Name", text : $userAccountViewModel.updatedUser.lastName)
                                 .font(.system(size: 30))
@@ -102,15 +106,16 @@ struct EditAccountView: View {
                         
                         VStack(alignment: .leading){
                             
-                            InputFieldLabel(text:"Country")
+                            InputFieldLabel(text: "Country")
                                 .padding(.bottom, -geometry.size.width/120)
-                            
+                                .accessibilityLabel("Country")
                             
                             Picker("", selection: $userAccountViewModel.updatedUser.country) {
                                             ForEach(countries, id: \.self) {
                                                            
                                                 Text($0)
                                                     .font(.system(size: 30))
+                                                    .accessibilityLabel("\($0)")
                                             }
                                         }
                             .frame(width: 100, height: 50)
@@ -121,8 +126,9 @@ struct EditAccountView: View {
                         
                         VStack(alignment: .leading) {
                             
-                            InputFieldLabel(text:"Date of Birth")
+                            InputFieldLabel(text: "Date of Birth")
                                 .padding(.bottom, -geometry.size.width/120)
+                                .accessibilityLabel("Date of Birth")
                             
                             TextField("Date of Birth", text : $userAccountViewModel.updatedUser.dob)
                                 .font(.system(size: 30))
@@ -137,8 +143,9 @@ struct EditAccountView: View {
                     // Email Address
                     VStack(alignment: .leading){
                         
-                        InputFieldLabel(text:"Email Address")
+                        InputFieldLabel(text: "Email Address")
                             .padding(.bottom, -geometry.size.width/120)
+                            .accessibilityLabel("Email Address")
                         
                         TextField("Email", text : $userAccountViewModel.updatedUser.email)
                             .font(.system(size: 30))
@@ -157,6 +164,7 @@ struct EditAccountView: View {
                         
                         InputFieldLabel(text:"Password")
                             .padding(.bottom, -geometry.size.width/120)
+                            .accessibilityLabel("Password")
                         
                         SecureInputView("Password", text : $userAccountViewModel.updatedUser.password)
                             .font(.system(size: 30))
@@ -168,7 +176,6 @@ struct EditAccountView: View {
                     }
                     .padding(geometry.size.width/42)
                     
-                    
                     // Update account button
                     Button{
                         userAccountViewModel.updateAccount()
@@ -176,12 +183,14 @@ struct EditAccountView: View {
                     }label:{
                         ButtonLabelLarge(text: "Save Changes", textColor: .white, backgroundColor: Color.blackCustom)
                             .padding(geometry.size.width/42)
+                            .accessibilityLabel("Save Changes Button")
                     }.opacity(userAccountViewModel.isEditingComplete ? 1 : 0.6)
                         .disabled(!monitor.isConnected || !userAccountViewModel.isEditingComplete)
                     if (!monitor.isConnected){
                         Text("Connect to the internet if you want to update account information")
                             .font(.system(size: 15))
                             .foregroundColor(.red)
+                            .accessibilityLabel("Connect to the internet if you want to update account information")
                     }
                 }
                 Spacer()
