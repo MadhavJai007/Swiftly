@@ -34,6 +34,7 @@ struct ChapterContentView: View {
                             chaptersViewModel.didStartChapter.toggle()
                         }label:{
                             NavBarIcon(iconName: "chevron.backward")
+                                .accessibilityLabel("Back Button")
                         }
                         .padding(.leading, 30)
                         
@@ -44,6 +45,7 @@ struct ChapterContentView: View {
                             chapterContentViewModel.isShowingChabot.toggle()
                         }label:{
                             NavBarIcon(iconName: "questionmark")
+                                .accessibilityLabel("Chatbot Button")
                         }
                         .padding(.trailing, 30)
                         .fullScreenCover(isPresented: $chapterContentViewModel.isShowingChabot){
@@ -77,14 +79,12 @@ struct ChapterContentView: View {
                                             if (lesson.content.firstIndex(of: content) == 0){
                                                 ChapterSubTitle(text: content)
                                                     .padding(.leading, geometry.size.width/24)
+                                                    .accessibilityLabel(content)
                                             }else{
                                                 
                                                 if (content.starts(with: "data:image")){
                                                     
-                                                    
                                                     let imgBase64 = chapterContentViewModel.getBase64(original: content)
-                                                    
-                                                    
                                                     
                                                     HStack{
                                                         Spacer()
@@ -97,10 +97,11 @@ struct ChapterContentView: View {
                                                     .padding(.bottom, geometry.size.width/48)
                                                     
                                                 }else{
-                                                    InteractiveContentText(text:content)
+                                                    InteractiveContentText(text: content)
                                                         .padding(.leading, geometry.size.width/24)
                                                         .padding(.bottom, geometry.size.width/48)
                                                         .padding(.trailing, geometry.size.width/24)
+                                                        .accessibilityLabel(content)
                                                 }
                                             }
                                         }
@@ -122,6 +123,7 @@ struct ChapterContentView: View {
                                                 if (lesson.content.firstIndex(of: content) == 0){
                                                     ChapterSubTitle(text: content)
                                                         .padding(.leading, geometry.size.width/24)
+                                                        .accessibilityLabel(content)
                                                 }else{
                                                     
                                                     if (content.starts(with: "data:image")){
@@ -139,10 +141,11 @@ struct ChapterContentView: View {
                                                         .padding(.bottom, geometry.size.width/48)
                                                         
                                                     }else{
-                                                        InteractiveContentText(text:content)
+                                                        InteractiveContentText(text: content)
                                                             .padding(.leading, geometry.size.width/24)
                                                             .padding(.bottom, geometry.size.width/48)
                                                             .padding(.trailing, geometry.size.width/24)
+                                                            .accessibilityLabel(content)
                                                     }
                                                 }
                                             }
@@ -157,7 +160,7 @@ struct ChapterContentView: View {
                                             }label: {
                                                 Text("Start Interactive Section")
                                                     .font(.system(size: 30, weight: .semibold))
-                                                    
+                                                    .accessibilityLabel("Start Interactive Section Button")
                                             }
                                             .frame(width: geometry.size.width/2, height: geometry.size.height/12)
                                             .background(Color(UIColor.darkGray))
@@ -188,14 +191,11 @@ struct ChapterContentView: View {
         .navigationBarHidden(true)
         
         .onAppear(){
-            
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            
                 if (chaptersViewModel.jumpToPlayground == true){
                     chapterContentViewModel.startInteractiveSection()
                     chaptersViewModel.jumpToPlayground = false
                 }
-            
             }
             /// Getting chapter index
             let chapIndex = chaptersViewModel.selectedChapterIndex
