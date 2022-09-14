@@ -49,7 +49,7 @@ struct PasswordRecoveryView: View {
                         InputFieldLabel(text:"Email")
                             .padding(.bottom, -geometry.size.width/120)
                         
-                        TextField("Email", text: self.$email)
+                        TextField("Email", text: self.$passwordRecoveryViewModel.email)
                             .font(.system(size: 30))
                             .padding()
                             .autocapitalization(.none)
@@ -64,10 +64,13 @@ struct PasswordRecoveryView: View {
                         
                     ///password recovery button
                         Button{
-                            print("Button pressed")
+                            print("Password recovery API call")
+                            passwordRecoveryViewModel.resetPassword()
                         }label: {
                             ButtonLabelLarge(text: "Reset Password", textColor: .white, backgroundColor: Color(UIColor.systemGray2))
                         }
+                        .opacity(passwordRecoveryViewModel.isEmailValid() || monitor.isConnected ? 1 : 0.24)
+                        .disabled(!monitor.isConnected || !passwordRecoveryViewModel.isEmailValid())
                     }
 
                     if (!monitor.isConnected){
