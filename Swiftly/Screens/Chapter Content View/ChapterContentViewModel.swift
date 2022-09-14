@@ -169,8 +169,29 @@ final class ChapterContentViewModel: ObservableObject {
         willStartInteractiveSection = true
     }
     
+    func didUserCompleteQuestion() -> Bool {
+        userScore = getQuestionScore()
+        
+        totalScore = 0
+        
+        switch selectedQuestion.type {
+        case "code_blocks":
+            totalScore = selectedQuestion.originalArr.count
+        case "mcq":
+            totalScore = selectedQuestion.mcqAnswers.count
+        default:
+            totalScore = 0
+        }
+        
+        if userScore == totalScore {
+            return true
+        }
+        
+        return false
+    }
+    
     /// Used to retrieve the score of the user
-    func getQuestionScore() -> Int{
+    func getQuestionScore() -> Int {
         
         userScore = 0
         
