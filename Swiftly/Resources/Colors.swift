@@ -14,6 +14,7 @@ extension Color {
     static let whiteCustom = Color(red: 240/255, green: 240/255, blue: 240/255)
     static let lightGrayCustom = Color(red: 188/255, green: 188/255, blue: 188/255)
     static let redCustom = Color(red: 211/255, green: 46/255, blue: 49/255)
+    static let blueCustom = Color(red: 0/255, green: 110/255, blue: 245/255)
     
     
     static let leaderboardBtnBackground = Color(red: 63/255, green: 63/255, blue: 63/255)

@@ -111,7 +111,7 @@ struct InteractiveView: View {
                     }.frame(width: geometry.size.width/1.0, height: geometry.size.height/1.50, alignment: .center)
                     
                     ZStack{
-                        Color(UIColor.systemGray4)
+                        Color.blueCustom
                             .ignoresSafeArea()
                         HStack{
                             InteractiveContentText(text: chapterContentViewModel.selectedQuestion.description)
@@ -123,7 +123,7 @@ struct InteractiveView: View {
                             
                             Spacer()
                             
-                            VStack(alignment: .leading){
+                            VStack(alignment: .leading) {
                                 
                                 /// Next question button
                                 Button{
