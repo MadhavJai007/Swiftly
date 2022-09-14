@@ -33,6 +33,7 @@ struct ChapterDetailView: View {
                         TitleLabel(text: "Chapter \(chaptersViewModel.selectedChapter!.chapterNum)")
                             .padding(.trailing, -geometry.size.width/12)
                             .padding(.leading, geometry.size.width/12)
+                            .accessibilityLabel("Chapter \(chaptersViewModel.selectedChapter!.chapterNum)")
                         
                         Spacer()
                         
@@ -44,6 +45,7 @@ struct ChapterDetailView: View {
                                 .imageScale(.large)
                                 .foregroundColor(Color(UIColor.systemGray3))
                                 .frame(width: 25, height: 25)
+                                .accessibilityLabel("Close Button")
                         }
                         .padding(.trailing, geometry.size.width/12)
                         .padding(.leading, -geometry.size.width/12)
@@ -52,9 +54,8 @@ struct ChapterDetailView: View {
                     HStack{
                         
                         Text("\(chaptersViewModel.selectedChapter!.name)")
-                            .font(.system(size: 35,
-                                          weight: .bold,
-                                          design: .default))
+                            .font(.system(size: 35, weight: .bold, design: .default))
+                            .accessibilityLabel("\(chaptersViewModel.selectedChapter!.name)")
                         
                         Image(systemName: "\(chaptersViewModel.selectedChapter!.iconName)")
                             .resizable()
@@ -71,74 +72,67 @@ struct ChapterDetailView: View {
                         VStack(alignment: .leading, spacing: -geometry.size.width/48){
                             
                             ChapterContentText(text: "Estimated Length: \(chaptersViewModel.selectedChapter!.length) minutes")
+                                .accessibilityLabel("Estimated Length: \(chaptersViewModel.selectedChapter!.length) minutes")
                             
-                            ChapterContentText(text:"Difficulty Level: \(chaptersViewModel.selectedChapter!.difficulty)")
+                            ChapterContentText(text: "Difficulty Level: \(chaptersViewModel.selectedChapter!.difficulty)")
+                                .accessibilityLabel("Difficulty Level: \(chaptersViewModel.selectedChapter!.difficulty)")
                             
                             Group{
                                 
-                                /// Getting the status for the current chapter
                                 let chapter = chaptersViewModel.selectedChapter
                                 let index = chaptersViewModel.chaptersArr.firstIndex(of: chapter!)
                                 let status = chaptersViewModel.loggedInUser.classroom[0].chapterProgress[index!].chapterStatus
                              
-                                
-                                ChapterContentText(text:"Status: \(status.capitalizingFirstLetter())")
+                                ChapterContentText(text: "Status: \(status.capitalizingFirstLetter())")
+                                    .accessibilityLabel("Status: \(status.capitalizingFirstLetter())")
                             }
                             ChapterContentText(text: chaptersViewModel.selectedChapter!.summary)
                                 .padding(.trailing, geometry.size.width/6)
                                 .padding(.top, geometry.size.width/24)
                                 .minimumScaleFactor(0.5)
+                                .accessibilityLabel(chaptersViewModel.selectedChapter!.summary)
                         }
                         
                         Spacer()
                         
-                        Button{
+                        Button {
                             
                             chaptersViewModel.selectedChapterIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)!
-                            
                             isShowingDetailView = false
                             chaptersViewModel.startChapterIntent = true
                             
-                        }label: {
+                        } label: {
                             StartChapterButton(text: "Start Chapter", textColor: .white, backgroundColor: Color(UIColor.darkGray))
+                                .accessibilityLabel("Start Chapter Button")
                         }
                         .padding(.leading, geometry.size.width/12)
-                        
                         
                         Group{
                             let chapIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)
                             let chapterStat = chaptersViewModel.chaptersStatus[chapIndex!]
                             let completionCount = chaptersViewModel.userCompletionCount[chapIndex!]
-                            
+
                             if (completionCount == 1){
                                 Text("\(completionCount) student out of \(chaptersViewModel.totalUserCount) have completed this chapter")
                                     .font(.system(size: 20,weight: .bold,design: .default))
                                     .foregroundColor(Color(UIColor.systemOrange))
                                     .padding(.leading, geometry.size.width/8.5)
+                                    .accessibilityLabel("\(completionCount) student out of \(chaptersViewModel.totalUserCount) have completed this chapter")
                             }else{
                                 Text("\(completionCount) students out of \(chaptersViewModel.totalUserCount) have completed this chapter")
                                     .font(.system(size: 20,weight: .bold,design: .default))
                                     .foregroundColor(Color(UIColor.systemOrange))
                                     .padding(.leading, geometry.size.width/8.5)
+                                    .accessibilityLabel("\(completionCount) students out of \(chaptersViewModel.totalUserCount) have completed this chapter")
                             }
-                            
-                            
                         }
                     
-                        
-                            
-                            
-                        
-                      
-                            
                         VStack(alignment: .leading){
                             
                             ChapterContentText(text: "Jump To")
-                            
-                            
+                                .accessibilityLabel("Jump To")
                             
                             HStack(spacing: geometry.size.width/32){
-                                
                                 
                                 Group{
                                     
@@ -154,7 +148,8 @@ struct ChapterDetailView: View {
                                         Button{
                                             print("tapped")
                                         }label: {
-                                            ChapterDetailsButtonText(text:"Chapter Questions")
+                                            ChapterDetailsButtonText(text: "Chapter Questions")
+                                                .accessibilityLabel("Chapter Questions")
                                         }
                                         .frame(width: 260, height: 50)
                                         .background(Color.lightGrayCustom)
@@ -166,13 +161,12 @@ struct ChapterDetailView: View {
                                         
                                         Button{
                                             chaptersViewModel.selectedChapterIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)!
-                                            
                                             isShowingDetailView = false
                                             chaptersViewModel.startChapterIntent = true
                                             chaptersViewModel.jumpToPlayground = true
-                                            
                                         }label: {
-                                            ChapterDetailsButtonText(text:"Chapter Questions")
+                                            ChapterDetailsButtonText(text: "Chapter Questions")
+                                                .accessibilityLabel("Chapter Questions")
                                         }
                                         .frame(width: 260, height: 50)
                                         .background(Color(UIColor.systemYellow))
@@ -184,13 +178,12 @@ struct ChapterDetailView: View {
                                       
                                         Button{
                                             chaptersViewModel.selectedChapterIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)!
-                                            
-
                                             isShowingDetailView = false
                                             chaptersViewModel.startChapterIntent = true
                                             chaptersViewModel.jumpToPlayground = true
                                         }label: {
-                                            ChapterDetailsButtonText(text:"Chapter Questions")
+                                            ChapterDetailsButtonText(text: "Chapter Questions")
+                                                .accessibilityLabel("Chapter Questions")
                                         }
                                         .frame(width: 260, height: 50)
                                         .background(Color(UIColor.systemGreen))

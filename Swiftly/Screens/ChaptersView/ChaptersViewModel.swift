@@ -128,7 +128,8 @@ final class ChaptersViewModel: ObservableObject {
                 "theory_status": loggedInUser.classroom[0].chapterProgress[j].theoryStatus,
                 "question_scores": loggedInUser.classroom[0].chapterProgress[j].questionScores,
                 "question_progress": loggedInUser.classroom[0].chapterProgress[j].questionProgress,
-                "question_ids": playgroundIds
+                "question_ids": playgroundIds,
+                "total_question_score": loggedInUser.classroom[0].chapterProgress[j].chapterScore
             ]){ err in
                 if let err = err {
                     print("Error updating document: \(err)")
@@ -463,6 +464,8 @@ final class ChaptersViewModel: ObservableObject {
                                             let questionScores = data["question_scores"] as! [Int]
                                             let theoryStatus = data["theory_status"] as! String
                                             let questionProgress = data["question_progress"] as! [String]
+                                            let chapterScore = data["total_question_score"] as! Int
+                                            let totalQuestions = data["total_questions"] as! Int
                                             
                                             let questionIds = data["question_ids"] as! [String]
                                             
@@ -482,7 +485,7 @@ final class ChaptersViewModel: ObservableObject {
                                             self.chaptersStatus.append(chapterStatus)
                                             
                                             /// Creating chapter object
-                                            let chapter = UserChapterProgress(chapterStatus: chapterStatus, chapterName: chapterName, chapterNum: chapterNum, playgroundStatus: playgroundStatus, questionScores: questionScores, questionAnswers: userQuestionAnswers, questionProgress: questionProgress, theoryStatus: theoryStatus)
+                                            let chapter = UserChapterProgress(chapterStatus: chapterStatus, chapterName: chapterName, chapterNum: chapterNum, playgroundStatus: playgroundStatus, questionScores: questionScores, questionAnswers: userQuestionAnswers, questionProgress: questionProgress, theoryStatus: theoryStatus, chapterScore: chapterScore, totalQuestions: totalQuestions)
                                             
                                             /// Appending chapter
                                             chaptersProgress.append(chapter)
@@ -548,7 +551,7 @@ final class ChaptersViewModel: ObservableObject {
                     let questionsScore = Array(repeating: 0, count: questionsCount)
                     
                     /// Creating new user progess object
-                    let newUserProgress = UserChapterProgress(chapterStatus: "incomplete", chapterName: chapterName, chapterNum: chapterNumber, playgroundStatus: "incomplete", questionScores: questionsScore, questionAnswers: userQuestionAnswers, questionProgress: questionsProgess, theoryStatus: "incomplete")
+                    let newUserProgress = UserChapterProgress(chapterStatus: "incomplete", chapterName: chapterName, chapterNum: chapterNumber, playgroundStatus: "incomplete", questionScores: questionsScore, questionAnswers: userQuestionAnswers, questionProgress: questionsProgess, theoryStatus: "incomplete", chapterScore: 0, totalQuestions: 0)
                     
                     /// Appening new object to user progress
                     self.loggedInUser.classroom[0].chapterProgress.append(newUserProgress)

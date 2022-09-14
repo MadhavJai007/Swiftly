@@ -222,7 +222,9 @@ final class SignupViewModel: ObservableObject {
                         "chapters_name" : chaptersArr[i].name,
                         "playground_status" : "incomplete",
                         "chapter_status" : "incomplete",
-                        "theory_status" : "incomplete"])
+                        "theory_status" : "incomplete",
+                        "total_question_score": 0,
+                        "total_questions": playgroundArray.count])
                     
                     var questionsArray : [Int] = []
                     var playgroundAnswers : [String] = []
@@ -240,7 +242,8 @@ final class SignupViewModel: ObservableObject {
                     
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
                     
-                        document.updateData(["question_scores" : questionsArray, "question_progress" : playgroundProgress,
+                        document.updateData(["question_scores" : questionsArray,
+                                             "question_progress" : playgroundProgress,
                                              "question_ids":questionsId])
                         
                     }

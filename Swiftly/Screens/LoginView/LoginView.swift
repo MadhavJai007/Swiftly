@@ -32,8 +32,10 @@ struct LoginView: View {
                     .ignoresSafeArea()
                  
                 VStack {
+                    
                     VStack{
-                        TitleLabel(text:"Swiftly Test Branch")
+                        TitleLabel(text: "Swiftly")
+                            .accessibilityLabel("Swiftly")
                     }
                     .frame(alignment: .topLeading)
                     .padding(.top, 250)
@@ -46,6 +48,7 @@ struct LoginView: View {
                             .background(Color(UIColor.systemGray3))
                             .autocapitalization(.none)
                             .cornerRadius(15)
+                            .accessibilityLabel("Email Address")
                         
                         SecureInputView("Password", text: $password)
                             .font(.system(size: 30))
@@ -53,6 +56,7 @@ struct LoginView: View {
                             .frame(width: 400, height: 75)
                             .background(Color(UIColor.systemGray3))
                             .cornerRadius(15)
+                            .accessibilityLabel("Password")
                     }
                     
                     
@@ -93,6 +97,7 @@ struct LoginView: View {
                         }
                     }label: {
                         ButtonLabelLarge(text: "Login", textColor: .white, backgroundColor: Color(UIColor.systemGray2))
+                            .accessibilityLabel("Login")
                     }
                     .padding(.top,50)
                     .padding(.bottom,50)
@@ -120,6 +125,7 @@ struct LoginView: View {
                     
                     VStack(spacing: 20){
                         InfoLabelMedium(text:"Need an account?")
+                            .accessibilityLabel("Need an account?")
                         Button{
                             /// Only let the user tap the sign up button when the user is not trying
                             /// to login.
@@ -128,6 +134,7 @@ struct LoginView: View {
                             }
                         }label: {
                             ButtonLabelLarge(text: "Tap to sign up", textColor: .white, backgroundColor: Color(UIColor.systemGray2))
+                                .accessibilityLabel("Tap to sign up")
                         }
                         
                         /// Navigation for signup view
@@ -142,6 +149,7 @@ struct LoginView: View {
                         Text("Connect to the internet before attempting to login")
                             .font(.system(size: 15))
                             .foregroundColor(.red)
+                            .accessibilityLabel("Connect to the internet before attempting to login")
                     }
                     Spacer()
                     

@@ -27,12 +27,12 @@ struct ChatbotView: View {
                 
                 VStack{
                     
-                    HStack{
-                        
-                        Button{
+                    HStack {
+                        Button {
                             chapterContentViewModel.isShowingChabot.toggle()
                         }label:{
                             ChatbotNavBarIcon(iconName: "xmark")
+                                .accessibilityLabel("Close Button")
                             
                         }
                         .padding(.leading, 30)
@@ -49,6 +49,7 @@ struct ChatbotView: View {
                             
                             TitleLabel(text: "Swiftly Help")
                                 .padding(.leading, 30)
+                                .accessibilityLabel("Swiftly Help")
                             
                             Spacer()
                         }
@@ -56,8 +57,7 @@ struct ChatbotView: View {
                         
                         /// For the messages with chatbot
                         List {
-                            
-                            
+
                             ForEach(chatbotViewModel.allMessages, id: \.id) { msg in
                                 
                                 /// If sender is user
@@ -73,6 +73,7 @@ struct ChatbotView: View {
                                                 .foregroundColor(Color.white)
                                                 .padding(.leading, 5)
                                                 .padding(.trailing, 5)
+                                                .accessibilityLabel(msg.text)
                                             
                                         }
                                         .frame(alignment: .leading)
@@ -96,6 +97,7 @@ struct ChatbotView: View {
                                                 .foregroundColor(Color.white)
                                                 .padding(.leading, 5)
                                                 .padding(.trailing, 5)
+                                                .accessibilityLabel(msg.text)
                                             
                                         }
                                         .frame(alignment: .leading)
@@ -133,17 +135,14 @@ struct ChatbotView: View {
                             }label:{
                                 Image(systemName: "arrow.up.circle.fill")
                                     .resizable()
+                                    .accessibilityLabel("Send Message Button")
                             }
                             .frame(width: 44, height: 44)
                         }
                         .frame(width: geometry.size.width/1.10)
                         .padding(.bottom, 15)
                         .padding(.top, 15)
-                        
-                        
-                        
                     }.frame(width: geometry.size.width, alignment: .leading)
-                    
                     
                     Spacer()
                 }
@@ -153,7 +152,6 @@ struct ChatbotView: View {
             chatbotViewModel.allMessages.removeAll()
             chatbotViewModel.chatlog.removeAll()
             SwiftlyApp.incomingChatbotMessages.removeAll()
-            
             
             chatbotViewModel.allMessages.append(Message(text: "Hi! I'm the Swiftly chatbot assistant, here to help you with any difficulties you may have ran into while working on the chapter. How may I help you?", sender: Message.Sender.chatbot))
         }

@@ -20,28 +20,26 @@ struct UserAccountView: View {
                 Color(UIColor.systemGray6)
                     .ignoresSafeArea()
                 
-                
                 VStack{
                     
                     HStack {
                         
                         Button{
-                            
                             chaptersViewModel.isShowingAccountView.toggle()
                         }label:{
                             UserAccountNavBarIcon(iconName: "chevron.backward")
+                                .accessibilityLabel("Back Button")
                         }
                         .padding(.leading, 30)
                         
                         Spacer()
-                        
-                        
                         
                         Button{
                             userAccountViewModel.retrieveAccountinfo()
                             userAccountViewModel.isEditingAccount.toggle()
                         }label:{
                             UserAccountNavBarIcon(iconName: "gearshape")
+                                .accessibilityLabel("Edit Account Button")
                         }
                         .padding(.trailing, 30)
                     }
@@ -55,30 +53,41 @@ struct UserAccountView: View {
                         VStack(alignment: .leading, spacing: geometry.size.width/20){
                             
                             UserAccountTitleLabel(text: "About Me")
+                                .accessibilityLabel("About Me")
                             
                             VStack(alignment: .leading){
-                                InfoHeader(text:"Username")
+                                InfoHeader(text: "Username")
+                                    .accessibilityLabel("Username")
                                 InfoLabel(text: userAccountViewModel.loggedInUser.username)
+                                    .accessibilityLabel(userAccountViewModel.loggedInUser.username)
                             }
                             
                             VStack(alignment: .leading){
-                                InfoHeader(text:"Name")
+                                InfoHeader(text: "Name")
+                                    .accessibilityLabel("Name")
                                 InfoLabel(text: "\(userAccountViewModel.loggedInUser.firstName) \(userAccountViewModel.loggedInUser.lastName)")
+                                    .accessibilityLabel("\(userAccountViewModel.loggedInUser.firstName) \(userAccountViewModel.loggedInUser.lastName)")
                             }
                             
                             VStack(alignment: .leading){
-                                InfoHeader(text:"Country")
+                                InfoHeader(text: "Country")
+                                    .accessibilityLabel("Country")
                                 InfoLabel(text: userAccountViewModel.loggedInUser.country)
+                                    .accessibilityLabel(userAccountViewModel.loggedInUser.country)
                             }
                             
                             VStack(alignment: .leading){
-                                InfoHeader(text:"Date of Birth")
+                                InfoHeader(text: "Date of Birth")
+                                    .accessibilityLabel("Date of Birth")
                                 InfoLabel(text: userAccountViewModel.loggedInUser.dob)
+                                    .accessibilityLabel(userAccountViewModel.loggedInUser.dob)
                             }
                             
                             VStack(alignment: .leading){
-                                InfoHeader(text:"Email Address")
+                                InfoHeader(text: "Email Address")
+                                    .accessibilityLabel("Email Address")
                                 InfoLabel(text: userAccountViewModel.loggedInUser.email)
+                                    .accessibilityLabel(userAccountViewModel.loggedInUser.email)
                             }
                             
                             /*
@@ -110,6 +119,7 @@ struct UserAccountView: View {
                                     .frame(width: 200, height: 75)
                                     .background(Color.redCustom)
                                     .cornerRadius(20)
+                                    .accessibilityLabel("Logout Button")
                             }
                             Spacer()
                         }
@@ -127,24 +137,24 @@ struct UserAccountView: View {
                                 UserAccountTitleLabel(text: "Progress")
                                     .padding(.top, -geometry.size.width/108)
                                     .padding(.leading, geometry.size.width/24)
+                                    .accessibilityLabel("Progress")
                                  
-                                /// Chapters completed stat
                                 VStack(alignment: .leading){
                                     StatHeader(text: "Chapters Completed")
                                         .padding(.bottom, geometry.size.width/48)
+                                        .accessibilityLabel("Chapters Completed")
                                     ProgressBar(progress: $userAccountViewModel.chapterCompletionProgress, color: Color(UIColor.systemGreen))
                                                         .frame(width: 120, height: 120)
                                                         .padding(.leading, geometry.size.width/12)
-                                    
                                 }
                                 .padding(.leading, geometry.size.width/24)
                                 .padding(.bottom, geometry.size.width/48)
                                 .frame(width: geometry.size.width/2, alignment: .leading)
                                 
-                                /// Chapters in-progress stat
                                 VStack(alignment: .leading){
                                     StatHeader(text: "Chapters In-Progress")
                                         .padding(.bottom, geometry.size.width/48)
+                                        .accessibilityLabel("Chapters In-Progress")
                                     ProgressBar(progress: $userAccountViewModel.chapterInProgressProgress, color: Color(UIColor.systemOrange))
                                                         .frame(width: 120, height: 120)
                                                         .padding(.leading, geometry.size.width/12)
@@ -153,11 +163,10 @@ struct UserAccountView: View {
                                 .padding(.bottom, geometry.size.width/48)
                                 .frame(width: geometry.size.width/2, alignment: .leading)
                                 
-                                
-                                /// Total questions completed stat
                                 VStack(alignment: .leading){
-                                    StatHeader(text: "Questions Completed ")
+                                    StatHeader(text: "Questions Completed")
                                         .padding(.bottom, geometry.size.width/48)
+                                        .accessibilityLabel("Questions Completed")
                                     ProgressBar(progress: $userAccountViewModel.questionCompletedProgress, color: Color(UIColor.systemBlue))
                                                         .frame(width: 120, height: 120)
                                                         .padding(.leading, geometry.size.width/12)

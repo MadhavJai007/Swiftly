@@ -37,6 +37,7 @@ struct InteractiveView: View {
                             chapterContentViewModel.willStartPlaygroundQuestion.toggle()
                         }label:{
                             NavBarIcon(iconName: "xmark")
+                                .accessibilityLabel("Close Button")
                         }
                         .padding(.leading, 30)
                         
@@ -50,6 +51,7 @@ struct InteractiveView: View {
                     HStack{
                         Spacer()
                         InteractiveSubTitle(text: chapterContentViewModel.selectedQuestion.title)
+                            .accessibilityLabel(chapterContentViewModel.selectedQuestion.title)
                         Spacer()
                     }
                     
@@ -73,6 +75,7 @@ struct InteractiveView: View {
                                                     return NSItemProvider(object: String(block.id) as NSString)
                                                 }
                                                 .onDrop(of: [UTType.text], delegate: DragRelocateDelegate(item: block, listData: $chapterContentViewModel.activeBlocks, current: $dragging))
+                                                .accessibilityLabel(block.content)
                                         }
                                         Spacer()
                                     }
@@ -97,18 +100,18 @@ struct InteractiveView: View {
                                         }
                                     }
                                     .listRowBackground(Color.clear)
+                                    .accessibilityLabel(item)
                                 }
                                 .frame(width: UIScreen.screenWidth/1.25, height: 100, alignment: .leading)
                                 .padding(.top, 10)
                                 
                                 Spacer()
-                                
                             }
                         }
                     }.frame(width: geometry.size.width/1.0, height: geometry.size.height/1.50, alignment: .center)
                     
                     ZStack{
-                        Color(UIColor.systemGray4)
+                        Color.blueCustom
                             .ignoresSafeArea()
                         HStack{
                             InteractiveContentText(text: chapterContentViewModel.selectedQuestion.description)
@@ -116,10 +119,11 @@ struct InteractiveView: View {
                                 .padding(.bottom, 20)
                                 .padding(.top, -10)
                                 .minimumScaleFactor(0.5)
+                                .accessibilityLabel(chapterContentViewModel.selectedQuestion.description)
                             
                             Spacer()
                             
-                            VStack(alignment: .leading){
+                            VStack(alignment: .leading) {
                                 
                                 /// Next question button
                                 Button{
@@ -150,7 +154,7 @@ struct InteractiveView: View {
                                             chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index].answers.append(String(answerIndex!))
                                         }
                                          
-                                    }else{
+                                    } else{
                                         
                                         chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index].answers.removeAll()
                                         
@@ -161,12 +165,8 @@ struct InteractiveView: View {
                                             
                                           
                                             chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index].answers.append(String(answerIndex!))
-                                            
-                                            
-                                            
                                         }
-                                        
-                                        
+
 //                                        chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].questionAnswers[index].answers = chapterContentViewModel.mcqUserAnswers
                                     }
                                     
@@ -178,6 +178,14 @@ struct InteractiveView: View {
                                     chapterContentViewModel.playgroundQuestionStatus[index] = "complete"
                                     
                                     chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chaptersViewModel.selectedChapterIndex].questionScores[index] = score
+                                    
+                                    
+                                    // Adding a point
+                                    if chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].chapterScore < chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].totalQuestions &&
+                                        chapterContentViewModel.didUserCompleteQuestion() == true {
+                                        chaptersViewModel.loggedInUser.classroom[0].chapterProgress[chapIndex].chapterScore += 1
+                                    }
+                                    
                                     
                                     /// If it's the last question
                                     if (index == chapterContentViewModel.playgroundQuestionScores.count-1){
@@ -205,6 +213,7 @@ struct InteractiveView: View {
                                     
                                 }label: {
                                     InteractiveSubTitle(text: chapterContentViewModel.chapterButtonText)
+                                        .accessibilityLabel(chapterContentViewModel.chapterButtonText)
                                 }
                                 .frame(width: geometry.size.width/5, height: geometry.size.width/10)
                                 .background(Color.blackCustom)
@@ -225,7 +234,6 @@ struct InteractiveView: View {
                             
                             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                 
-                                
                                 /// Used to either proceed to next question, or finish interactive section
                                 if (chapterContentViewModel.isFinalChapter == false){
                                     
@@ -241,6 +249,7 @@ struct InteractiveView: View {
                         })
                     )
                 }
+                .accessibilityLabel("You Score: \(chapterContentViewModel.userScore)/\(chapterContentViewModel.totalScore)")
             }
         }
         .navigationBarHidden(true)

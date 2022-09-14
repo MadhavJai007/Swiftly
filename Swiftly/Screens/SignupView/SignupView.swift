@@ -47,6 +47,7 @@ struct SignupView: View {
                     // Title
                     TitleLabel(text:"Account Creation")
                         .padding(.bottom, geometry.size.width/42)
+                        .accessibilityLabel("Account Creation")
                     
                     // Username
                     VStack(alignment: .leading){
@@ -61,8 +62,10 @@ struct SignupView: View {
                             .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
                             .background(Color(UIColor.systemGray3))
                             .cornerRadius(15)
+                            .accessibilityLabel("Username")
                         Text("Must be 5-15 characters in length, start with a letter and only contain a _ or . after a letter.")
                             .font(.system(size: 15))
+                            .accessibilityLabel("Must be 5-15 characters in length, start with a letter and only contain a _ or . after a letter.")
                         
                     }
                     .padding(geometry.size.width/42)
@@ -75,7 +78,7 @@ struct SignupView: View {
                            
                             InputFieldLabel(text:"First Name")
                                 .padding(.bottom, -geometry.size.width/120)
-                            
+                                .accessibilityLabel("First Name")
                             
                             TextField("First Name", text : $signupViewModel.newUser.firstName)
                                 .font(.system(size: 30))
@@ -90,6 +93,7 @@ struct SignupView: View {
                            
                             InputFieldLabel(text:"Last Name")
                                 .padding(.bottom, -geometry.size.width/120)
+                                .accessibilityLabel("Last Name")
 
                             TextField("Last Name", text : $signupViewModel.newUser.lastName)
                                 .font(.system(size: 30))
@@ -108,6 +112,7 @@ struct SignupView: View {
                             
                             InputFieldLabel(text:"Country")
                                 .padding(.bottom, -geometry.size.width/120)
+                                .accessibilityLabel("Country")
                             
                             Picker("", selection: $signupViewModel.newUser.country) {
                                             ForEach(countries, id: \.self) {
@@ -126,8 +131,7 @@ struct SignupView: View {
                             
                             InputFieldLabel(text:"Date of Birth")
                                 .padding(.bottom, -geometry.size.width/120)
-                            
-                            
+                                .accessibilityLabel("Date of Birth")
                             
                             TextField("DD/MM/YYYY", text : $signupViewModel.newUser.dob)
                                 .font(.system(size: 30))
@@ -144,6 +148,7 @@ struct SignupView: View {
                         
                         InputFieldLabel(text:"Email Address")
                             .padding(.bottom, -geometry.size.width/120)
+                            .accessibilityLabel("Email Address")
                         
                         TextField("Email", text : $signupViewModel.newUser.email)
                             .font(.system(size: 30))
@@ -162,6 +167,7 @@ struct SignupView: View {
                         
                         InputFieldLabel(text:"Password")
                             .padding(.bottom, -geometry.size.width/120)
+                            .accessibilityLabel("Password")
                         
                         SecureInputView("Password", text : $signupViewModel.newUser.password)
                             .font(.system(size: 30))
@@ -169,8 +175,10 @@ struct SignupView: View {
                             .frame(width: geometry.size.width - 150, height: geometry.size.width/12)
                             .background(Color(UIColor.systemGray3))
                             .cornerRadius(15)
+                        
                         Text("Must be 8-15 characters in length, start with a letter, and contain atleast 1 number")
                             .font(.system(size: 15))
+                            .accessibilityLabel("Must be 8-15 characters in length, start with a letter, and contain atleast 1 number")
                         
                     }
                     .padding(geometry.size.width/42)
@@ -207,24 +215,23 @@ struct SignupView: View {
                         }
                     }label:{
                         CreateAccountButton(text: "Create Account", textColor: .white, backgroundColor: Color.blackCustom)
+                            .accessibilityLabel("Create Account")
                         
                     }
                     .opacity(signupViewModel.isSignUpComplete || monitor.isConnected ? 1 : 0.24)
                     .disabled(!monitor.isConnected || !signupViewModel.isSignUpComplete)
                     .alert(isPresented: $signupViewModel.isBadSignup) {
                         Alert(title: Text("Email Already Taken"), message: Text("\(signupViewModel.newUser.email) is already taken."), dismissButton: .default(Text("OK")))
-
                     }
                     if (!monitor.isConnected){
                         Text("Connect to the internet if you want to create a new account")
                             .font(.system(size: 15))
                             .foregroundColor(.red)
+                            .accessibilityLabel("Connect to the internet if you want to create a new account")
                     }
-                    
                 }
 
                 Spacer()
-                
                     .onAppear(){
                         signupViewModel.chaptersArr = chaptersViewModel.chaptersArr
                         signupViewModel.newUser.email = ""
@@ -233,7 +240,6 @@ struct SignupView: View {
                         signupViewModel.newUser.firstName = ""
                         signupViewModel.newUser.lastName = ""
                         signupViewModel.newUser.dob = ""
-                        
                     }
             }
             .navigationBarHidden(true)
