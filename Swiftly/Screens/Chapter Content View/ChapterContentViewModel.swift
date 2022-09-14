@@ -42,6 +42,7 @@ final class ChapterContentViewModel: ObservableObject {
     var customOpacity = 1.0
     var buttonEnable = false
     
+    
     /// Init variables with basic data
     init(){
         chapter = MockData.sampleChapter
