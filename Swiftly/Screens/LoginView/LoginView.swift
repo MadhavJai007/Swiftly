@@ -12,8 +12,6 @@ struct LoginView: View {
     
     @State var email: String = ""
     @State var password: String = ""
-    @State var shouldNav: Bool = false
-    
     var accountTypeOptions = ["Student", "Teacher"]
     
     /// Environment View Models being passed down the hierarchy
@@ -23,6 +21,7 @@ struct LoginView: View {
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel
     @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel
+    @EnvironmentObject var passwordRecoveryViewModel: PasswordRecoveryViewModel
 
     
     var body: some View {
@@ -152,7 +151,7 @@ struct LoginView: View {
                     ///password recovery button
                         Button{
                             print("Button pressed")
-                            self.shouldNav.toggle()
+                            passwordRecoveryViewModel.toggleNow.toggle()
                         }label: {
                             ButtonLabelLarge(text: "Forgot Password?", textColor: .white, backgroundColor: Color(UIColor.systemGray2))
                         }
@@ -160,8 +159,9 @@ struct LoginView: View {
                                         .environmentObject(loginViewModel)
                                         .environmentObject(signupViewModel)
                                         .environmentObject(chaptersViewModel)
-                                        .environmentObject(chapterContentViewModel),
-                                           isActive: $shouldNav) {EmptyView()}
+                                        .environmentObject(chapterContentViewModel)
+                                        .environmentObject(passwordRecoveryViewModel),
+                                           isActive: $passwordRecoveryViewModel.toggleNow) {EmptyView()}
                     }
                 }
                 .padding(.bottom, 250)

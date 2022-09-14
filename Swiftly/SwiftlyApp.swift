@@ -21,6 +21,7 @@ struct SwiftlyApp: App {
     @StateObject var userAccountViewModel = UserAccountViewModel()
     @StateObject var leaderboardViewModel = LeaderboardViewModel()
     @StateObject var chatbotViewModel = ChatbotViewModel()
+    @StateObject var passwordRecoveryViewModel = PasswordRecoveryViewModel()
     
     
     init(){
@@ -39,6 +40,7 @@ struct SwiftlyApp: App {
                 .environmentObject(userAccountViewModel)
                 .environmentObject(leaderboardViewModel)
                 .environmentObject(chatbotViewModel)
+                .environmentObject(passwordRecoveryViewModel)
         }
     }
 }
