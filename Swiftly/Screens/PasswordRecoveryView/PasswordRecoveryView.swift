@@ -40,7 +40,7 @@ struct PasswordRecoveryView: View {
                     .padding(.bottom, geometry.size.width/24)
                     
                     // Title
-                    TitleLabel(text:"Password Recovery")
+                    TitleLabel(text:"Password Recovery Test Commit")
                         .padding(.bottom, geometry.size.width/42)
                     
                     // Username
