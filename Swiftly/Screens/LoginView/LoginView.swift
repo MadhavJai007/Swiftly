@@ -13,6 +13,8 @@ struct LoginView: View {
     @State var email: String = ""
     @State var password: String = ""
     
+    
+    //test change for merging
     var accountTypeOptions = ["Student", "Teacher"]
     
     /// Environment View Models being passed down the hierarchy
