@@ -12,9 +12,6 @@ struct LoginView: View {
     
     @State var email: String = ""
     @State var password: String = ""
-    
-    
-    //test change for merging
     var accountTypeOptions = ["Student", "Teacher"]
     
     /// Environment View Models being passed down the hierarchy
@@ -24,6 +21,8 @@ struct LoginView: View {
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel
     @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel
+    @EnvironmentObject var passwordRecoveryViewModel: PasswordRecoveryViewModel
+
     
     var body: some View {
         NavigationView {
@@ -71,7 +70,7 @@ struct LoginView: View {
                         if (loginViewModel.attemptingLogin == false){
                             loginViewModel.login(email: email, password: password)
 
-                            /// If the login is successful, download chapter content 
+                            /// If the login is successful, download chapter content
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1.25) {
                                 
                                 if (loginViewModel.isSuccessful) {
@@ -153,8 +152,28 @@ struct LoginView: View {
                             .accessibilityLabel("Connect to the internet before attempting to login")
                     }
                     Spacer()
+                    
+                    
+                    VStack(spacing: 20){
+                        
+                    ///password recovery button
+                        Button{
+                            print("Button pressed")
+                            passwordRecoveryViewModel.toggleNow.toggle()
+                        }label: {
+                            ButtonLabelLarge(text: "Forgot Password?", textColor: .white, backgroundColor: Color(UIColor.systemGray2))
+                        }
+                            NavigationLink(destination: PasswordRecoveryView()
+                                        .environmentObject(loginViewModel)
+                                        .environmentObject(signupViewModel)
+                                        .environmentObject(chaptersViewModel)
+                                        .environmentObject(chapterContentViewModel)
+                                        .environmentObject(passwordRecoveryViewModel),
+                                           isActive: $passwordRecoveryViewModel.toggleNow) {EmptyView()}
+                    }
                 }
                 .padding(.bottom, 250)
+                
                 
                 /// Shows progress loader while chapters are being downloaded
                 if (loginViewModel.isSuccessful == true){
