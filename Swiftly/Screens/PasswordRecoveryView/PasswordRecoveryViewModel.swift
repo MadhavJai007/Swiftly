@@ -24,7 +24,7 @@ final class PasswordRecoveryViewModel: ObservableObject {
     
     //boolean to ensure the email being used to reset password exists
     @Published var emailExists: Bool = false
-    
+    @Published var alertInfo: AlertModel?
     //db variable for firestore information
     private var db = Firestore.firestore()
     
@@ -87,13 +87,15 @@ final class PasswordRecoveryViewModel: ObservableObject {
         Auth.auth().sendPasswordReset(withEmail: email){ error in
             if(!self.emailExists){
                 print("Email does not exist, not sending reset")
+                self.alertInfo = AlertModel(id: .emailNotFoundInCollection, title: "Email Not Found", message: "Please enter valid email.")
                 return
             }
             else{
                 print("Email sent successfully")
+                self.alertInfo = AlertModel(id: .emailNotFoundInCollection, title: "Email Successfully Sent", message: "Please check email to reset password.")
             }
             
         }
     }
-    
 }
+    

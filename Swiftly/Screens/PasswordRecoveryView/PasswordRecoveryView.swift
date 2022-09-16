@@ -40,8 +40,14 @@ struct PasswordRecoveryView: View {
                     .padding(.bottom, geometry.size.width/24)
                     
                     // Title
-                    TitleLabel(text:"Password Recovery")
-                        .padding(.bottom, geometry.size.width/42)
+                    
+                    VStack{
+                        TitleLabel(text:"Password Recovery")
+                            .accessibilityLabel("Password Recovery")
+                    }
+                    .frame(alignment: .topLeading)
+                    
+                    
                     
                     // Username
                     VStack(alignment: .leading){
@@ -69,6 +75,9 @@ struct PasswordRecoveryView: View {
                         }label: {
                             ButtonLabelLarge(text: "Reset Password", textColor: .white, backgroundColor: Color(UIColor.systemGray2))
                         }
+                        .alert(item: $passwordRecoveryViewModel.alertInfo, content: { info in
+                            Alert(title: Text(info.title), message: Text(info.message))
+                        })
                         .opacity(passwordRecoveryViewModel.isEmailValid() || monitor.isConnected ? 1 : 0.24)
                         .disabled(!monitor.isConnected || !passwordRecoveryViewModel.isEmailValid())
                     }
@@ -80,9 +89,9 @@ struct PasswordRecoveryView: View {
                     }
                     
                 }
+                .padding(.bottom, geometry.size.height - 250)
 
                 Spacer()
-                
                     .onAppear(){
                         self.email = ""
  
