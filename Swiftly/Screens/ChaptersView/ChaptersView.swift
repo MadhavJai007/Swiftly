@@ -41,7 +41,7 @@ struct ChaptersView: View {
                     }.padding(.top, geometry.size.width/18)
                     
                     VStack(alignment: .leading){
-                        TitleLabel(text:"All Chapters")
+                        TitleLabel(text:"All Chapters (Adding Advertisements)")
                             .accessibilityLabel("All Chapters")
                         
                         HStack{
