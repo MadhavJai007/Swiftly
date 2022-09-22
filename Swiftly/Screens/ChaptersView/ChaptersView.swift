@@ -22,6 +22,8 @@ struct ChaptersView: View {
         GADMobileAds.sharedInstance().start(completionHandler: nil)
     }
     
+    
+    
     var body: some View {
         
         GeometryReader { geometry in
@@ -46,7 +48,9 @@ struct ChaptersView: View {
                     }.padding(.top, geometry.size.width/18)
                     
                     VStack(alignment: .leading){
+                        //advertisement
                         BannerAd(unitID:"ca-app-pub-3940256099942544/2934735716")
+                        
                         TitleLabel(text:"All Chapters (Adding Advertisements)")
                             .accessibilityLabel("All Chapters")
                         

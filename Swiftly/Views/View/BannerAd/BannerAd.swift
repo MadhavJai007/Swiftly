@@ -14,6 +14,8 @@ struct BannerAd: UIViewRepresentable{
     
     var unitID: String
     
+    
+    
     func makeCoordinator() -> Coordinator {
         return Coordinator()
     }
@@ -24,7 +26,10 @@ struct BannerAd: UIViewRepresentable{
         adView.adUnitID = unitID
         adView.rootViewController = UIApplication.shared.getRootViewController()
         adView.delegate = context.coordinator
-        adView.load(GADRequest())
+        let request = GADRequest()
+        request.scene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        adView.load(request)
+        
         
         return adView
     }
@@ -34,6 +39,8 @@ struct BannerAd: UIViewRepresentable{
     }
     
     class Coordinator: NSObject, GADBannerViewDelegate{
+        
+        
         func bannerViewDidReceiveAd(_ bannerView: GADBannerView) {
           print("bannerViewDidReceiveAd")
         }
@@ -63,6 +70,8 @@ struct BannerAd: UIViewRepresentable{
 
 extension UIApplication{
     func getRootViewController()->UIViewController{
+        
+        
         
         guard let screen = self.connectedScenes.first as? UIWindowScene else{
             return .init()
