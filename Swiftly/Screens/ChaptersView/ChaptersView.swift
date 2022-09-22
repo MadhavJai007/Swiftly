@@ -4,6 +4,7 @@
 //  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import SwiftUI
+import GoogleMobileAds
 
 struct ChaptersView: View {
     
@@ -16,6 +17,12 @@ struct ChaptersView: View {
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel
     @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel
     @EnvironmentObject var chatbotViewModel: ChatbotViewModel
+    
+    init(){
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
+    }
+    
+    
     
     var body: some View {
         
@@ -41,7 +48,10 @@ struct ChaptersView: View {
                     }.padding(.top, geometry.size.width/18)
                     
                     VStack(alignment: .leading){
-                        TitleLabel(text:"All Chapters")
+                        //advertisement
+                        BannerAd(unitID:"ca-app-pub-3940256099942544/2934735716")
+                        
+                        TitleLabel(text:"All Chapters (Adding Advertisements)")
                             .accessibilityLabel("All Chapters")
                         
                         HStack{
@@ -54,6 +64,8 @@ struct ChaptersView: View {
                     .padding(.leading, 30)
                     
                     Spacer()
+                    
+                    
                     
                     /// ScrollView containing all chapters
                     ScrollView {
