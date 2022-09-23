@@ -19,6 +19,7 @@ final class ChaptersViewModel: ObservableObject {
     @Published var classroomCode: String = ""
     @Published var jumpToPlayground = false
     @Published var loadingInfo = "Processing..."
+    @Published var isShowingLeaderboardView = false
     
     var userNeedsUpdate: Bool = false
     var deletePlayground: Bool = false

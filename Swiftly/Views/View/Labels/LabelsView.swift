@@ -181,7 +181,7 @@ struct LeaderboardTableHeader: View {
     var text: String
     var body: some View {
         Text(text)
-            .font(.system(size: 30, weight: .semibold))
+            .font(.system(size: 20, weight: .semibold))
             .foregroundColor(Color.blackCustom)
     }
 }
@@ -192,8 +192,7 @@ struct LeaderboardSubTitle: View {
     var text: String
     var body: some View {
         Text(text)
-            .font(.system(size: 30))
-            .foregroundColor(Color.white)
+            .font(.system(size: 30, weight: .light))
     }
 }
 
@@ -211,5 +210,17 @@ struct NextChaptButton: View {
             .frame(width: 400, height: 75)
             .background(backgroundColor)
             .cornerRadius(15)
+    }
+}
+
+
+/// Label 16: Leaderboard Entry  Label
+/// Description: Largest button label, used for sign up button, login button, etc.
+struct LeaderboardEntryLabel: View {
+    var text: String
+    var body: some View {
+        Text(text)
+            .font(.system(size: 20, weight: .light))
+            .foregroundColor(Color.black)
     }
 }

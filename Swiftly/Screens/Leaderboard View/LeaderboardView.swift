@@ -7,22 +7,29 @@ import SwiftUI
 
 struct LeaderboardView: View {
     
+    init() {
+        UITableView.appearance().separatorStyle = .none
+        UITableView.appearance().backgroundColor = UIColor(Color.white)
+    }
+    
     /// Environment variables
     @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel /// --> view model for this view
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     
+    @Environment(\.colorScheme) var colorScheme
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack{
-                Color.darkGrayCustom
+                Color(UIColor.systemGray6)
                     .ignoresSafeArea()
                 
                 VStack(alignment: .leading, spacing: 15){
                     
                     HStack {
                         Button{
-                            chaptersViewModel.didSelectLeaderboard.toggle()
+                            chaptersViewModel.isShowingLeaderboardView.toggle()
                         }label:{
                             NavBarIcon(iconName: "chevron.backward")
                         }
@@ -32,47 +39,58 @@ struct LeaderboardView: View {
                     .padding(.top, geometry.size.width/16)
                     
                     HStack{
-                        
                         TitleLabel(text:"Leaderboard")
                             .padding(.leading,  geometry.size.width/24)
-                        ImageViewLarge(imageName: "chart.bar.xaxis")
+                            .foregroundColor(colorScheme == .dark ? Color.white: Color.black)
 
                     }
                     
-                    LeaderboardSubTitle(text: "Classroom: Global")
-                        .padding(.leading,  geometry.size.width/24)
-                    
                     HStack(spacing: 15){
-                        
-                        /// Todo: Uncomment code because it uses chapter passed to it from viewmodel. It's commented out for preview purposes.
-                        //                        LeaderboardSubTitle(text:"Chapter:  \(leaderboardViewModel.selectedChapter.chapterNum)")
-                        LeaderboardSubTitle(text:"Chapter:  1")
-                        
-                        Button{
-                            print("tapped")
-                        }label: {
-                            Image(systemName: "chevron.down")
-                                .resizable()
-                                .foregroundColor(.white)
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 25, height: 25)
-                        }
+                        LeaderboardSubTitle(text:"Swiftly Userbase Progress")
+                            .foregroundColor(colorScheme == .dark ? Color.white: Color.black)
                     }
                     .padding(.leading,  geometry.size.width/24)
                     
                     VStack{
                         ZStack{
-                            Color.whiteCustom
+                            
+                            Color.white
                             
                             VStack{
                                 HStack(spacing: geometry.size.width/8){
                                     LeaderboardTableHeader(text: "Username")
-                                    LeaderboardTableHeader(text: "Chapter Time")
-                                    LeaderboardTableHeader(text: "Test Score")
+                                        .padding(.trailing, 20)
+                                    LeaderboardTableHeader(text: "Country")
+                                    LeaderboardTableHeader(text: "Total Score")
+                                        .padding(.leading, 15)
                                 }
                                 .frame(width: geometry.size.width/1.10)
                                 .padding(.top, 25)
                                 Spacer()
+                                
+                                List {
+                                    
+                                    ForEach(leaderboardViewModel.userLeaderboardData, id: \.id) { user in
+                                        
+
+                                        let formattedFloat = String(format: "%.1f", user.totalScore)
+                                        
+                                        HStack(){
+                                            LeaderboardEntryLabel(text: "\(user.username)")
+                                                .frame(width: geometry.size.width/4, height: 30, alignment: .center)
+                                            LeaderboardEntryLabel(text: leaderboardViewModel.getCountryFlag(country: user.country))
+                                                .frame(width: geometry.size.width/4, height: 30, alignment: .center)
+                                                .padding(.trailing, 5)
+                                            LeaderboardEntryLabel(text: "\(formattedFloat)%")
+                                                .frame(width: geometry.size.width/6, height: 30, alignment: .center)
+                                                .padding(.trailing, geometry.size.width/8)
+                                                .padding(.leading, geometry.size.width/36)
+                                        }
+                                        .frame(width: geometry.size.width/1.10)
+                                        .listRowBackground(Color.clear)
+                                    }
+                                    
+                                }
                             }
                         }
                         .frame(width: geometry.size.width/1.10, height: geometry.size.height/1.35, alignment: .center)
@@ -83,8 +101,35 @@ struct LeaderboardView: View {
                 }.frame(width: geometry.size.width, alignment: .leading)
                 
                 Spacer()
+                
+                if (leaderboardViewModel.isDataLoading == true){
+                    
+                    ZStack {
+                        Color.blackCustom
+                        
+                        VStack{
+                            ProgressView {
+                                SpinnerInfoLabel(text: "Getting Data")
+                            }
+                            .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
+                        }
+                    }
+                    .frame(width: 175, height: 125)
+                    .cornerRadius(15)
+                    .animation(.spring())
+                }
             }
             .navigationBarHidden(true)
+        }
+        .onAppear {
+            leaderboardViewModel.startDataRetrieval()
+            leaderboardViewModel.isDataLoading = true
+        }
+        
+        .onDisappear {
+            leaderboardViewModel.tempUserLeaderboard.removeAll()
+            leaderboardViewModel.userLeaderboardData.removeAll()
+            leaderboardViewModel.isDataLoading = false
         }
     }
 }
