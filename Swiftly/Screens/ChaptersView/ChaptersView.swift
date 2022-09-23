@@ -43,6 +43,9 @@ struct ChaptersView: View {
                     }.padding(.top, geometry.size.width/18)
                     
                     VStack(alignment: .leading){
+                        
+                        BannerAd(unitID:"ca-app-pub-3940256099942544/2934735716")
+                        
                         TitleLabel(text:"All Chapters")
                             .accessibilityLabel("All Chapters")
                         
