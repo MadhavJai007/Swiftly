@@ -51,7 +51,7 @@ struct ChaptersView: View {
                         //advertisement
                         BannerAd(unitID:"ca-app-pub-3940256099942544/2934735716")
                         
-                        TitleLabel(text:"All Chapters (Adding Advertisements)")
+                        TitleLabel(text:"All Chapters")
                             .accessibilityLabel("All Chapters")
                         
                         HStack{
