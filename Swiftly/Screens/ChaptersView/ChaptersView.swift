@@ -4,6 +4,7 @@
 //  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import SwiftUI
+import GoogleMobileAds
 
 struct ChaptersView: View {
     
@@ -16,6 +17,10 @@ struct ChaptersView: View {
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel
     @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel
     @EnvironmentObject var chatbotViewModel: ChatbotViewModel
+    
+    init(){
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
+    }
     
     @Environment(\.colorScheme) var colorScheme
     
