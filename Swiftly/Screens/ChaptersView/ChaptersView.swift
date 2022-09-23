@@ -22,7 +22,7 @@ struct ChaptersView: View {
         GADMobileAds.sharedInstance().start(completionHandler: nil)
     }
     
-    
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         
@@ -48,24 +48,40 @@ struct ChaptersView: View {
                     }.padding(.top, geometry.size.width/18)
                     
                     VStack(alignment: .leading){
-                        //advertisement
+                        
                         BannerAd(unitID:"ca-app-pub-3940256099942544/2934735716")
                         
                         TitleLabel(text:"All Chapters")
                             .accessibilityLabel("All Chapters")
                         
-                        HStack{
-                            InfoLabelMedium(text:"Showing all available chapters")
-                                .accessibilityLabel("Showing all available chapters")
+//                        Button {
+//                            userAccountViewModel.clearStats()
+//                            userAccountViewModel.getUserStats()
+//                            chaptersViewModel.isShowingAccountView.toggle()
+//                        }label: {
+//                            SpecialNavBarIcon(text: "person.crop.circle")
+//                                .accessibilityLabel("View Account Button")
+//                        }
+                        
+                        Button {
+                            chaptersViewModel.isShowingLeaderboardView.toggle()
+                        }label: {
+                            InfoLabelMedium(text: "View Leaderboard")
+                                .foregroundColor(colorScheme == .dark ? Color.white: Color.black)
+                                .accessibilityLabel("View Leaderboard")
                         }
-                        .padding(.top, -35)
                     }
                     .frame(width: geometry.size.width, alignment: .leading)
                     .padding(.leading, 30)
                     
+                    /// Nav link to accessing chapter content
+                    NavigationLink(destination: LeaderboardView()
+                                    .environmentObject(leaderboardViewModel)
+                                    .environmentObject(userAccountViewModel)
+                                    .environmentObject(chaptersViewModel),
+                                   isActive: $chaptersViewModel.isShowingLeaderboardView) {EmptyView()}
+                    
                     Spacer()
-                    
-                    
                     
                     /// ScrollView containing all chapters
                     ScrollView {
@@ -121,6 +137,7 @@ struct ChaptersView: View {
         .onAppear {
             
             userAccountViewModel.loggedInUser = chaptersViewModel.loggedInUser
+            leaderboardViewModel.loggedInUser = chaptersViewModel.loggedInUser
             
             /// If the user is going to logout
             if (chaptersViewModel.logoutIntent == true){
@@ -175,7 +192,7 @@ struct ChaptersView: View {
                 loginViewModel.isLoading = false
                 
                 
-            }    
+            }
         }
     }
 }
