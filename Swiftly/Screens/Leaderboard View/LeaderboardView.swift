@@ -14,7 +14,6 @@ struct LeaderboardView: View {
     
     /// Environment variables
     @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel /// --> view model for this view
-    @EnvironmentObject var userAccountViewModel: UserAccountViewModel
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     
     @Environment(\.colorScheme) var colorScheme
