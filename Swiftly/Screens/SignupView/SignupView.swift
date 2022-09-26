@@ -14,6 +14,8 @@ struct SignupView: View {
     var countries = ["Canada", "United States", "United Kingdom", "Australia"]
     @State private var selectedType = "Student"
     
+    @State private var doesUserNameContainProfanity = false
+    
     @EnvironmentObject var loginViewModel: LoginViewModel
     @EnvironmentObject var signupViewModel: SignupViewModel /// view model for this view
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
@@ -205,15 +207,19 @@ struct SignupView: View {
                     
                     // Create account button
                     Button{
-                        signupViewModel.save(accountType: selectedType)
-
-                        let timer2 = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [self] (timer) in
-                            if(signupViewModel.emailNotTaken == true){
-                                loginViewModel.isShowingSignupView.toggle()
+                        
+                        // If the username has a bad word in it
+                        if signupViewModel.validateUsername(username: signupViewModel.newUser.username) {
+                            doesUserNameContainProfanity.toggle()
+                        } else {
+                            signupViewModel.save(accountType: selectedType)
+                            let timer2 = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [self] (timer) in
+                                if(signupViewModel.emailNotTaken == true){
+                                    loginViewModel.isShowingSignupView.toggle()
+                                }
                             }
-                                
                         }
-                    }label:{
+                    } label:{
                         CreateAccountButton(text: "Create Account", textColor: .white, backgroundColor: Color.blackCustom)
                             .accessibilityLabel("Create Account")
                         
@@ -229,6 +235,9 @@ struct SignupView: View {
                             .foregroundColor(.red)
                             .accessibilityLabel("Connect to the internet if you want to create a new account")
                     }
+                }
+                .alert(isPresented: $doesUserNameContainProfanity) {
+                    Alert(title: Text("Bad Word Detected!"), message: Text("Please enter a username with no profanity."), dismissButton: .default(Text("OK")))
                 }
 
                 Spacer()

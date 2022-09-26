@@ -43,6 +43,9 @@ final class SignupViewModel: ObservableObject {
     @Published var chaptersArr = [Chapter]()
     
     
+    let listOfBadWords = ["crap", "fuck", "shit", "ass", "penis", "dick", "nigger", "nigga", "cunt", "whore", "vagina", "boobs", "tits", "fucker", "slut", "motherfucker", "cock", "dildo", "bitch"]
+    
+    
     
     //Validation functions
     
@@ -118,6 +121,10 @@ final class SignupViewModel: ObservableObject {
             return false
         }
         return true
+    }
+    
+    func validateUsername(username: String) -> Bool {
+        return listOfBadWords.reduce(false) { $0 || username.contains($1.lowercased()) }
     }
     
     ///function to check if email already exists in Swiftly database
