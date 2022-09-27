@@ -43,7 +43,7 @@ final class SignupViewModel: ObservableObject {
     @Published var chaptersArr = [Chapter]()
     
     
-    let listOfBadWords = ["crap", "fuck", "shit", "ass", "penis", "dick", "nigger", "nigga", "cunt", "whore", "vagina", "boobs", "tits", "fucker", "slut", "motherfucker", "cock", "dildo", "bitch"]
+    let listOfBadWords = ["crap", "fuck", "shit", "ass", "penis", "dick","cunt", "whore", "vagina", "boobs", "tits", "fucker", "slut", "motherfucker", "cock", "dildo", "bitch"]
     
     
     
