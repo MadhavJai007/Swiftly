@@ -11,7 +11,7 @@ struct SignupView: View {
     
     
     var userTypes = ["Student", "Teacher"]
-    var countries = ["Canada", "United States", "United Kingdom", "Australia"]
+    var countries = ["Canada", "United States", "United Kingdom", "Australia", "Ireland", "Scotland", "New Zealand"]
     @State private var selectedType = "Student"
     
     @State private var doesUserNameContainProfanity = false

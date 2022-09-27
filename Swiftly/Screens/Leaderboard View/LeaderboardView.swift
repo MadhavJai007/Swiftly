@@ -126,7 +126,6 @@ struct LeaderboardView: View {
         }
         
         .onDisappear {
-            leaderboardViewModel.tempUserLeaderboard.removeAll()
             leaderboardViewModel.userLeaderboardData.removeAll()
             leaderboardViewModel.isDataLoading = false
         }
