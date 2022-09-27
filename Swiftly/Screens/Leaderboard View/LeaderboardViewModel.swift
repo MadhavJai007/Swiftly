@@ -16,6 +16,9 @@ final class LeaderboardViewModel: ObservableObject {
     
     @Published var userLeaderboardData = [UserLeaderboardData]()
     @Published var isDataLoading: Bool = false
+    @Published var filters = [""]
+    
+    var selectedFilter = "None"
     
     var loggedInUser = User(firstName: "",
                             lastName: "",
@@ -26,9 +29,12 @@ final class LeaderboardViewModel: ObservableObject {
                             country: "",
                             classroom: [])
     
-    func startDataRetrieval(){
+    
+    func startDataRetrieval(filterOne: String? = nil){
         
-        retrieveBasicUserData { downloadStatus, userDataArray in
+        userLeaderboardData.removeAll()
+        
+        retrieveBasicUserData(filterOne: filterOne) { downloadStatus, userDataArray in
             
             switch downloadStatus {
                 
@@ -57,7 +63,8 @@ final class LeaderboardViewModel: ObservableObject {
         }
     }
    
-    func retrieveBasicUserData(completion: @escaping(DownloadStatus, [UserLeaderboardData]) -> Void) {
+    func retrieveBasicUserData(filterOne: String? = nil,
+                               completion: @escaping(DownloadStatus, [UserLeaderboardData]) -> Void) {
         
         var downloadedUserData = [UserLeaderboardData]()
     
@@ -75,7 +82,8 @@ final class LeaderboardViewModel: ObservableObject {
                     let username = document.data()["username"]! as! String
                     let country = document.data()["country"]! as! String
                     
-                    self.downloadUserScoreData(documentId: document.documentID) { downloadStatus, testScore, totalScoreMax  in
+                    self.downloadUserScoreData(filterOne: filterOne,
+                                               documentId: document.documentID) { downloadStatus, testScore, totalScoreMax  in
                         
                         switch downloadStatus {
                             
@@ -106,7 +114,9 @@ final class LeaderboardViewModel: ObservableObject {
         }
     }
     
-    func downloadUserScoreData(documentId: String, completion: @escaping(DownloadStatus, Int, Int) -> Void) {
+    func downloadUserScoreData(filterOne: String? = nil,
+                               documentId: String,
+                               completion: @escaping(DownloadStatus, Int, Int) -> Void) {
                     
         let db = Firestore.firestore()
         
@@ -122,8 +132,16 @@ final class LeaderboardViewModel: ObservableObject {
                 var count = 0
                 
                 for document in querySnapshot!.documents {
-                    testScore += document.data()["total_question_score"]! as! Int
-                    totalScoreMax += document.data()["total_questions"]! as! Int
+                    
+                    if filterOne == nil {
+                        testScore += document.data()["total_question_score"]! as! Int
+                        totalScoreMax += document.data()["total_questions"]! as! Int
+                    } else {
+                        if filterOne == "Chapter \(count+1)" {
+                            testScore += document.data()["total_question_score"]! as! Int
+                            totalScoreMax += document.data()["total_questions"]! as! Int
+                        }
+                    }
                     
                     count += 1
                     

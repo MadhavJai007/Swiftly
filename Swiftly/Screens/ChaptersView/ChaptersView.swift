@@ -138,14 +138,21 @@ struct ChaptersView: View {
             
             userAccountViewModel.loggedInUser = chaptersViewModel.loggedInUser
             leaderboardViewModel.loggedInUser = chaptersViewModel.loggedInUser
-            
-            /// If the user is going to logout
+
             if (chaptersViewModel.logoutIntent == true){
                 chaptersViewModel.logoutIntent = false
                 chaptersViewModel.isUserLoggedIn = false
-            }else{
-//                chaptersViewModel.saveUserProgress()
+            } else {
+                
                 chaptersViewModel.retrieveUserbaseCompletion()
+                leaderboardViewModel.filters.removeAll()
+                
+                leaderboardViewModel.filters.append("None")
+                leaderboardViewModel.selectedFilter = "None"
+                
+                for chapter in self.chaptersViewModel.chaptersArr {
+                    leaderboardViewModel.filters.append("Chapter \(chapter.chapterNum)")
+                }
             }
             
             print(chaptersViewModel.loggedInUser.classroom[0].chapterProgress)
