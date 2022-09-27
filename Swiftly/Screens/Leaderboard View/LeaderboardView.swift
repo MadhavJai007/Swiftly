@@ -48,13 +48,14 @@ struct LeaderboardView: View {
                     
                     HStack {
                         InputFieldLabel(text: "Filter by:")
-                            .padding(.bottom, -geometry.size.width/120)
+                            .padding(.bottom, geometry.size.width/122)
                             .accessibilityLabel("Filter By Picker")
                     
                         Picker("", selection: $leaderboardViewModel.selectedFilter) {
                             ForEach(leaderboardViewModel.filters, id: \.self) {
                                 Text($0)
-                                    .font(.system(size: 20, weight: .regular, design: .default))
+                                    .font(.system(size: 25))
+                                    .foregroundColor(Color.black)
                             }
                         }
                         .frame(width: 100, height: 40)
@@ -98,7 +99,6 @@ struct LeaderboardView: View {
                                 List {
                                     
                                     ForEach(leaderboardViewModel.userLeaderboardData, id: \.id) { user in
-                                        
 
                                         let formattedFloat = String(format: "%.1f", user.totalScore)
                                         
@@ -114,8 +114,9 @@ struct LeaderboardView: View {
                                                 .padding(.leading, geometry.size.width/36)
                                         }
                                         .frame(width: geometry.size.width/1.10)
-                                        .listRowBackground(Color.clear)
-                                    } 
+                                        .cornerRadius(5)
+                                        .listRowBackground(user.username == leaderboardViewModel.loggedInUser.username ? Color.lightBlueCustom : Color.clear)
+                                    }
                                 }
                             }
                         }
