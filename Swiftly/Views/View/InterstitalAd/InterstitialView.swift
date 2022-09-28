@@ -19,6 +19,8 @@ final class Interstitial:NSObject, GADFullScreenContentDelegate {
 
     func loadInterstitial(){
         let request = GADRequest()
+        request.scene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        
         GADInterstitialAd.load(withAdUnitID:"ca-app-pub-3940256099942544/4411468910",
                                request: request,
                                completionHandler: { [self] ad, error in

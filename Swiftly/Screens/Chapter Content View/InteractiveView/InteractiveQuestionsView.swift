@@ -17,8 +17,16 @@ struct InteractiveQuestionsView: View {
     var customOpacity = 1.0
     var buttonEnable = false
     
+    
+    private var fullScreenAd: Interstitial?
+    
+    init() {
+        fullScreenAd = Interstitial()
+    }
+    
     /// View
     var body: some View {
+
         GeometryReader { geometry in
             ZStack{
                 
@@ -258,8 +266,8 @@ struct InteractiveQuestionsView: View {
                                         .accessibilityLabel("Start Next Chapter Button")
                                     }else{
                                         Button{
-                                            //implement pop up ad here
-                                            
+                                            print("Show ad")
+                                             self.fullScreenAd?.showAd()
                                             chaptersViewModel.willStartNextChapter = true
                                             chapterContentViewModel.willStartInteractiveSection.toggle()
                                             chaptersViewModel.didStartChapter.toggle()
