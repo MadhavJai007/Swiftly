@@ -255,6 +255,8 @@ struct InteractiveQuestionsView: View {
                                         .accessibilityLabel("Start Next Chapter Button")
                                     }else{
                                         Button{
+                                            //implement pop up ad here
+                                            
                                             chaptersViewModel.willStartNextChapter = true
                                             chapterContentViewModel.willStartInteractiveSection.toggle()
                                             chaptersViewModel.didStartChapter.toggle()
