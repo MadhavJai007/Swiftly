@@ -146,13 +146,14 @@ struct ChaptersView: View {
             } else {
                 
                 chaptersViewModel.retrieveUserbaseCompletion()
-                leaderboardViewModel.filters.removeAll()
+                leaderboardViewModel.chapterFilters.removeAll()
                 
-                leaderboardViewModel.filters.append("None")
+                leaderboardViewModel.chapterFilters.append("None")
                 leaderboardViewModel.selectedFilter = "None"
+                leaderboardViewModel.selectedCountryFilter = "None"
                 
                 for chapter in self.chaptersViewModel.chaptersArr {
-                    leaderboardViewModel.filters.append("Chapter \(chapter.chapterNum)")
+                    leaderboardViewModel.chapterFilters.append("Chapter \(chapter.chapterNum)")
                 }
             }
             

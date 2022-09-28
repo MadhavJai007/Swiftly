@@ -52,7 +52,18 @@ struct LeaderboardView: View {
                             .accessibilityLabel("Filter By Picker")
                     
                         Picker("", selection: $leaderboardViewModel.selectedFilter) {
-                            ForEach(leaderboardViewModel.filters, id: \.self) {
+                            ForEach(leaderboardViewModel.chapterFilters, id: \.self) {
+                                Text($0)
+                                    .font(.system(size: 25))
+                                    .foregroundColor(Color.black)
+                            }
+                        }
+                        .frame(width: 100, height: 40)
+                        .background(Color(UIColor.systemGray3))
+                        .cornerRadius(10)
+                        
+                        Picker("", selection: $leaderboardViewModel.selectedCountryFilter) {
+                            ForEach(leaderboardViewModel.countryFilters, id: \.self) {
                                 Text($0)
                                     .font(.system(size: 25))
                                     .foregroundColor(Color.black)
@@ -64,7 +75,9 @@ struct LeaderboardView: View {
                         
                         
                         Button{
-                            leaderboardViewModel.startDataRetrieval(filterOne: leaderboardViewModel.selectedFilter == "None" ? nil : leaderboardViewModel.selectedFilter)
+                            leaderboardViewModel.startDataRetrieval(filterOne: leaderboardViewModel.selectedFilter == "None" ? nil :
+                                                                        leaderboardViewModel.selectedFilter,
+                                                                    filterTwo: leaderboardViewModel.selectedCountryFilter == "None" ? nil : leaderboardViewModel.selectedCountryFilter)
                             leaderboardViewModel.isDataLoading = true
                         } label: {
                             Text("Apply")

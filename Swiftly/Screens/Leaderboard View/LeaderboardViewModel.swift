@@ -16,8 +16,11 @@ final class LeaderboardViewModel: ObservableObject {
     
     @Published var userLeaderboardData = [UserLeaderboardData]()
     @Published var isDataLoading: Bool = false
-    @Published var filters = [""]
+    @Published var chapterFilters = [""]
     
+    var countryFilters = ["None", "🇨🇦", "🇦🇺", "🇬🇧", "🇺🇸", "🇮🇪", "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "🇳🇿"]
+    
+    var selectedCountryFilter = "None"
     var selectedFilter = "None"
     
     var loggedInUser = User(firstName: "",
@@ -30,11 +33,13 @@ final class LeaderboardViewModel: ObservableObject {
                             classroom: [])
     
     
-    func startDataRetrieval(filterOne: String? = nil){
+    func startDataRetrieval(filterOne: String? = nil, filterTwo: String? = nil){
         
         userLeaderboardData.removeAll()
         
-        retrieveBasicUserData(filterOne: filterOne) { downloadStatus, userDataArray in
+        let countryFilter = getCountryStringFromFlag(country: filterTwo ?? "")
+        
+        retrieveBasicUserData(filterOne: filterOne, filterTwo: countryFilter) { downloadStatus, userDataArray in
             
             switch downloadStatus {
                 
@@ -64,6 +69,7 @@ final class LeaderboardViewModel: ObservableObject {
     }
    
     func retrieveBasicUserData(filterOne: String? = nil,
+                               filterTwo: String? = nil,
                                completion: @escaping(DownloadStatus, [UserLeaderboardData]) -> Void) {
         
         var downloadedUserData = [UserLeaderboardData]()
@@ -81,7 +87,7 @@ final class LeaderboardViewModel: ObservableObject {
                     
                     let username = document.data()["username"]! as! String
                     let country = document.data()["country"]! as! String
-                    
+                     
                     self.downloadUserScoreData(filterOne: filterOne,
                                                documentId: document.documentID) { downloadStatus, testScore, totalScoreMax  in
                         
@@ -96,7 +102,13 @@ final class LeaderboardViewModel: ObservableObject {
                                                                country: country,
                                                                totalScore: finalizedTestScore)
                             
-                            downloadedUserData.append(userData)
+                            if filterTwo != "None" {
+                                if filterTwo == country {
+                                    downloadedUserData.append(userData)
+                                }
+                            } else {
+                                downloadedUserData.append(userData)
+                            }
                             
                             count += 1
                             
@@ -117,11 +129,11 @@ final class LeaderboardViewModel: ObservableObject {
     func downloadUserScoreData(filterOne: String? = nil,
                                documentId: String,
                                completion: @escaping(DownloadStatus, Int, Int) -> Void) {
-                    
+        
         let db = Firestore.firestore()
         
         var testScore = 0, totalScoreMax = 0
-
+        
         db.collection("Students").document(documentId).collection("Classrooms").document("classroom_1").collection("Chapters").getDocuments { (querySnapshot, err) in
             
             if err != nil{
@@ -159,6 +171,28 @@ final class LeaderboardViewModel: ObservableObject {
             return Double(0)
         } else {
             return (Double(testScore) / Double(totalScoreMax)) * 100
+        }
+    }
+    
+    func getCountryStringFromFlag(country: String) -> String {
+        switch country {
+        case "🇨🇦":
+            return "Canada"
+        case "🇦🇺":
+            return "Australia"
+        case "🇬🇧":
+            return "United Kingdom"
+        case "🇺🇸":
+            return "United States"
+        case "🇮🇪":
+            return "Ireland"
+        case "🏴󠁧󠁢󠁳󠁣󠁴󠁿":
+            return "Scotland"
+        case "🇳🇿":
+            return "New Zealand"
+        default:
+            return "None"
+            
         }
     }
     
