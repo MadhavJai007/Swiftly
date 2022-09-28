@@ -4,12 +4,15 @@
 //  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import SwiftUI
+import GoogleMobileAds
 
 struct InteractiveQuestionsView: View {
     
     /// View responsive variables
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
+    
+    
     
     var customOpacity = 1.0
     var buttonEnable = false
