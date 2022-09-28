@@ -101,6 +101,7 @@ struct ChaptersView: View {
                             ChapterDetailView(isShowingDetailView: $chaptersViewModel.isShowingChapterDetailView)
                                 .environmentObject(chaptersViewModel)
                                 .environmentObject(chapterContentViewModel)
+                                .environmentObject(leaderboardViewModel)
                             
                         }
                     }
@@ -182,6 +183,12 @@ struct ChaptersView: View {
         
         .onDisappear {
             
+//            if chaptersViewModel.chapterDetailLeaderboardEntryPointFilter != "None" {
+//                leaderboardViewModel.selectedFilter = chaptersViewModel.chapterDetailLeaderboardEntryPointFilter
+//            }
+//
+//            chaptersViewModel.chapterDetailLeaderboardEntryPointFilter = "None"
+            
 //            if (chaptersViewModel.selectedChapter != nil && chaptersViewModel.didStartChapter == true){
 //
 //                chaptersViewModel.selectedChapterIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)!
@@ -191,7 +198,6 @@ struct ChaptersView: View {
 //            }
             
             if (chaptersViewModel.isUserLoggedIn == false){
-                
                 
                 loginViewModel.loggedInEmail = ""
                 loginViewModel.accountMode = "Undefined"

@@ -149,7 +149,7 @@ struct LeaderboardView: View {
             .navigationBarHidden(true)
         }
         .onAppear {
-            leaderboardViewModel.startDataRetrieval()
+            leaderboardViewModel.startDataRetrieval(filterOne: leaderboardViewModel.selectedFilter == "None" ? nil : leaderboardViewModel.selectedFilter)
             leaderboardViewModel.isDataLoading = true
         }
         
