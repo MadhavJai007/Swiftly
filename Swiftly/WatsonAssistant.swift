@@ -22,14 +22,14 @@ struct Message: Identifiable {
 class WatsonAssistant: ObservableObject {
     
     static let instance = WatsonAssistant()
-    private let authenticator = WatsonIAMAuthenticator(apiKey: "AjB3RJCwfpoTATa05-3ZsEKHtIXKXno2HgTMVPizvFyi")
+    private let authenticator = WatsonIAMAuthenticator(apiKey: "hqEd_vDM2H5RYGbupGdbTGN2RXUNd1Hmj9NsWZFX8Kp8")
     private let assistant: Assistant
-    private let assistantID = "38f70976-e9af-4332-b33a-0f4197c09bd9"
+    private let assistantID = "4206ad91-539b-4080-8d44-fdbadf9b9cd8"
     private var context: MessageContextStateless = MessageContextStateless()
 
     init(){
         assistant = Assistant(version: "2020-06-14", authenticator: authenticator)
-        assistant.serviceURL = "https://api.us-south.assistant.watson.cloud.ibm.com/instances/d2b1cc14-ee89-4027-b482-b791349859cb"
+        assistant.serviceURL = "https://api.us-south.assistant.watson.cloud.ibm.com/instances/25a8489b-6fcb-414e-9f8c-a41622bbd978"
     }
 
 
