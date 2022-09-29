@@ -12,7 +12,7 @@ struct EditAccountView: View {
     
     @ObservedObject var monitor = NetworkMonitor()
     
-    var countries = ["Canada", "United States", "United Kingdom", "Australia"]
+    var countries = ["Canada", "United States", "United Kingdom", "Australia", "Ireland", "Scotland", "New Zealand"]
     
     @EnvironmentObject var userAccountViewModel: UserAccountViewModel /// view model for this view
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel

@@ -101,6 +101,7 @@ struct ChaptersView: View {
                             ChapterDetailView(isShowingDetailView: $chaptersViewModel.isShowingChapterDetailView)
                                 .environmentObject(chaptersViewModel)
                                 .environmentObject(chapterContentViewModel)
+                                .environmentObject(leaderboardViewModel)
                             
                         }
                     }
@@ -138,14 +139,22 @@ struct ChaptersView: View {
             
             userAccountViewModel.loggedInUser = chaptersViewModel.loggedInUser
             leaderboardViewModel.loggedInUser = chaptersViewModel.loggedInUser
-            
-            /// If the user is going to logout
+
             if (chaptersViewModel.logoutIntent == true){
                 chaptersViewModel.logoutIntent = false
                 chaptersViewModel.isUserLoggedIn = false
-            }else{
-//                chaptersViewModel.saveUserProgress()
+            } else {
+                
                 chaptersViewModel.retrieveUserbaseCompletion()
+                leaderboardViewModel.chapterFilters.removeAll()
+                
+                leaderboardViewModel.chapterFilters.append("None")
+                leaderboardViewModel.selectedFilter = "None"
+                leaderboardViewModel.selectedCountryFilter = "None"
+                
+                for chapter in self.chaptersViewModel.chaptersArr {
+                    leaderboardViewModel.chapterFilters.append("Chapter \(chapter.chapterNum)")
+                }
             }
             
             print(chaptersViewModel.loggedInUser.classroom[0].chapterProgress)
@@ -175,6 +184,12 @@ struct ChaptersView: View {
         
         .onDisappear {
             
+//            if chaptersViewModel.chapterDetailLeaderboardEntryPointFilter != "None" {
+//                leaderboardViewModel.selectedFilter = chaptersViewModel.chapterDetailLeaderboardEntryPointFilter
+//            }
+//
+//            chaptersViewModel.chapterDetailLeaderboardEntryPointFilter = "None"
+            
 //            if (chaptersViewModel.selectedChapter != nil && chaptersViewModel.didStartChapter == true){
 //
 //                chaptersViewModel.selectedChapterIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)!
@@ -184,7 +199,6 @@ struct ChaptersView: View {
 //            }
             
             if (chaptersViewModel.isUserLoggedIn == false){
-                
                 
                 loginViewModel.loggedInEmail = ""
                 loginViewModel.accountMode = "Undefined"

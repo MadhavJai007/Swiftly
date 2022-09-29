@@ -24,7 +24,7 @@ struct LeaderboardView: View {
                 Color(UIColor.systemGray6)
                     .ignoresSafeArea()
                 
-                VStack(alignment: .leading, spacing: 15){
+                VStack(alignment: .leading, spacing: 15) {
                     
                     HStack {
                         Button{
@@ -37,25 +37,67 @@ struct LeaderboardView: View {
                     }
                     .padding(.top, geometry.size.width/16)
                     
-                    HStack{
-                        TitleLabel(text:"Leaderboard")
-                            .padding(.leading,  geometry.size.width/24)
-                            .foregroundColor(colorScheme == .dark ? Color.white: Color.black)
-
-                    }
                     
-                    HStack(spacing: 15){
-                        LeaderboardSubTitle(text:"Swiftly Userbase Progress")
-                            .foregroundColor(colorScheme == .dark ? Color.white: Color.black)
-                    }
-                    .padding(.leading,  geometry.size.width/24)
+                    TitleLabel(text:"Leaderboard")
+                        .padding(.leading, geometry.size.width/24)
+                        .foregroundColor(colorScheme == .dark ? Color.white: Color.black)
                     
-                    VStack{
-                        ZStack{
+                    LeaderboardSubTitle(text:"Swiftly Userbase Progress")
+                        .foregroundColor(colorScheme == .dark ? Color.white: Color.black)
+                        .padding(.leading,  geometry.size.width/24)
+                    
+                    HStack {
+                        InputFieldLabel(text: "Filter by:")
+                            .padding(.bottom, geometry.size.width/122)
+                            .accessibilityLabel("Filter By Picker")
+                    
+                        Picker("", selection: $leaderboardViewModel.selectedFilter) {
+                            ForEach(leaderboardViewModel.chapterFilters, id: \.self) {
+                                Text($0)
+                                    .font(.system(size: 25))
+                                    .foregroundColor(Color.black)
+                            }
+                        }
+                        .frame(width: 100, height: 40)
+                        .background(Color(UIColor.systemGray3))
+                        .cornerRadius(10)
+                        
+                        Picker("", selection: $leaderboardViewModel.selectedCountryFilter) {
+                            ForEach(leaderboardViewModel.countryFilters, id: \.self) {
+                                Text($0)
+                                    .font(.system(size: 25))
+                                    .foregroundColor(Color.black)
+                            }
+                        }
+                        .frame(width: 100, height: 40)
+                        .background(Color(UIColor.systemGray3))
+                        .cornerRadius(10)
+                        
+                        
+                        Button{
+                            leaderboardViewModel.startDataRetrieval(filterOne: leaderboardViewModel.selectedFilter == "None" ? nil :
+                                                                        leaderboardViewModel.selectedFilter,
+                                                                    filterTwo: leaderboardViewModel.selectedCountryFilter == "None" ? nil : leaderboardViewModel.selectedCountryFilter)
+                            leaderboardViewModel.isDataLoading = true
+                        } label: {
+                            Text("Apply")
+                                .font(.system(size: 20, weight: .regular, design: .default))
+                                .foregroundColor(Color(UIColor.white))
+                                .frame(width: 100, height: 40)
+                                .accessibilityLabel("Apply Filter Button")
+                                .background(Color.blueCustom)
+                                .cornerRadius(10)
+                        }
+                    }
+                    .padding(.leading,  geometry.size.width/22)
+                    
+                    
+                    VStack {
+                        ZStack {
                             
                             Color.white
                             
-                            VStack{
+                            VStack {
                                 HStack(spacing: geometry.size.width/8){
                                     LeaderboardTableHeader(text: "Username")
                                         .padding(.trailing, 20)
@@ -70,7 +112,6 @@ struct LeaderboardView: View {
                                 List {
                                     
                                     ForEach(leaderboardViewModel.userLeaderboardData, id: \.id) { user in
-                                        
 
                                         let formattedFloat = String(format: "%.1f", user.totalScore)
                                         
@@ -86,13 +127,13 @@ struct LeaderboardView: View {
                                                 .padding(.leading, geometry.size.width/36)
                                         }
                                         .frame(width: geometry.size.width/1.10)
-                                        .listRowBackground(Color.clear)
+                                        .cornerRadius(5)
+                                        .listRowBackground(user.username == leaderboardViewModel.loggedInUser.username ? Color.lightBlueCustom : Color.clear)
                                     }
-                                    
                                 }
                             }
                         }
-                        .frame(width: geometry.size.width/1.10, height: geometry.size.height/1.35, alignment: .center)
+                        .frame(width: geometry.size.width/1.10, height: geometry.size.height/1.5, alignment: .center)
                         .cornerRadius(40)
                     }
                     .frame(width: geometry.size.width)
@@ -121,12 +162,11 @@ struct LeaderboardView: View {
             .navigationBarHidden(true)
         }
         .onAppear {
-            leaderboardViewModel.startDataRetrieval()
+            leaderboardViewModel.startDataRetrieval(filterOne: leaderboardViewModel.selectedFilter == "None" ? nil : leaderboardViewModel.selectedFilter)
             leaderboardViewModel.isDataLoading = true
         }
         
         .onDisappear {
-            leaderboardViewModel.tempUserLeaderboard.removeAll()
             leaderboardViewModel.userLeaderboardData.removeAll()
             leaderboardViewModel.isDataLoading = false
         }

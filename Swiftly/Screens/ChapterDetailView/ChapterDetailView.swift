@@ -13,6 +13,7 @@ struct ChapterDetailView: View {
     
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel // view model for this view
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
+    @EnvironmentObject var leaderboardViewModel: LeaderboardViewModel
     
     // Connected to chaptersViewModel isShowingDetail
     @Binding var isShowingDetailView: Bool
@@ -148,8 +149,20 @@ struct ChapterDetailView: View {
                                         Button{
                                             print("tapped")
                                         }label: {
-                                            ChapterDetailsButtonText(text: "Chapter Questions")
-                                                .accessibilityLabel("Chapter Questions")
+                                            ChapterDetailsButtonText(text: "Questions")
+                                                .accessibilityLabel("Questions")
+                                        }
+                                        .frame(width: 260, height: 50)
+                                        .background(Color.lightGrayCustom)
+                                        .cornerRadius(10)
+                                        .disabled(true)
+                                        
+                                        
+                                        Button{
+                                            print("tapped")
+                                        }label: {
+                                            ChapterDetailsButtonText(text: "Leaderboard")
+                                                .accessibilityLabel("Leaderboard")
                                         }
                                         .frame(width: 260, height: 50)
                                         .background(Color.lightGrayCustom)
@@ -165,13 +178,24 @@ struct ChapterDetailView: View {
                                             chaptersViewModel.startChapterIntent = true
                                             chaptersViewModel.jumpToPlayground = true
                                         }label: {
-                                            ChapterDetailsButtonText(text: "Chapter Questions")
-                                                .accessibilityLabel("Chapter Questions")
+                                            ChapterDetailsButtonText(text: "Questions")
+                                                .accessibilityLabel("Questions")
                                         }
                                         .frame(width: 260, height: 50)
                                         .background(Color(UIColor.systemYellow))
                                         .cornerRadius(10)
                                         .disabled(false)
+                                        
+                                        Button{
+                                            print("tapped")
+                                        }label: {
+                                            ChapterDetailsButtonText(text: "Leaderboard")
+                                                .accessibilityLabel("Leaderboard")
+                                        }
+                                        .frame(width: 260, height: 50)
+                                        .background(Color.lightGrayCustom)
+                                        .cornerRadius(10)
+                                        .disabled(true)
                                     }
                                     
                                     else if (playgroundStat == "complete"){
@@ -182,8 +206,22 @@ struct ChapterDetailView: View {
                                             chaptersViewModel.startChapterIntent = true
                                             chaptersViewModel.jumpToPlayground = true
                                         }label: {
-                                            ChapterDetailsButtonText(text: "Chapter Questions")
-                                                .accessibilityLabel("Chapter Questions")
+                                            ChapterDetailsButtonText(text: "Questions")
+                                                .accessibilityLabel("Questions")
+                                        }
+                                        .frame(width: 260, height: 50)
+                                        .background(Color(UIColor.systemGreen))
+                                        .cornerRadius(10)
+                                        .disabled(false)
+                                        
+                                        
+                                        Button{
+                                            leaderboardViewModel.selectedFilter = "Chapter \(chaptersViewModel.selectedChapter!.chapterNum)"
+                                            chaptersViewModel.isShowingLeaderboardView.toggle()
+                                            isShowingDetailView = false
+                                        }label: {
+                                            ChapterDetailsButtonText(text: "Leaderboard")
+                                                .accessibilityLabel("Leaderboard")
                                         }
                                         .frame(width: 260, height: 50)
                                         .background(Color(UIColor.systemGreen))
@@ -269,7 +307,7 @@ struct ChapterDetailsButtonText: View {
     var body: some View {
         
         Text(text)
-            .font(.system(size: 30))
+            .font(.system(size: 25))
             .foregroundColor(Color(UIColor.systemGray6))
             .background(Color(UIColor.clear))
         
