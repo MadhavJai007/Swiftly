@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2C0E5EF728D3EDAB005706DB /* PasswordRecoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0E5EF628D3EDAB005706DB /* PasswordRecoveryView.swift */; };
 		2C0E5EF928D3EDC4005706DB /* PasswordRecoveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0E5EF828D3EDC4005706DB /* PasswordRecoveryViewModel.swift */; };
+		2C4CAF9628E4A93800A27545 /* InterstitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4CAF9528E4A93800A27545 /* InterstitialView.swift */; };
 		2C67167928DB77940049D51D /* BannerAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C67167828DB77940049D51D /* BannerAd.swift */; };
 		2CEB414727598BEC00C8858D /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEB414627598BEC00C8858D /* NetworkMonitor.swift */; };
 		DA0866AB2717702E00B1999E /* InteractiveQuestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866AA2717702E00B1999E /* InteractiveQuestionsView.swift */; };
@@ -58,6 +59,7 @@
 		11B3422058B48AC46E6C075C /* Pods_Swiftly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swiftly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C0E5EF628D3EDAB005706DB /* PasswordRecoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRecoveryView.swift; sourceTree = "<group>"; };
 		2C0E5EF828D3EDC4005706DB /* PasswordRecoveryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRecoveryViewModel.swift; sourceTree = "<group>"; };
+		2C4CAF9528E4A93800A27545 /* InterstitialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterstitialView.swift; sourceTree = "<group>"; };
 		2C67167828DB77940049D51D /* BannerAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAd.swift; sourceTree = "<group>"; };
 		2CEB414627598BEC00C8858D /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		66F71B613F71F71DCB1B8233 /* Pods-Swiftly.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swiftly.release.xcconfig"; path = "Target Support Files/Pods-Swiftly/Pods-Swiftly.release.xcconfig"; sourceTree = "<group>"; };
@@ -125,6 +127,14 @@
 				2C0E5EF828D3EDC4005706DB /* PasswordRecoveryViewModel.swift */,
 			);
 			path = PasswordRecoveryView;
+			sourceTree = "<group>";
+		};
+		2C4CAF9428E4A8F800A27545 /* InterstitalAd */ = {
+			isa = PBXGroup;
+			children = (
+				2C4CAF9528E4A93800A27545 /* InterstitialView.swift */,
+			);
+			path = InterstitalAd;
 			sourceTree = "<group>";
 		};
 		2C67167728DB777E0049D51D /* BannerAd */ = {
@@ -368,6 +378,7 @@
 		DABF368E27020DF3009BF78A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				2C4CAF9428E4A8F800A27545 /* InterstitalAd */,
 				2C67167728DB777E0049D51D /* BannerAd */,
 				DA34D889274478ED00A6822B /* Progress */,
 				DA1281F32731BE07002EAC2F /* Chapter */,
@@ -597,6 +608,7 @@
 				EBD10B7F271E3338002042D9 /* DropdownView.swift in Sources */,
 				DAD6B319270A3C71002C8A55 /* UserAccountView.swift in Sources */,
 				2C0E5EF928D3EDC4005706DB /* PasswordRecoveryViewModel.swift in Sources */,
+				2C4CAF9628E4A93800A27545 /* InterstitialView.swift in Sources */,
 				DA0866BE271A0AF900B1999E /* NavBarIconView.swift in Sources */,
 				DA1281E227316165002EAC2F /* ChatbotViewModel.swift in Sources */,
 				DA0866B82719CC0D00B1999E /* EditAccountView.swift in Sources */,

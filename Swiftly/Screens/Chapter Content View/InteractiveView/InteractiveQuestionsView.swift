@@ -4,6 +4,7 @@
 //  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import SwiftUI
+import GoogleMobileAds
 
 struct InteractiveQuestionsView: View {
     
@@ -11,11 +12,21 @@ struct InteractiveQuestionsView: View {
     @EnvironmentObject var chaptersViewModel: ChaptersViewModel
     @EnvironmentObject var chapterContentViewModel: ChapterContentViewModel
     
+    
+    
     var customOpacity = 1.0
     var buttonEnable = false
     
+    
+    private var fullScreenAd: Interstitial?
+    
+    init() {
+        fullScreenAd = Interstitial()
+    }
+    
     /// View
     var body: some View {
+
         GeometryReader { geometry in
             ZStack{
                 
@@ -255,6 +266,8 @@ struct InteractiveQuestionsView: View {
                                         .accessibilityLabel("Start Next Chapter Button")
                                     }else{
                                         Button{
+                                            print("Show ad")
+                                             self.fullScreenAd?.showAd()
                                             chaptersViewModel.willStartNextChapter = true
                                             chapterContentViewModel.willStartInteractiveSection.toggle()
                                             chaptersViewModel.didStartChapter.toggle()
