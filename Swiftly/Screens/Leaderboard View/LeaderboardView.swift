@@ -55,12 +55,12 @@ struct LeaderboardView: View {
                             ForEach(leaderboardViewModel.chapterFilters, id: \.self) {
                                 Text($0)
                                     .font(.system(size: 25))
-                                    .foregroundColor(Color.black)
                             }
                         }
                         .frame(width: 100, height: 40)
                         .background(Color(UIColor.systemGray3))
                         .cornerRadius(10)
+                        .accentColor(colorScheme == .dark ? Color.white: Color.black)
                         
                         Picker("", selection: $leaderboardViewModel.selectedCountryFilter) {
                             ForEach(leaderboardViewModel.countryFilters, id: \.self) {
@@ -72,6 +72,7 @@ struct LeaderboardView: View {
                         .frame(width: 100, height: 40)
                         .background(Color(UIColor.systemGray3))
                         .cornerRadius(10)
+                        .accentColor(colorScheme == .dark ? Color.white: Color.black)
                         
                         
                         Button{
