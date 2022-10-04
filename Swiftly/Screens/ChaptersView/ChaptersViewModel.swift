@@ -130,7 +130,8 @@ final class ChaptersViewModel: ObservableObject {
                 "question_scores": loggedInUser.classroom[0].chapterProgress[j].questionScores,
                 "question_progress": loggedInUser.classroom[0].chapterProgress[j].questionProgress,
                 "question_ids": playgroundIds,
-                "total_question_score": loggedInUser.classroom[0].chapterProgress[j].chapterScore
+                "total_question_score": loggedInUser.classroom[0].chapterProgress[j].chapterScore,
+                "total_questions": loggedInUser.classroom[0].chapterProgress[j].totalQuestions
             ]){ err in
                 if let err = err {
                     print("Error updating document: \(err)")

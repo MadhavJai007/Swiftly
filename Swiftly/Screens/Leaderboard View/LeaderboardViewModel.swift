@@ -145,13 +145,17 @@ final class LeaderboardViewModel: ObservableObject {
                 
                 for document in querySnapshot!.documents {
                     
+                    let totalQuestionScore = (document.data()["total_question_score"] as? Int) ?? 0
+                    let totalQuestions = (document.data()["total_questions"] as? Int) ?? 0
+                    
                     if filterOne == nil {
-                        testScore += document.data()["total_question_score"]! as! Int
-                        totalScoreMax += document.data()["total_questions"]! as! Int
+                        testScore += totalQuestionScore
+                        totalScoreMax += totalQuestions
+                        
                     } else {
                         if filterOne == "Chapter \(count+1)" {
-                            testScore += document.data()["total_question_score"]! as! Int
-                            totalScoreMax += document.data()["total_questions"]! as! Int
+                            testScore += totalQuestionScore
+                            totalScoreMax += totalQuestions
                         }
                     }
                     
