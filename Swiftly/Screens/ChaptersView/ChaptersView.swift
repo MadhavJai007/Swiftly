@@ -4,7 +4,6 @@
 //  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import SwiftUI
-import GoogleMobileAds
 
 struct ChaptersView: View {
     
@@ -19,7 +18,6 @@ struct ChaptersView: View {
     @EnvironmentObject var chatbotViewModel: ChatbotViewModel
     
     init(){
-        GADMobileAds.sharedInstance().start(completionHandler: nil)
     }
     
     @Environment(\.colorScheme) var colorScheme
@@ -48,8 +46,6 @@ struct ChaptersView: View {
                     }.padding(.top, geometry.size.width/18)
                     
                     VStack(alignment: .leading){
-                        
-                        BannerAd(unitID:"ca-app-pub-3940256099942544/2934735716")
                         
                         TitleLabel(text:"All Chapters")
                             .accessibilityLabel("All Chapters")
