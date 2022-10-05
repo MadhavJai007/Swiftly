@@ -165,7 +165,7 @@ final class ChaptersViewModel: ObservableObject {
                     var chapterLessons = [ChapterLesson]()
                     let playgroundQuestions = [Playground]()
                     
-                    var newChapter = Chapter(chapterNum: chapterNum, name: chapterName, difficulty: chapterDifficulty, summary: chapterSummary, lessons: chapterLessons, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions)
+                    var newChapter = Chapter(chapterNum: chapterNum, name: chapterName, difficulty: chapterDifficulty, summary: chapterSummary, lessons: chapterLessons, length: chapterLength, iconName: iconName, playgroundArr: playgroundQuestions, firestoreID: document.documentID)
                     
                     /// Getting lesson information
                     db.collection("Chapters").document(document.documentID).collection("lessons").getDocuments() {

@@ -231,14 +231,15 @@ final class SignupViewModel: ObservableObject {
                         "chapter_status" : "incomplete",
                         "theory_status" : "incomplete",
                         "total_question_score": 0,
-                        "total_questions": playgroundArray.count])
+                        "total_questions": playgroundArray.count,
+                        "chapter_id": chaptersArr[i].firestoreID])
                     
                     var questionsArray : [Int] = []
-                    var playgroundAnswers : [String] = []
+                    let playgroundAnswers : [String] = []
                     var playgroundProgress : [String] = []
                     var questionsId: [String] = []
                     
-                    var document = newStudentRef.collection("Chapters").document("chapter_\(chaptersArr[i].chapterNum)")
+                    let document = newStudentRef.collection("Chapters").document("chapter_\(chaptersArr[i].chapterNum)")
                     
                     for j in 0..<playgroundArray.count {
                         questionsId.append(playgroundArray[j].fId)

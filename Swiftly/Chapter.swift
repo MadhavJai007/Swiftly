@@ -16,7 +16,16 @@ struct Chapter: Hashable, Identifiable {
     var length: Int
     var iconName: String
     var playgroundArr: [Playground]
+    var firestoreID: String
     
+    
+    func getFirestoreID() -> String {
+        return firestoreID
+    }
+    
+    mutating func setFirestoreID(remoteID: String) {
+        firestoreID = remoteID
+    }
     
     /// Get ID
     func getId() -> UUID {
@@ -112,13 +121,13 @@ struct MockData {
     
     static let sampleUser = User(firstName: "Johhny", lastName: "Appleseed", username: "ilikeapples123", email: "test@email.com", password: "123456", dob: "2000/01/11", country: "Canada", classroom: [UserClassroom()])
     
-    static let sampleChapter = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, summary: "SUmmary", lessons: [ChapterLesson(content: ["ABC", "DEF"])], length: 24, iconName: "cpu", playgroundArr: [Playground(title: "Title", description: "Do this", type: "code_blocks", originalArr: ["CODE", "CODE", "CODE"]), Playground(title: "Title", description: "Do this", type: "code_blocks", originalArr: ["CODE", "CODE", "CODE"])])
+    static let sampleChapter = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, summary: "SUmmary", lessons: [ChapterLesson(content: ["ABC", "DEF"])], length: 24, iconName: "cpu", playgroundArr: [Playground(title: "Title", description: "Do this", type: "code_blocks", originalArr: ["CODE", "CODE", "CODE"]), Playground(title: "Title", description: "Do this", type: "code_blocks", originalArr: ["CODE", "CODE", "CODE"])], firestoreID: "chapter_1")
     
-    static let sampleChapter2 = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, summary: "SUmmary", lessons: [ChapterLesson(content: ["ABC", "DEF"])], length: 24, iconName: "cpu", playgroundArr: [Playground(title: "Title", description: "Do this", type: "code_blocks", originalArr: ["CODE", "CODE", "CODE"]), Playground(title: "Title", description: "Do this", type: "code_blocks", originalArr: ["CODE", "CODE", "CODE"])])
+    static let sampleChapter2 = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, summary: "SUmmary", lessons: [ChapterLesson(content: ["ABC", "DEF"])], length: 24, iconName: "cpu", playgroundArr: [Playground(title: "Title", description: "Do this", type: "code_blocks", originalArr: ["CODE", "CODE", "CODE"]), Playground(title: "Title", description: "Do this", type: "code_blocks", originalArr: ["CODE", "CODE", "CODE"])], firestoreID: "chapter_2")
     
-    static let sampleChapter3 = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, summary: "SUmmary", lessons: [ChapterLesson(content: ["ABC", "DEF"])], length: 24, iconName: "cpu", playgroundArr: [Playground(title: "Title", description: "Do this", type: "code_blocks", originalArr: ["CODE", "CODE", "CODE"]), Playground(title: "Title", description: "Do this", type: "code_blocks", originalArr: ["CODE", "CODE", "CODE"])])
+    static let sampleChapter3 = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, summary: "SUmmary", lessons: [ChapterLesson(content: ["ABC", "DEF"])], length: 24, iconName: "cpu", playgroundArr: [Playground(title: "Title", description: "Do this", type: "code_blocks", originalArr: ["CODE", "CODE", "CODE"]), Playground(title: "Title", description: "Do this", type: "code_blocks", originalArr: ["CODE", "CODE", "CODE"])], firestoreID: "chapter_3")
     
-    static let sampleChapter4 = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, summary: "SUmmary", lessons: [ChapterLesson(content: ["ABC", "DEF"])], length: 24, iconName: "cpu", playgroundArr: [Playground(title: "Title", description: "Do this", type: "code_blocks", originalArr: ["CODE", "CODE", "CODE"]), Playground(title: "Title", description: "Do this", type: "code_blocks", originalArr: ["CODE", "CODE", "CODE"])])
+    static let sampleChapter4 = Chapter(chapterNum: 1, name: "Data Types", difficulty: 3, summary: "SUmmary", lessons: [ChapterLesson(content: ["ABC", "DEF"])], length: 24, iconName: "cpu", playgroundArr: [Playground(title: "Title", description: "Do this", type: "code_blocks", originalArr: ["CODE", "CODE", "CODE"]), Playground(title: "Title", description: "Do this", type: "code_blocks", originalArr: ["CODE", "CODE", "CODE"])], firestoreID: "chapter_4")
     
     
     static let Chapters = [
