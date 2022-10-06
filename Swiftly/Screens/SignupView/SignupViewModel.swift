@@ -34,6 +34,8 @@ final class SignupViewModel: ObservableObject {
     //variable used for alert notification
     @Published var alertInfo: AlertModel?
     
+    @Published var loadingSignupProcess: Bool = false
+    
     
     //db variable for firestore information
     private var db = Firestore.firestore()
@@ -364,11 +366,7 @@ final class SignupViewModel: ObservableObject {
             if(emailNotTaken == true){
                 print("Finally, since the email was valid, now execute addUser() to add user to collections")
                 self.addUser(user: newUser, accountType: accountType)
-            }
-            
+            }   
         }
-        
     }
-    
-    
 }

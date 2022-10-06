@@ -40,6 +40,7 @@ struct SignupView: View {
                             NavBarIcon(iconName: "chevron.backward")
                         }
                         .padding(.leading, 30)
+                        .disabled(signupViewModel.loadingSignupProcess)
 
                         Spacer()
                     }
@@ -212,12 +213,17 @@ struct SignupView: View {
                         if signupViewModel.validateUsername(username: signupViewModel.newUser.username) {
                             doesUserNameContainProfanity.toggle()
                         } else {
+                            signupViewModel.loadingSignupProcess = true
                             signupViewModel.save(accountType: selectedType)
-                            let timer2 = Timer.scheduledTimer(withTimeInterval: 5.0, repeats: false) { [self] (timer) in
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 6, execute: {
+                                
+                                signupViewModel.loadingSignupProcess = true
+                                
                                 if(signupViewModel.emailNotTaken == true){
                                     loginViewModel.isShowingSignupView.toggle()
                                 }
-                            }
+                            })
                         }
                     } label:{
                         CreateAccountButton(text: "Create Account", textColor: .white, backgroundColor: Color.blackCustom)
@@ -225,7 +231,7 @@ struct SignupView: View {
                         
                     }
                     .opacity(signupViewModel.isSignUpComplete || monitor.isConnected ? 1 : 0.24)
-                    .disabled(!monitor.isConnected || !signupViewModel.isSignUpComplete)
+                    .disabled(!monitor.isConnected || !signupViewModel.isSignUpComplete || signupViewModel.loadingSignupProcess)
                     .alert(isPresented: $signupViewModel.isBadSignup) {
                         Alert(title: Text("Email Already Taken"), message: Text("\(signupViewModel.newUser.email) is already taken."), dismissButton: .default(Text("OK")))
                     }
@@ -250,6 +256,25 @@ struct SignupView: View {
                         signupViewModel.newUser.lastName = ""
                         signupViewModel.newUser.dob = ""
                     }
+                
+                
+                if (signupViewModel.loadingSignupProcess == true){
+                    
+                    ZStack {
+                        Color.blackCustom
+                        
+                        VStack{
+                            ProgressView {
+                                SpinnerInfoLabel(text: "Creating account...")
+                            }
+                            .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
+                        }
+                    }
+                    .frame(width: 175, height: 125)
+                    .cornerRadius(15)
+                    .animation(.spring())
+                }
+                
             }
             .navigationBarHidden(true)
         }
