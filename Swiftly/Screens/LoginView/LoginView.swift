@@ -188,11 +188,15 @@ struct LoginView: View {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     chaptersViewModel.chaptersArr.removeAll()
                     chaptersViewModel.clearAllData()
-                    chaptersViewModel.downloadLessons()
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                        chaptersViewModel.downloadPlaygrounds()
-                    }
+                    chaptersViewModel.downloadChapters(completion: { status in
+                        switch status {
+                        case .success:
+                            print("Passed: downloading chapter")
+                        case .failure:
+                            print("Failed: downloading chapter")
+                        }
+                    })
                 }
             }
             

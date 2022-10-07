@@ -32,7 +32,6 @@ final class LeaderboardViewModel: ObservableObject {
                             country: "",
                             classroom: [])
     
-    
     func startDataRetrieval(filterOne: String? = nil, filterTwo: String? = nil){
         
         userLeaderboardData.removeAll()

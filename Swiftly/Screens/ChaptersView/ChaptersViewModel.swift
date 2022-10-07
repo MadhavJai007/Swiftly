@@ -24,6 +24,14 @@ final class ChaptersViewModel: ObservableObject {
     var userNeedsUpdate: Bool = false
     var deletePlayground: Bool = false
     
+    var chapterCounter = 0
+    var lessonCounter = 0
+    var playgroundCounter = 0
+    
+    var chapterCount = 0
+    var lessonCount = 0
+    var playgroundCount = 0
+    
     /// Taken from firebase --> used to update UI components and store user entire chapter progress
     @Published var chaptersStatus = [String]()
     
@@ -78,7 +86,225 @@ final class ChaptersViewModel: ObservableObject {
         print("changeClassroom")
     }
     
-    /// Function that uploads user progress to firestore
+    
+    func downloadTotalCount(completion: @escaping(Int) -> Void) {
+        
+        self.chapterCount = 0
+        self.chapterCounter = 0
+        
+        let db = Firestore.firestore()
+        
+        db.collection("Chapters").getDocuments() { (querySnapshot, err) in
+            if err != nil {
+                completion(0)
+            } else {
+                
+                self.chapterCount += querySnapshot!.documents.count
+        
+                for chapterDocument in querySnapshot!.documents {
+                    
+                    let currentChapter = db.collection("Chapters").document(chapterDocument.documentID)
+                    
+                    currentChapter.collection("lessons").getDocuments() { (querySnapshot, err) in
+                        if err != nil {
+                            completion(0)
+                        } else {
+                            self.chapterCount += querySnapshot!.documents.count
+                        }
+                    }
+                        
+                    currentChapter.collection("playground").getDocuments() { (querySnapshot, err) in
+                        if err != nil {
+                            completion(0)
+                        } else {
+                            self.chapterCount += querySnapshot!.documents.count
+                        }
+                    }
+                }
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+                completion(self.chapterCount)
+            })
+        }
+    }
+            
+    
+    func downloadLessons(chapterID: String, completion: @escaping(DownloadStatus, [ChapterLesson]) -> Void) {
+        
+        let db = Firestore.firestore()
+        let currentChapter = db.collection("Chapters").document(chapterID)
+        
+        var lessonCounter = 0
+        var lessons = [ChapterLesson]()
+        
+        currentChapter.collection("lessons").getDocuments() { (querySnapshot, err) in
+            if err != nil {
+                completion(.failure, [])
+            } else {
+                
+                let lessonCount = querySnapshot?.documents.count
+                
+                for chapterLessonDocument in querySnapshot!.documents {
+                    let lesson_data = chapterLessonDocument.data()["lesson_content"]! as! [String]
+                    let newLesson = ChapterLesson(content: lesson_data)
+                    lessons.append(newLesson)
+                    
+                    lessonCounter += 1
+                    
+                    if lessonCounter == lessonCount {
+                        completion(.success, lessons)
+                    }
+                }
+            }
+        }
+    }
+    
+    func downloadPlaygrounds(chapterID: String, completion: @escaping(DownloadStatus, [Playground]) -> Void) {
+        let db = Firestore.firestore()
+        let currentChapter = db.collection("Chapters").document(chapterID)
+        
+        var playgroundCounter = 0
+        var playgrounds = [Playground]()
+        
+        
+        currentChapter.collection("playground").getDocuments() { (querySnapshot, err) in
+            
+            if err != nil {
+                completion(.failure, [])
+            } else {
+                
+                let playgroundCount = querySnapshot?.documents.count
+                
+                for chapterPlaygroundDocument in querySnapshot!.documents {
+                    
+                    guard let title = chapterPlaygroundDocument.data()["question_title"]! as? String,
+                          let description = chapterPlaygroundDocument.data()["question_description"]! as? String,
+                          let type = chapterPlaygroundDocument.data()["question_type"]! as? String,
+                          let blocks = chapterPlaygroundDocument.data()["code_blocks"]! as? [String],
+                          let id = chapterPlaygroundDocument.data()["id"]! as? String else {
+                              completion(.failure, [])
+                              return
+                      }
+                    
+                    var newBlocks = blocks
+                    
+                    for i in 0..<newBlocks.count {
+                        newBlocks[i] = newBlocks[i].replacingOccurrences(of: "$n", with: "\n")
+                    }
+                    
+                    if (type == "mcq") {
+                        
+                        let mcqOptions = chapterPlaygroundDocument.data()["code_blocks"]! as! [String]
+                        let mcqAnswers = chapterPlaygroundDocument.data()["mcq_answers"]! as! [String]
+                        
+                        var playgroundQuestion = Playground(fId: id,
+                                                            title: title,
+                                                            description: description,
+                                                            type: type,
+                                                            originalArr: blocks)
+                        
+                        playgroundQuestion.mcqOptions = mcqOptions
+                        playgroundQuestion.mcqAnswers = mcqAnswers
+                        
+                        playgrounds.append(playgroundQuestion)
+                        
+                    } else {
+                        
+                        let playgroundQuestion = Playground(fId: id,
+                                                            title: title,
+                                                            description: description,
+                                                            type: type,
+                                                            originalArr: blocks)
+                        
+                        playgrounds.append(playgroundQuestion)
+                    }
+                    
+                    playgroundCounter += 1
+                    
+                    if playgroundCounter == playgroundCount {
+                        completion(.success, playgrounds)
+                    }
+                }
+            }
+        }
+    }
+   
+    
+    func downloadChapters(completion: @escaping(DownloadStatus) -> Void){
+        
+        downloadTotalCount { count in
+            if (count == 0){
+                completion(.failure)
+            } else {
+                
+                let db = Firestore.firestore()
+       
+                db.collection("Chapters").getDocuments() { (querySnapshot, err) in
+                    if err != nil {
+                        completion(.failure)
+                    } else {
+                        
+                        
+                        
+                        for chapterDocument in querySnapshot!.documents {
+                            
+                            guard let chapterNum = chapterDocument.data()["chapter_number"]! as? Int,
+                                  let chapterName = chapterDocument.data()["chapter_title"]! as? String,
+                                  let chapterDifficulty = chapterDocument.data()["chapter_difficulty"]! as? Int,
+                                  let chapterSummary = chapterDocument.data()["chapter_desc"]! as? String,
+                                  let chapterLength = chapterDocument.data()["chapter_length"]! as? Int,
+                                  let iconName = chapterDocument.data()["chapter_icon_name"]! as? String else {
+                                      completion(.failure)
+                                      return
+                                  }
+                            
+                            
+                            var chapter = Chapter(chapterNum: chapterNum,
+                                                  name: chapterName,
+                                                  difficulty: chapterDifficulty,
+                                                  summary: chapterSummary,
+                                                  lessons: [ChapterLesson](),
+                                                  length: chapterLength,
+                                                  iconName: iconName,
+                                                  playgroundArr: [Playground](),
+                                                  firestoreID: chapterDocument.documentID)
+                            
+                            self.downloadLessons(chapterID: chapterDocument.documentID) { status, lessons in
+                                switch status {
+                                case .success:
+                                    chapter.lessons = lessons
+                                    
+                                    self.downloadPlaygrounds(chapterID: chapterDocument.documentID) { statusTwo, playgrounds in
+                                        switch statusTwo {
+                                        case .success:
+                                            chapter.playgroundArr = playgrounds
+                                            self.chaptersArr.append(chapter)
+                                            completion(.success)
+                                        case .failure:
+                                            completion(.failure)
+                                        }
+                                    }
+                                    
+                                case .failure:
+                                    completion(.failure)
+                                }
+                            }
+                            
+                            self.chapterCounter += 1
+                            
+                            if self.chapterCounter == self.chapterCount {
+                                completion(.success)
+                                return
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    // Function that uploads user progress to firestore
     func saveUserProgress(){
         
         let db = Firestore.firestore()
