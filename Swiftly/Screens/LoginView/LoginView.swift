@@ -180,19 +180,20 @@ struct LoginView: View {
             }
             .animation(.spring())
             
-            .onAppear{
+            .onAppear {
+                
                 email = ""
                 password = ""
                 chaptersViewModel.isUserLoggedIn = false
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                DispatchQueue.main.asyncAfter(deadline: .now()) {
                     chaptersViewModel.chaptersArr.removeAll()
                     chaptersViewModel.clearAllData()
                     
                     chaptersViewModel.downloadChapters(completion: { status in
                         switch status {
                         case .success:
-                            print("Passed: downloading chapter")
+                            chaptersViewModel.organizeChaptersByNumber()
                         case .failure:
                             print("Failed: downloading chapter")
                         }
@@ -200,7 +201,7 @@ struct LoginView: View {
                 }
             }
             
-            /// Resetting user input
+            // Resetting user input
             .onDisappear {
                 self.email = ""
                 self.password = ""
@@ -212,7 +213,7 @@ struct LoginView: View {
     }
 }
 
-/// Preview
+// Preview
 struct LoginScreen_Previews: PreviewProvider {
     static var previews: some View {
         LoginView()

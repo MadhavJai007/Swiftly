@@ -229,6 +229,18 @@ final class ChaptersViewModel: ObservableObject {
             }
         }
     }
+    
+    func organizeChaptersByNumber(){
+        for _ in 0..<self.chaptersArr.count {
+            for j in 1..<self.chaptersArr.count {
+                if self.chaptersArr[j].chapterNum < self.chaptersArr[j-1].chapterNum {
+                    let tmp = self.chaptersArr[j-1]
+                    self.chaptersArr[j-1] = self.chaptersArr[j]
+                    self.chaptersArr[j] = tmp
+                }
+            }
+        }
+    }
    
     
     func downloadChapters(completion: @escaping(DownloadStatus) -> Void){
