@@ -12,6 +12,8 @@
 		2C4CAF9628E4A93800A27545 /* InterstitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4CAF9528E4A93800A27545 /* InterstitialView.swift */; };
 		2C67167928DB77940049D51D /* BannerAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C67167828DB77940049D51D /* BannerAd.swift */; };
 		2CEB414727598BEC00C8858D /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEB414627598BEC00C8858D /* NetworkMonitor.swift */; };
+		4E21FAE828F08D0B0076AF1F /* SwiftlyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E21FAE728F08D0B0076AF1F /* SwiftlyTests.swift */; };
+		4E21FAEF28F08D7E0076AF1F /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E21FAEE28F08D7E0076AF1F /* LoginTests.swift */; };
 		DA0866AB2717702E00B1999E /* InteractiveQuestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866AA2717702E00B1999E /* InteractiveQuestionsView.swift */; };
 		DA0866B82719CC0D00B1999E /* EditAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866B72719CC0C00B1999E /* EditAccountView.swift */; };
 		DA0866BE271A0AF900B1999E /* NavBarIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866BD271A0AF900B1999E /* NavBarIconView.swift */; };
@@ -55,6 +57,16 @@
 		EBD10B7F271E3338002042D9 /* DropdownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD10B7E271E3338002042D9 /* DropdownView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		4E21FAE928F08D0B0076AF1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DA884F1526FE04D000F58E4A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DA884F1C26FE04D000F58E4A;
+			remoteInfo = Swiftly;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		11B3422058B48AC46E6C075C /* Pods_Swiftly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swiftly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C0E5EF628D3EDAB005706DB /* PasswordRecoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRecoveryView.swift; sourceTree = "<group>"; };
@@ -62,6 +74,9 @@
 		2C4CAF9528E4A93800A27545 /* InterstitialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterstitialView.swift; sourceTree = "<group>"; };
 		2C67167828DB77940049D51D /* BannerAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAd.swift; sourceTree = "<group>"; };
 		2CEB414627598BEC00C8858D /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		4E21FAE528F08D0B0076AF1F /* SwiftlyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwiftlyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4E21FAE728F08D0B0076AF1F /* SwiftlyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftlyTests.swift; sourceTree = "<group>"; };
+		4E21FAEE28F08D7E0076AF1F /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
 		66F71B613F71F71DCB1B8233 /* Pods-Swiftly.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swiftly.release.xcconfig"; path = "Target Support Files/Pods-Swiftly/Pods-Swiftly.release.xcconfig"; sourceTree = "<group>"; };
 		8FDBE6C6B205D978766E6A18 /* Pods-Swiftly.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swiftly.debug.xcconfig"; path = "Target Support Files/Pods-Swiftly/Pods-Swiftly.debug.xcconfig"; sourceTree = "<group>"; };
 		DA0866AA2717702E00B1999E /* InteractiveQuestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveQuestionsView.swift; sourceTree = "<group>"; };
@@ -108,6 +123,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4E21FAE228F08D0B0076AF1F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA884F1A26FE04D000F58E4A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -143,6 +165,15 @@
 				2C67167828DB77940049D51D /* BannerAd.swift */,
 			);
 			path = BannerAd;
+			sourceTree = "<group>";
+		};
+		4E21FAE628F08D0B0076AF1F /* SwiftlyTests */ = {
+			isa = PBXGroup;
+			children = (
+				4E21FAEE28F08D7E0076AF1F /* LoginTests.swift */,
+				4E21FAE728F08D0B0076AF1F /* SwiftlyTests.swift */,
+			);
+			path = SwiftlyTests;
 			sourceTree = "<group>";
 		};
 		572D01B0403350F11E0E40F5 /* Frameworks */ = {
@@ -293,6 +324,7 @@
 			isa = PBXGroup;
 			children = (
 				DA884F1F26FE04D000F58E4A /* Swiftly */,
+				4E21FAE628F08D0B0076AF1F /* SwiftlyTests */,
 				DA884F1E26FE04D000F58E4A /* Products */,
 				E7CF9668284AE716B205B930 /* Pods */,
 				572D01B0403350F11E0E40F5 /* Frameworks */,
@@ -303,6 +335,7 @@
 			isa = PBXGroup;
 			children = (
 				DA884F1D26FE04D000F58E4A /* Swiftly.app */,
+				4E21FAE528F08D0B0076AF1F /* SwiftlyTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -482,6 +515,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4E21FAE428F08D0B0076AF1F /* SwiftlyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4E21FAED28F08D0B0076AF1F /* Build configuration list for PBXNativeTarget "SwiftlyTests" */;
+			buildPhases = (
+				4E21FAE128F08D0B0076AF1F /* Sources */,
+				4E21FAE228F08D0B0076AF1F /* Frameworks */,
+				4E21FAE328F08D0B0076AF1F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4E21FAEA28F08D0B0076AF1F /* PBXTargetDependency */,
+			);
+			name = SwiftlyTests;
+			productName = SwiftlyTests;
+			productReference = 4E21FAE528F08D0B0076AF1F /* SwiftlyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		DA884F1C26FE04D000F58E4A /* Swiftly */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DA884F2C26FE04D200F58E4A /* Build configuration list for PBXNativeTarget "Swiftly" */;
@@ -510,9 +561,13 @@
 		DA884F1526FE04D000F58E4A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1250;
+				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
+					4E21FAE428F08D0B0076AF1F = {
+						CreatedOnToolsVersion = 13.2;
+						TestTargetID = DA884F1C26FE04D000F58E4A;
+					};
 					DA884F1C26FE04D000F58E4A = {
 						CreatedOnToolsVersion = 12.5.1;
 					};
@@ -535,11 +590,19 @@
 			projectRoot = "";
 			targets = (
 				DA884F1C26FE04D000F58E4A /* Swiftly */,
+				4E21FAE428F08D0B0076AF1F /* SwiftlyTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4E21FAE328F08D0B0076AF1F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA884F1B26FE04D000F58E4A /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -595,6 +658,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4E21FAE128F08D0B0076AF1F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E21FAE828F08D0B0076AF1F /* SwiftlyTests.swift in Sources */,
+				4E21FAEF28F08D7E0076AF1F /* LoginTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA884F1926FE04D000F58E4A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -645,7 +717,55 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		4E21FAEA28F08D0B0076AF1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DA884F1C26FE04D000F58E4A /* Swiftly */;
+			targetProxy = 4E21FAE928F08D0B0076AF1F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		4E21FAEB28F08D0B0076AF1F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "${SRCROOT}/Pods/Firebase/CoreOnly/Sources";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.SwiftlyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Swiftly.app/Swiftly";
+			};
+			name = Debug;
+		};
+		4E21FAEC28F08D0B0076AF1F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "${SRCROOT}/Pods/Firebase/CoreOnly/Sources";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.SwiftlyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Swiftly.app/Swiftly";
+			};
+			name = Release;
+		};
 		DA884F2A26FE04D200F58E4A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -811,6 +931,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4E21FAED28F08D0B0076AF1F /* Build configuration list for PBXNativeTarget "SwiftlyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4E21FAEB28F08D0B0076AF1F /* Debug */,
+				4E21FAEC28F08D0B0076AF1F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		DA884F1826FE04D000F58E4A /* Build configuration list for PBXProject "Swiftly" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
