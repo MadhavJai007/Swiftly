@@ -60,36 +60,22 @@ struct LoginView: View {
                     }
                     
                     
-                    /// Login button --> calls login method from loginViewModel
+                    // Login Button
                     Button{
-                        print("Logging into \(loginViewModel.accountMode) mode...")
-                        
+                      
                         loginViewModel.isLoading.toggle()
                         
-                        /// Used to make sure user cannot hit login button while their being logged in
                         if (loginViewModel.attemptingLogin == false){
-                            loginViewModel.login(email: email, password: password)
-
-                            /// If the login is successful, download chapter content
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.25) {
-                                
-                                if (loginViewModel.isSuccessful) {
-                                    
+                            
+                            loginViewModel.loginUser(email: email, password: password) { status in
+                                switch status {
+                                case .success:
                                     loginViewModel.loggedInEmail = email
-                                    
-                                    print("Loggin into \(loginViewModel.loggedInEmail)")
-                                    print("Logging into \(loginViewModel.accountMode) mode...")
-                                    
-                                    /// Loading all user data
                                     chaptersViewModel.loadUserData(loggedInEmail: email, accountType: loginViewModel.accountMode)
-                                    
+                                    loginViewModel.attemptingLogin = true
                                     email = ""
                                     password = ""
-                                    
-                                    loginViewModel.attemptingLogin = true
-                                    
-                                }else{
-                                    /// Error getting chapters
+                                case .failure:
                                     loginViewModel.attemptingLogin = false
                                     loginViewModel.isLoading = false
                                 }
