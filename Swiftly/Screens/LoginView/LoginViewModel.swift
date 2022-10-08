@@ -26,6 +26,8 @@ final class LoginViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var alertInfo: AlertModel?
     
+    @Published var showLoginSpinner = false
+    
     var attemptingLogin: Bool = false
     
     private var db = Firestore.firestore()

@@ -12,6 +12,11 @@ enum DownloadStatus {
     case failure
 }
 
+enum UploadStatus {
+    case success
+    case failure
+}
+
 final class LeaderboardViewModel: ObservableObject {
     
     @Published var userLeaderboardData = [UserLeaderboardData]()

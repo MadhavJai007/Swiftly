@@ -196,7 +196,6 @@ final class SignupViewModel: ObservableObject {
                     "chapter_status" : "incomplete",
                     "theory_status" : "incomplete",
                     "total_question_score": 0,
-                    "total_questions": chaptersArr[i].playgroundArr.count,
                     "chapter_id": chaptersArr[i].firestoreID])
                 
                 var playgroundQuestionScores: [Int] = []
@@ -204,7 +203,7 @@ final class SignupViewModel: ObservableObject {
                 var playgroundProgress: [String] = []
                 var questionsId: [String] = []
                 
-                let document = newStudent.collection("Chapters").document("chapter_\(i)")
+                let document = newStudent.collection("Chapters").document("chapter_\(i+1)")
                 
                 for j in 0..<chaptersArr[i].playgroundArr.count {
                     questionsId.append(chaptersArr[i].playgroundArr[j].fId)
@@ -213,13 +212,16 @@ final class SignupViewModel: ObservableObject {
                     document.updateData(["question_\(j+1)_answer" : playgroundAnswers])
                 }
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     document.updateData(["question_scores": playgroundQuestionScores,
                                          "question_progress": playgroundProgress,
-                                         "question_ids": questionsId])
-                    
-                    completion(.success)
+                                         "question_ids": questionsId,
+                                         "total_questions": self.chaptersArr[i].playgroundArr.count])
                 }
+            }
+            
+            if i+1 == chaptersArr.count {
+                completion(.success)
             }
         }
     }

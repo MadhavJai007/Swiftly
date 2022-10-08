@@ -226,7 +226,9 @@ struct ChapterContentView: View {
     //                chaptersViewModel.saveUserProgress()
                 }
             
-            chaptersViewModel.saveUserProgress()
+                chaptersViewModel.saveUserProgressToCloud(completion: { status in
+                    print(status)
+                })
             
             }
         }

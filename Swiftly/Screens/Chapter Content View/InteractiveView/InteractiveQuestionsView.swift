@@ -264,10 +264,10 @@ struct InteractiveQuestionsView: View {
                                         .padding(20)
                                         .disabled(true)
                                         .accessibilityLabel("Start Next Chapter Button")
-                                    }else{
+                                    } else{
                                         Button{
                                             print("Show ad")
-                                             self.fullScreenAd?.showAd()
+                                            self.fullScreenAd?.showAd()
                                             chaptersViewModel.willStartNextChapter = true
                                             chapterContentViewModel.willStartInteractiveSection.toggle()
                                             chaptersViewModel.didStartChapter.toggle()
@@ -316,8 +316,10 @@ struct InteractiveQuestionsView: View {
                 chaptersViewModel.loggedInUser.classroom[0].classroomPlaygroundStatus = "inprogress"
             }
             
-            chaptersViewModel.saveUserProgress()
-            chaptersViewModel.retrieveUserbaseCompletion()
+            chaptersViewModel.saveUserProgressToCloud { status in
+            }
+            
+            chaptersViewModel.retrieveUserbaseCompletion(completion: { _ in })
             
             /// If all the questions in this playground are complete, set the chapter to be complete
             if (chapterContentViewModel.playgroundQuestionStatus.contains("incomplete")){
