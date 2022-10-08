@@ -311,13 +311,49 @@ final class ChaptersViewModel: ObservableObject {
         }
     }
     
+    func deleteOldChapterFromCloud(completion: @escaping(UploadStatus) -> Void) {
+        
+        let db = Firestore.firestore()
+        let classroom = db.collection(loggedInAccountType).document(loggedInUser.username).collection("Classrooms").document("classroom_1")
+        
+        classroom.collection("Chapters").getDocuments { snapshot, err in
+            if err != nil {
+                completion(.failure)
+            } else {
+                
+                var counter = 0
+                let count = snapshot!.documents.count
+                
+                for doc in snapshot!.documents {
+                    classroom.collection("Chapters").document(doc.documentID).delete() { err in
+                        if err != nil {
+                            print("Error removing document")
+                        } else {
+                            print("Document successfully removed!")
+                        }
+                    }
+                    
+                    counter += 1
+                    
+                    if counter == count {
+                        completion(.success)
+                    }
+                    
+                }
+            }
+            
+            
+        }
+    }
+    
+    
     func addNewChapterToCloud(completion: @escaping(UploadStatus) -> Void) {
         
         let db = Firestore.firestore()
-        
+        let classroom = db.collection(loggedInAccountType).document(loggedInUser.username).collection("Classrooms").document("classroom_1")
+          
         for j in 0..<loggedInUser.classroom[0].chapterProgress.count {
         
-            let classroom = db.collection(loggedInAccountType).document(loggedInUser.username).collection("Classrooms").document("classroom_1")
             let userChapter = classroom.collection("Chapters").document("chapter_\(j+1)")
             
             var playgroundIds = [String]()
@@ -579,12 +615,29 @@ final class ChaptersViewModel: ObservableObject {
 
                             // 4
                             self.checkForRemovedChapter { statusFour in
-
-                                if statusThree || statusFour {
-
-                                    // 5
-                                    self.addNewChapterToCloud { statusFive in
+                                
+                                if statusFour {
+                                    self.deleteOldChapterFromCloud { statusFive in
                                         switch statusFive {
+                                        case .success:
+                                            self.addNewChapterToCloud { statusSix in
+                                                switch statusSix {
+                                                case .success:
+                                                    print("Success")
+                                                case .failure:
+                                                    completion(.failure)
+                                                }
+                                            }
+                                        case .failure:
+                                            completion(.failure)
+                                        }
+                                    }
+                                }
+                                
+                                if statusThree {
+                                    // 5
+                                    self.addNewChapterToCloud { statusSeven in
+                                        switch statusSeven {
                                         case .success:
                                             print("Success")
                                         case .failure:
@@ -593,11 +646,11 @@ final class ChaptersViewModel: ObservableObject {
                                     }
                                 }
                                 
-                                self.checkForMissingPlayground { statusSix in
-                                    self.checkForExtraPlayground { statusSeven in
-                                        if statusSix || statusSeven {
-                                            self.saveUserProgressToCloud { statusEight in
-                                                switch statusEight {
+                                self.checkForMissingPlayground { statusEight in
+                                    self.checkForExtraPlayground { statusNine in
+                                        if statusEight || statusNine {
+                                            self.addNewChapterToCloud { statusTen in
+                                                switch statusTen {
                                                 case .success:
                                                     completion(.success)
                                                 case .failure:
@@ -800,10 +853,11 @@ final class ChaptersViewModel: ObservableObject {
                 needsUpdate = true
             }
             
-            if i+1 == loggedInUser.classroom[0].chapterProgress.count {
-                completion(needsUpdate)
-            }
+//            if i+1 == loggedInUser.classroom[0].chapterProgress.count {
+//
+//            }
         }
+        completion(needsUpdate)
     }
     
     
