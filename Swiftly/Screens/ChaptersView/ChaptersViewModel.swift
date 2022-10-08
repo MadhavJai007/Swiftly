@@ -40,7 +40,7 @@ final class ChaptersViewModel: ObservableObject {
     
     @Published var totalUserCount = 0
     
-    var loggedInAccountType : String = ""
+    var loggedInAccountType : String = "Student"
     var logoutIntent = false
     var loggedInUser = User(firstName: "",
                             lastName: "",
@@ -311,6 +311,63 @@ final class ChaptersViewModel: ObservableObject {
         }
     }
     
+    func addNewChapterToCloud(completion: @escaping(UploadStatus) -> Void) {
+        
+        let db = Firestore.firestore()
+        
+        for j in 0..<loggedInUser.classroom[0].chapterProgress.count {
+        
+            let classroom = db.collection(loggedInAccountType).document(loggedInUser.username).collection("Classrooms").document("classroom_1")
+            let userChapter = classroom.collection("Chapters").document("chapter_\(j+1)")
+            
+            var playgroundIds = [String]()
+            
+            let chapterQuestionsProgress = loggedInUser.classroom[0].chapterProgress[j].questionAnswers
+            
+            for i in 0..<chapterQuestionsProgress.count{
+                
+                let data = chapterQuestionsProgress[i].answers
+                
+                playgroundIds.append(chapterQuestionsProgress[i].fId)
+                
+                userChapter.setData(["question_\(i+1)_answer": data]){ err in
+                    if err != nil {
+                        completion(.failure)
+                    }
+                }
+            }
+            
+            userChapter.setData([
+                "chapter_status": loggedInUser.classroom[0].chapterProgress[j].chapterStatus,
+                "chapters_name": loggedInUser.classroom[0].chapterProgress[j].chapterName,
+                "chapters_num": loggedInUser.classroom[0].chapterProgress[j].chapterNum,
+                "playground_status": loggedInUser.classroom[0].chapterProgress[j].playgroundStatus,
+                "theory_status": loggedInUser.classroom[0].chapterProgress[j].theoryStatus,
+                "question_scores": loggedInUser.classroom[0].chapterProgress[j].questionScores,
+                "question_progress": loggedInUser.classroom[0].chapterProgress[j].questionProgress,
+                "question_ids": playgroundIds,
+                "total_question_score": loggedInUser.classroom[0].chapterProgress[j].chapterScore,
+                "total_questions": loggedInUser.classroom[0].chapterProgress[j].totalQuestions,
+                "chapter_id": loggedInUser.classroom[0].chapterProgress[j].chapterID]){ err in
+                if err != nil {
+                    completion(.failure)
+                }
+            }
+            
+            for i in 0..<chapterQuestionsProgress.count{
+                let data = chapterQuestionsProgress[i].answers
+                userChapter.updateData(["question_\(i+1)_answer": data]){ err in
+                    if err != nil {
+                        completion(.failure)
+                    }
+                }
+            }
+            
+            if j+1 == loggedInUser.classroom[0].chapterProgress.count {
+                completion(.success)
+            }
+        }
+    }
     func saveUserProgressToCloud(completion: @escaping(UploadStatus) -> Void){
         let db = Firestore.firestore()
         let user = Auth.auth().currentUser
@@ -396,7 +453,10 @@ final class ChaptersViewModel: ObservableObject {
                             var counter = 0
                             for chapterDoc in querySnapshot!.documents {
                                 
-                                let chapterStatus = chapterDoc["chapter_status"] as! String
+                                guard let chapterStatus = chapterDoc["chapter_status"] as? String else {
+                                    completion(.failure)
+                                    return
+                                }
                                 
                                 if (chapterStatus == "complete"){
                                     // Only getting status for chapters currently being used by the app
@@ -523,32 +583,31 @@ final class ChaptersViewModel: ObservableObject {
                                 if statusThree || statusFour {
 
                                     // 5
-                                    self.saveUserProgressToCloud { statusFive in
+                                    self.addNewChapterToCloud { statusFive in
                                         switch statusFive {
                                         case .success:
-                                            completion(.success)
-                                            self.checkForMissingPlayground { statusSix in
-                                                self.checkForExtraPlayground { statusSeven in
-                                                    if statusSix || statusSeven {
-                                                        self.saveUserProgressToCloud { statusEight in
-                                                            switch statusEight {
-                                                            case .success:
-                                                                completion(.success)
-                                                            case .failure:
-                                                                completion(.failure)
-                                                            }
-                                                        }
-                                                    }else {
-                                                        completion(.success)
-                                                    }
-                                                }
-                                            }
+                                            print("Success")
                                         case .failure:
                                             completion(.failure)
                                         }
                                     }
-                                } else {
-                                    completion(.success)
+                                }
+                                
+                                self.checkForMissingPlayground { statusSix in
+                                    self.checkForExtraPlayground { statusSeven in
+                                        if statusSix || statusSeven {
+                                            self.saveUserProgressToCloud { statusEight in
+                                                switch statusEight {
+                                                case .success:
+                                                    completion(.success)
+                                                case .failure:
+                                                    completion(.failure)
+                                                }
+                                            }
+                                        }else {
+                                            completion(.success)
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -656,12 +715,12 @@ final class ChaptersViewModel: ObservableObject {
                             
                             let chapter = UserChapterProgress(chapterStatus: chapterStatus, chapterName: chapterName, chapterNum: chapterNum, playgroundStatus: playgroundStatus, questionScores: questionScores, questionAnswers: userQuestionAnswers, questionProgress: questionProgress, theoryStatus: theoryStatus, chapterScore: chapterScore, totalQuestions: totalQuestions, chapterID: chapterID, questionIDS: questionIds)
                             
+                            chaptersProgress.append(chapter)
+                            
                             if i+1 == snapshot!.documents.count {
                                 userClassroom.chapterProgress = chaptersProgress
                                 self.loggedInUser.classroom.append(userClassroom)
                                 completion(.success)
-                            } else {
-                                chaptersProgress.append(chapter)
                             }
                         }
                     }
