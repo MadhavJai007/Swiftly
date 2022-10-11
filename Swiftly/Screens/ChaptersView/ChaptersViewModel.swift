@@ -150,7 +150,6 @@ final class ChaptersViewModel: ObservableObject {
                                       return
                                   }
                             
-                            
                             var chapter = Chapter(chapterNum: chapterNum,
                                                   name: chapterName,
                                                   difficulty: chapterDifficulty,
@@ -311,6 +310,23 @@ final class ChaptersViewModel: ObservableObject {
         }
     }
     
+    
+    func organizeUserProgressViaChapterNumber(completion: @escaping() -> Void){
+        for i in 0..<self.loggedInUser.classroom[0].chapterProgress.count {
+            for j in 1..<self.loggedInUser.classroom[0].chapterProgress.count {
+                if self.loggedInUser.classroom[0].chapterProgress[j].chapterNum < self.loggedInUser.classroom[0].chapterProgress[j-1].chapterNum {
+                    let tmp = self.loggedInUser.classroom[0].chapterProgress[j-1].chapterNum
+                    self.loggedInUser.classroom[0].chapterProgress[j-1].chapterNum = self.loggedInUser.classroom[0].chapterProgress[j].chapterNum
+                    self.loggedInUser.classroom[0].chapterProgress[j].chapterNum = tmp
+                }
+                
+                if i+1 == self.loggedInUser.classroom[0].chapterProgress.count {
+                    completion()
+                }
+            }
+        }
+    }
+    
     func deleteOldChapterFromCloud(completion: @escaping(UploadStatus) -> Void) {
         
         let db = Firestore.firestore()
@@ -354,7 +370,7 @@ final class ChaptersViewModel: ObservableObject {
           
         for j in 0..<loggedInUser.classroom[0].chapterProgress.count {
         
-            let userChapter = classroom.collection("Chapters").document("chapter_\(j+1)")
+            let userChapter = classroom.collection("Chapters").document(loggedInUser.classroom[0].chapterProgress[j].chapterID)
             
             var playgroundIds = [String]()
             
@@ -419,7 +435,7 @@ final class ChaptersViewModel: ObservableObject {
         for j in 0..<loggedInUser.classroom[0].chapterProgress.count {
             
             let classroom = db.collection(loggedInAccountType).document(loggedInUser.username).collection("Classrooms").document("classroom_1")
-            let userChapter = classroom.collection("Chapters").document("chapter_\(j+1)")
+            let userChapter = classroom.collection("Chapters").document(loggedInUser.classroom[0].chapterProgress[j].chapterID)
             
             var playgroundIds = [String]()
             
@@ -553,6 +569,7 @@ final class ChaptersViewModel: ObservableObject {
                 self.downloadUserProgress(username: self.loggedInUser.username) { statusTwo in
                     switch statusTwo {
                     case .success:
+
                         // 3
                         self.checkForMissingChapter { statusThree in
 
@@ -560,31 +577,34 @@ final class ChaptersViewModel: ObservableObject {
                             self.checkForRemovedChapter { statusFour in
                                 
                                 if statusFour {
-                                    self.deleteOldChapterFromCloud { statusFive in
-                                        switch statusFive {
-                                        case .success:
-                                            self.addNewChapterToCloud { statusSix in
-                                                switch statusSix {
-                                                case .success:
-                                                    print("Success")
-                                                case .failure:
-                                                    completion(.failure)
+                                    self.organizeUserProgressViaChapterNumber {
+                                        self.deleteOldChapterFromCloud { statusFive in
+                                            switch statusFive {
+                                            case .success:
+                                                self.addNewChapterToCloud { statusSix in
+                                                    switch statusSix {
+                                                    case .success:
+                                                        print("Success")
+                                                    case .failure:
+                                                        completion(.failure)
+                                                    }
                                                 }
+                                            case .failure:
+                                                completion(.failure)
                                             }
-                                        case .failure:
-                                            completion(.failure)
                                         }
                                     }
                                 }
                                 
                                 if statusThree {
-                                    // 5
-                                    self.addNewChapterToCloud { statusSeven in
-                                        switch statusSeven {
-                                        case .success:
-                                            print("Success")
-                                        case .failure:
-                                            completion(.failure)
+                                    self.organizeUserProgressViaChapterNumber {
+                                        self.addNewChapterToCloud { statusSeven in
+                                            switch statusSeven {
+                                            case .success:
+                                                print("Success")
+                                            case .failure:
+                                                completion(.failure)
+                                            }
                                         }
                                     }
                                 }
@@ -917,7 +937,7 @@ final class ChaptersViewModel: ObservableObject {
         
         for i in 0..<userChaptersCount{
             
-            let updatingRef = db.collection(loggedInAccountType).document(loggedInUser.username).collection("Classrooms").document("classroom_1").collection("Chapters").document("chapter_\(i+1)")
+            let updatingRef = db.collection(loggedInAccountType).document(loggedInUser.username).collection("Classrooms").document("classroom_1").collection("Chapters").document(loggedInUser.classroom[0].chapterProgress[i].chapterID)
             
             var questionIds = [String]()
             
@@ -980,7 +1000,7 @@ final class ChaptersViewModel: ObservableObject {
         /// Looping through chapters (indexes) user does not have yet
         for j in startIndex...endIndex{
             
-            let updatingRef = db.collection(loggedInAccountType).document(loggedInUser.username).collection("Classrooms").document("classroom_1").collection("Chapters").document("chapter_\(j+1)")
+            let updatingRef = db.collection(loggedInAccountType).document(loggedInUser.username).collection("Classrooms").document("classroom_1").collection("Chapters").document(loggedInUser.classroom[0].chapterProgress[j].chapterID)
             
             var questionIds = [String]()
             

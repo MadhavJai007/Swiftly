@@ -189,7 +189,7 @@ final class SignupViewModel: ObservableObject {
 
             if (chaptersArr[i].chapterNum > 0){
                 
-                newStudent.collection("Chapters").document("chapter_\(i+1)").setData([
+                newStudent.collection("Chapters").document(chaptersArr[i].firestoreID).setData([
                     "chapters_num" : chaptersArr[i].chapterNum,
                     "chapters_name" : chaptersArr[i].name,
                     "playground_status" : "incomplete",
@@ -203,7 +203,7 @@ final class SignupViewModel: ObservableObject {
                 var playgroundProgress: [String] = []
                 var questionsId: [String] = []
                 
-                let document = newStudent.collection("Chapters").document("chapter_\(i+1)")
+                let document = newStudent.collection("Chapters").document(chaptersArr[i].firestoreID)
                 
                 for j in 0..<chaptersArr[i].playgroundArr.count {
                     questionsId.append(chaptersArr[i].playgroundArr[j].fId)

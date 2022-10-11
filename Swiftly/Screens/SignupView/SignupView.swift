@@ -268,7 +268,7 @@ struct SignupView: View {
                         signupViewModel.newUser.password = ""
                         signupViewModel.newUser.firstName = ""
                         signupViewModel.newUser.lastName = ""
-                        signupViewModel.newUser.dob = ""
+                        signupViewModel.newUser.dob = ""                        
                     }
             }
             .navigationBarHidden(true)
