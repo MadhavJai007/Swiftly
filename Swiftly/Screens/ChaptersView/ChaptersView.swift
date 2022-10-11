@@ -79,12 +79,12 @@ struct ChaptersView: View {
                     
                     Spacer()
                     
-                    /// ScrollView containing all chapters
+                    // ScrollView containing all chapters
                     ScrollView {
                         LazyVGrid(columns: chaptersViewModel.columns, spacing: 50) {
-                            
                             ForEach(0..<chaptersViewModel.chaptersArr.count) { index in
                                 
+                                // TODO: THIS THING IS BROKEN --> WEIRD INDEXING
                                 ChapterTitleView(chapter: chaptersViewModel.chaptersArr[index], width: geometry.size.width/2.35)
                                     .environmentObject(chaptersViewModel)
                                     .environmentObject(chapterContentViewModel)
@@ -137,11 +137,10 @@ struct ChaptersView: View {
             leaderboardViewModel.loggedInUser = chaptersViewModel.loggedInUser
 
             if (chaptersViewModel.logoutIntent == true){
-                chaptersViewModel.logoutIntent = false
                 chaptersViewModel.isUserLoggedIn = false
             } else {
                 
-                chaptersViewModel.retrieveUserbaseCompletion()
+                chaptersViewModel.retrieveUserbaseCompletion { _ in }
                 leaderboardViewModel.chapterFilters.removeAll()
                 
                 leaderboardViewModel.chapterFilters.append("None")
@@ -153,7 +152,7 @@ struct ChaptersView: View {
                 }
             }
             
-            print(chaptersViewModel.loggedInUser.classroom[0].chapterProgress)
+            
             
             /// Resetting  variables
             chaptersViewModel.isShowingAccountView = false
@@ -168,12 +167,13 @@ struct ChaptersView: View {
             
             /// If the user wants to start the next chapter
             if (chaptersViewModel.willStartNextChapter){
-                
                 chaptersViewModel.willStartNextChapter = false
                 
-                /// Get current chapter index and grab next chapter
-                let chapIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)
-                chaptersViewModel.selectedChapter = chaptersViewModel.chaptersArr[chapIndex!+1]
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    let chapIndex = chaptersViewModel.chaptersArr.firstIndex(of: chaptersViewModel.selectedChapter!)
+                    chaptersViewModel.selectedChapter = chaptersViewModel.chaptersArr[chapIndex!+1]
+                }
+               
             }
             
         }
@@ -197,11 +197,6 @@ struct ChaptersView: View {
             if (chaptersViewModel.isUserLoggedIn == false){
                 
                 loginViewModel.loggedInEmail = ""
-                loginViewModel.accountMode = "Undefined"
-                loginViewModel.isSuccessful = false
-                loginViewModel.isLoading = false
-                
-                
             }
         }
     }

@@ -207,8 +207,11 @@ struct InteractiveView: View {
                                         }
                                     }
                                     
-                                    chaptersViewModel.saveUserProgress()
-                                    chaptersViewModel.retrieveUserbaseCompletion()
+                                    chaptersViewModel.saveUserProgressToCloud { status in
+                                        print(status)
+                                    }
+                                    
+                                    chaptersViewModel.retrieveUserbaseCompletion(completion: { _ in })
                                     
                                     
                                 }label: {

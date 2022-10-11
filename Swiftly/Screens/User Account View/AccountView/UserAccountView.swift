@@ -102,15 +102,15 @@ struct UserAccountView: View {
                                 /// Logging user out
                                 userAccountViewModel.logoutUser()
                                 
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                DispatchQueue.main.asyncAfter(deadline: .now()) {
                                     
                                     if (userAccountViewModel.logoutSuccessful){
                                         chaptersViewModel.isShowingAccountView = false
                                         chaptersViewModel.logoutIntent = true
+                                       
                                     }
                                     else{
                                         print("login view model's loggedInEmail has not been reset")
-                                        /// Todo: Show some alert
                                     }
                                 }
                                 

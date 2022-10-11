@@ -12,6 +12,11 @@ enum DownloadStatus {
     case failure
 }
 
+enum UploadStatus {
+    case success
+    case failure
+}
+
 final class LeaderboardViewModel: ObservableObject {
     
     @Published var userLeaderboardData = [UserLeaderboardData]()
@@ -31,7 +36,6 @@ final class LeaderboardViewModel: ObservableObject {
                             dob : "",
                             country: "",
                             classroom: [])
-    
     
     func startDataRetrieval(filterOne: String? = nil, filterTwo: String? = nil){
         

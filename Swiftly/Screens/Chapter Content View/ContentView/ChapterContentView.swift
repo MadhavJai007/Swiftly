@@ -132,11 +132,16 @@ struct ChapterContentView: View {
                                                         
                                                         HStack{
                                                             Spacer()
-                                                            Image(base64String: String(imgBase64))!
-                                                                .resizable()
-                                                                .aspectRatio(contentMode: .fit)
-                                                                .frame(width: geometry.size.width/1.50)
-                                                            Spacer()
+                                                            
+                                                            if let _ = Image(base64String: String(imgBase64)) {
+                                                                Image(base64String: String(imgBase64))!
+                                                                    .resizable()
+                                                                    .aspectRatio(contentMode: .fit)
+                                                                    .frame(width: geometry.size.width/1.50)
+                                                                Spacer()
+                                                            }
+                                                            
+                                                            
                                                         }
                                                         .padding(.bottom, geometry.size.width/48)
                                                         
@@ -226,7 +231,9 @@ struct ChapterContentView: View {
     //                chaptersViewModel.saveUserProgress()
                 }
             
-            chaptersViewModel.saveUserProgress()
+                chaptersViewModel.saveUserProgressToCloud(completion: { status in
+                    print(status)
+                })
             
             }
         }

@@ -12,9 +12,9 @@ struct SignupView: View {
     
     var userTypes = ["Student", "Teacher"]
     var countries = ["Canada", "United States", "United Kingdom", "Australia", "Ireland", "Scotland", "New Zealand"]
+    
     @State private var selectedType = "Student"
     
-    @State private var doesUserNameContainProfanity = false
     
     @EnvironmentObject var loginViewModel: LoginViewModel
     @EnvironmentObject var signupViewModel: SignupViewModel /// view model for this view
@@ -209,32 +209,38 @@ struct SignupView: View {
                     // Create account button
                     Button{
                         
-                        // If the username has a bad word in it
+                        signupViewModel.doesUserNameContainProfanity = false
+                        signupViewModel.isBadSignup = false
+                        
+                        // Validating username
                         if signupViewModel.validateUsername(username: signupViewModel.newUser.username) {
-                            doesUserNameContainProfanity.toggle()
+                            signupViewModel.doesUserNameContainProfanity.toggle()
+                            signupViewModel.showAlert.toggle()
                         } else {
-                            signupViewModel.loadingSignupProcess = true
-                            signupViewModel.save(accountType: selectedType)
                             
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 6, execute: {
-                                
-                                signupViewModel.loadingSignupProcess = true
-                                
-                                if(signupViewModel.emailNotTaken == true){
+                            signupViewModel.loadingSignupProcess = true
+                            
+                            signupViewModel.saveNewUser { status in
+                                switch status {
+                                case .success:
+                                    signupViewModel.isBadSignup = false
                                     loginViewModel.isShowingSignupView.toggle()
+                                case .failure, .unknown:
+                                    signupViewModel.isBadSignup = true
+                                    signupViewModel.showAlert = true
                                 }
-                            })
+                                
+                                signupViewModel.loadingSignupProcess = false
+                            }
                         }
                     } label:{
                         CreateAccountButton(text: "Create Account", textColor: .white, backgroundColor: Color.blackCustom)
                             .accessibilityLabel("Create Account")
                         
                     }
-                    .opacity(signupViewModel.isSignUpComplete || monitor.isConnected ? 1 : 0.24)
+                    .opacity(signupViewModel.isSignUpComplete || monitor.isConnected ? 1 : 0.25)
                     .disabled(!monitor.isConnected || !signupViewModel.isSignUpComplete || signupViewModel.loadingSignupProcess)
-                    .alert(isPresented: $signupViewModel.isBadSignup) {
-                        Alert(title: Text("Email Already Taken"), message: Text("\(signupViewModel.newUser.email) is already taken."), dismissButton: .default(Text("OK")))
-                    }
+                    
                     if (!monitor.isConnected){
                         Text("Connect to the internet if you want to create a new account")
                             .font(.system(size: 15))
@@ -242,8 +248,16 @@ struct SignupView: View {
                             .accessibilityLabel("Connect to the internet if you want to create a new account")
                     }
                 }
-                .alert(isPresented: $doesUserNameContainProfanity) {
-                    Alert(title: Text("Bad Word Detected!"), message: Text("Please enter a username with no profanity."), dismissButton: .default(Text("OK")))
+
+                
+                .alert(isPresented: $signupViewModel.showAlert) {
+                    switch signupViewModel.getAlertType() {
+                    case .profanity:
+                        return Alert(title: Text("Bad Word Detected!"), message: Text("Please enter a username with no profanity."), dismissButton: .default(Text("OK")))
+                        
+                    case .badSignup:
+                        return Alert(title: Text("Email Already Taken"), message: Text("\(signupViewModel.newUser.email) is already taken."), dismissButton: .default(Text("OK")))
+                    }
                 }
 
                 Spacer()
@@ -254,27 +268,8 @@ struct SignupView: View {
                         signupViewModel.newUser.password = ""
                         signupViewModel.newUser.firstName = ""
                         signupViewModel.newUser.lastName = ""
-                        signupViewModel.newUser.dob = ""
+                        signupViewModel.newUser.dob = ""                        
                     }
-                
-                
-                if (signupViewModel.loadingSignupProcess == true){
-                    
-                    ZStack {
-                        Color.blackCustom
-                        
-                        VStack{
-                            ProgressView {
-                                SpinnerInfoLabel(text: "Creating account...")
-                            }
-                            .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
-                        }
-                    }
-                    .frame(width: 175, height: 125)
-                    .cornerRadius(15)
-                    .animation(.spring())
-                }
-                
             }
             .navigationBarHidden(true)
         }

@@ -194,88 +194,89 @@ struct UserChapterProgress: Hashable, Identifiable, Codable {
     var theoryStatus: String
     var chapterScore: Int
     var totalQuestions: Int
+    var chapterID: String
+    var questionIDS: [String]
     
-    /// Getting id
+    func getQuestionIDS() -> [String]{
+        return questionIDS
+    }
+    
+    mutating func setQuestionIDS(ids: [String]) {
+        questionIDS = ids
+    }
+    
+    func getChapterID() -> String {
+        return chapterID
+    }
+    
+    mutating func setChapterID(id: String) {
+        chapterID = id
+    }
+    
     func getId() -> UUID {
         return id
     }
     
-    /// Getting chapter status
     func getChapterStatus() -> String {
         return chapterStatus
     }
     
-    /// Setting chapter status
     mutating func setChapterStatus(status: String) {
         chapterStatus = status
     }
     
-    /// Getting chapter name
     func getChapterName() -> String {
         return chapterName
     }
     
-    /// Setting chapter name
     mutating func setChapterName(name: String) {
         chapterName = name
     }
     
-    /// Getting chapter num
     func getChapterNum() -> Int {
         return chapterNum
     }
     
-    /// Setting chapter num
     mutating func setChapterNum(num: Int){
         chapterNum = num
     }
     
-    /// Getting playground status
     func getPlaygroundStatus() -> String {
         return playgroundStatus
     }
     
-    /// Setting playground status
     mutating func setPlaygroundStatus(status: String) {
         playgroundStatus = status
     }
     
-    /// Getting question scores
     func getQuestionScores() -> [Int]{
         return questionScores
     }
     
-    /// Setting question scores
     mutating func setQuestionScores(scores: [Int]){
         questionScores = scores
     }
     
-    /// Getting question answers
     func getQuestionAnwers() -> [UserQuestionAnswer]{
         return questionAnswers
     }
     
-    /// Setting question answers
     mutating func setQuestionAnswers(answers: [UserQuestionAnswer]){
         questionAnswers = answers
     }
     
-    /// Getting question progress
     func getQuestionProgress() -> [String]{
         return questionProgress
     }
     
-    /// Setting question progress
     mutating func setQuestionProgress(progress: [String]){
         questionProgress = progress
     }
     
-    /// Getting theory status
     func getTheoryStatus() -> String{
         return theoryStatus
     }
     
-    /// Setting theory status
     mutating func setTheoryStatus(status: String) {
         theoryStatus = status
     }

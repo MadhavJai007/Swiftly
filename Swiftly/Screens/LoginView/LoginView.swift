@@ -65,16 +65,30 @@ struct LoginView: View {
                       
                         loginViewModel.isLoading.toggle()
                         
-                        if (loginViewModel.attemptingLogin == false){
+                        if (loginViewModel.showLoginSpinner == false){
                             
                             loginViewModel.loginUser(email: email, password: password) { status in
                                 switch status {
                                 case .success:
+                                    
+                                    loginViewModel.showLoginSpinner = true
                                     loginViewModel.loggedInEmail = email
-                                    chaptersViewModel.loadUserData(loggedInEmail: email, accountType: loginViewModel.accountMode)
-                                    loginViewModel.attemptingLogin = true
-                                    email = ""
-                                    password = ""
+                                    
+                                    chaptersViewModel.startUserDownload(email: email) { statusTwo in
+                                        switch statusTwo {
+                                        case .success:
+                                            chaptersViewModel.isUserLoggedIn = true
+                                        case .failure:
+                                            loginViewModel.attemptingLogin = false
+                                            loginViewModel.isLoading = false
+                                        }
+                                        
+                                        loginViewModel.showLoginSpinner = false
+                                    }
+                                    
+//
+                                    //email = ""
+                                    //password = ""
                                 case .failure:
                                     loginViewModel.attemptingLogin = false
                                     loginViewModel.isLoading = false
@@ -87,8 +101,8 @@ struct LoginView: View {
                     }
                     .padding(.top,50)
                     .padding(.bottom,50)
-                    .opacity(loginViewModel.isLoading || !monitor.isConnected ? 0.24 : 1)
-                    .disabled(loginViewModel.isLoading || !monitor.isConnected)
+                    .opacity(loginViewModel.showLoginSpinner || !monitor.isConnected ? 0.25 : 1)
+                    .disabled(loginViewModel.showLoginSpinner || !monitor.isConnected)
                     
                     /// Alert for bad login
                     .alert(item: $loginViewModel.alertInfo, content: { info in
@@ -160,15 +174,12 @@ struct LoginView: View {
                 }
                 .padding(.bottom, 250)
                 
-                
-                /// Shows progress loader while chapters are being downloaded
-                if (loginViewModel.isSuccessful == true){
+                if (loginViewModel.showLoginSpinner == true){
                     ZStack {
                         Color.blackCustom
-                        
                         VStack{
                             ProgressView {
-                                SpinnerInfoLabel(text:chaptersViewModel.loadingInfo)
+                                SpinnerInfoLabel(text: chaptersViewModel.loadingInfo)
                             }
                             .progressViewStyle(CircularProgressViewStyle(tint: Color.white))
                         }
@@ -180,23 +191,33 @@ struct LoginView: View {
             }
             .animation(.spring())
             
-            .onAppear{
+            .onAppear {
+                
                 email = ""
                 password = ""
                 chaptersViewModel.isUserLoggedIn = false
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + (chaptersViewModel.logoutIntent ? 3 : 0)) {
+                    
+                    chaptersViewModel.logoutIntent = false
                     chaptersViewModel.chaptersArr.removeAll()
                     chaptersViewModel.clearAllData()
-                    chaptersViewModel.downloadLessons()
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                        chaptersViewModel.downloadPlaygrounds()
-                    }
+                    chaptersViewModel.downloadChapters(completion: { status in
+                        switch status {
+                        case .success:
+                            chaptersViewModel.organizeChaptersByNumber {
+                                chaptersViewModel.retrieveUserbaseCompletion { _ in
+                                }
+                            }
+                        case .failure:
+                            print("Failed: downloading chapter")
+                        }
+                    })
                 }
             }
             
-            /// Resetting user input
+            // Resetting user input
             .onDisappear {
                 self.email = ""
                 self.password = ""
@@ -208,7 +229,7 @@ struct LoginView: View {
     }
 }
 
-/// Preview
+// Preview
 struct LoginScreen_Previews: PreviewProvider {
     static var previews: some View {
         LoginView()
