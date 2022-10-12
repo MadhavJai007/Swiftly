@@ -108,10 +108,17 @@ final class LeaderboardViewModel: ObservableObject {
                             
                             if filterTwo != "None" {
                                 if filterTwo == country {
-                                    downloadedUserData.append(userData)
+                                    
+                                    if finalizedTestScore != 0.0 {
+                                        downloadedUserData.append(userData)
+                                    }
+                                    
+                                    
                                 }
                             } else {
-                                downloadedUserData.append(userData)
+                                if finalizedTestScore != 0.0 {
+                                    downloadedUserData.append(userData)
+                                }
                             }
                             
                             count += 1
