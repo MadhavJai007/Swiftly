@@ -1,9 +1,7 @@
-//
+//  INFO49635 - CAPSTONE FALL 2022
 //  SignupTests.swift
-//  SwiftlyTests
-//
-//  Created by Toby Moktar on 2022-10-12.
-//
+//  Swiftly
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import XCTest
 

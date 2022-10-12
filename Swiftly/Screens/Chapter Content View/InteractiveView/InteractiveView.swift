@@ -1,4 +1,4 @@
-//  INFO49635 - CAPSTONE FALL 2021
+//  INFO49635 - CAPSTONE FALL 2022
 //  InteractiveView.swift
 //  Swiftly
 //  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
