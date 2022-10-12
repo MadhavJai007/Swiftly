@@ -1,26 +1,31 @@
-//
+//  INFO49635 - CAPSTONE FALL 2022
 //  InterstitialView.swift
 //  Swiftly
-//
-//  Created by Arjun Suthaharan on 2022-09-28.
-//
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import GoogleMobileAds
 import SwiftUI
 import UIKit
 
+
+//class used to handle interstitial advertisements
 final class Interstitial:NSObject, GADFullScreenContentDelegate {
   var interstitial:GADInterstitialAd?
 
+    
+  //initializer
   override init() {
     super.init()
     self.loadInterstitial()
   }
 
+    //loads the interstital ad
     func loadInterstitial(){
         let request = GADRequest()
         request.scene = UIApplication.shared.connectedScenes.first as? UIWindowScene
         
+        
+        //interstitial ad, with test ad ID
         GADInterstitialAd.load(withAdUnitID:"ca-app-pub-3940256099942544/4411468910",
                                request: request,
                                completionHandler: { [self] ad, error in
@@ -33,6 +38,7 @@ final class Interstitial:NSObject, GADFullScreenContentDelegate {
                                })
     }
 
+    //displays the advertisement
     func showAd(){
         if self.interstitial != nil {
             let root = UIApplication.shared.windows.first?.rootViewController
@@ -43,6 +49,7 @@ final class Interstitial:NSObject, GADFullScreenContentDelegate {
         }
     }
     
+    //used for handling full screen content
     func adDidDismissFullScreenContent(_ ad: GADFullScreenPresentingAd) {
         print("Ad did dismiss full screen content.")
         self.loadInterstitial()

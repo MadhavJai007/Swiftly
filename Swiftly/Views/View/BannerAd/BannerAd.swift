@@ -1,15 +1,12 @@
-//
+//  INFO49635 - CAPSTONE FALL 2022
 //  BannerAd.swift
 //  Swiftly
-//
-//  Created by Arjun Suthaharan on 2022-09-21.
-//
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import SwiftUI
 import GoogleMobileAds
 
-//Implementing Banner Ad
-
+//Struct to hold banner type advertisements
 struct BannerAd: UIViewRepresentable{
     
     var unitID: String
@@ -20,6 +17,7 @@ struct BannerAd: UIViewRepresentable{
         return Coordinator()
     }
     
+    //creates the UIView that holds banner ad
     func makeUIView(context: Context) -> GADBannerView{
         let adView = GADBannerView(adSize: GADAdSizeBanner)
         
@@ -38,6 +36,7 @@ struct BannerAd: UIViewRepresentable{
         
     }
     
+    //coordinator class that holds all logs involving the banner ad
     class Coordinator: NSObject, GADBannerViewDelegate{
         
         
@@ -66,8 +65,8 @@ struct BannerAd: UIViewRepresentable{
         }
     }
 }
-//Extending app to get rootview
 
+//extending UIApplication to retrieve rootview
 extension UIApplication{
     func getRootViewController()->UIViewController{
         
