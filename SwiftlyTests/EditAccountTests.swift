@@ -1,15 +1,15 @@
 //
-//  SwiftlyTests.swift
+//  EditAccountTests.swift
 //  SwiftlyTests
 //
-//  Created by Toby Moktar on 2022-10-07.
+//  Created by Toby Moktar on 2022-10-12.
 //
 
 import XCTest
 @testable import Swiftly
 @testable import Pods_Swiftly
 
-class SwiftlyTests: XCTestCase {
+class EditAccountTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -29,7 +29,7 @@ class SwiftlyTests: XCTestCase {
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
-        measure {
+        self.measure {
             // Put the code you want to measure the time of here.
         }
     }
