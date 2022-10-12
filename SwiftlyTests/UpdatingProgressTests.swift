@@ -1,5 +1,5 @@
 //  INFO49635 - CAPSTONE FALL 2022
-//  SignupTests.swift
+//  UpdatingProgressTests.swift
 //  Swiftly
 //  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
@@ -7,7 +7,7 @@ import XCTest
 @testable import Swiftly
 @testable import Pods_Swiftly
 
-class SignupTests: XCTestCase {
+class UpdatingProgressTests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -15,6 +15,17 @@ class SignupTests: XCTestCase {
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
+    }
+    
+    func testUpdatingUserProgress() throws {
+        
+        let chaptersViewModel = ChaptersViewModel()
+        
+//        chaptersViewModel.loggedInUser = User(firstName: "swiftly",
+//                                              lastName: "test",
+//                                              username: "swiftlytest", email: "swiftlytest@email.com", password: "Test1234", dob: "01/01/2000", country: "Canada", classroom: )
+        
+        
     }
 
     func testExample() throws {

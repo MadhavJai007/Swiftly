@@ -16,6 +16,7 @@
 		4E21FAEF28F08D7E0076AF1F /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E21FAEE28F08D7E0076AF1F /* LoginTests.swift */; };
 		4E21FAF128F7039C0076AF1F /* SignupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E21FAF028F7039C0076AF1F /* SignupTests.swift */; };
 		4E21FAF328F703D90076AF1F /* EditAccountTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E21FAF228F703D90076AF1F /* EditAccountTests.swift */; };
+		4E21FAF528F7364E0076AF1F /* UpdatingProgressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E21FAF428F7364E0076AF1F /* UpdatingProgressTests.swift */; };
 		DA0866AB2717702E00B1999E /* InteractiveQuestionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866AA2717702E00B1999E /* InteractiveQuestionsView.swift */; };
 		DA0866B82719CC0D00B1999E /* EditAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866B72719CC0C00B1999E /* EditAccountView.swift */; };
 		DA0866BE271A0AF900B1999E /* NavBarIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA0866BD271A0AF900B1999E /* NavBarIconView.swift */; };
@@ -81,6 +82,7 @@
 		4E21FAEE28F08D7E0076AF1F /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
 		4E21FAF028F7039C0076AF1F /* SignupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupTests.swift; sourceTree = "<group>"; };
 		4E21FAF228F703D90076AF1F /* EditAccountTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountTests.swift; sourceTree = "<group>"; };
+		4E21FAF428F7364E0076AF1F /* UpdatingProgressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatingProgressTests.swift; sourceTree = "<group>"; };
 		66F71B613F71F71DCB1B8233 /* Pods-Swiftly.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swiftly.release.xcconfig"; path = "Target Support Files/Pods-Swiftly/Pods-Swiftly.release.xcconfig"; sourceTree = "<group>"; };
 		8FDBE6C6B205D978766E6A18 /* Pods-Swiftly.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Swiftly.debug.xcconfig"; path = "Target Support Files/Pods-Swiftly/Pods-Swiftly.debug.xcconfig"; sourceTree = "<group>"; };
 		DA0866AA2717702E00B1999E /* InteractiveQuestionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractiveQuestionsView.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 		4E21FAE628F08D0B0076AF1F /* SwiftlyTests */ = {
 			isa = PBXGroup;
 			children = (
+				4E21FAF428F7364E0076AF1F /* UpdatingProgressTests.swift */,
 				4E21FAF228F703D90076AF1F /* EditAccountTests.swift */,
 				4E21FAF028F7039C0076AF1F /* SignupTests.swift */,
 				4E21FAEE28F08D7E0076AF1F /* LoginTests.swift */,
@@ -668,6 +671,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E21FAF528F7364E0076AF1F /* UpdatingProgressTests.swift in Sources */,
 				4E21FAF128F7039C0076AF1F /* SignupTests.swift in Sources */,
 				4E21FAE828F08D0B0076AF1F /* SwiftlyTests.swift in Sources */,
 				4E21FAEF28F08D7E0076AF1F /* LoginTests.swift in Sources */,

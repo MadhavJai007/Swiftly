@@ -561,21 +561,18 @@ final class ChaptersViewModel: ObservableObject {
     
     func startUserDownload(email: String, completion: @escaping(DownloadStatus) -> Void){
         
-        // 1 This is fine
+        // 1
         downloadRemoteUserData(email: email) { statusOne in
             switch statusOne {
             case .success:
-                // 2 This is fine
+                // 2
                 self.downloadUserProgress(username: self.loggedInUser.username) { statusTwo in
                     switch statusTwo {
                     case .success:
-
                         // 3
                         self.checkForMissingChapter { statusThree in
-
                             // 4
                             self.checkForRemovedChapter { statusFour in
-                                
                                 if statusFour {
                                     self.organizeUserProgressViaChapterNumber {
                                         self.deleteOldChapterFromCloud { statusFive in

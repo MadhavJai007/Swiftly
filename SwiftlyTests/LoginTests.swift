@@ -31,7 +31,7 @@ class LoginTests: XCTestCase {
         
         let expectation = self.expectation(description: "Login")
         
-        loginViewModel.loginUser(email: "moktar@email.com", password: "Moktar11", completion: { _ in
+        loginViewModel.loginUser(email: "swiftlytest@email.com", password: "Test1234", completion: { _ in
             expectation.fulfill()
         })
         
@@ -53,4 +53,36 @@ class LoginTests: XCTestCase {
         XCTAssertNotNil(chapterDownloadStatus)
         XCTAssertEqual(chapterDownloadStatus, .success)
    }
+    
+    func testUserProgressDownload() throws {
+        let loginViewModel = LoginViewModel()
+        let chaptersViewModel = ChaptersViewModel()
+        
+        chaptersViewModel.chaptersArr.removeAll()
+        chaptersViewModel.clearAllData()
+        
+        let expectation = self.expectation(description: "UserProgress")
+        expectation.assertForOverFulfill = false
+        
+        chaptersViewModel.downloadChapters { _ in
+            chaptersViewModel.organizeChaptersByNumber {
+                chaptersViewModel.retrieveUserbaseCompletion { _ in
+                    loginViewModel.loginUser(email: "swiftlytest@email.com", password: "Test1234") { _ in
+                        chaptersViewModel.startUserDownload(email: "swiftlytest@email.com") { status in
+                            switch status {
+                            case .success:
+                                chaptersViewModel.isUserLoggedIn = true
+                            case .failure:
+                                print("Something went wrong...")
+                            }
+                            expectation.fulfill()
+                        }
+                    }
+                }
+            }
+        }
+
+        waitForExpectations(timeout: 10, handler: nil)
+        XCTAssertEqual(chaptersViewModel.isUserLoggedIn, true)
+    }
 }
