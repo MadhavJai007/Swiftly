@@ -11,6 +11,7 @@ import FirebaseFirestore
 
 class LoginTests: XCTestCase {
     
+    // Testing: Invalid login credentials
     func testInvalidLogin() {
         
         let loginViewModel = LoginViewModel()
@@ -25,6 +26,7 @@ class LoginTests: XCTestCase {
         XCTAssertFalse(loginViewModel.isSuccessful)
     }
     
+    // Testing: Valid login credentials
     func testValidLogin() throws {
 
         let loginViewModel = LoginViewModel()
@@ -39,6 +41,7 @@ class LoginTests: XCTestCase {
         XCTAssertTrue(loginViewModel.isSuccessful)
     }
     
+    // Testing: Downloading Swiftly chapters
     func testChaptersDownload() throws {
         let chaptersViewModel = ChaptersViewModel()
         let expectation = self.expectation(description: "Download")
@@ -54,6 +57,7 @@ class LoginTests: XCTestCase {
         XCTAssertEqual(chapterDownloadStatus, .success)
    }
     
+    // Testing: Download progress for user
     func testUserProgressDownload() throws {
         let loginViewModel = LoginViewModel()
         let chaptersViewModel = ChaptersViewModel()
