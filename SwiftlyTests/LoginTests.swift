@@ -38,4 +38,19 @@ class LoginTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
         XCTAssertTrue(loginViewModel.isSuccessful)
     }
+    
+    func testChaptersDownload() throws {
+        let chaptersViewModel = ChaptersViewModel()
+        let expectation = self.expectation(description: "Download")
+        var chapterDownloadStatus: DownloadStatus?
+        
+        chaptersViewModel.downloadChapters(completion: { status in
+            chapterDownloadStatus = status
+            expectation.fulfill()
+        })
+                              
+        waitForExpectations(timeout: 5, handler: nil)
+        XCTAssertNotNil(chapterDownloadStatus)
+        XCTAssertEqual(chapterDownloadStatus, .success)
+   }
 }
