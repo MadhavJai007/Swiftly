@@ -57,12 +57,11 @@ class LoginTests: XCTestCase {
     func testUserProgressDownload() throws {
         let loginViewModel = LoginViewModel()
         let chaptersViewModel = ChaptersViewModel()
+        let expectation = self.expectation(description: "UserProgress")
+        expectation.assertForOverFulfill = false
         
         chaptersViewModel.chaptersArr.removeAll()
         chaptersViewModel.clearAllData()
-        
-        let expectation = self.expectation(description: "UserProgress")
-        expectation.assertForOverFulfill = false
         
         chaptersViewModel.downloadChapters { _ in
             chaptersViewModel.organizeChaptersByNumber {
