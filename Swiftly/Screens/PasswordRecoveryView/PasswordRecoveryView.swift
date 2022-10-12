@@ -1,12 +1,11 @@
-//
+//  INFO49635 - CAPSTONE FALL 2022
 //  PasswordRecoveryView.swift
 //  Swiftly
-//
-//  Created by Arjun Suthaharan on 2022-09-10.
-//
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import SwiftUI
 
+//struct used for handling UI elements of password recovery screen
 struct PasswordRecoveryView: View {
     
     @ObservedObject var monitor = NetworkMonitor()

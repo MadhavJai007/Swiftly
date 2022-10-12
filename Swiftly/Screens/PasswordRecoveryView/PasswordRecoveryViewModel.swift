@@ -1,9 +1,7 @@
-//
+//  INFO49635 - CAPSTONE FALL 2022
 //  PasswordRecoveryViewModel.swift
 //  Swiftly
-//
-//  Created by Arjun Suthaharan on 2022-09-10.
-//
+//  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
 
 import Foundation
 import SwiftUI
@@ -43,20 +41,6 @@ final class PasswordRecoveryViewModel: ObservableObject {
         
         let emailCompared = emailChecked
         
-        //        print("After lowercased its : \(emailCompared)")
-        //
-        //        switch accountType {
-        //        case "Student":
-        //            print("search student collection")
-        //            let collectionRef = db.collection("Students")
-        //
-        //        case "Teacher":
-        //            print("search teacher collection")
-        //            let collectionRef = db.collection("Teachers")
-        //        default:
-        //            print("there is no default case")
-        //
-        //        }
         /// retrieving  Firebase collection
         let collectionRef = db.collection("Students")
         
@@ -82,8 +66,11 @@ final class PasswordRecoveryViewModel: ObservableObject {
     }
     
     func resetPassword(){
+        
+        //checks if email is in database
         checkIfEmailExists(emailChecked: email)
         
+        //uses auth package to send recovery email to user
         Auth.auth().sendPasswordReset(withEmail: email){ error in
             if(!self.emailExists){
                 print("Email does not exist, not sending reset")
