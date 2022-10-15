@@ -109,14 +109,14 @@ final class LeaderboardViewModel: ObservableObject {
                             if filterTwo != "None" {
                                 if filterTwo == country {
                                     
-                                    if finalizedTestScore != 0.0 {
+                                    if finalizedTestScore != 0.0 || username == self.loggedInUser.username {
                                         downloadedUserData.append(userData)
                                     }
                                     
                                     
                                 }
                             } else {
-                                if finalizedTestScore != 0.0 {
+                                if finalizedTestScore != 0.0 || username == self.loggedInUser.username {
                                     downloadedUserData.append(userData)
                                 }
                             }
