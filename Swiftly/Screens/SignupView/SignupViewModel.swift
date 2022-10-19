@@ -46,6 +46,18 @@ final class SignupViewModel: ObservableObject {
     private var db = Firestore.firestore()
     
     let listOfBadWords = ["crap", "fuck", "shit", "ass", "penis", "dick","cunt", "whore", "vagina", "boobs", "tits", "fucker", "slut", "motherfucker", "cock", "dildo", "bitch"]
+    
+    
+    func createTestAccount(){
+        newUser.firstName = "test"
+        newUser.lastName = "test"
+        newUser.username = "testAccount"
+        newUser.email = "asdfasdf@email.com"
+        newUser.password = "Password12"
+        newUser.dob = "25/02/2000"
+        newUser.country = "Canada"
+    }
+    
 
     func isEmailValid() -> Bool{
         let emailTest = NSPredicate(format: "SELF MATCHES %@", "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$")
@@ -124,27 +136,32 @@ final class SignupViewModel: ObservableObject {
     
     // Function to check if email already exists in Swiftly database
     func checkIfEmailExists(user: User, completion: @escaping(EmailStatus) -> Void){
-        
+        print("Email check started!")
         let emailCompared = user.email
         let collectionRef = db.collection("Students")
         var userCounter = 0
         
+        print("Now going through database to compare email")
         collectionRef.whereField("email", isEqualTo: emailCompared).getDocuments { (snapshot, err) in
             if err != nil {
+                print("email is unknown")
                 completion(.unknown)
             } else if (snapshot?.isEmpty)! {
+                print("email is free")
                 completion(.free)
             } else {
                 
                 for document in (snapshot?.documents)! {
                     
                     if document.data()["username"] != nil {
+                        print("email is taken")
                         completion(.taken)
                     }
                     
                     userCounter += 1
                     
                     if userCounter == snapshot?.documents.count {
+                        print("email is free")
                         completion(.free)
                     }
                 }
