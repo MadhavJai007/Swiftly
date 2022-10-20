@@ -33,7 +33,8 @@ class LoginTests: XCTestCase {
         
         let expectation = self.expectation(description: "Login")
         
-        loginViewModel.loginUser(email: "swiftlytest@email.com", password: "Test1234", completion: { _ in
+        // Note: email and password might have to be changed
+        loginViewModel.loginUser(email: "moktar@email.com", password: "Moktar11", completion: { _ in
             expectation.fulfill()
         })
         
@@ -54,8 +55,8 @@ class LoginTests: XCTestCase {
         chaptersViewModel.downloadChapters { _ in
             chaptersViewModel.organizeChaptersByNumber {
                 chaptersViewModel.retrieveUserbaseCompletion { _ in
-                    loginViewModel.loginUser(email: "swiftlytest@email.com", password: "Test1234") { _ in
-                        chaptersViewModel.startUserDownload(email: "swiftlytest@email.com") { status in
+                    loginViewModel.loginUser(email: "moktar@email.com", password: "Moktar11") { _ in
+                        chaptersViewModel.startUserDownload(email: "moktar@email.com") { status in
                             switch status {
                             case .success:
                                 chaptersViewModel.isUserLoggedIn = true

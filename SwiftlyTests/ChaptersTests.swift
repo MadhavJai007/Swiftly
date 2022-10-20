@@ -26,7 +26,23 @@ class ChaptersTests: XCTestCase {
    }
     
     
-    // Add test for getting userbase completion
+    // Testing: Downloading userbase completino
+    func testUserbaseCompletionDownload() throws {
+        
+        let chaptersViewModel = ChaptersViewModel()
+        let expectation = self.expectation(description: "Download")
+        
+        chaptersViewModel.downloadChapters(completion: { _ in
+            chaptersViewModel.organizeChaptersByNumber {
+                chaptersViewModel.retrieveUserbaseCompletion(completion: { _ in
+                    expectation.fulfill()
+                })
+            }
+        })
+        
+        waitForExpectations(timeout: 10, handler: nil)
+        XCTAssertNotEqual(chaptersViewModel.userCompletionCount, [Int]())
+    }
 
 }
 

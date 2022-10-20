@@ -118,7 +118,7 @@ final class ChaptersViewModel: ObservableObject {
                 }
             }
             
-            DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
                 completion(self.chapterCount)
             })
         }
@@ -138,7 +138,10 @@ final class ChaptersViewModel: ObservableObject {
                         completion(.failure)
                     } else {
                         
+                        self.chapterCounter += querySnapshot!.documents.count
+                        
                         for chapterDocument in querySnapshot!.documents {
+                            
                             
                             guard let chapterNum = chapterDocument.data()["chapter_number"]! as? Int,
                                   let chapterName = chapterDocument.data()["chapter_title"]! as? String,
@@ -165,12 +168,19 @@ final class ChaptersViewModel: ObservableObject {
                                 case .success:
                                     chapter.lessons = lessons
                                     
+                                    self.chapterCounter += lessons.count
+                                    
                                     self.downloadPlaygrounds(chapterID: chapterDocument.documentID) { statusTwo, playgrounds in
                                         switch statusTwo {
                                         case .success:
                                             chapter.playgroundArr = playgrounds
                                             self.chaptersArr.append(chapter)
-                                            completion(.success)
+                                            self.chapterCounter += playgrounds.count
+                                            
+                                            if self.chapterCounter == self.chapterCount {
+                                                completion(.success)
+                                            }
+                                            
                                         case .failure:
                                             completion(.failure)
                                         }
@@ -179,13 +189,6 @@ final class ChaptersViewModel: ObservableObject {
                                 case .failure:
                                     completion(.failure)
                                 }
-                            }
-                            
-                            self.chapterCounter += 1
-                            
-                            if self.chapterCounter == self.chapterCount {
-                                completion(.success)
-                                return
                             }
                         }
                     }
@@ -485,15 +488,17 @@ final class ChaptersViewModel: ObservableObject {
         
         let db = Firestore.firestore()
         
-        db.collection("Students").getDocuments() { (querySnapshot, err) in
+        db.collection("Students").getDocuments() { (querySnapshotOne, err) in
             if err != nil {
                 completion(.failure)
             } else {
                 
+                let totalDocumentCount = querySnapshotOne!.documents.count
+                
                 // Looping through each student
-                for document in querySnapshot!.documents {
+                for document in querySnapshotOne!.documents {
                     
-                    self.totalUserCount += 1
+//                    self.totalUserCount += 1
                     
                     // Accessing chapters collection for the student
                     db.collection("Students").document(document.documentID).collection("Classrooms").document("classroom_1").collection("Chapters").getDocuments() { (querySnapshot, err) in
@@ -503,6 +508,7 @@ final class ChaptersViewModel: ObservableObject {
                             
                             // Going through each chapter and finding the status
                             var counter = 0
+                            var i = 0
                             for chapterDoc in querySnapshot!.documents {
                                 
                                 guard let chapterStatus = chapterDoc["chapter_status"] as? String else {
@@ -517,15 +523,19 @@ final class ChaptersViewModel: ObservableObject {
                                     }
                                 }
                                 counter += 1
+                                i += 1
+                                
+                                if i == querySnapshot?.documents.count {
+                                    self.totalUserCount += 1
+                                    
+                                    if self.totalUserCount == totalDocumentCount {
+                                        completion(.success)
+                                    }
+                                }
                             }
                         }
                     }
-                    
-                    if self.totalUserCount == querySnapshot!.documents.count {
-                        completion(.success)
-                    }
                 }
-                
             }
         }
     }
@@ -688,9 +698,9 @@ final class ChaptersViewModel: ObservableObject {
                         
                         var chaptersProgress = [UserChapterProgress]()
                         
-                        for i in 0..<snapshot!.documents.count {
+                        for j in 0..<snapshot!.documents.count {
                             
-                            guard let data = snapshot?.documents[i].data() else {
+                            guard let data = snapshot?.documents[j].data() else {
                                 completion(.failure)
                                 return
                             }
@@ -730,7 +740,7 @@ final class ChaptersViewModel: ObservableObject {
                             
                             chaptersProgress.append(chapter)
                             
-                            if i+1 == snapshot!.documents.count {
+                            if j+1 == snapshot!.documents.count {
                                 userClassroom.chapterProgress = chaptersProgress
                                 self.loggedInUser.classroom.append(userClassroom)
                                 completion(.success)
@@ -911,121 +921,6 @@ final class ChaptersViewModel: ObservableObject {
                 if k+1 == userPlaygroundCount {
                     completion(wasExtraPlayground)
                 }
-            }
-        }
-    }
-    
-    func deleteFirestorePlayground(){
-        
-        let db = Firestore.firestore()
-        
-        let user = Auth.auth().currentUser
-        let credential: AuthCredential = EmailAuthProvider.credential(withEmail: loggedInUser.email, password: loggedInUser.password)
-        
-        user?.reauthenticate(with: credential, completion: {(authResult, error) in
-            if error != nil {
-                print("Error: \(error)")
-            }else{
-                print("Successfully Reauthenticated! ")
-            }
-        })
-        
-        let userChaptersCount = self.loggedInUser.classroom[0].chapterProgress.count
-        
-        for i in 0..<userChaptersCount{
-            
-            let updatingRef = db.collection(loggedInAccountType).document(loggedInUser.username).collection("Classrooms").document("classroom_1").collection("Chapters").document(loggedInUser.classroom[0].chapterProgress[i].chapterID)
-            
-            var questionIds = [String]()
-            
-            for k in 0..<loggedInUser.classroom[0].chapterProgress[i].questionAnswers.count{
-                
-                questionIds.append(loggedInUser.classroom[0].chapterProgress[i].questionAnswers[k].fId)
-                
-            }
-            
-            updatingRef.setData([
-                "chapter_status": loggedInUser.classroom[0].chapterProgress[i].chapterStatus,
-                "playground_status": loggedInUser.classroom[0].chapterProgress[i].playgroundStatus,
-                "theory_status": loggedInUser.classroom[0].chapterProgress[i].theoryStatus,
-                "question_scores": loggedInUser.classroom[0].chapterProgress[i].questionScores,
-                "question_progress": loggedInUser.classroom[0].chapterProgress[i].questionProgress,
-                "chapters_name": loggedInUser.classroom[0].chapterProgress[i].chapterName,
-                "chapters_num": loggedInUser.classroom[0].chapterProgress[i].chapterNum,
-                "question_ids": questionIds
-            ])
-            
-            let answersCount = self.loggedInUser.classroom[0].chapterProgress[i].questionAnswers.count
-            
-            for k in 0..<answersCount {
-                
-                updatingRef.updateData([
-                    "question_\(k+1)_answer": self.loggedInUser.classroom[0].chapterProgress[i].questionAnswers[k].answers
-                ])
-            }
-            
-            
-        }
-        
-        
-    }
-    
-    /// Function which uploads new user progress data (for when a new object is created for a chapter that the user does not have progress for yet)
-    func uploadNewData(newChapterCount: Int){
-        
-        self.loadingInfo = "Setting up new content..."
-        
-        let db = Firestore.firestore()
-        
-        let user = Auth.auth().currentUser
-        let credential: AuthCredential = EmailAuthProvider.credential(withEmail: loggedInUser.email, password: loggedInUser.password)
-        
-        user?.reauthenticate(with: credential, completion: {(authResult, error) in
-            if error != nil {
-                print("Error: \(error)")
-            }else{
-                print("Successfully Reauthenticated! ")
-            }
-        })
-        
-        let startIndex = loggedInUser.classroom[0].chapterProgress.count - newChapterCount
-        let endIndex = loggedInUser.classroom[0].chapterProgress.count - 1
-        
-        print("Start Index: \(startIndex)")
-        print("End Index: \(endIndex)")
-        
-        /// Looping through chapters (indexes) user does not have yet
-        for j in startIndex...endIndex{
-            
-            let updatingRef = db.collection(loggedInAccountType).document(loggedInUser.username).collection("Classrooms").document("classroom_1").collection("Chapters").document(loggedInUser.classroom[0].chapterProgress[j].chapterID)
-            
-            var questionIds = [String]()
-            
-            for k in 0..<loggedInUser.classroom[0].chapterProgress[j].questionAnswers.count{
-                
-                questionIds.append(loggedInUser.classroom[0].chapterProgress[j].questionAnswers[k].fId)
-                
-            }
-            
-            updatingRef.setData([
-                "chapter_status": loggedInUser.classroom[0].chapterProgress[j].chapterStatus,
-                "playground_status": loggedInUser.classroom[0].chapterProgress[j].playgroundStatus,
-                "theory_status": loggedInUser.classroom[0].chapterProgress[j].theoryStatus,
-                "question_scores": loggedInUser.classroom[0].chapterProgress[j].questionScores,
-                "question_progress": loggedInUser.classroom[0].chapterProgress[j].questionProgress,
-                "chapters_name": loggedInUser.classroom[0].chapterProgress[j].chapterName,
-                "chapters_num": loggedInUser.classroom[0].chapterProgress[j].chapterNum,
-                "question_ids": questionIds
-            ])
-            
-            
-            let answersCount = self.loggedInUser.classroom[0].chapterProgress[j].questionAnswers.count
-            
-            for k in 0..<answersCount {
-                
-                updatingRef.updateData([
-                    "question_\(k+1)_answer": self.loggedInUser.classroom[0].chapterProgress[j].questionAnswers[k].answers
-                ])
             }
         }
     }
