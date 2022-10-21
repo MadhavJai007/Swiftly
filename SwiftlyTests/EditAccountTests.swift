@@ -17,10 +17,24 @@ class EditAccountTests: XCTestCase {
         
         
         //creating test user for filling in logged in data used for updating account information
-        userAccountViewModel.createTestLoggedInUser()
+        userAccountViewModel.loggedInUser.firstName = "test"
+        userAccountViewModel.loggedInUser.lastName = "test"
+        userAccountViewModel.loggedInUser.username = "testAccount"
+        userAccountViewModel.loggedInUser.email = "testcreateaccount@email.com"
+        userAccountViewModel.loggedInUser.password = "Password12"
+        userAccountViewModel.loggedInUser.dob = "25/02/2000"
+        userAccountViewModel.loggedInUser.country = "Canada"
+        
+        userAccountViewModel.updatedUser.firstName = ""
+        userAccountViewModel.updatedUser.lastName = ""
+        userAccountViewModel.updatedUser.username = "testAccount"
+        userAccountViewModel.updatedUser.email = "testcreateaccount@email.com"
+        userAccountViewModel.updatedUser.password = ""
+        userAccountViewModel.updatedUser.dob = ""
+        userAccountViewModel.updatedUser.country = "Canada"
         
         
-        //all the edit fields are empty, failing every validation teste, making editing NOT complete,therefore false on boolean check
+        //all the editable fields are still empty, failing the vaildation checks, making editing NOT complete,therefore false on boolean check
         XCTAssertFalse(userAccountViewModel.isEditingComplete)
         
         
@@ -31,10 +45,22 @@ class EditAccountTests: XCTestCase {
         
         
         //creating test user for filling in logged in data used for updating account information
-        userAccountViewModel.createTestLoggedInUser()
+        userAccountViewModel.loggedInUser.firstName = "test"
+        userAccountViewModel.loggedInUser.lastName = "test"
+        userAccountViewModel.loggedInUser.username = "testAccount"
+        userAccountViewModel.loggedInUser.email = "testcreateaccount@email.com"
+        userAccountViewModel.loggedInUser.password = "Password12"
+        userAccountViewModel.loggedInUser.dob = "25/02/2000"
+        userAccountViewModel.loggedInUser.country = "Canada"
         
         //performing test edit where fields are updated to make changes to users account
-        userAccountViewModel.createTestEdit()
+        userAccountViewModel.updatedUser.firstName = "testChange"
+        userAccountViewModel.updatedUser.lastName = "testChange"
+        userAccountViewModel.updatedUser.username = "testAccount"
+        userAccountViewModel.updatedUser.email = "testcreateaccount@email.com"
+        userAccountViewModel.updatedUser.password = "Password123"
+        userAccountViewModel.updatedUser.dob = "25/02/2001"
+        userAccountViewModel.updatedUser.country = "United States"
         
         
         //since all fields are filled in and meet validation requirements, editing is complete, therefore true on boolean check

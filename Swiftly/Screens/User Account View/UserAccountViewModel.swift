@@ -56,25 +56,6 @@ final class UserAccountViewModel: ObservableObject {
     
     //validation methods for updating account
     
-    func createTestLoggedInUser(){
-        loggedInUser.firstName = "test"
-        loggedInUser.lastName = "test"
-        loggedInUser.username = "testAccount"
-        loggedInUser.email = "testcreateaccount@email.com"
-        loggedInUser.password = "Password12"
-        loggedInUser.dob = "25/02/2000"
-        loggedInUser.country = "Canada"
-    }
-    
-    func createTestEdit(){
-        updatedUser.firstName = loggedInUser.firstName
-        updatedUser.lastName = loggedInUser.lastName
-        updatedUser.username = loggedInUser.username
-        updatedUser.email = loggedInUser.email
-        updatedUser.password = loggedInUser.password
-        updatedUser.dob = loggedInUser.dob
-        updatedUser.country = loggedInUser.country
-    }
     func isDateValid() -> Bool{
         
         //must be in dd/mm/yyyy format, only numerics

@@ -36,6 +36,8 @@ final class SignupViewModel: ObservableObject {
                                   country: "Canada",
                                   classroom: [UserClassroom()])
     
+    @Published var result = ""
+    
     @Published var isBadSignup: Bool = false
     @Published var alertInfo: AlertModel?
     @Published var chaptersArr = [Chapter]()
@@ -47,15 +49,17 @@ final class SignupViewModel: ObservableObject {
     
     let listOfBadWords = ["crap", "fuck", "shit", "ass", "penis", "dick","cunt", "whore", "vagina", "boobs", "tits", "fucker", "slut", "motherfucker", "cock", "dildo", "bitch"]
     
-    
-    func createTestAccount(){
-        newUser.firstName = "test"
-        newUser.lastName = "test"
-        newUser.username = "testAccount"
-        newUser.email = "testcreateaccount@email.com"
-        newUser.password = "Password12"
-        newUser.dob = "25/02/2000"
-        newUser.country = "Canada"
+    func testEmailOverlap(){
+        checkIfEmailExists(user: newUser) { status in
+            switch status {
+            case .taken:
+                print("taken called from testEmailOverlap")
+            case .free:
+                print("free called from testEmailOverlap")
+            case .unknown:
+                print("unknown called from testEmailOverlap")
+            }
+        }
     }
     
 
@@ -148,6 +152,7 @@ final class SignupViewModel: ObservableObject {
                 completion(.unknown)
             } else if (snapshot?.isEmpty)! {
                 print("email is free")
+                self.result = "free"
                 completion(.free)
             } else {
                 
@@ -155,6 +160,7 @@ final class SignupViewModel: ObservableObject {
                     
                     if document.data()["username"] != nil {
                         print("email is taken")
+                        self.result = "taken"
                         completion(.taken)
                     }
                     
@@ -162,6 +168,7 @@ final class SignupViewModel: ObservableObject {
                     
                     if userCounter == snapshot?.documents.count {
                         print("email is free")
+                        self.result = "free"
                         completion(.free)
                     }
                 }

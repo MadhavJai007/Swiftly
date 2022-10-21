@@ -15,45 +15,35 @@ class SignupTests: XCTestCase {
     func testOverlappingEmailSignup() {
         let signupViewModel = SignupViewModel()
         
-        var result = ""
+        signupViewModel.newUser.firstName = "test"
+        signupViewModel.newUser.lastName = "test"
+        signupViewModel.newUser.username = "testAccount"
+        signupViewModel.newUser.email = "testcreateaccount@email.com"
+        signupViewModel.newUser.password = "Password12"
+        signupViewModel.newUser.dob = "25/02/2000"
+        signupViewModel.newUser.country = "Canada"
         
-        let testUser = User(firstName: "",
-                                      lastName: "",
-                                      username: "",
-                                      email: "moktar@email.com",
-                                      password: "",
-                                      dob : "",
-                                      country: "",
-                                      classroom: [UserClassroom()])
-        
-        
-        
-        print("Testing email status")
-        print(testUser.email)
-        signupViewModel.checkIfEmailExists(user: testUser) { status in
-            switch status {
-            case .taken:
-                print("taken")
-                result = "taken"
-            case .free:
-                print("free")
-                result = "free"
-            case .unknown:
-                print("unknown")
-                result = "unknownn"
-            }
-        }
-        print("Email check should be done now.")
+        print("now testing email overlap")
+        signupViewModel.testEmailOverlap()
         
         //since email is tied to existing user, result should be "taken"
-        XCTAssertEqual(result, "taken")
+        XCTAssertEqual(signupViewModel.result, "taken")
     }
 
     func testInvalidSignup() {
+        
         let signupViewModel = SignupViewModel()
         
+        signupViewModel.newUser.firstName = ""
+        signupViewModel.newUser.lastName = ""
+        signupViewModel.newUser.username = ""
+        signupViewModel.newUser.email = ""
+        signupViewModel.newUser.password = ""
+        signupViewModel.newUser.dob = ""
+        signupViewModel.newUser.country = "Canada"
+        
         //testing isSignupComplete which checks all validation for signup.
-        //by default is false since "newUser" variable is set to empty fields until user manually fills in fields
+        //by default boolean is false since "newUser" variable is set to empty fields until user manually fills in fields
         XCTAssertFalse(signupViewModel.isSignUpComplete)
         
 
@@ -62,8 +52,18 @@ class SignupTests: XCTestCase {
     func testValidSignup(){
         let signupViewModel = SignupViewModel()
         
+        
+        
         //calling function that fills in "newUser" with test information, that follows account validation
-        signupViewModel.createTestAccount()
+        
+        //signupViewModel.createTestAccount()
+        signupViewModel.newUser.firstName = "test"
+        signupViewModel.newUser.lastName = "test"
+        signupViewModel.newUser.username = "testAccount"
+        signupViewModel.newUser.email = "testcreateaccount@email.com"
+        signupViewModel.newUser.password = "Password12"
+        signupViewModel.newUser.dob = "25/02/2000"
+        signupViewModel.newUser.country = "Canada"
         
         //since account information is now meeting all account validation, isSignUpComplete is set to true
         XCTAssertTrue(signupViewModel.isSignUpComplete)
