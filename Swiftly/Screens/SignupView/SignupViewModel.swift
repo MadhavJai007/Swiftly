@@ -52,7 +52,7 @@ final class SignupViewModel: ObservableObject {
         newUser.firstName = "test"
         newUser.lastName = "test"
         newUser.username = "testAccount"
-        newUser.email = "asdfasdf@email.com"
+        newUser.email = "testcreateaccount@email.com"
         newUser.password = "Password12"
         newUser.dob = "25/02/2000"
         newUser.country = "Canada"
