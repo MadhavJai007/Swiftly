@@ -43,6 +43,5 @@ class ChaptersTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
         XCTAssertNotEqual(chaptersViewModel.userCompletionCount, [Int]())
     }
-
 }
 
