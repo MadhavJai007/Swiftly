@@ -28,6 +28,9 @@ final class UserAccountViewModel: ObservableObject {
                        country: "",
                        classroom: [UserClassroom()])
     
+    
+    @Published var result = ""
+    
     @Published var classroomName = ""
     
     @Published var isUserInfoRetrieved = false
@@ -191,7 +194,7 @@ final class UserAccountViewModel: ObservableObject {
         let credential: AuthCredential = EmailAuthProvider.credential(withEmail: loggedInUser.email, password: loggedInUser.password)
 
         
-        
+        print("Now attempting to reauthenticate the authentication data")
         user?.reauthenticate(with: credential, completion: {(authResult, error) in
                     if error != nil {
                         print("Error: \(String(describing: error))")
@@ -204,7 +207,7 @@ final class UserAccountViewModel: ObservableObject {
           print("Successfully updated password!")
         }
         
-        
+        print("Now updating firestore database data")
         let updatingRef = db.collection("Students").document(loggedInUser.username)
 
         updatingRef.updateData([
@@ -218,7 +221,7 @@ final class UserAccountViewModel: ObservableObject {
                 print("Error updating document: \(err)")
             } else {
                 print("Document successfully updated")
-                
+                self.result = "success"
                 self.loggedInUser.firstName = self.updatedUser.firstName
                 self.loggedInUser.lastName = self.updatedUser.lastName
                 self.loggedInUser.username = self.updatedUser.username

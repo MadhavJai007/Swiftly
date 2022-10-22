@@ -12,27 +12,12 @@ import FirebaseFirestore
 
 class SignupTests: XCTestCase {
 
-    func testOverlappingEmailSignup() {
-        let signupViewModel = SignupViewModel()
-        
-        signupViewModel.newUser.firstName = "test"
-        signupViewModel.newUser.lastName = "test"
-        signupViewModel.newUser.username = "testAccount"
-        signupViewModel.newUser.email = "testcreateaccount@email.com"
-        signupViewModel.newUser.password = "Password12"
-        signupViewModel.newUser.dob = "25/02/2000"
-        signupViewModel.newUser.country = "Canada"
-        
-        print("now testing email overlap")
-        signupViewModel.testEmailOverlap()
-        
-        //since email is tied to existing user, result should be "taken"
-        XCTAssertEqual(signupViewModel.result, "taken")
-    }
-
     func testInvalidSignup() {
         
         let signupViewModel = SignupViewModel()
+        
+        
+        //setting newUser signup with empty fields (except for country which is set to 'Canada' by default
         
         signupViewModel.newUser.firstName = ""
         signupViewModel.newUser.lastName = ""
@@ -57,12 +42,12 @@ class SignupTests: XCTestCase {
         //calling function that fills in "newUser" with test information, that follows account validation
         
         //signupViewModel.createTestAccount()
-        signupViewModel.newUser.firstName = "test"
-        signupViewModel.newUser.lastName = "test"
+        signupViewModel.newUser.firstName = "testFirstName"
+        signupViewModel.newUser.lastName = "testLastName"
         signupViewModel.newUser.username = "testAccount"
         signupViewModel.newUser.email = "testcreateaccount@email.com"
         signupViewModel.newUser.password = "Password12"
-        signupViewModel.newUser.dob = "25/02/2000"
+        signupViewModel.newUser.dob = "01/01/2000"
         signupViewModel.newUser.country = "Canada"
         
         //since account information is now meeting all account validation, isSignUpComplete is set to true
