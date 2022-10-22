@@ -183,7 +183,7 @@ final class UserAccountViewModel: ObservableObject {
         
     }
     
-    func updateAccount(){
+    func updateAccount(completion: @escaping() -> Void){
         
         print("Logged In: \(loggedInUser)")
         print("Updated: \(updatedUser)")
@@ -198,6 +198,7 @@ final class UserAccountViewModel: ObservableObject {
         user?.reauthenticate(with: credential, completion: {(authResult, error) in
                     if error != nil {
                         print("Error: \(String(describing: error))")
+                        completion()
                     }else{
                         print("Successfully Reauthenticated! ")
                     }
@@ -231,6 +232,8 @@ final class UserAccountViewModel: ObservableObject {
                 self.loggedInUser.country = self.updatedUser.country
         
             }
+            
+            completion()
         }
     }
     

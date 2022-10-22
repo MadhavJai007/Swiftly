@@ -178,7 +178,9 @@ struct EditAccountView: View {
                     
                     // Update account button
                     Button{
-                        userAccountViewModel.updateAccount()
+                        userAccountViewModel.updateAccount {
+                            // Nothing
+                        }
                         userAccountViewModel.isEditingAccount.toggle()
                     }label:{
                         ButtonLabelLarge(text: "Save Changes", textColor: .white, backgroundColor: Color.blackCustom)

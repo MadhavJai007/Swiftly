@@ -71,7 +71,7 @@ class EditAccountTests: XCTestCase {
     
     func testAccountEdit(){
         let userAccountViewModel = UserAccountViewModel()
-        
+        let expectation = self.expectation(description: "AccountEdit")
         
         userAccountViewModel.loggedInUser.firstName = "Edit"
         userAccountViewModel.loggedInUser.lastName = "Account"
@@ -89,9 +89,11 @@ class EditAccountTests: XCTestCase {
         userAccountViewModel.updatedUser.dob = "01/01/2000"
         userAccountViewModel.updatedUser.country = "Canada"
         
-        userAccountViewModel.updateAccount()
+        userAccountViewModel.updateAccount {
+            expectation.fulfill()
+        }
         
-        
+        waitForExpectations(timeout: 10, handler: nil)
         XCTAssertEqual(userAccountViewModel.result, "success")
     }
 
