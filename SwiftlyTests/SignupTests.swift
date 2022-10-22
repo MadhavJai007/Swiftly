@@ -41,7 +41,6 @@ class SignupTests: XCTestCase {
         
         //calling function that fills in "newUser" with test information, that follows account validation
         
-        //signupViewModel.createTestAccount()
         signupViewModel.newUser.firstName = "testFirstName"
         signupViewModel.newUser.lastName = "testLastName"
         signupViewModel.newUser.username = "testAccount"
@@ -54,4 +53,33 @@ class SignupTests: XCTestCase {
         XCTAssertTrue(signupViewModel.isSignUpComplete)
     }
     
+    func testOverlappingEmailCheck(){
+        let signupViewModel = SignupViewModel()
+        
+        signupViewModel.newUser.firstName = "testFirstName"
+        signupViewModel.newUser.lastName = "testLastName"
+        signupViewModel.newUser.username = "testAccount"
+        
+        //selecting email that is already tied to existing account
+        signupViewModel.newUser.email = "editacctest@email.com"
+        signupViewModel.newUser.password = "Password12"
+        signupViewModel.newUser.dob = "01/01/2000"
+        signupViewModel.newUser.country = "Canada"
+
+        signupViewModel.checkIfEmailExists(user: signupViewModel.newUser) { status in
+            switch status {
+            case .taken:
+                signupViewModel.result = "taken"
+
+            case .free:
+                signupViewModel.result = "free"
+                
+            case .unknown:
+                signupViewModel.result = "free"
+            }
+        }
+
+        //waitForExpectations(timeout: 10, handler: nil)
+        XCTAssertEqual(signupViewModel.result, "success")
+    }
 }

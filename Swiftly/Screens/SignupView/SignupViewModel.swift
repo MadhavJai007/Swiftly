@@ -47,22 +47,10 @@ final class SignupViewModel: ObservableObject {
     
     private var db = Firestore.firestore()
     
+    //validation checks
+    
     let listOfBadWords = ["crap", "fuck", "shit", "ass", "penis", "dick","cunt", "whore", "vagina", "boobs", "tits", "fucker", "slut", "motherfucker", "cock", "dildo", "bitch"]
     
-    func testEmailOverlap(){
-        checkIfEmailExists(user: newUser) { status in
-            switch status {
-            case .taken:
-                print("taken called from testEmailOverlap")
-            case .free:
-                print("free called from testEmailOverlap")
-            case .unknown:
-                print("unknown called from testEmailOverlap")
-            }
-        }
-    }
-    
-
     func isEmailValid() -> Bool{
         let emailTest = NSPredicate(format: "SELF MATCHES %@", "^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$")
         return emailTest.evaluate(with: newUser.email)
