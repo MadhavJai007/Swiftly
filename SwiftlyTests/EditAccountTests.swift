@@ -97,7 +97,7 @@ class EditAccountTests: XCTestCase {
             }
         })
 
-        waitForExpectations(timeout: 99, handler: nil)
+        waitForExpectations(timeout: 10, handler: nil)
         XCTAssertEqual(userAccountViewModel.result, "success")
     }
 
