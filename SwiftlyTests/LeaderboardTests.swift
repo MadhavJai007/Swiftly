@@ -26,4 +26,23 @@ class LeaderboardTests: XCTestCase {
         XCTAssertNotNil(scoreData)
         XCTAssertEqual(scoreData?.isEmpty, false)
     }
+    
+    
+    func testRetrieveUserScoresWithFilters() throws {
+        let leaderboardViewModel = LeaderboardViewModel()
+        let expectation = self.expectation(description: "Download")
+        
+        var scoreData: [UserLeaderboardData]?
+        
+        leaderboardViewModel.retrieveBasicUserData(filterOne: "Chapter 1",
+                                                   filterTwo: leaderboardViewModel.getCountryStringFromFlag(country: "🇨🇦"),
+                                                   completion: { status, data in
+            scoreData = data
+            expectation.fulfill()
+        })
+        
+        waitForExpectations(timeout: 5, handler: nil)
+        XCTAssertNotNil(scoreData)
+        XCTAssertEqual(scoreData?.isEmpty, false)
+    }
 }
