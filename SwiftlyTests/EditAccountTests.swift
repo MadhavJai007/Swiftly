@@ -71,29 +71,33 @@ class EditAccountTests: XCTestCase {
     
     func testAccountEdit(){
         let userAccountViewModel = UserAccountViewModel()
+        let loginViewModel = LoginViewModel()
         let expectation = self.expectation(description: "AccountEdit")
-        
-        userAccountViewModel.loggedInUser.firstName = "Edit"
-        userAccountViewModel.loggedInUser.lastName = "Account"
-        userAccountViewModel.loggedInUser.username = "EditAccTest"
-        userAccountViewModel.loggedInUser.email = "editacctest@email.com"
-        userAccountViewModel.loggedInUser.password = "Password12"
-        userAccountViewModel.loggedInUser.dob = "01/01/2000"
-        userAccountViewModel.loggedInUser.country = "Canada"
-        
-        userAccountViewModel.updatedUser.firstName = "Edit"
-        userAccountViewModel.updatedUser.lastName = "Account"
-        userAccountViewModel.updatedUser.username = "EditAccTest"
-        userAccountViewModel.updatedUser.email = "editacctest@email.com"
-        userAccountViewModel.updatedUser.password = "Password12"
-        userAccountViewModel.updatedUser.dob = "01/01/2000"
-        userAccountViewModel.updatedUser.country = "Canada"
-        
-        userAccountViewModel.updateAccount {
-            expectation.fulfill()
-        }
-        
-        waitForExpectations(timeout: 10, handler: nil)
+
+        loginViewModel.loginUser(email: "editacctest@email.com", password: "Password12", completion: { _ in
+            
+            userAccountViewModel.loggedInUser.firstName = "Edit"
+            userAccountViewModel.loggedInUser.lastName = "Account"
+            userAccountViewModel.loggedInUser.username = "EditAccTest"
+            userAccountViewModel.loggedInUser.email = "editacctest@email.com"
+            userAccountViewModel.loggedInUser.password = "Password12"
+            userAccountViewModel.loggedInUser.dob = "01/01/2000"
+            userAccountViewModel.loggedInUser.country = "Canada"
+            
+            userAccountViewModel.updatedUser.firstName = "Edit"
+            userAccountViewModel.updatedUser.lastName = "Account"
+            userAccountViewModel.updatedUser.username = "EditAccTest"
+            userAccountViewModel.updatedUser.email = "editacctest@email.com"
+            userAccountViewModel.updatedUser.password = "Password12"
+            userAccountViewModel.updatedUser.dob = "01/01/2000"
+            userAccountViewModel.updatedUser.country = "Canada"
+            
+            userAccountViewModel.updateAccount {
+                expectation.fulfill()
+            }
+        })
+
+        waitForExpectations(timeout: 99, handler: nil)
         XCTAssertEqual(userAccountViewModel.result, "success")
     }
 

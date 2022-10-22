@@ -230,9 +230,7 @@ final class UserAccountViewModel: ObservableObject {
                 //self.loggedInUser.password = self.updatedUser.password
                 self.loggedInUser.dob = self.updatedUser.dob
                 self.loggedInUser.country = self.updatedUser.country
-        
             }
-            
             completion()
         }
     }
