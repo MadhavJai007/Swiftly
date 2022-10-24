@@ -100,28 +100,29 @@ class SignupTests: XCTestCase {
 
     func testAccountCreation(){
         let signupViewModel = SignupViewModel()
-        //let expectation = self.expectation(description: "CreateAccount")
+        let chaptersViewModel = ChaptersViewModel()
+        let expectation = self.expectation(description: "CreateAccount")
         
         signupViewModel.newUser.firstName = "testFirstName"
         signupViewModel.newUser.lastName = "testLastName"
         signupViewModel.newUser.username = "TestAccountCreation"
         
         //selecting email that is already tied to existing account
-        signupViewModel.newUser.email = "testacccreation@email.com"
+        signupViewModel.newUser.email = "TESTACCOUNTCREATION@email.com"
         signupViewModel.newUser.password = "Password12"
         signupViewModel.newUser.dob = "01/01/2000"
         signupViewModel.newUser.country = "Canada"
         
-        signupViewModel.saveNewUser { status in
-            switch status {
-            case .success:
-                print("success")
-            case .failure, .unknown:
-                print("failure")
-            }
-        }
+        chaptersViewModel.downloadChapters(completion: { _ in
+            signupViewModel.chaptersArr = chaptersViewModel.chaptersArr
+            signupViewModel.saveNewUser(completion: { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 10, execute: {
+                    expectation.fulfill()
+                })
+            })
+        })
         
-        //waitForExpectations(timeout: 10, handler: nil)
-        XCTAssertEqual(signupViewModel.result, "free")
+        waitForExpectations(timeout: 30, handler: nil)
+        XCTAssertEqual(signupViewModel.result, "success")
     }
 }

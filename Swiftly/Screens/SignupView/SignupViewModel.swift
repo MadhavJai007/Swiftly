@@ -275,12 +275,14 @@ final class SignupViewModel: ObservableObject {
     }
     
     func saveNewUser(completion: @escaping(SignupStatus) -> Void){
+        
         checkIfEmailExists(user: newUser) { status in
             switch status {
             case .taken:
-                completion(.failure)
                 self.isBadSignup = true
+                completion(.failure)
             case .free:
+                
                 self.authenticateUser(user: self.newUser) { authenticated in
                     
                     if authenticated {
@@ -288,26 +290,26 @@ final class SignupViewModel: ObservableObject {
                         self.addUser(user: self.newUser) { signupStatus in
                             switch signupStatus {
                             case .success:
-                                completion(.success)
                                 self.result = "success"
+                                completion(.success)
                             case .failure:
-                                completion(.failure)
                                 self.result = "failure"
+                                completion(.failure)
                             case .unknown:
-                                completion(.unknown)
                                 self.result = "unknown"
+                                completion(.unknown)
                             }
                         }
                     } else {
+                        self.result = "failure"
                         completion(.failure)
                     }
                 }
                 
             case .unknown:
-                completion(.unknown)
                 self.result = "unknown"
+                completion(.unknown)
             }
         }
-        
     }
 }
