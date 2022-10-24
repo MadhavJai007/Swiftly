@@ -103,6 +103,14 @@ class EditAccountTests: XCTestCase {
     
     func testLogout(){
         let userAccountViewModel = UserAccountViewModel()
+        
+        
+        //calling logoutUser() function used to clear logged in
+        userAccountViewModel.logoutUser()
+        
+        
+        //successful logout updates the logoutSuccessful boolean to true, which is used to validate the result of this unit test
+        XCTAssertTrue(userAccountViewModel.logoutSuccessful)
     }
 
 }

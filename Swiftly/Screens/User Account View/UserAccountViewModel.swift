@@ -9,7 +9,7 @@ import Firebase
 
 final class UserAccountViewModel: ObservableObject {
 
-    var logoutSuccessful = false
+    @Published var logoutSuccessful = false
     
     @Published var isEditingAccount = false
     
