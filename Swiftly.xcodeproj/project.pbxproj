@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2C0E5EF728D3EDAB005706DB /* PasswordRecoveryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0E5EF628D3EDAB005706DB /* PasswordRecoveryView.swift */; };
 		2C0E5EF928D3EDC4005706DB /* PasswordRecoveryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0E5EF828D3EDC4005706DB /* PasswordRecoveryViewModel.swift */; };
+		2C39112E2907188600247757 /* PasswordRecoveryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C39112D2907188600247757 /* PasswordRecoveryTests.swift */; };
 		2C4CAF9628E4A93800A27545 /* InterstitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4CAF9528E4A93800A27545 /* InterstitialView.swift */; };
 		2C67167928DB77940049D51D /* BannerAd.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C67167828DB77940049D51D /* BannerAd.swift */; };
 		2CEB414727598BEC00C8858D /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEB414627598BEC00C8858D /* NetworkMonitor.swift */; };
@@ -76,6 +77,7 @@
 		11B3422058B48AC46E6C075C /* Pods_Swiftly.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Swiftly.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C0E5EF628D3EDAB005706DB /* PasswordRecoveryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRecoveryView.swift; sourceTree = "<group>"; };
 		2C0E5EF828D3EDC4005706DB /* PasswordRecoveryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRecoveryViewModel.swift; sourceTree = "<group>"; };
+		2C39112D2907188600247757 /* PasswordRecoveryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordRecoveryTests.swift; sourceTree = "<group>"; };
 		2C4CAF9528E4A93800A27545 /* InterstitialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterstitialView.swift; sourceTree = "<group>"; };
 		2C67167828DB77940049D51D /* BannerAd.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerAd.swift; sourceTree = "<group>"; };
 		2CEB414627598BEC00C8858D /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 		4E21FAE628F08D0B0076AF1F /* SwiftlyTests */ = {
 			isa = PBXGroup;
 			children = (
+				2C39112D2907188600247757 /* PasswordRecoveryTests.swift */,
 				4E21FAFC2902E3940076AF1F /* LeaderboardTests.swift */,
 				4E21FAFA28FD9E5E0076AF1F /* ChaptersTests.swift */,
 				4E21FAF428F7364E0076AF1F /* UpdatingProgressTests.swift */,
@@ -680,6 +683,7 @@
 				4E21FAF528F7364E0076AF1F /* UpdatingProgressTests.swift in Sources */,
 				4E21FAF128F7039C0076AF1F /* SignupTests.swift in Sources */,
 				4E21FAE828F08D0B0076AF1F /* SwiftlyTests.swift in Sources */,
+				2C39112E2907188600247757 /* PasswordRecoveryTests.swift in Sources */,
 				4E21FAEF28F08D7E0076AF1F /* LoginTests.swift in Sources */,
 				4E21FAF328F703D90076AF1F /* EditAccountTests.swift in Sources */,
 				4E21FAFB28FD9E5E0076AF1F /* ChaptersTests.swift in Sources */,

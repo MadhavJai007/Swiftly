@@ -70,7 +70,9 @@ struct PasswordRecoveryView: View {
                     ///password recovery button
                         Button{
                             print("Password recovery API call")
-                            passwordRecoveryViewModel.resetPassword()
+                            passwordRecoveryViewModel.resetPassword{
+                                // Nothing
+                            }
                         }label: {
                             ButtonLabelLarge(text: "Reset Password", textColor: .white, backgroundColor: Color(UIColor.systemGray2))
                         }

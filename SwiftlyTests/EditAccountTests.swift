@@ -105,7 +105,7 @@ class EditAccountTests: XCTestCase {
         let userAccountViewModel = UserAccountViewModel()
         
         
-        //calling logoutUser() function used to clear logged in
+        //calling logoutUser() function used to clear logged in information
         userAccountViewModel.logoutUser()
         
         
