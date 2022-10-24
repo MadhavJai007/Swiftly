@@ -164,6 +164,42 @@ final class SignupViewModel: ObservableObject {
         }
     }
     
+    func testCheckOverlappingEmail(completion: @escaping() -> Void){
+        print("Email check started!")
+        let emailCompared = newUser.email
+        let collectionRef = db.collection("Students")
+        var userCounter = 0
+        
+        print("Now going through database to compare email")
+        collectionRef.whereField("email", isEqualTo: emailCompared).getDocuments { (snapshot, err) in
+            if err != nil {
+                print("email is unknown")
+                self.result = "unknown"
+            } else if (snapshot?.isEmpty)! {
+                print("email is free")
+                self.result = "free"
+            } else {
+                
+                for document in (snapshot?.documents)! {
+                    
+                    if document.data()["username"] != nil {
+                        print("email is taken")
+                        self.result = "taken"
+                        break
+                    }
+                    
+                    userCounter += 1
+                    
+                    if userCounter == snapshot?.documents.count {
+                        print("email is free")
+                        self.result = "free"
+                    }
+                }
+            }
+            completion()
+        }
+    }
+    
     // Authenticating the user
     func authenticateUser(user: User, completion: @escaping(Bool) -> Void){
         Auth.auth().createUser(withEmail: user.email, password: user.password) { [self] user, error in

@@ -53,8 +53,9 @@ class SignupTests: XCTestCase {
         XCTAssertTrue(signupViewModel.isSignUpComplete)
     }
     
-    func testOverlappingEmailCheck(){
+    func testEmailTakenCheck(){
         let signupViewModel = SignupViewModel()
+        let expectation = self.expectation(description: "EmailCheck")
         
         signupViewModel.newUser.firstName = "testFirstName"
         signupViewModel.newUser.lastName = "testLastName"
@@ -66,20 +67,38 @@ class SignupTests: XCTestCase {
         signupViewModel.newUser.dob = "01/01/2000"
         signupViewModel.newUser.country = "Canada"
 
-        signupViewModel.checkIfEmailExists(user: signupViewModel.newUser) { status in
-            switch status {
-            case .taken:
-                signupViewModel.result = "taken"
-
-            case .free:
-                signupViewModel.result = "free"
-                
-            case .unknown:
-                signupViewModel.result = "free"
-            }
+        signupViewModel.testCheckOverlappingEmail{
+            expectation.fulfill()
         }
 
-        //waitForExpectations(timeout: 10, handler: nil)
-        XCTAssertEqual(signupViewModel.result, "success")
+        waitForExpectations(timeout: 10, handler: nil)
+        XCTAssertEqual(signupViewModel.result, "taken")
+    }
+    
+    func testEmailFreeCheck(){
+        let signupViewModel = SignupViewModel()
+        let expectation = self.expectation(description: "EmailCheck")
+        
+        signupViewModel.newUser.firstName = "testFirstName"
+        signupViewModel.newUser.lastName = "testLastName"
+        signupViewModel.newUser.username = "testAccount"
+        
+        //selecting email that is already tied to existing account
+        signupViewModel.newUser.email = "freeemail@email.com"
+        signupViewModel.newUser.password = "Password12"
+        signupViewModel.newUser.dob = "01/01/2000"
+        signupViewModel.newUser.country = "Canada"
+
+        signupViewModel.testCheckOverlappingEmail{
+            expectation.fulfill()
+        }
+
+        waitForExpectations(timeout: 10, handler: nil)
+        XCTAssertEqual(signupViewModel.result, "free")
+    }
+    
+
+    func testAccountCreation(){
+        let signupViewModel = SignupViewModel()
     }
 }

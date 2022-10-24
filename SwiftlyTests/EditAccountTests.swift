@@ -100,5 +100,9 @@ class EditAccountTests: XCTestCase {
         waitForExpectations(timeout: 10, handler: nil)
         XCTAssertEqual(userAccountViewModel.result, "success")
     }
+    
+    func testLogout(){
+        let userAccountViewModel = UserAccountViewModel()
+    }
 
 }
