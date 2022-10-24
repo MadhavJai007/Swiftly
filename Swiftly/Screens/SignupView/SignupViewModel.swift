@@ -289,10 +289,13 @@ final class SignupViewModel: ObservableObject {
                             switch signupStatus {
                             case .success:
                                 completion(.success)
+                                self.result = "success"
                             case .failure:
                                 completion(.failure)
+                                self.result = "failure"
                             case .unknown:
                                 completion(.unknown)
+                                self.result = "unknown"
                             }
                         }
                     } else {
@@ -302,7 +305,9 @@ final class SignupViewModel: ObservableObject {
                 
             case .unknown:
                 completion(.unknown)
+                self.result = "unknown"
             }
         }
+        
     }
 }
