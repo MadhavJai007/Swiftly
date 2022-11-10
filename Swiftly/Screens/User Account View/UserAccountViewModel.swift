@@ -72,7 +72,7 @@ final class UserAccountViewModel: ObservableObject {
     }
     
     func validateName(name: String) -> Bool {
-        return listOfBadWords.reduce(false) { $0 || name.contains($1.lowercased()) }
+        return listOfBadWords.reduce(false) { $0 || name.lowercased().contains($1.lowercased()) }
     }
     
     

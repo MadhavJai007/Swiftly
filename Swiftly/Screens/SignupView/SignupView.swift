@@ -209,12 +209,12 @@ struct SignupView: View {
                     // Create account button
                     Button{
                         
-                        signupViewModel.doesUserNameContainProfanity = false
+                        signupViewModel.doesNameContainProfanity = false
                         signupViewModel.isBadSignup = false
                         
-                        // Validating username
-                        if signupViewModel.validateUsername(username: signupViewModel.newUser.username) {
-                            signupViewModel.doesUserNameContainProfanity.toggle()
+                        // Validating username,firstname and lastname
+                        if signupViewModel.validateName(name: signupViewModel.newUser.username) || signupViewModel.validateName(name: signupViewModel.newUser.firstName) || signupViewModel.validateName(name: signupViewModel.newUser.lastName) {
+                            signupViewModel.doesNameContainProfanity.toggle()
                             signupViewModel.showAlert.toggle()
                         } else {
                             
@@ -253,7 +253,7 @@ struct SignupView: View {
                 .alert(isPresented: $signupViewModel.showAlert) {
                     switch signupViewModel.getAlertType() {
                     case .profanity:
-                        return Alert(title: Text("Bad Word Detected!"), message: Text("Please enter a username, first and last name with no profanity."), dismissButton: .default(Text("OK")))
+                        return Alert(title: Text("Profanity Detected!"), message: Text("Please enter a username, first and last name with no profanity."), dismissButton: .default(Text("OK")))
                         
                     case .badSignup:
                         return Alert(title: Text("Email Already Taken"), message: Text("\(signupViewModel.newUser.email) is already taken."), dismissButton: .default(Text("OK")))

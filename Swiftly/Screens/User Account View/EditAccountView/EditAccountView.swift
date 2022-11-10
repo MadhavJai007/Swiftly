@@ -190,8 +190,9 @@ struct EditAccountView: View {
                             userAccountViewModel.updateAccount {
                             // Nothing
                             }
+                            userAccountViewModel.isEditingAccount.toggle()
                         }
-                        userAccountViewModel.isEditingAccount.toggle()
+                        
                     }label:{
                         ButtonLabelLarge(text: "Save Changes", textColor: .white, backgroundColor: Color.blackCustom)
                             .padding(geometry.size.width/42)
@@ -209,7 +210,7 @@ struct EditAccountView: View {
                 .alert(isPresented: $userAccountViewModel.showAlert) {
                     switch userAccountViewModel.getAlertType() {
                     case .profanity:
-                        return Alert(title: Text("Bad Word Detected!"), message: Text("Please enter a first and last name with no profanity."), dismissButton: .default(Text("OK")))
+                        return Alert(title: Text("Profanity Detected!"), message: Text("Please enter a first and last name with no profanity."), dismissButton: .default(Text("OK")))
                         
                     case .badSignup:
                         return Alert(title: Text("Email Already Taken"), message: Text("Email is already taken."), dismissButton: .default(Text("OK")))

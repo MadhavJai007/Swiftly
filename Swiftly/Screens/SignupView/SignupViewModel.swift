@@ -42,7 +42,7 @@ final class SignupViewModel: ObservableObject {
     @Published var alertInfo: AlertModel?
     @Published var chaptersArr = [Chapter]()
     @Published var loadingSignupProcess: Bool = false
-    @Published var doesUserNameContainProfanity = false
+    @Published var doesNameContainProfanity = false
     @Published var showAlert = false
     
     private var db = Firestore.firestore()
@@ -86,7 +86,7 @@ final class SignupViewModel: ObservableObject {
     
     func getAlertType() -> AlertType {
         
-        if doesUserNameContainProfanity {
+        if doesNameContainProfanity {
             return .profanity
         } else {
             return .badSignup
@@ -122,8 +122,8 @@ final class SignupViewModel: ObservableObject {
         return true
     }
     
-    func validateUsername(username: String) -> Bool {
-        return listOfBadWords.reduce(false) { $0 || username.contains($1.lowercased()) }
+    func validateName(name: String) -> Bool {
+        return listOfBadWords.reduce(false) { $0 || name.lowercased().contains($1.lowercased()) }
     }
     
     // Function to check if email already exists in Swiftly database
