@@ -178,8 +178,18 @@ struct EditAccountView: View {
                     
                     // Update account button
                     Button{
-                        userAccountViewModel.updateAccount {
+                        
+                        userAccountViewModel.doesNameContainProfanity = false
+                        userAccountViewModel.isBadSignup = false
+                        
+                        // Validating username
+                        if userAccountViewModel.validateName(name: userAccountViewModel.updatedUser.firstName) || userAccountViewModel.validateName(name: userAccountViewModel.updatedUser.lastName) {
+                            userAccountViewModel.doesNameContainProfanity.toggle()
+                            userAccountViewModel.showAlert.toggle()
+                        } else {
+                            userAccountViewModel.updateAccount {
                             // Nothing
+                            }
                         }
                         userAccountViewModel.isEditingAccount.toggle()
                     }label:{
@@ -195,6 +205,17 @@ struct EditAccountView: View {
                             .accessibilityLabel("Connect to the internet if you want to update account information")
                     }
                 }
+                
+                .alert(isPresented: $userAccountViewModel.showAlert) {
+                    switch userAccountViewModel.getAlertType() {
+                    case .profanity:
+                        return Alert(title: Text("Bad Word Detected!"), message: Text("Please enter a first and last name with no profanity."), dismissButton: .default(Text("OK")))
+                        
+                    case .badSignup:
+                        return Alert(title: Text("Email Already Taken"), message: Text("Email is already taken."), dismissButton: .default(Text("OK")))
+                    }
+                }
+                
                 Spacer()
                     .onAppear(){
                         self.userAccountViewModel.updatedUser.password = ""

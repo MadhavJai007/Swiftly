@@ -35,6 +35,10 @@ final class UserAccountViewModel: ObservableObject {
     
     @Published var isUserInfoRetrieved = false
     
+    @Published var showAlert = false
+    @Published var doesNameContainProfanity = false
+    @Published var isBadSignup: Bool = false
+    
     @Published var userChapterCompletionCount = 0
     @Published var userChapterInProgressCount = 0
     
@@ -43,6 +47,8 @@ final class UserAccountViewModel: ObservableObject {
 //    @Published var userQuestionCompleteCount = 0
     
     var loggedInAccountType : String = ""
+    
+    let listOfBadWords = ["crap", "fuck", "shit", "ass", "penis", "dick","cunt", "whore", "vagina", "boobs", "tits", "fucker", "slut", "motherfucker", "cock", "dildo", "bitch"]
     
     
     @Published var updatedUser = User(firstName: "",
@@ -55,6 +61,19 @@ final class UserAccountViewModel: ObservableObject {
                        classroom: [UserClassroom()]
                     )
     
+    func getAlertType() -> AlertType {
+        
+        if doesNameContainProfanity {
+            return .profanity
+        } else {
+            return .badSignup
+        }
+        
+    }
+    
+    func validateName(name: String) -> Bool {
+        return listOfBadWords.reduce(false) { $0 || name.contains($1.lowercased()) }
+    }
     
     
     //validation methods for updating account

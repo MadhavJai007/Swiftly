@@ -253,7 +253,7 @@ struct SignupView: View {
                 .alert(isPresented: $signupViewModel.showAlert) {
                     switch signupViewModel.getAlertType() {
                     case .profanity:
-                        return Alert(title: Text("Bad Word Detected!"), message: Text("Please enter a username with no profanity."), dismissButton: .default(Text("OK")))
+                        return Alert(title: Text("Bad Word Detected!"), message: Text("Please enter a username, first and last name with no profanity."), dismissButton: .default(Text("OK")))
                         
                     case .badSignup:
                         return Alert(title: Text("Email Already Taken"), message: Text("\(signupViewModel.newUser.email) is already taken."), dismissButton: .default(Text("OK")))
