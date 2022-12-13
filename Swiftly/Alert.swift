@@ -2,6 +2,7 @@
 //  Alert.swift
 //  Swiftly
 //  Developers: Arjun Suthaharan, Madhav Jaisankar, Tobias Moktar
+// just a test commit after moving to github
 
 import SwiftUI
 
